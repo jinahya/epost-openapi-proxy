@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: datagokr-proxy
+  cloud:
+    gateway:
+      routes:
+        - id: openapi.epost.go.kr
+          uri: http://openapi.epost.go.kr
+          predicates:
+            - Host=openapi.epost.go.kr
+            - Path=/postal/retrieveNewAdressAreaCdSearchAllService/retrieveNewAdressAreaCdSearchAllService/getNewAddressListAreaCdSearchAll
