@@ -1,11 +1,14 @@
 spring:
   application:
-    name: datagokr-proxy
+    name: epost-openapi-proxy
   cloud:
     gateway:
+      httpclient:
+        wiretap: true
+      httpserver:
+        wiretap: true
       routes:
-        - id: openapi.epost.go.kr
+        - id: RetrieveNewAdressAreaCdService
           uri: http://openapi.epost.go.kr
           predicates:
-            - Host=openapi.epost.go.kr
-            - Path=/postal/retrieveNewAdressAreaCdSearchAllService/retrieveNewAdressAreaCdSearchAllService/getNewAddressListAreaCdSearchAll
+            - Path=/postal/retrieveNewAdressAreaCdService/retrieveNewAdressAreaCdService/getNewAddressListAreaCd

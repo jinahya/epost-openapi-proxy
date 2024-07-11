@@ -1,4 +1,4 @@
-package com.github.jianhya.datagokr;
+package com.github.jianhya;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
