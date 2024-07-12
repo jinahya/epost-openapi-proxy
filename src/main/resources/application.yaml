@@ -13,3 +13,6 @@ spring:
           predicates:
             - Method=GET
             - Path=/postal/retrieveNewAdressAreaCdService/retrieveNewAdressAreaCdService/getNewAddressListAreaCd
+          filters:
+            - SetRequestHeader=Content-Type, application/xml
+            - JsonFilter

@@ -34,5 +34,8 @@ gradle-app.setting
 
 
 
+*.iml
+*.ipr
+*.iws
 .idea
 !.idea/codeStyles

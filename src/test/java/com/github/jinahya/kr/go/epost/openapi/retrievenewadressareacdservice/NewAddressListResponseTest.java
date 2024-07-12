@@ -1,5 +1,6 @@
 package com.github.jinahya.kr.go.epost.openapi.retrievenewadressareacdservice;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jinahya.xml.stream.util.NoNamespaceStreamReaderDelegate;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
@@ -25,7 +26,8 @@ class NewAddressListResponseTest {
             final var unmarshaller = jc.createUnmarshaller();
             final var value = (NewAddressListResponse) unmarshaller.unmarshal(xsr);
             log.debug("value: {}", value);
-
+            final var json = new ObjectMapper().writeValueAsString(value);
+            log.debug("json: {}", json);
         }
     }
 }

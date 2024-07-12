@@ -3,6 +3,7 @@ plugins {
     // https://docs.spring.io/spring-boot/appendix/dependency-versions/coordinates.html
     id 'org.springframework.boot' version '3.3.1'
     id 'io.spring.dependency-management' version '1.1.5'
+    id 'idea'
 }
 
 group = 'com.github.jianhya'
@@ -34,8 +35,9 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+//    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
@@ -43,6 +45,7 @@ dependencies {
 
     implementation 'jakarta.xml.bind:jakarta.xml.bind-api'
     runtimeOnly 'com.sun.xml.bind:jaxb-ri:4.0.0' // jakarta.xml.bind-api impl
+    implementation 'jakarta.json.bind:jakarta.json.bind-api' // ad hoc
 
     // https://stackoverflow.com/a/72077713/330457
     // https://docs.spring.io/spring-boot/appendix/dependency-versions/coordinates.html
@@ -61,4 +64,12 @@ dependencyManagement {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
 }

@@ -1,20 +1,23 @@
 package com.github.jinahya.kr.go.epost.openapi.retrievenewadressareacdservice;
 
+import jakarta.validation.Validator;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.DisabledIf;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Import(ValidationAutoConfiguration.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Slf4j
 class RetrieveNewAdressAreaCdServiceTest {
@@ -52,11 +55,12 @@ class RetrieveNewAdressAreaCdServiceTest {
     void __(final NewAddressListRequest.SearchSe searchSe, final String srchwrd, final int countPerPage,
             final int currentPage) {
         final var serviceKey = System.getProperty(SYSTEM_PROPERTY_SERVICE_KEY);
+        log.debug("serviceKey: {}", serviceKey);
         assertThat(serviceKey).isNotBlank();
         final var result = webClient
                 .get()
                 .uri(b -> {
-                    final var uri = b.path(Constants.uri())
+                    final var uri = b.path(Constants.requestUri())
                             .queryParam(NewAddressListRequest.QUERY_PARAM_NAME_SERVICE_KEY, serviceKey)
                             .queryParam(NewAddressListRequest.QUERY_PARAM_NAME_SERACH_SE, searchSe.name())
                             .queryParam(NewAddressListRequest.QUERY_PARAM_NAME_SRCHWRD, srchwrd)
@@ -66,16 +70,78 @@ class RetrieveNewAdressAreaCdServiceTest {
                     log.debug("uri: {}", uri.toASCIIString());
                     return uri;
                 })
-                .accept(MediaType.APPLICATION_XML)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(NewAddressListResponse.class)
                 .returnResult()
                 .getResponseBody();
         log.debug("body: {}", result);
-        assertThat(result).isNotNull();
+        assertThat(result).isNotNull().satisfies(r -> {
+            assertThat(validator.validate(r)).isEmpty();
+        });
         assertThat(result.getCmmMsgHeader()).isNotNull().satisfies(h -> {
             assertThat(h.isSucceeded()).isTrue();
+            log.debug("responseTime: {}", h.getResponseTime());
+            log.debug("responseTimeAsLocalDateTime: {}", h.getResponseTimeAsLocalDateTime());
+        });
+        result.getNewAddressListAreaCdList().forEach(e -> {
+            log.debug("address: {}", e);
+        });
+        assertThat(result.getNewAddressListAreaCdList()).satisfiesAnyOf(
+                l -> assertThat(l).isEmpty(),
+                l -> assertThat(l).isNotEmpty().hasSizeLessThanOrEqualTo(countPerPage).allSatisfy(e -> {
+                    switch (searchSe) {
+                        case dong:
+                            assertThat(e.getRnAdres()).contains(srchwrd);
+                            break;
+                        case road:
+                            assertThat(e.getLnmAdres()).contains(srchwrd);
+                            break;
+                        default:
+                            assertThat(searchSe).isSameAs(NewAddressListRequest.SearchSe.post);
+                            assertThat(e.getZipNo()).isEqualTo(srchwrd);
+                            break;
+                    }
+                })
+        );
+    }
+
+    @DisabledIf("#{systemProperties['" + SYSTEM_PROPERTY_SERVICE_KEY + "'] == null}")
+    @MethodSource({
+            "argumentsStream"
+    })
+    @ParameterizedTest
+    void __json(final NewAddressListRequest.SearchSe searchSe, final String srchwrd, final int countPerPage,
+                final int currentPage) {
+        final var serviceKey = System.getProperty(SYSTEM_PROPERTY_SERVICE_KEY);
+        assertThat(serviceKey).isNotBlank();
+        final var result = webClient
+                .get()
+                .uri(b -> {
+                    final var uri = b.path(Constants.requestUri())
+                            .queryParam(NewAddressListRequest.QUERY_PARAM_NAME_SERVICE_KEY, serviceKey)
+                            .queryParam(NewAddressListRequest.QUERY_PARAM_NAME_SERACH_SE, searchSe.name())
+                            .queryParam(NewAddressListRequest.QUERY_PARAM_NAME_SRCHWRD, srchwrd)
+                            .queryParam(NewAddressListRequest.QUERY_PARAM_NAME_COUNT_PER_PAGE, countPerPage)
+                            .queryParam(NewAddressListRequest.QUERY_PARAM_NAME_CURRENT_PAGE, currentPage)
+                            .build(false);
+                    log.debug("uri: {}", uri.toASCIIString());
+                    return uri;
+                })
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(NewAddressListResponse.class)
+                .returnResult()
+                .getResponseBody();
+        log.debug("body: {}", result);
+        assertThat(result).isNotNull().satisfies(r -> {
+            assertThat(validator.validate(r)).isEmpty();
+        });
+        assertThat(result.getCmmMsgHeader()).isNotNull().satisfies(h -> {
+            assertThat(h.isSucceeded()).isTrue();
+            log.debug("responseTime: {}", h.getResponseTime());
+            log.debug("responseTimeAsLocalDateTime: {}", h.getResponseTimeAsLocalDateTime());
         });
         result.getNewAddressListAreaCdList().forEach(e -> {
             log.debug("address: {}", e);
@@ -102,4 +168,7 @@ class RetrieveNewAdressAreaCdServiceTest {
     // -----------------------------------------------------------------------------------------------------------------
     @Autowired
     private WebTestClient webClient;
+
+    @Autowired
+    private Validator validator;
 }
