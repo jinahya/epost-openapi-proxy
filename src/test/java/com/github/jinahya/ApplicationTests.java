@@ -1,13 +1,12 @@
-package com.github.jianhya;
+package com.github.jinahya;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DatagokrProxyApplicationTests {
+class ApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
-
+    @Test
+    void contextLoads() {
+    }
 }

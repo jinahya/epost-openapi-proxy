@@ -1,13 +1,11 @@
 package com.github.jinahya.kr.go.epost.openapi.retrievenewadressareacdservice;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +14,7 @@ import lombok.ToString;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 @XmlRootElement(name = "NewAddressListResponse")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -26,6 +25,8 @@ public class NewAddressListResponse
         extends AbstractType {
 
     @XmlAccessorType(XmlAccessType.FIELD)
+    @Setter
+    @Getter
     @ToString(callSuper = true)
     public static class CmmMsgHeader
             extends AbstractType {
@@ -56,9 +57,20 @@ public class NewAddressListResponse
             }
         }
 
+        public static final String SUCCESS_YN_Y = "Y";
+
+        public static final String SUCCESS_YN_N = "N";
+
         // ------------------------------------------------------------------------------------------------ responseTime
 
         // --------------------------------------------------------------------------------------------------- successYN
+        @JsonIgnore
+        @XmlTransient
+        public boolean isSucceeded() {
+            return Optional.ofNullable(getSuccessYN())
+                    .map(v -> v.equals(SUCCESS_YN_Y))
+                    .orElse(Boolean.FALSE);
+        }
 
         // -------------------------------------------------------------------------------------------------------------
         private String requestMsgId;

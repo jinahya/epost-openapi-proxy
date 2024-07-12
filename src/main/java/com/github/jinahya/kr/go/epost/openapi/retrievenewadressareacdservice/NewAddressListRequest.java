@@ -6,6 +6,16 @@ import jakarta.validation.constraints.Positive;
 
 public class NewAddressListRequest {
 
+    public static final String QUERY_PARAM_NAME_SERVICE_KEY = "serviceKey";
+
+    public static final String QUERY_PARAM_NAME_SERACH_SE = "searchSe";
+
+    public static final String QUERY_PARAM_NAME_SRCHWRD = "srchwrd";
+
+    public static final String QUERY_PARAM_NAME_COUNT_PER_PAGE = "countPerPage";
+
+    public static final String QUERY_PARAM_NAME_CURRENT_PAGE = "currentPage";
+
     @SuppressWarnings({
             "java:S115" // not 'DONG' but 'dong'
     })

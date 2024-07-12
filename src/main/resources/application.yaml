@@ -11,4 +11,5 @@ spring:
         - id: RetrieveNewAdressAreaCdService
           uri: http://openapi.epost.go.kr
           predicates:
+            - Method=GET
             - Path=/postal/retrieveNewAdressAreaCdService/retrieveNewAdressAreaCdService/getNewAddressListAreaCd

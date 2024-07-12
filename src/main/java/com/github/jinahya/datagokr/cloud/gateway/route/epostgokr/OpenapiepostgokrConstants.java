@@ -1,4 +1,4 @@
-package com.github.jianhya.datagokr.cloud.gateway.route.epostgokr;
+package com.github.jinahya.datagokr.cloud.gateway.route.epostgokr;
 
 public final class OpenapiepostgokrConstants {
 
