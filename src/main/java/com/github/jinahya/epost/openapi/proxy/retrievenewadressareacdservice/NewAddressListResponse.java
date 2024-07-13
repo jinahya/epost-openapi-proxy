@@ -187,7 +187,6 @@ public class NewAddressListResponse
 
     // -----------------------------------------------------------------------------------------------------------------
     @Valid
-    @NotNull
     private CmmMsgHeader cmmMsgHeader;
 
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
@@ -200,6 +199,7 @@ public class NewAddressListResponse
         return Optional.ofNullable(wrapped).orElse(this);
     }
 
+    @Valid
     @JsonProperty(ROOT_NAME)
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.NONE)
