@@ -1,7 +1,7 @@
-package com.github.jinahya.kr.go.epost.openapi.retrievenewadressareacdservice;
+package com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdservice;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.jinahya.xml.stream.util.NoNamespaceStreamReaderDelegate;
+import com.github.jinahya.epost.openapi.proxy.xml.stream.util.NoNamespaceStreamReaderDelegate;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import lombok.extern.slf4j.Slf4j;
@@ -20,11 +20,11 @@ class NewAddressListResponseTest {
     void __() throws IOException, XMLStreamException, JAXBException {
         try (var resource = getClass().getResourceAsStream("response1.xml")) {
             assertThat(resource).isNotNull();
-            final var xif = XMLInputFactory.newFactory();
-            final var xsr = new NoNamespaceStreamReaderDelegate(xif.createXMLStreamReader(resource));
-            final var jc = JAXBContext.newInstance(NewAddressListResponse.class);
-            final var unmarshaller = jc.createUnmarshaller();
-            final var value = (NewAddressListResponse) unmarshaller.unmarshal(xsr);
+            final var factory = XMLInputFactory.newFactory();
+            final var reader = new NoNamespaceStreamReaderDelegate(factory.createXMLStreamReader(resource));
+            final var context = JAXBContext.newInstance(NewAddressListResponse.class);
+            final var unmarshaller = context.createUnmarshaller();
+            final var value = (NewAddressListResponse) unmarshaller.unmarshal(reader);
             log.debug("value: {}", value);
             final var json = new ObjectMapper().writeValueAsString(value);
             log.debug("json: {}", json);

@@ -14,5 +14,7 @@ spring:
             - Method=GET
             - Path=/postal/retrieveNewAdressAreaCdService/retrieveNewAdressAreaCdService/getNewAddressListAreaCd
           filters:
-            - SetRequestHeader=Content-Type, application/xml
-            - JsonFilter
+
+  jackson:
+    deserialization:
+      UNWRAP_SINGLE_VALUE_ARRAYS: true

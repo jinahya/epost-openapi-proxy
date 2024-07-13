@@ -1,4 +1,4 @@
-package com.github.jinahya.kr.go.epost.openapi.retrievenewadressareacdservice;
+package com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdservice;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

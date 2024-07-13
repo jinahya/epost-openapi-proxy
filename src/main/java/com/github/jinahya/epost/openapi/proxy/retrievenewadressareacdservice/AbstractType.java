@@ -1,4 +1,4 @@
-package com.github.jinahya.kr.go.epost.openapi.retrievenewadressareacdservice;
+package com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdservice;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.json.bind.annotation.JsonbTransient;

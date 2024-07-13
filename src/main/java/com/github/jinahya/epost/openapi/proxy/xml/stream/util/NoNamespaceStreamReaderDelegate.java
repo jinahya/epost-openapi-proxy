@@ -1,4 +1,4 @@
-package com.github.jinahya.xml.stream.util;
+package com.github.jinahya.epost.openapi.proxy.xml.stream.util;
 
 import javax.xml.XMLConstants;
 import javax.xml.stream.XMLStreamReader;

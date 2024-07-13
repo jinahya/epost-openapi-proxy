@@ -1,9 +1,11 @@
-package com.github.jinahya.kr.go.epost.openapi.retrievenewadressareacdservice;
+package com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdservice;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.jinahya.xml.stream.util.NoNamespaceStreamReaderDelegate;
+import com.github.jinahya.epost.openapi.proxy.xml.stream.util.NoNamespaceStreamReaderDelegate;
 import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -13,7 +15,9 @@ import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.annotation.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.xml.stream.XMLInputFactory;
@@ -30,15 +34,22 @@ import java.util.function.Function;
 
 import static java.time.temporal.ChronoField.NANO_OF_SECOND;
 
-@XmlRootElement(name = "NewAddressListResponse")
+//@JsonRootName(value = NewAddressListResponse.ROOT_NAME)
+@XmlRootElement(name = NewAddressListResponse.ROOT_NAME)
 @XmlAccessorType(XmlAccessType.FIELD)
+@Setter
 @Getter
 @ToString(callSuper = true)
 public class NewAddressListResponse
         extends AbstractType {
 
+    static final String ROOT_NAME = "NewAddressListResponse";
+
+    private static final String NAME_NEW_ADDRESS_LIST_AREA_CD = "newAddressListAreaCd";
+
     // -----------------------------------------------------------------------------------------------------------------
     @XmlAccessorType(XmlAccessType.FIELD)
+    @Setter
     @Getter
     @ToString(callSuper = true)
     public static class CmmMsgHeader
@@ -155,6 +166,7 @@ public class NewAddressListResponse
         private Integer currentPage;
     }
 
+    @Setter
     @Getter
     @ToString(callSuper = true)
     public static class NewAddressListAreaCd
@@ -169,13 +181,29 @@ public class NewAddressListResponse
         private String rnAdres;
     }
 
+    // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
+
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+
     // -----------------------------------------------------------------------------------------------------------------
     @Valid
     @NotNull
     private CmmMsgHeader cmmMsgHeader;
 
-    @XmlElement(name = "newAddressListAreaCd")
+    @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
+    @JsonProperty(NAME_NEW_ADDRESS_LIST_AREA_CD)
+    @XmlElement(name = NAME_NEW_ADDRESS_LIST_AREA_CD)
     private List<@Valid @NotNull NewAddressListAreaCd> newAddressListAreaCdList;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    public NewAddressListResponse get() {
+        return Optional.ofNullable(wrapped).orElse(this);
+    }
+
+    @JsonProperty(ROOT_NAME)
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.NONE)
+    private NewAddressListResponse wrapped;
 
     // -----------------------------------------------------------------------------------------------------------------
     private static final JAXBContext JAXB_CONTEXT;
