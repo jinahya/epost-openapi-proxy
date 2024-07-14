@@ -15,14 +15,11 @@ import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.annotation.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import java.io.Reader;
+import javax.xml.stream.XMLStreamReader;
+import java.io.Serial;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
@@ -31,6 +28,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import static java.time.temporal.ChronoField.NANO_OF_SECOND;
 
@@ -40,9 +38,14 @@ import static java.time.temporal.ChronoField.NANO_OF_SECOND;
 @Setter
 @Getter
 @ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 public class NewAddressListResponse
         extends AbstractType {
 
+    @Serial
+    private static final long serialVersionUID = -1527464956712592866L;
+
+    // -----------------------------------------------------------------------------------------------------------------
     static final String ROOT_NAME = "NewAddressListResponse";
 
     private static final String NAME_NEW_ADDRESS_LIST_AREA_CD = "newAddressListAreaCd";
@@ -52,8 +55,12 @@ public class NewAddressListResponse
     @Setter
     @Getter
     @ToString(callSuper = true)
+    @EqualsAndHashCode(callSuper = false)
     public static class CmmMsgHeader
             extends AbstractType {
+
+        @Serial
+        private static final long serialVersionUID = 4236051073314958906L;
 
         // ------------------------------------------------------------------------------------------------ responseTime
 //        private static final String RESPONSE_TIME_PATTERN = "uuuuMMdd:HHmmssSSS"; // SSS 부분이 가변인 듯!
@@ -99,6 +106,15 @@ public class NewAddressListResponse
         // -------------------------------------------------------------------------------------- STATIC_FACTORY_METHODS
 
         // ------------------------------------------------------------------------------------------------ CONSTRUCTORS
+
+        // -------------------------------------------------------------------------------------------------------------
+
+        // ------------------------------------------------------------------------------------------------ requestMsgId
+        // just for the prefab values
+        CmmMsgHeader requestMsgId(final String requestMsgId) {
+            setRequestMsgId(requestMsgId);
+            return this;
+        }
 
         // ------------------------------------------------------------------------------------------------ responseTime
 
@@ -169,9 +185,14 @@ public class NewAddressListResponse
     @Setter
     @Getter
     @ToString(callSuper = true)
+    @EqualsAndHashCode(callSuper = false)
     public static class NewAddressListAreaCd
             extends AbstractType {
 
+        @Serial
+        private static final long serialVersionUID = 493013101186485936L;
+
+        // -----------------------------------------------------------------------------------------------------------------
         @Pattern(regexp = "\\d{5}")
         @NotNull
         private String zipNo;
@@ -184,6 +205,13 @@ public class NewAddressListResponse
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+
+    // ---------------------------------------------------------------------------------------------------- cmmMsgHeader
+    // just for the prefab values.
+    NewAddressListResponse cmmMsgHeader(final CmmMsgHeader cmmMsgHeader) {
+        setCmmMsgHeader(cmmMsgHeader);
+        return this;
+    }
 
     // -----------------------------------------------------------------------------------------------------------------
     @Valid
@@ -218,16 +246,25 @@ public class NewAddressListResponse
 
     private static final XMLInputFactory XML_INPUT_FACTORY = XMLInputFactory.newFactory();
 
-    public static NewAddressListResponse unmarshalInstance(final Reader reader)
-            throws XMLStreamException, JAXBException {
-        return (NewAddressListResponse) JAXB_CONTEXT.createUnmarshaller()
-                .unmarshal(new NoNamespaceStreamReaderDelegate(XML_INPUT_FACTORY.createXMLStreamReader(reader)));
+    public static NewAddressListResponse unmarshalInstance(final Supplier<? extends XMLStreamReader> supplier)
+            throws JAXBException {
+        Objects.requireNonNull(supplier, "supplier is null");
+        return JAXB_CONTEXT.createUnmarshaller()
+                .unmarshal(new NoNamespaceStreamReaderDelegate(supplier.get()), NewAddressListResponse.class)
+                .getValue();
     }
 
-    public static NewAddressListResponse deserializeInstance(final ObjectMapper objectMapper, final String json)
+    public static NewAddressListResponse unmarshalInstance(
+            final Function<? super XMLInputFactory, ? extends XMLStreamReader> supplier)
+            throws JAXBException {
+        Objects.requireNonNull(supplier, "supplier is null");
+        return unmarshalInstance(() -> supplier.apply(XML_INPUT_FACTORY));
+    }
+
+    public static NewAddressListResponse deserializeInstance(final ObjectMapper mapper, final String json)
             throws JsonProcessingException {
-        Objects.requireNonNull(objectMapper, "objectMapper is null");
+        Objects.requireNonNull(mapper, "mapper is null");
         Objects.requireNonNull(json, "json is null");
-        return objectMapper.readValue(json, NewAddressListResponse.class);
+        return mapper.readValue(json, NewAddressListResponse.class);
     }
 }

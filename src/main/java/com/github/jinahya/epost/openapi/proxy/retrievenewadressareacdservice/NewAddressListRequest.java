@@ -3,18 +3,28 @@ package com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdservice;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-public class NewAddressListRequest {
+import java.io.Serial;
 
+@Setter
+@Getter
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
+public class NewAddressListRequest
+        extends AbstractType {
+
+    @Serial
+    private static final long serialVersionUID = -4766029866023904965L;
+
+    // -----------------------------------------------------------------------------------------------------------------
     public static final String QUERY_PARAM_NAME_SERVICE_KEY = "serviceKey";
 
-    public static final String QUERY_PARAM_NAME_SERACH_SE = "searchSe";
-
-    public static final String QUERY_PARAM_NAME_SRCHWRD = "srchwrd";
-
-    public static final String QUERY_PARAM_NAME_COUNT_PER_PAGE = "countPerPage";
-
-    public static final String QUERY_PARAM_NAME_CURRENT_PAGE = "currentPage";
+    // -----------------------------------------------------------------------------------------------------------------
+    public static final String QUERY_PARAM_NAME_SEARCH_SE = "searchSe";
 
     @SuppressWarnings({
             "java:S115" // not 'DONG' but 'dong'
@@ -36,6 +46,19 @@ public class NewAddressListRequest {
          */
         post
     }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    public static final String QUERY_PARAM_NAME_SRCHWRD = "srchwrd";
+
+    // -----------------------------------------------------------------------------------------------------------------
+    public static final String QUERY_PARAM_NAME_COUNT_PER_PAGE = "countPerPage";
+
+    // -----------------------------------------------------------------------------------------------------------------
+    public static final String QUERY_PARAM_NAME_CURRENT_PAGE = "currentPage";
+
+    // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
+
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
     // -----------------------------------------------------------------------------------------------------------------
     @NotBlank

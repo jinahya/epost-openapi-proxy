@@ -1,4 +1,5 @@
 module com.github.jinahya.epost.openapi.proxy {
+
     requires com.fasterxml.jackson.annotation;
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
@@ -7,4 +8,7 @@ module com.github.jinahya.epost.openapi.proxy {
     requires jakarta.xml.bind;
     requires java.xml;
     requires static lombok;
+
+    exports com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdservice;
+    exports com.github.jinahya.epost.openapi.proxy.xml.stream.util;
 }

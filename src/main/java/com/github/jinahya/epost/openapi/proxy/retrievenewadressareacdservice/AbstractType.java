@@ -1,19 +1,18 @@
 package com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdservice;
 
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.Element;
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlAnyAttribute;
-import jakarta.xml.bind.annotation.XmlAnyElement;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.xml.bind.annotation.*;
+import lombok.*;
 
 import javax.xml.namespace.QName;
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +20,11 @@ import java.util.Map;
 @Setter
 @Getter
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
-abstract class AbstractType {
+abstract class AbstractType
+        implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1503731084647974030L;
 
     // ------------------------------------------------------------------------------------------------ java.lang.Object
     @Override
@@ -29,6 +32,7 @@ abstract class AbstractType {
         return super.toString() + '{' +
                 "unknownAttributes=" + unknownAttributes +
                 ",unknownElements=" + unknownElements +
+                ",unknownProperties=" + unknownProperties +
                 '}';
     }
 
@@ -43,12 +47,40 @@ abstract class AbstractType {
         return unknownElements == null || unknownElements.isEmpty();
     }
 
+    // ----------------------------------------------------------------------------------------------- unknownAttributes
+    public Map<QName, Object> getUnknownAttributes() {
+        if (unknownAttributes == null) {
+            unknownAttributes = new HashMap<>();
+        }
+        return unknownAttributes;
+    }
+
+    // ------------------------------------------------------------------------------------------------- unknownElements
+    public List<Element> getUnknownElements() {
+        if (unknownElements == null) {
+            unknownElements = new ArrayList<>();
+        }
+        return unknownElements;
+    }
+
+    // ----------------------------------------------------------------------------------------------- unknownProperties
+
+    public Map<String, Object> getUnknownProperties() {
+        if (unknownProperties == null) {
+            unknownProperties = new HashMap<>();
+        }
+        return unknownProperties;
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
     // should be empty!
     @JsonbTransient
     @JsonIgnore
     @Size(max = 0, message = "no unknown attributes are expected")
     @XmlAnyAttribute
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.NONE)
+    @EqualsAndHashCode.Exclude
     private Map<QName, Object> unknownAttributes;
 
     // should be empty!
@@ -56,5 +88,17 @@ abstract class AbstractType {
     @JsonIgnore
     @Size(max = 0, message = "no unknown elements are expected")
     @XmlAnyElement
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.NONE)
+    @EqualsAndHashCode.Exclude
     private List<Element> unknownElements;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    @Size(max = 0, message = "no unknown properties are expected")
+    @JsonAnySetter
+    @XmlTransient
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.NONE)
+    @EqualsAndHashCode.Exclude
+    private Map<String, Object> unknownProperties;
 }

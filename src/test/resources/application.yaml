@@ -1,0 +1,43 @@
+spring:
+
+  application:
+    name: epost-openapi-proxy
+
+  cloud:
+    gateway:
+      httpclient:
+        # https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/http-timeouts-configuration.html
+        connect-timeout: 1024  # connect-timeout must be specified in milliseconds.
+        response-timeout: PT4S # response-timeout must be specified as a java.time.Duration
+        wiretap: true
+      httpserver:
+        wiretap: true
+      filter:
+        local-response-cache:
+          enabled: true
+
+  profiles:
+    default: development
+    group:
+      development:
+        - prod
+        - dev
+      production:
+        - dev
+        - prod
+
+---
+
+spring:
+  config:
+    active:
+      on-profile: dev
+    import: classpath:application-development.yaml
+
+---
+
+spring:
+  config:
+    active:
+      on-profile: prod
+    import: classpath:application-production.yaml

@@ -1,0 +1,13 @@
+spring:
+  config:
+    import: classpath:application-epost-openapi-proxy-development.yaml
+  cloud:
+    gateway:
+      routes:
+      - id: RetrieveNewAdressAreaCdService
+        filters:
+        - LocalResponseCache=10m,128MB
+        metadata:
+          # https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/http-timeouts-configuration.html
+          connect-timeout: 1024  #connect-timeout must be specified in milliseconds.
+          response-timeout: 4096 # response-timeout must be specified in milliseconds.

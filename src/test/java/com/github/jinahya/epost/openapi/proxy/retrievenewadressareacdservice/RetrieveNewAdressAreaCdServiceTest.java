@@ -115,7 +115,7 @@ class RetrieveNewAdressAreaCdServiceTest {
                 .uri(b -> {
                     final var uri = b.path(Constants.requestUri())
                             .queryParam(NewAddressListRequest.QUERY_PARAM_NAME_SERVICE_KEY, serviceKey)
-                            .queryParam(NewAddressListRequest.QUERY_PARAM_NAME_SERACH_SE, searchSe.name())
+                            .queryParam(NewAddressListRequest.QUERY_PARAM_NAME_SEARCH_SE, searchSe.name())
                             .queryParam(NewAddressListRequest.QUERY_PARAM_NAME_SRCHWRD, srchwrd)
                             .queryParam(NewAddressListRequest.QUERY_PARAM_NAME_COUNT_PER_PAGE, countPerPage)
                             .queryParam(NewAddressListRequest.QUERY_PARAM_NAME_CURRENT_PAGE, currentPage)
