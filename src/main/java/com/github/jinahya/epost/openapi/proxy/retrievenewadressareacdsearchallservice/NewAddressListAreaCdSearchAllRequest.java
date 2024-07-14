@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdservice;
+package com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdsearchallservice;
 
 import com.github.jinahya.epost.openapi.proxy.bind.AbstractType;
 import jakarta.validation.constraints.NotBlank;
@@ -15,38 +15,14 @@ import java.io.Serial;
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class NewAddressListRequest
+public class NewAddressListAreaCdSearchAllRequest
         extends AbstractType {
 
     @Serial
-    private static final long serialVersionUID = -4766029866023904965L;
+    private static final long serialVersionUID = -7468923602062739458L;
 
     // -----------------------------------------------------------------------------------------------------------------
     public static final String QUERY_PARAM_NAME_SERVICE_KEY = "serviceKey";
-
-    // -----------------------------------------------------------------------------------------------------------------
-    public static final String QUERY_PARAM_NAME_SEARCH_SE = "searchSe";
-
-    @SuppressWarnings({
-            "java:S115" // not 'DONG' but 'dong'
-    })
-    public enum SearchSe {
-
-        /**
-         * 동(읍/면)명.
-         */
-        dong,
-
-        /**
-         * 도로명[default].
-         */
-        road,
-
-        /**
-         * 우편번호
-         */
-        post
-    }
 
     // -----------------------------------------------------------------------------------------------------------------
     public static final String QUERY_PARAM_NAME_SRCHWRD = "srchwrd";
@@ -66,8 +42,6 @@ public class NewAddressListRequest
     private String serviceKey;
 
     // -----------------------------------------------------------------------------------------------------------------
-    private SearchSe searchSe; // 검색구분
-
     @NotBlank
     private String srchwrd; // 검색어
 

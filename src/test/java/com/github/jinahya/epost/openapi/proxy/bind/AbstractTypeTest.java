@@ -1,15 +1,27 @@
-package com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdservice;
+package com.github.jinahya.epost.openapi.proxy.bind;
 
+import io.vavr.CheckedFunction1;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
 import java.util.Objects;
+import java.util.Set;
+import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,7 +31,39 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @param <TYPE> subclass type parameter
  * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
  */
-abstract class AbstractTypeTest<TYPE extends AbstractType> {
+public abstract class AbstractTypeTest<TYPE extends AbstractType> {
+
+    // -----------------------------------------------------------------------------------------------------------------
+    private static ValidatorFactory VALIDATOR_FACTORY = null;
+
+    @BeforeAll
+    static void openValidatorFactory() {
+        VALIDATOR_FACTORY = Validation.buildDefaultValidatorFactory();
+    }
+
+    @AfterAll
+    static void closeValidatorFactory() {
+        VALIDATOR_FACTORY.close();
+    }
+
+    protected static <R> R applyValidator(final Function<? super Validator, ? extends R> function) {
+        Objects.requireNonNull(function, "function is null");
+        final var validator = VALIDATOR_FACTORY.getValidator();
+        return function.apply(validator);
+    }
+
+    protected static <T> Set<ConstraintViolation<T>> validate(final T object, final Class<?>... groups) {
+        Objects.requireNonNull(object, "object is null");
+        Objects.requireNonNull(groups, "groups is null");
+        return applyValidator(v -> v.validate(object, groups));
+
+    }
+
+    protected static void verifyValid(final Object object, final Class<?>... groups) {
+        assertThat(validate(object, groups))
+                .as("constraint violations on %1$s with %2$s", object, groups)
+                .isEmpty();
+    }
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
@@ -28,9 +72,40 @@ abstract class AbstractTypeTest<TYPE extends AbstractType> {
      *
      * @param typeClass the type class to test.
      */
-    AbstractTypeTest(final Class<TYPE> typeClass) {
+    protected AbstractTypeTest(final Class<TYPE> typeClass) {
         super();
         this.typeClass = Objects.requireNonNull(typeClass, "typeClass is null");
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    protected <R> R applyResource(final String resName, final Function<? super URL, ? extends R> function) {
+        final var resource = typeClass.getResource(resName);
+        assertThat(resource)
+                .as("resource stream for '%1$s", resName)
+                .isNotNull();
+        return function.apply(resource);
+    }
+
+    protected <R> R applyResourceAsStream(final String resName,
+                                          final Function<? super InputStream, ? extends R> function)
+            throws IOException {
+        try (var resource = typeClass.getResourceAsStream(resName)) {
+            assertThat(resource)
+                    .as("resource stream for '%1$s", resName)
+                    .isNotNull();
+            return function.apply(resource);
+        }
+    }
+
+    protected <R> R applyResourceAsStreamChecked(final String resName,
+                                                 final CheckedFunction1<? super InputStream, ? extends R> function)
+            throws Throwable {
+        try (var resource = typeClass.getResourceAsStream(resName)) {
+            assertThat(resource)
+                    .as("resource stream for '%1$s", resName)
+                    .isNotNull();
+            return function.apply(resource);
+        }
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -42,7 +117,7 @@ abstract class AbstractTypeTest<TYPE extends AbstractType> {
         ).verify();
     }
 
-    SingleTypeEqualsVerifierApi<TYPE> __equals(final SingleTypeEqualsVerifierApi<TYPE> verifierApi) {
+    protected SingleTypeEqualsVerifierApi<TYPE> __equals(final SingleTypeEqualsVerifierApi<TYPE> verifierApi) {
         return verifierApi
                 .withIgnoredFields(
                         "unknownAttributes",
@@ -89,11 +164,11 @@ abstract class AbstractTypeTest<TYPE extends AbstractType> {
     }
 
     // ------------------------------------------------------------------------------------------------------- typeClass
-    final TYPE newTypeSpy() {
+    protected final TYPE newTypeSpy() {
         return Mockito.spy(newTypeInstance());
     }
 
-    final TYPE newTypeInstance() {
+    protected final TYPE newTypeInstance() {
         try {
             final var constructor = typeClass.getDeclaredConstructor();
             if (!constructor.canAccess(null)) {

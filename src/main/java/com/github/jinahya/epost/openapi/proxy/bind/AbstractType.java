@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdservice;
+package com.github.jinahya.epost.openapi.proxy.bind;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -19,12 +19,21 @@ import java.util.Map;
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
 @Getter
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
-abstract class AbstractType
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public abstract class AbstractType
         implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1503731084647974030L;
+
+//    // -----------------------------------------------------------------------------------------------------------------
+//    protected static <TYPE extends AbstractType> TYPE deserializeInstance(final ObjectReader objectReader,
+//                                                                          final Class<TYPE> typeClass,
+//                                                                          final Object valueSource) {
+//        Objects.requireNonNull(objectReader, "objectReader is null");
+//        Objects.requireNonNull(valueSource, "valueSource is null");
+//        return typeClass.cast(ObjectReaderUtils.readValue(objectReader, valueSource));
+//    }
 
     // ------------------------------------------------------------------------------------------------ java.lang.Object
     @Override

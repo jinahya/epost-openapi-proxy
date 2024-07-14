@@ -63,6 +63,8 @@ dependencies {
 //    testRuntimeOnly 'org.springframework.boot:spring-boot-starter-cache'
     testImplementation 'com.github.ben-manes.caffeine:caffeine'
     testImplementation 'org.springframework.boot:spring-boot-starter-cache'
+
+    testImplementation 'io.vavr:vavr:1.0.0-alpha-4'
 }
 
 dependencyManagement {

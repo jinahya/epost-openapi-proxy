@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<NewAddressListResponse>
+  <cmmMsgHeader>
+    <requestMsgId></requestMsgId>
+    <responseMsgId></responseMsgId>
+    <responseTime>20240714:202037507</responseTime>
+    <successYN>Y</successYN>
+    <returnCode>00</returnCode>
+    <errMsg></errMsg>
+    <totalCount>23</totalCount>
+    <countPerPage>1</countPerPage>
+    <totalPage>23</totalPage>
+    <currentPage>1</currentPage>
+  </cmmMsgHeader>
+  <newAddressListAreaCdSearchAll>
+    <zipNo>12621</zipNo>
+    <lnmAdres>경기도 여주시 세종로 17 (홍문동)</lnmAdres>
+    <rnAdres>경기도 여주시 홍문동 111-15</rnAdres>
+  </newAddressListAreaCdSearchAll>
+</NewAddressListResponse>

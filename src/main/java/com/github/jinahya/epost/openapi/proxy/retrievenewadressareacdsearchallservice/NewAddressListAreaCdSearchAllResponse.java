@@ -1,15 +1,15 @@
-package com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdservice;
+package com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdsearchallservice;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.jinahya.epost.openapi.proxy.bind.AbstractAddress;
 import com.github.jinahya.epost.openapi.proxy.bind.AbstractType;
 import com.github.jinahya.epost.openapi.proxy.bind.CmmMsgHeader;
 import com.github.jinahya.epost.openapi.proxy.misc.xml.stream.util.NoNamespaceStreamReaderDelegate;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -28,13 +28,13 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 //@JsonRootName(value = NewAddressListResponse.ROOT_NAME)
-@XmlRootElement(name = NewAddressListResponse.ROOT_NAME)
+@XmlRootElement(name = NewAddressListAreaCdSearchAllResponse.ROOT_NAME)
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
-public class NewAddressListResponse
+public class NewAddressListAreaCdSearchAllResponse
         extends AbstractType {
 
     @Serial
@@ -43,26 +43,17 @@ public class NewAddressListResponse
     // -----------------------------------------------------------------------------------------------------------------
     static final String ROOT_NAME = "NewAddressListResponse";
 
-    private static final String NAME_NEW_ADDRESS_LIST_AREA_CD = "newAddressListAreaCd";
+    private static final String NAME_NEW_ADDRESS_LIST_AREA_CD_SEARCH_ALL = "newAddressListAreaCdSearchAll";
 
     @Setter
     @Getter
     @ToString(callSuper = true)
-    @EqualsAndHashCode(callSuper = false)
-    public static class NewAddressListAreaCd
-            extends AbstractType {
+    @EqualsAndHashCode(callSuper = true)
+    public static class NewAddressListAreaCdSearchAll
+            extends AbstractAddress {
 
         @Serial
-        private static final long serialVersionUID = 493013101186485936L;
-
-        // -----------------------------------------------------------------------------------------------------------------
-        @Pattern(regexp = "\\d{5}")
-        @NotNull
-        private String zipNo;
-
-        private String lnmAdres;
-
-        private String rnAdres;
+        private static final long serialVersionUID = -3719216662681924951L;
     }
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
@@ -71,7 +62,7 @@ public class NewAddressListResponse
 
     // ---------------------------------------------------------------------------------------------------- cmmMsgHeader
     // just for the prefab values.
-    NewAddressListResponse cmmMsgHeader(final CmmMsgHeader cmmMsgHeader) {
+    NewAddressListAreaCdSearchAllResponse cmmMsgHeader(final CmmMsgHeader cmmMsgHeader) {
         setCmmMsgHeader(cmmMsgHeader);
         return this;
     }
@@ -81,12 +72,12 @@ public class NewAddressListResponse
     private CmmMsgHeader cmmMsgHeader;
 
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
-    @JsonProperty(NAME_NEW_ADDRESS_LIST_AREA_CD)
-    @XmlElement(name = NAME_NEW_ADDRESS_LIST_AREA_CD)
-    private List<@Valid @NotNull NewAddressListAreaCd> newAddressListAreaCdList;
+    @JsonProperty(NAME_NEW_ADDRESS_LIST_AREA_CD_SEARCH_ALL)
+    @XmlElement(name = NAME_NEW_ADDRESS_LIST_AREA_CD_SEARCH_ALL)
+    private List<@Valid @NotNull NewAddressListAreaCdSearchAll> newAddressListAreaCdSearchAll;
 
     // -----------------------------------------------------------------------------------------------------------------
-    public NewAddressListResponse get() {
+    public NewAddressListAreaCdSearchAllResponse get() {
         return Optional.ofNullable(wrapped).orElse(this);
     }
 
@@ -94,14 +85,14 @@ public class NewAddressListResponse
     @JsonProperty(ROOT_NAME)
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.NONE)
-    private NewAddressListResponse wrapped;
+    private NewAddressListAreaCdSearchAllResponse wrapped;
 
     // -----------------------------------------------------------------------------------------------------------------
     private static final JAXBContext JAXB_CONTEXT;
 
     static {
         try {
-            JAXB_CONTEXT = JAXBContext.newInstance(NewAddressListResponse.class);
+            JAXB_CONTEXT = JAXBContext.newInstance(NewAddressListAreaCdSearchAllResponse.class);
         } catch (final JAXBException jaxbe) {
             throw new ExceptionInInitializerError(jaxbe);
         }
@@ -109,25 +100,33 @@ public class NewAddressListResponse
 
     private static final XMLInputFactory XML_INPUT_FACTORY = XMLInputFactory.newFactory();
 
-    public static NewAddressListResponse unmarshalInstance(final Supplier<? extends XMLStreamReader> supplier)
+    public static NewAddressListAreaCdSearchAllResponse unmarshalInstance(
+            final Supplier<? extends XMLStreamReader> supplier)
             throws JAXBException {
         Objects.requireNonNull(supplier, "supplier is null");
         return JAXB_CONTEXT.createUnmarshaller()
-                .unmarshal(new NoNamespaceStreamReaderDelegate(supplier.get()), NewAddressListResponse.class)
+                .unmarshal(new NoNamespaceStreamReaderDelegate(supplier.get()),
+                           NewAddressListAreaCdSearchAllResponse.class)
                 .getValue();
     }
 
-    public static NewAddressListResponse unmarshalInstance(
+    public static NewAddressListAreaCdSearchAllResponse unmarshalInstance(
             final Function<? super XMLInputFactory, ? extends XMLStreamReader> supplier)
             throws JAXBException {
         Objects.requireNonNull(supplier, "supplier is null");
         return unmarshalInstance(() -> supplier.apply(XML_INPUT_FACTORY));
     }
 
-    public static NewAddressListResponse deserializeInstance(final ObjectMapper mapper, final String json)
+    public String serialize(final ObjectMapper mapper) throws JsonProcessingException {
+        Objects.requireNonNull(mapper, "mapper is null");
+        return mapper.writeValueAsString(get());
+    }
+
+    public static NewAddressListAreaCdSearchAllResponse deserializeInstance(final ObjectMapper mapper,
+                                                                            final String json)
             throws JsonProcessingException {
         Objects.requireNonNull(mapper, "mapper is null");
         Objects.requireNonNull(json, "json is null");
-        return mapper.readValue(json, NewAddressListResponse.class);
+        return mapper.readValue(json, NewAddressListAreaCdSearchAllResponse.class);
     }
 }

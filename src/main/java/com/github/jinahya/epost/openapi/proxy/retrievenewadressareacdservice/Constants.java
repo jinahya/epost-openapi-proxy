@@ -8,10 +8,11 @@ final class Constants {
             /retrieveNewAdressAreaCdService
             /getNewAddressListAreaCd""";
 
-    public static final String requestUri() {
+    public static String requestUri() {
         return REQUEST_URI.replaceAll("\\n", "");
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
     private Constants() {
         throw new AssertionError("instantiation is not allowed");
     }

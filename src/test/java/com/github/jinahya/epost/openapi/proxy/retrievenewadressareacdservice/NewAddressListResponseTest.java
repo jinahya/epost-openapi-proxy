@@ -1,7 +1,9 @@
 package com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdservice;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.jinahya.epost.openapi.proxy.xml.stream.util.NoNamespaceStreamReaderDelegate;
+import com.github.jinahya.epost.openapi.proxy.bind.AbstractTypeTest;
+import com.github.jinahya.epost.openapi.proxy.bind.CmmMsgHeader;
+import com.github.jinahya.epost.openapi.proxy.misc.xml.stream.util.NoNamespaceStreamReaderDelegate;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +15,6 @@ import org.junit.jupiter.api.Test;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,27 +23,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Slf4j
 class NewAddressListResponseTest
         extends AbstractTypeTest<NewAddressListResponse> {
-
-    @DisplayName("CmmMsgHeader")
-    @Nested
-    class CmmMsgHeaderTest
-            extends AbstractTypeTest<NewAddressListResponse.CmmMsgHeader> {
-
-        CmmMsgHeaderTest() {
-            super(NewAddressListResponse.CmmMsgHeader.class);
-        }
-
-        @Override
-        SingleTypeEqualsVerifierApi<NewAddressListResponse.CmmMsgHeader> __equals(
-                SingleTypeEqualsVerifierApi<NewAddressListResponse.CmmMsgHeader> verifierApi) {
-            return super.__equals(verifierApi)
-                    .withPrefabValues(java.util.Map.class, new HashMap<>() {{
-                        put("a", new Object());
-                    }}, new HashMap<>() {{
-                        put("b", new Object());
-                    }});
-        }
-    }
 
     @DisplayName("NewAddressListAreaCd")
     @Nested
@@ -54,7 +34,7 @@ class NewAddressListResponseTest
         }
 
         @Override
-        SingleTypeEqualsVerifierApi<NewAddressListResponse.NewAddressListAreaCd> __equals(
+        protected SingleTypeEqualsVerifierApi<NewAddressListResponse.NewAddressListAreaCd> __equals(
                 final SingleTypeEqualsVerifierApi<NewAddressListResponse.NewAddressListAreaCd> verifierApi) {
             return super.__equals(verifierApi)
                     .withPrefabValues(
@@ -73,13 +53,13 @@ class NewAddressListResponseTest
     // -----------------------------------------------------------------------------------------------------------------
 
     @Override
-    SingleTypeEqualsVerifierApi<NewAddressListResponse> __equals(
+    protected SingleTypeEqualsVerifierApi<NewAddressListResponse> __equals(
             SingleTypeEqualsVerifierApi<NewAddressListResponse> verifierApi) {
         return super.__equals(verifierApi)
                 .withPrefabValues(
-                        NewAddressListResponse.CmmMsgHeader.class,
-                        new NewAddressListResponse.CmmMsgHeader().requestMsgId("a"),
-                        new NewAddressListResponse.CmmMsgHeader().requestMsgId("b")
+                        CmmMsgHeader.class,
+                        new CmmMsgHeader().requestMsgId("a"),
+                        new CmmMsgHeader().requestMsgId("b")
                 )
                 .withPrefabValues(
                         java.util.List.class,
@@ -94,9 +74,9 @@ class NewAddressListResponseTest
                 .withPrefabValues(
                         NewAddressListResponse.class,
                         new NewAddressListResponse().cmmMsgHeader(
-                                new NewAddressListResponse.CmmMsgHeader().requestMsgId("a")),
+                                new CmmMsgHeader().requestMsgId("a")),
                         new NewAddressListResponse().cmmMsgHeader(
-                                new NewAddressListResponse.CmmMsgHeader().requestMsgId("b"))
+                                new CmmMsgHeader().requestMsgId("b"))
                 );
     }
 
