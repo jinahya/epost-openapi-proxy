@@ -14,7 +14,6 @@ spring:
             - Method=GET
             - Path=/postal/retrieveNewAdressAreaCdService/retrieveNewAdressAreaCdService/getNewAddressListAreaCd
           filters:
-
-  jackson:
-    deserialization:
-      UNWRAP_SINGLE_VALUE_ARRAYS: true
+  profiles:
+    group:
+      epost-openapi-proxy-development:
