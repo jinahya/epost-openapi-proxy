@@ -30,25 +30,35 @@ ext {
     set('springCloudVersion', "2023.0.3") // https://spring.io/projects/spring-cloud
 }
 
+// https://docs.spring.io/spring-boot/appendix/dependency-versions/coordinates.html
+// https://stackoverflow.com/a/63362780/330457
+dependencyManagement {
+    imports {
+        // https://search.maven.org/artifact/org.springframework.boot/spring-boot-dependencies
+        mavenBom "org.springframework.boot:spring-boot-dependencies:3.3.1"
+    }
+}
+
 dependencies {
     testImplementation 'io.projectreactor:reactor-test'
     testImplementation 'nl.jqno.equalsverifier:equalsverifier-nodep:3.16.1'
     testImplementation 'org.apache.commons:commons-lang3:3.14.0'
+
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
-//    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
-    implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'org.springframework.cloud:spring-cloud-starter-gateway'
 
     implementation platform('jakarta.platform:jakarta.jakartaee-bom:11.0.0-M4')
-
-    implementation 'jakarta.xml.bind:jakarta.xml.bind-api'
-    runtimeOnly 'com.sun.xml.bind:jaxb-ri:4.0.0' // jakarta.xml.bind-api impl
-    implementation 'jakarta.json.bind:jakarta.json.bind-api' // ad hoc
+    compileOnly 'jakarta.xml.bind:jakarta.xml.bind-api'
+    compileOnly 'jakarta.validation:jakarta.validation-api'
+    compileOnly 'com.fasterxml.jackson.core:jackson-databind'
+    testRuntimeOnly 'com.sun.xml.bind:jaxb-ri:4.0.0' // jakarta.xml.bind-api impl
 
     // https://stackoverflow.com/a/72077713/330457
     // https://docs.spring.io/spring-boot/appendix/dependency-versions/coordinates.html
@@ -75,20 +85,13 @@ dependencyManagement {
 
 tasks.named('test') {
     useJUnitPlatform()
+    // https://stackoverflow.com/a/40839018/330457
+    systemProperties = System.properties
 }
 
-
-idea {
-    module {
-        downloadJavadoc = true
-        downloadSources = true
-    }
-}
-
-//task testBootRun(type: bootRun) {
-//    clsspath = configurations.testBootRun
-//}
-
-//task (testBootRun, type: JavaExec) {
-//    clsspath += configurations.testBootRun
+//idea {
+//    module {
+//        downloadJavadoc = true
+//        downloadSources = true
+//    }
 //}

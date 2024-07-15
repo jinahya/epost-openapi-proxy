@@ -1,7 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.bind;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -98,7 +97,6 @@ public class CmmMsgHeader
      * @return current value of {@code responseTime} property as mapped with {@code mapper}; {@code null} when the
      * {@code responseTime} property is currently {@code null}.
      */
-    @JsonbTransient
     @JsonIgnore
     public <R> R getResponseTimeAs(final Function<? super String, ? extends R> mapper) {
         return Optional.ofNullable(getResponseTime())
@@ -106,7 +104,6 @@ public class CmmMsgHeader
                 .orElse(null);
     }
 
-    @JsonbTransient
     @JsonIgnore
     public LocalDateTime getResponseTimeAsLocalDateTime() {
         return getResponseTimeAs(v -> LocalDateTime.parse(v, RESPONSE_TIME_FORMATTER));
@@ -119,7 +116,6 @@ public class CmmMsgHeader
      *
      * @return {@code true} if current value of {@code successYN} property is equal to {@value #SUCCESS_YN_Y}.
      */
-    @JsonbTransient
     @JsonIgnore
     @XmlTransient
     public boolean isSucceeded() {

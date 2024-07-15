@@ -29,7 +29,7 @@ spring:
 
 spring:
   config:
-    active:
+    activate:
       on-profile: dev
     import: classpath:application-development.yaml
 
@@ -37,6 +37,6 @@ spring:
 
 spring:
   config:
-    active:
+    activate:
       on-profile: prod
     import: classpath:application-production.yaml

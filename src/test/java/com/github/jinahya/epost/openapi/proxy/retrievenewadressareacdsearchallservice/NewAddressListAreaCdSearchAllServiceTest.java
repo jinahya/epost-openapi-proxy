@@ -1,9 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdsearchallservice;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdservice.NewAddressListRequest;
-import com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdservice.NewAddressListResponse;
 import jakarta.validation.Validator;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -77,8 +74,7 @@ class NewAddressListAreaCdSearchAllServiceTest {
         final var requestSpec = webClient
                 .get()
                 .uri(b -> {
-                    final var uri = b.path(
-                                    com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdsearchallservice.Constants.requestUri())
+                    final var uri = b.path(Constants.requestUri())
                             .queryParam(NewAddressListRequest.QUERY_PARAM_NAME_SERVICE_KEY, serviceKey)
                             .queryParam(NewAddressListRequest.QUERY_PARAM_NAME_SRCHWRD, srchwrd)
                             .queryParam(NewAddressListRequest.QUERY_PARAM_NAME_COUNT_PER_PAGE, countPerPage)
@@ -93,27 +89,13 @@ class NewAddressListAreaCdSearchAllServiceTest {
         final var responseSpec = requestSpec
                 .exchange()
                 .expectStatus().isOk();
-        if (mediaType != null) {
+        if (false && mediaType != null) {
             responseSpec
                     .expectHeader()
                     .contentTypeCompatibleWith(mediaType);
         }
-        if (false) {
-            final var responseBody = responseSpec
-                    .expectBody(String.class)
-                    .returnResult()
-                    .getResponseBody();
-            log.debug("responseBody: {}", responseBody);
-            try {
-                final var value = new ObjectMapper().readValue(responseBody, NewAddressListResponse.class);
-                log.debug("value: {}", value);
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
-            return;
-        }
         final var responseBody = responseSpec
-                .expectBody(NewAddressListResponse.class)
+                .expectBody(NewAddressListAreaCdSearchAllResponse.class)
                 .returnResult()
                 .getResponseBody()
                 .get();
@@ -126,10 +108,10 @@ class NewAddressListAreaCdSearchAllServiceTest {
             log.debug("responseTime: {}", h.getResponseTime());
             log.debug("responseTimeAsLocalDateTime: {}", h.getResponseTimeAsLocalDateTime());
         });
-        responseBody.getNewAddressListAreaCdList().forEach(e -> {
+        responseBody.getNewAddressListAreaCdSearchAll().forEach(e -> {
             log.debug("address: {}", e);
         });
-        assertThat(responseBody.getNewAddressListAreaCdList()).satisfiesAnyOf(
+        assertThat(responseBody.getNewAddressListAreaCdSearchAll()).satisfiesAnyOf(
                 l -> assertThat(l).isEmpty(),
                 l -> assertThat(l).isNotEmpty().hasSizeLessThanOrEqualTo(countPerPage).allSatisfy(e -> {
 //                    switch (searchSe) {

@@ -2,7 +2,6 @@ package com.github.jinahya.epost.openapi.proxy.bind;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.Element;
 import jakarta.xml.bind.annotation.*;
@@ -83,7 +82,6 @@ public abstract class AbstractType
 
     // -----------------------------------------------------------------------------------------------------------------
     // should be empty!
-    @JsonbTransient
     @JsonIgnore
     @Size(max = 0, message = "no unknown attributes are expected")
     @XmlAnyAttribute
@@ -93,7 +91,6 @@ public abstract class AbstractType
     private Map<QName, Object> unknownAttributes;
 
     // should be empty!
-    @JsonbTransient
     @JsonIgnore
     @Size(max = 0, message = "no unknown elements are expected")
     @XmlAnyElement
