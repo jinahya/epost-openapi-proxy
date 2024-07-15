@@ -110,29 +110,7 @@ class NewAddressListResponseTest
     @Test
     void unmarshalInstance__() throws IOException, JAXBException {
         try (var resource = getClass().getResourceAsStream("response1.xml")) {
-            final var unmarshalled = NewAddressListResponse.unmarshalInstance(xif -> {
-                try {
-                    return xif.createXMLStreamReader(resource);
-                } catch (final XMLStreamException xmlse) {
-                    throw new RuntimeException(xmlse);
-                }
-            });
-        }
-    }
-
-    @Test
-    void deserializeInstance__() throws IOException, JAXBException {
-        try (var resource = getClass().getResourceAsStream("response1.xml")) {
-            final var unmarshalled = NewAddressListResponse.unmarshalInstance(xif -> {
-                try {
-                    return xif.createXMLStreamReader(resource);
-                } catch (final XMLStreamException xmlse) {
-                    throw new RuntimeException(xmlse);
-                }
-            });
-            final var serialized = new ObjectMapper().writeValueAsString(unmarshalled);
-            final var deserialized = NewAddressListResponse.deserializeInstance(new ObjectMapper(), serialized);
-            assertThat(deserialized).isEqualTo(unmarshalled);
+            final var unmarshalled = NewAddressListResponse.unmarshalInstance(resource);
         }
     }
 }

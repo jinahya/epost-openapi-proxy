@@ -6,39 +6,44 @@ import java.util.Objects;
 
 public final class ObjectReaderUtils {
 
-    public static <T, SOURCE> T readValue(final ObjectReader objectReader, final Class<SOURCE> sourceClass,
-                                          final SOURCE sourceInstance) {
+    @SuppressWarnings({
+            "java:S119"
+    })
+    public static <T, SOURCE> T readValue(final ObjectReader reader, final Class<SOURCE> type, final SOURCE source) {
         for (var method : ObjectReader.class.getMethods()) {
-            if (!method.getName().equals("readValue")) {
+            if (!"readValue".equals(method.getName())) {
                 continue;
             }
             final var parameterTypes = method.getParameterTypes();
             if (parameterTypes.length != 1) {
                 continue;
             }
-            if (!parameterTypes[0].isAssignableFrom(sourceClass)) {
+            if (!parameterTypes[0].isAssignableFrom(type)) {
                 continue;
             }
             try {
                 @SuppressWarnings({"unchecked"})
-                final var result = (T) method.invoke(objectReader, sourceInstance);
+                final var result = (T) method.invoke(reader, source);
                 return result;
             } catch (ReflectiveOperationException roe) {
-                throw new RuntimeException("unable to createJSONStreamReader for " + sourceInstance, roe);
+                throw new RuntimeException("unable to read value from " + source + " of " + type, roe);
             }
         }
-        throw new IllegalArgumentException("unable to createJSONStreamReader for " + sourceInstance);
+        throw new IllegalArgumentException("unable to read value from " + source + " of " + type);
     }
 
-    private static <T, SOURCE> T readValueHelper(final ObjectReader objectReader, final Class<SOURCE> sourceClass,
-                                                 final Object sourceInstance) {
-        Objects.requireNonNull(sourceClass, "sourceClass is null");
-        return readValue(objectReader, sourceClass, sourceClass.cast(sourceInstance));
+    @SuppressWarnings({
+            "java:S119"
+    })
+    private static <T, SOURCE> T readValueHelper(final ObjectReader reader, final Class<SOURCE> type,
+                                                 final Object source) {
+        Objects.requireNonNull(type, "type is null");
+        return readValue(reader, type, type.cast(source));
     }
 
-    public static <T> T readValue(final ObjectReader objectReader, final Object sourceInstance) {
-        Objects.requireNonNull(sourceInstance, "sourceInstance is null");
-        return readValueHelper(objectReader, sourceInstance.getClass(), sourceInstance);
+    public static <T> T readValue(final ObjectReader reader, final Object source) {
+        Objects.requireNonNull(source, "source is null");
+        return readValueHelper(reader, source.getClass(), source);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

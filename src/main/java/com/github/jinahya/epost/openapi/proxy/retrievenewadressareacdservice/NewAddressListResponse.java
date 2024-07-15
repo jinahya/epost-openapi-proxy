@@ -2,11 +2,12 @@ package com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdservice;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import com.github.jinahya.epost.openapi.proxy.bind.AbstractType;
 import com.github.jinahya.epost.openapi.proxy.bind.CmmMsgHeader;
-import com.github.jinahya.epost.openapi.proxy.misc.xml.stream.util.NoNamespaceStreamReaderDelegate;
+import com.github.jinahya.epost.openapi.proxy.misc.jackson.databind.ObjectReaderUtils;
+import com.github.jinahya.epost.openapi.proxy.misc.xml.stream.XMLInputFactoryUtils;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -18,16 +19,11 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.*;
 
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamReader;
 import java.io.Serial;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
-//@JsonRootName(value = NewAddressListResponse.ROOT_NAME)
 @XmlRootElement(name = NewAddressListResponse.ROOT_NAME)
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
@@ -107,27 +103,35 @@ public class NewAddressListResponse
         }
     }
 
-    private static final XMLInputFactory XML_INPUT_FACTORY = XMLInputFactory.newFactory();
-
-    public static NewAddressListResponse unmarshalInstance(final Supplier<? extends XMLStreamReader> supplier)
-            throws JAXBException {
-        Objects.requireNonNull(supplier, "supplier is null");
-        return JAXB_CONTEXT.createUnmarshaller()
-                .unmarshal(new NoNamespaceStreamReaderDelegate(supplier.get()), NewAddressListResponse.class)
-                .getValue();
+    public static NewAddressListResponse unmarshalInstance(final Object source) throws JAXBException {
+        return XMLInputFactoryUtils.unmarshalNoNamespacedInstance(
+                JAXB_CONTEXT,
+                NewAddressListResponse.class,
+                source
+        );
     }
 
-    public static NewAddressListResponse unmarshalInstance(
-            final Function<? super XMLInputFactory, ? extends XMLStreamReader> supplier)
-            throws JAXBException {
-        Objects.requireNonNull(supplier, "supplier is null");
-        return unmarshalInstance(() -> supplier.apply(XML_INPUT_FACTORY));
+    public static NewAddressListResponse deserializeInstance(final ObjectReader reader, final Object source) {
+        Objects.requireNonNull(reader, "reader is null");
+        Objects.requireNonNull(source, "source is null");
+        return ObjectReaderUtils.readValue(
+                reader,
+                source
+        );
     }
 
-    public static NewAddressListResponse deserializeInstance(final ObjectMapper mapper, final String json)
-            throws JsonProcessingException {
+    public static NewAddressListResponse deserializeInstance(final ObjectMapper mapper, final Object source) {
         Objects.requireNonNull(mapper, "mapper is null");
-        Objects.requireNonNull(json, "json is null");
-        return mapper.readValue(json, NewAddressListResponse.class);
+        return deserializeInstance(
+                mapper.readerFor(NewAddressListResponse.class),
+                source
+        );
+    }
+
+    public static NewAddressListResponse deserializeInstance(final Object source) {
+        return deserializeInstance(
+                new ObjectMapper(),
+                source
+        );
     }
 }

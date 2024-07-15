@@ -14,8 +14,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.DisabledIf;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Import(
@@ -94,11 +96,14 @@ class NewAddressListAreaCdSearchAllServiceTest {
                     .expectHeader()
                     .contentTypeCompatibleWith(mediaType);
         }
-        final var responseBody = responseSpec
-                .expectBody(NewAddressListAreaCdSearchAllResponse.class)
-                .returnResult()
-                .getResponseBody()
-                .get();
+        final var responseBody = Optional.ofNullable(
+                        responseSpec
+                                .expectBody(NewAddressListAreaCdSearchAllResponse.class)
+                                .returnResult()
+                                .getResponseBody()
+                )
+                .map(NewAddressListAreaCdSearchAllResponse::get)
+                .orElseThrow();
         log.debug("responseBody: {}", responseBody);
         assertThat(responseBody).isNotNull().satisfies(r -> {
             assertThat(validator.validate(r)).isEmpty();
@@ -114,18 +119,7 @@ class NewAddressListAreaCdSearchAllServiceTest {
         assertThat(responseBody.getNewAddressListAreaCdSearchAll()).satisfiesAnyOf(
                 l -> assertThat(l).isEmpty(),
                 l -> assertThat(l).isNotEmpty().hasSizeLessThanOrEqualTo(countPerPage).allSatisfy(e -> {
-//                    switch (searchSe) {
-//                        case dong:
-//                            assertThat(e.getRnAdres()).contains(srchwrd);
-//                            break;
-//                        case road:
-//                            assertThat(e.getLnmAdres()).contains(srchwrd);
-//                            break;
-//                        default:
-//                            assertThat(searchSe).isSameAs(NewAddressListRequest.SearchSe.post);
-//                            assertThat(e.getZipNo()).isEqualTo(srchwrd);
-//                            break;
-//                    }
+                    assertThat(validator.validate(e)).isEmpty();
                 }));
     }
 

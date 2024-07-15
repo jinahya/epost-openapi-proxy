@@ -1,6 +1,5 @@
 package com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdsearchallservice;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jinahya.epost.openapi.proxy.bind.AbstractAddressTest;
 import com.github.jinahya.epost.openapi.proxy.bind.AbstractTypeTest;
 import com.github.jinahya.epost.openapi.proxy.bind.CmmMsgHeader;
@@ -10,7 +9,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import javax.xml.stream.XMLStreamException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -101,13 +99,7 @@ class NewAddressListAreaCdSearchAllResponseTest
     void __xml(final String resName) throws Throwable {
         final var unmarshalled = applyResourceAsStreamChecked(
                 resName,
-                r -> NewAddressListAreaCdSearchAllResponse.unmarshalInstance(xsf -> {
-                    try {
-                        return xsf.createXMLStreamReader(r);
-                    } catch (final XMLStreamException xmlse) {
-                        throw new RuntimeException(xmlse);
-                    }
-                })
+                NewAddressListAreaCdSearchAllResponse::unmarshalInstance
         );
         verifyValid(unmarshalled);
     }
@@ -125,7 +117,7 @@ class NewAddressListAreaCdSearchAllResponseTest
     void __json(final String resName) throws Throwable {
         final var deserialized = applyResourceAsStreamChecked(
                 resName,
-                r -> new ObjectMapper().readValue(r, NewAddressListAreaCdSearchAllResponse.class)
+                NewAddressListAreaCdSearchAllResponse::deserializeInstance
         );
         verifyValid(deserialized);
     }
