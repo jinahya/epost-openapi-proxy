@@ -1,7 +1,5 @@
 package com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdservice;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Validator;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.DisabledIf;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -108,8 +107,9 @@ class RetrieveNewAdressAreaCdServiceTest {
     void __(final NewAddressListRequest.SearchSe searchSe, final String srchwrd, final int countPerPage,
             final int currentPage, final MediaType mediaType) {
         final var serviceKey = System.getProperty(SYSTEM_PROPERTY_SERVICE_KEY);
-        log.debug("serviceKey: {}", serviceKey);
-        assertThat(serviceKey).isNotBlank();
+        assertThat(serviceKey)
+                .as("-DserviceKey")
+                .isNotBlank();
         final var requestSpec = webClient
                 .get()
                 .uri(b -> {
@@ -134,25 +134,14 @@ class RetrieveNewAdressAreaCdServiceTest {
                     .expectHeader()
                     .contentTypeCompatibleWith(mediaType);
         }
-        if (false) {
-            final var responseBody = responseSpec
-                    .expectBody(String.class)
-                    .returnResult()
-                    .getResponseBody();
-            log.debug("responseBody: {}", responseBody);
-            try {
-                final var value = new ObjectMapper().readValue(responseBody, NewAddressListResponse.class);
-                log.debug("value: {}", value);
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
-            return;
-        }
-        final var responseBody = responseSpec
-                .expectBody(NewAddressListResponse.class)
-                .returnResult()
-                .getResponseBody()
-                .get();
+        final var responseBody = Optional.ofNullable(
+                        responseSpec
+                                .expectBody(NewAddressListResponse.class)
+                                .returnResult()
+                                .getResponseBody()
+                )
+                .map(NewAddressListResponse::get)
+                .orElseThrow();
         log.debug("responseBody: {}", responseBody);
         assertThat(responseBody).isNotNull().satisfies(r -> {
             assertThat(validator.validate(r)).isEmpty();
