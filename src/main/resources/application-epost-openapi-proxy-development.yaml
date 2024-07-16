@@ -7,8 +7,12 @@ spring:
         predicates:
         - Method=GET
         - Path=/postal/retrieveNewAdressAreaCdService/retrieveNewAdressAreaCdService/getNewAddressListAreaCd
+        filters:
+        - AddResponseHeader=Vary, Accept
       - id: RetrieveNewAdressAreaCdSearchAllService
         uri: http://openapi.epost.go.kr
         predicates:
         - Method=GET
         - Path=/postal/retrieveNewAdressAreaCdSearchAllService/retrieveNewAdressAreaCdSearchAllService/getNewAddressListAreaCdSearchAll
+        filters:
+        - AddResponseHeader=Vary, Accept
