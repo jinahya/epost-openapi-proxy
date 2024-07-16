@@ -1,29 +1,10 @@
 spring:
   cloud:
     gateway:
-      httpclient:
-        # https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/http-timeouts-configuration.html
-        connect-timeout: 1024  # connect-timeout must be specified in milliseconds.
-        response-timeout: PT4S # response-timeout must be specified as a java.time.Duration
-        wiretap: true
-      httpserver:
-        wiretap: true
       filter:
         local-response-cache:
           enabled: true
       routes:
-        - id: retrieve_new_adress_area_cd_service
-          uri: http://openapi.epost.go.kr
-          predicates:
-            - Method=GET
-            - Path=/postal/retrieveNewAdressAreaCdService/retrieveNewAdressAreaCdService/getNewAddressListAreaCd
-          filters:
-            - AddResponseHeader=Vary, Accept
-            - LocalResponseCache=10m,128MB
-          metadata:
-            # https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/http-timeouts-configuration.html
-            connect-timeout: 1024  # connect-timeout must be specified in milliseconds.
-            response-timeout: 4096 # response-timeout must be specified in milliseconds.
         - id: retrieve_new_adress_area_cd_search_all_service
           uri: http://openapi.epost.go.kr
           predicates:
@@ -31,4 +12,20 @@ spring:
             - Path=/postal/retrieveNewAdressAreaCdSearchAllService/retrieveNewAdressAreaCdSearchAllService/getNewAddressListAreaCdSearchAll
           filters:
             - AddResponseHeader=Vary, Accept
-            - LocalResponseCache=${retrieve_new_adress_area_cd_search_all_service.cache.time},{retrieve_new_adress_area_cd_search_all_service.cache.size}
+            - LocalResponseCache=${retrieve_new_adress_area_cd_search_all_service.cache.time:10m},${retrieve_new_adress_area_cd_search_all_service.cache.size:128MB}
+          metadata:
+            # https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/http-timeouts-configuration.html
+            connect-timeout: ${retrieve_new_adress_area_cd_search_all_service.connect-timeout:1024}  # connect-timeout must be specified in milliseconds.
+            response-timeout: ${retrieve_new_adress_area_cd_search_all_service.response-timeout:4096} # response-timeout must be specified in milliseconds.
+        - id: retrieve_new_adress_area_cd_service
+          uri: http://openapi.epost.go.kr
+          predicates:
+            - Method=GET
+            - Path=/postal/retrieveNewAdressAreaCdService/retrieveNewAdressAreaCdService/getNewAddressListAreaCd
+          filters:
+            - AddResponseHeader=Vary, Accept
+            - LocalResponseCache=${retrieve_new_adress_area_cd_service.cache.time:10m},${retrieve_new_adress_area_cd_service.cache.size:128MB}
+          metadata:
+            # https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/http-timeouts-configuration.html
+            connect-timeout: ${retrieve_new_adress_area_cd_service.connect-timeout:1024}  # connect-timeout must be specified in milliseconds.
+            response-timeout: ${retrieve_new_adress_area_cd_service.response-timeout:4096} # response-timeout must be specified in milliseconds.

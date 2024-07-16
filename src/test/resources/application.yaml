@@ -4,6 +4,9 @@ spring:
   cloud:
     gateway:
       httpclient:
+        # https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/http-timeouts-configuration.html
+        connect-timeout: 1024  # connect-timeout must be specified in milliseconds.
+        response-timeout: PT4S # response-timeout must be specified as a java.time.Duration
         wiretap: true
       httpserver:
         wiretap: true
@@ -15,6 +18,15 @@ spring:
       production:
         - dev
         - prod
+
+#retrieve_new_adress_area_cd_search_all_service:
+#  cache:
+#    time: 10m
+#    size: 128MB
+#retrieve_new_adress_area_cd_service:
+#  cache:
+#    time: 10m
+#    size: 128MB
 
 ---
 
