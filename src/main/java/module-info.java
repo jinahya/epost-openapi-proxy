@@ -8,9 +8,7 @@ module com.github.jinahya.epost.openapi.proxy {
     requires java.xml;
     requires static lombok;
 
-    exports com.github.jinahya.epost.openapi.proxy.bind;
-    exports com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdsearchallservice;
-    exports com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdservice;
-//    exports com.github.jinahya.epost.openapi.proxy.xml.stream.util;
-//    exports com.github.jinahya.epost.openapi.proxy.jackson.databind;
+    exports com.github.jinahya.epost.openapi.proxy.common;
+    exports com.github.jinahya.epost.openapi.proxy.retrieve_new_adress_area_cd_search_all_service;
+    exports com.github.jinahya.epost.openapi.proxy.retrieve_new_adress_area_cd_service;
 }

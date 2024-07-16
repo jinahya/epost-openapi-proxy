@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdservice;
+package com.github.jinahya.epost.openapi.proxy.retrieve_new_adress_area_cd_service;
 
 final class Constants {
 

@@ -1,8 +1,8 @@
-package com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdservice;
+package com.github.jinahya.epost.openapi.proxy.retrieve_new_adress_area_cd_service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.jinahya.epost.openapi.proxy.bind.AbstractTypeTest;
-import com.github.jinahya.epost.openapi.proxy.bind.CmmMsgHeader;
+import com.github.jinahya.epost.openapi.proxy.common.AbstractTypeTest;
+import com.github.jinahya.epost.openapi.proxy.common.CmmMsgHeader;
 import com.github.jinahya.epost.openapi.proxy.misc.xml.stream.util.NoNamespaceStreamReaderDelegate;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;

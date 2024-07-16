@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdservice;
+package com.github.jinahya.epost.openapi.proxy.retrieve_new_adress_area_cd_service;
 
 import jakarta.validation.Validator;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.bind;
+package com.github.jinahya.epost.openapi.proxy.common;
 
 import io.vavr.CheckedFunction1;
 import jakarta.validation.ConstraintViolation;

@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.bind;
+package com.github.jinahya.epost.openapi.proxy.common;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;

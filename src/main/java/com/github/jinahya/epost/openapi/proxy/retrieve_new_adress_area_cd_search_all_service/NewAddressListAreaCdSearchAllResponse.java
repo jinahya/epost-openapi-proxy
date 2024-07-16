@@ -1,12 +1,12 @@
-package com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdsearchallservice;
+package com.github.jinahya.epost.openapi.proxy.retrieve_new_adress_area_cd_search_all_service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
-import com.github.jinahya.epost.openapi.proxy.bind.AbstractAddress;
-import com.github.jinahya.epost.openapi.proxy.bind.AbstractType;
-import com.github.jinahya.epost.openapi.proxy.bind.CmmMsgHeader;
+import com.github.jinahya.epost.openapi.proxy.common.AbstractAddress;
+import com.github.jinahya.epost.openapi.proxy.common.AbstractType;
+import com.github.jinahya.epost.openapi.proxy.common.CmmMsgHeader;
 import com.github.jinahya.epost.openapi.proxy.misc.jackson.databind.ObjectReaderUtils;
 import com.github.jinahya.epost.openapi.proxy.misc.xml.stream.XMLInputFactoryUtils;
 import jakarta.validation.Valid;

@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.bind;
+package com.github.jinahya.epost.openapi.proxy.common;
 
 public abstract class AbstractAddressTest<TYPE extends AbstractAddress>
         extends AbstractTypeTest<TYPE> {

@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.bind;
+package com.github.jinahya.epost.openapi.proxy.common;
 
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 import org.junit.jupiter.api.DisplayName;

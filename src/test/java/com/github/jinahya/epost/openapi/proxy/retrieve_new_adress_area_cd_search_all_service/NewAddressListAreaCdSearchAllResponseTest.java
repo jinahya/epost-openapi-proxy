@@ -1,8 +1,8 @@
-package com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdsearchallservice;
+package com.github.jinahya.epost.openapi.proxy.retrieve_new_adress_area_cd_search_all_service;
 
-import com.github.jinahya.epost.openapi.proxy.bind.AbstractAddressTest;
-import com.github.jinahya.epost.openapi.proxy.bind.AbstractTypeTest;
-import com.github.jinahya.epost.openapi.proxy.bind.CmmMsgHeader;
+import com.github.jinahya.epost.openapi.proxy.common.AbstractAddressTest;
+import com.github.jinahya.epost.openapi.proxy.common.AbstractTypeTest;
+import com.github.jinahya.epost.openapi.proxy.common.CmmMsgHeader;
 import lombok.extern.slf4j.Slf4j;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 import org.junit.jupiter.api.Nested;

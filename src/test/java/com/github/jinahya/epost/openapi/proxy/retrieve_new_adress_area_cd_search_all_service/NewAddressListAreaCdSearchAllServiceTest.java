@@ -1,6 +1,6 @@
-package com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdsearchallservice;
+package com.github.jinahya.epost.openapi.proxy.retrieve_new_adress_area_cd_search_all_service;
 
-import com.github.jinahya.epost.openapi.proxy.retrievenewadressareacdservice.NewAddressListRequest;
+import com.github.jinahya.epost.openapi.proxy.retrieve_new_adress_area_cd_service.NewAddressListRequest;
 import jakarta.validation.Validator;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,7 +17,6 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Import(

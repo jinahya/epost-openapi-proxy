@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.bind;
+package com.github.jinahya.epost.openapi.proxy.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Positive;
