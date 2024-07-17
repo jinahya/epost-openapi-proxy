@@ -80,8 +80,6 @@ retrieve_new_adress_area_cd_search_all_service:
 
 The [LocalResponseCache GatewayFilter Factory](https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/gatewayfilter-factories/local-cache-response-filter.html) is already added.
 > It accepts the first parameter to override the time to expire a cache entry (expressed in `s` for seconds, `m` for minutes, and `h` for hours) and a second parameter to set the maximum size of the cache to evict entries for this route (`KB`, `MB`, or `GB`).
-> 
-> -- <cite>LocalResponseCache GatewayFilter Factory</cite>
 
 Override preconfigured values with `<route-id>.cache.(time|size)`.
 
