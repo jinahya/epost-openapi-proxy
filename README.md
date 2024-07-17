@@ -105,7 +105,6 @@ spring:
           enabled: false
 ```
 
-
 ## Links
 
 ### [github.com/spring-cloud/spring-cloud-gateway](https://github.com/spring-cloud/spring-cloud-gateway)
