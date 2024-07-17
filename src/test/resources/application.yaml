@@ -19,14 +19,15 @@ spring:
         - dev
         - prod
 
-#retrieve_new_adress_area_cd_search_all_service:
-#  cache:
-#    time: 10m
-#    size: 128MB
-#retrieve_new_adress_area_cd_service:
-#  cache:
-#    time: 10m
-#    size: 128MB
+retrieve_new_adress_area_cd_search_all_service:
+
+  cache:
+    time: 10m
+    size: 128MB
+retrieve_new_adress_area_cd_service:
+  cache:
+    time: 10m
+    size: 128MB
 
 ---
 
