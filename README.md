@@ -17,6 +17,8 @@ Add your own `@SprinbBootApplication` class.
 
 https://github.com/jinahya/epost-openapi-proxy/blob/b5d3365fc140cde29ab824a1c8ac5fdd7ca1cf15/src/test/java/com/mycompany/Application.java
 
+https://github.com/jinahya/epost-openapi-proxy/blob/b5d3365fc140cde29ab824a1c8ac5fdd7ca1cf15/src/test/java/com/mycompany/Application.java
+
 ### `application.(properties|yaml)`
 
 Put your own `application.(properties|yaml)` file.
