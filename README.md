@@ -19,6 +19,8 @@ https://github.com/jinahya/epost-openapi-proxy/blob/b5d3365fc140cde29ab824a1c8ac
 
 https://github.com/jinahya/epost-openapi-proxy/blob/b5d3365fc140cde29ab824a1c8ac5fdd7ca1cf15/src/test/java/com/mycompany/Application.java
 
+https://github.com/jinahya/epost-openapi-proxy/blob/75b114f36b20a12d1ba93ead76818959c11f5735/src/test/java/com/mycompany/Application.java#L1-L17
+
 ### `application.(properties|yaml)`
 
 Put your own `application.(properties|yaml)` file.
