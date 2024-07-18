@@ -1,0 +1,21 @@
+{
+  "NewAddressListResponse": {
+    "cmmMsgHeader": {
+      "requestMsgId": "",
+      "responseMsgId": "",
+      "responseTime": "20240718:181428348",
+      "successYN": "Y",
+      "returnCode": "00",
+      "errMsg": "",
+      "totalCount": 2,
+      "countPerPage": 1,
+      "totalPage": 2,
+      "currentPage": 1
+    },
+    "newAddressListAreaCd": {
+      "zipNo": 12621,
+      "lnmAdres": "경기도 여주시 세종로 17 (홍문동)",
+      "rnAdres": "경기도 여주시 홍문동 111-15"
+    }
+  }
+}

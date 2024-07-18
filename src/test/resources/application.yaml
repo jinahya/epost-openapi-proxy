@@ -19,15 +19,18 @@ spring:
         - dev
         - prod
 
-retrieve_new_adress_area_cd_search_all_service:
-
-  cache:
-    time: 10m
-    size: 128MB
-retrieve_new_adress_area_cd_service:
-  cache:
-    time: 10m
-    size: 128MB
+epost:
+  openapi:
+    proxy:
+      routes:
+        retrieve_new_adress_area_cd_search_all_service:
+          cache: 10m,128MB
+          connect-timeout: 1024
+          response-timeout: 2048
+        retrieve_new_adress_area_cd_service:
+          cache: 10m,128MB
+          connect-timeout: 1024
+          response-timeout: 2048
 
 ---
 

@@ -3,18 +3,23 @@
   <cmmMsgHeader>
     <requestMsgId></requestMsgId>
     <responseMsgId></responseMsgId>
-    <responseTime>20240718:181410119</responseTime>
+    <responseTime>20240718:181458338</responseTime>
     <successYN>Y</successYN>
     <returnCode>00</returnCode>
     <errMsg></errMsg>
     <totalCount>2</totalCount>
-    <countPerPage>1</countPerPage>
-    <totalPage>2</totalPage>
+    <countPerPage>2</countPerPage>
+    <totalPage>1</totalPage>
     <currentPage>1</currentPage>
   </cmmMsgHeader>
   <newAddressListAreaCd>
     <zipNo>12621</zipNo>
     <lnmAdres>경기도 여주시 세종로 17 (홍문동)</lnmAdres>
     <rnAdres>경기도 여주시 홍문동 111-15</rnAdres>
+  </newAddressListAreaCd>
+  <newAddressListAreaCd>
+    <zipNo>12621</zipNo>
+    <lnmAdres>경기도 여주시 세종로 17-1 (홍문동)</lnmAdres>
+    <rnAdres>경기도 여주시 홍문동 111-2</rnAdres>
   </newAddressListAreaCd>
 </NewAddressListResponse>

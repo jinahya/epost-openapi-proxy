@@ -40,7 +40,7 @@ gradle-app.setting
 !.idea/codeStyles
 
 
-_bootTestRun_development.sh
-_bootTestRun_production.sh
-_test_development.sh
-_test_production.sh
+*.sh
+
+
+src/test/resources/com/github/jinahya/epost/openapi/proxy/download_area_code_service/zipcode_DB.zip

@@ -28,41 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ContextConfiguration(classes = {Application.class})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Slf4j
-class RetrieveNewAdressAreaCdServiceTest {
-
-//    //    @TestConfiguration
-//    static class TestConfiguration_ {
-//
-//        @Bean
-//        Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
-//            return b -> {
-//                log.debug("builder: {}", b);
-//                b.featuresToEnable(DeserializationFeature.UNWRAP_ROOT_VALUE);
-////                b.featuresToEnable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
-//            };
-//        }
-//
-//        @Bean
-//        WebTestClientBuilderCustomizer webTestClientBuilderCustomizer(final Jackson2ObjectMapperBuilder builder) {
-//            return b -> {
-//                log.debug("customizing {}", b);
-//                b.exchangeStrategies(
-//                        ExchangeStrategies.builder()
-//                                .codecs(c -> {
-////                                    c.defaultCodecs()
-////                                            .jackson2JsonEncoder(
-////                                                    new Jackson2JsonEncoder(builder.build(),
-////                                                                            MediaType.APPLICATION_JSON));
-//                                    c.defaultCodecs()
-//                                            .jackson2JsonDecoder(
-//                                                    new Jackson2JsonDecoder(builder.build(),
-//                                                                            MediaType.APPLICATION_JSON));
-//                                })
-//                                .build()
-//                );
-//            };
-//        }
-//    }
+class GetNewAddressListAreaCd_SpringBootIT {
 
     // -----------------------------------------------------------------------------------------------------------------
     private static final String SYSTEM_PROPERTY_SERVICE_KEY = "serviceKey";

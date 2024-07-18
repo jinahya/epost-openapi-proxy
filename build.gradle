@@ -1,20 +1,22 @@
 plugins {
     id 'java'
-    // https://docs.spring.io/spring-boot/appendix/dependency-versions/coordinates.html
+//    id 'jvm-test-suite' // https://docs.gradle.org/current/userguide/jvm_test_suite_plugin.html#jvm_test_suite_plugin
+    id "com.github.ben-manes.versions" version "0.51.0"
     id 'org.springframework.boot' version '3.3.1'
+    // https://docs.spring.io/spring-boot/appendix/dependency-versions/coordinates.html
     id 'io.spring.dependency-management' version '1.1.5'
-    id 'jacoco'
+//    id 'jacoco'
     id 'idea'
 }
 
 group = 'com.github.jinahya'
 version = '0.0.1-SNAPSHOT'
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
-}
+//java {
+//    toolchain {
+//        languageVersion = JavaLanguageVersion.of(21)
+//    }
+//}
 
 configurations {
     compileOnly {
@@ -82,11 +84,53 @@ dependencyManagement {
     }
 }
 
+compileJava {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+compileTestJava {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+// https://docs.gradle.org/current/userguide/toolchains.html
+tasks.withType(JavaCompile).configureEach {
+    javaCompiler = javaToolchains.compilerFor {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
 tasks.named('test') {
     useJUnitPlatform()
-    // https://stackoverflow.com/a/40839018/330457
+    systemProperties = System.properties // https://stackoverflow.com/a/40839018/330457
+    exclude "**/*IT.class"
+}
+
+// https://docs.gradle.org/current/userguide/java_testing.html#sec:configuring_java_integration_tests
+sourceSets {
+    intTest {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+configurations {
+    intTestImplementation.extendsFrom implementation
+    intTestRuntimeOnly.extendsFrom runtimeOnly
+}
+tasks.register('integrationTest', Test) {
+    description = 'Runs integration tests.'
+    group = 'verification'
+    testClassesDirs = sourceSets.intTest.output.classesDirs
+    classpath = sourceSets.intTest.runtimeClasspath
+    shouldRunAfter test
+    useJUnitPlatform()
+    testLogging {
+        events "passed"
+    }
+    include '**/*Test.class'
+    include '**/*IT.class'
     systemProperties = System.properties
 }
+check.dependsOn integrationTest
 
 //idea {
 //    module {
@@ -95,7 +139,7 @@ tasks.named('test') {
 //    }
 //}
 
-jacoco {
-    // https://github.com/jacoco/jacoco/releases
-    toolVersion = "0.8.12"
-}
+//jacoco {
+//    // https://github.com/jacoco/jacoco/releases
+//    toolVersion = "0.8.12"
+//}
