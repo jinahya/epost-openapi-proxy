@@ -181,5 +181,5 @@ public abstract class AbstractTypeTest<TYPE extends AbstractType> {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    final Class<TYPE> typeClass;
+    protected final Class<TYPE> typeClass;
 }

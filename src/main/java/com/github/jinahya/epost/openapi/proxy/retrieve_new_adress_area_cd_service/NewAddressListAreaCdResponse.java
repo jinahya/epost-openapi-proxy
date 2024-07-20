@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.github.jinahya.epost.openapi.proxy._common.AbstractType;
 import com.github.jinahya.epost.openapi.proxy._common.CmmMsgHeader;
+import com.github.jinahya.epost.openapi.proxy._common.Wrapping;
 import com.github.jinahya.epost.openapi.proxy._misc.jackson.databind.ObjectReaderUtils;
 import com.github.jinahya.epost.openapi.proxy._misc.xml.stream.XMLInputFactoryUtils;
 import jakarta.validation.Valid;
@@ -23,17 +24,17 @@ import lombok.*;
 import java.io.Serial;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
-@JsonRootName(GetNewAddressListAreaCdResponse.ROOT_NAME)
-@XmlRootElement(name = GetNewAddressListAreaCdResponse.ROOT_NAME)
+//@JsonRootName(NewAddressListAreaCdResponse.ROOT_NAME)
+@XmlRootElement(name = NewAddressListAreaCdResponse.ROOT_NAME)
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
-public class GetNewAddressListAreaCdResponse
-        extends AbstractType {
+public class NewAddressListAreaCdResponse
+        extends AbstractType
+        implements Wrapping.Self<NewAddressListAreaCdResponse> {
 
     @Serial
     private static final long serialVersionUID = -1527464956712592866L;
@@ -69,7 +70,7 @@ public class GetNewAddressListAreaCdResponse
 
     // ---------------------------------------------------------------------------------------------------- cmmMsgHeader
     // just for the prefab values.
-    GetNewAddressListAreaCdResponse cmmMsgHeader(final CmmMsgHeader cmmMsgHeader) {
+    NewAddressListAreaCdResponse cmmMsgHeader(final CmmMsgHeader cmmMsgHeader) {
         setCmmMsgHeader(cmmMsgHeader);
         return this;
     }
@@ -84,36 +85,33 @@ public class GetNewAddressListAreaCdResponse
     private List<@Valid @NotNull NewAddressListAreaCd> newAddressListAreaCdList;
 
     // -----------------------------------------------------------------------------------------------------------------
-    public GetNewAddressListAreaCdResponse get() {
-        return Optional.ofNullable(wrapped).orElse(this);
-    }
-
     @Valid
     @JsonProperty(ROOT_NAME)
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.NONE)
-    private GetNewAddressListAreaCdResponse wrapped;
+    private NewAddressListAreaCdResponse wrapped;
 
     // -----------------------------------------------------------------------------------------------------------------
     private static final JAXBContext JAXB_CONTEXT;
 
     static {
         try {
-            JAXB_CONTEXT = JAXBContext.newInstance(GetNewAddressListAreaCdResponse.class);
+            JAXB_CONTEXT = JAXBContext.newInstance(NewAddressListAreaCdResponse.class);
         } catch (final JAXBException jaxbe) {
             throw new ExceptionInInitializerError(jaxbe);
         }
     }
 
-    public static GetNewAddressListAreaCdResponse unmarshalInstance(final Object source) throws JAXBException {
+    public static NewAddressListAreaCdResponse unmarshalInstance(final Object source) throws JAXBException {
         return XMLInputFactoryUtils.unmarshalNoNamespacedInstance(
                 JAXB_CONTEXT,
-                GetNewAddressListAreaCdResponse.class,
+                NewAddressListAreaCdResponse.class,
                 source
         );
     }
 
-    public static GetNewAddressListAreaCdResponse deserializeInstance(final ObjectReader reader, final Object source) {
+    // -----------------------------------------------------------------------------------------------------------------
+    public static NewAddressListAreaCdResponse deserializeInstance(final ObjectReader reader, final Object source) {
         Objects.requireNonNull(reader, "reader is null");
         Objects.requireNonNull(source, "source is null");
         return ObjectReaderUtils.readValue(
@@ -122,15 +120,15 @@ public class GetNewAddressListAreaCdResponse
         );
     }
 
-    public static GetNewAddressListAreaCdResponse deserializeInstance(final ObjectMapper mapper, final Object source) {
+    public static NewAddressListAreaCdResponse deserializeInstance(final ObjectMapper mapper, final Object source) {
         Objects.requireNonNull(mapper, "mapper is null");
         return deserializeInstance(
-                mapper.readerFor(GetNewAddressListAreaCdResponse.class),
+                mapper.readerFor(NewAddressListAreaCdResponse.class),
                 source
         );
     }
 
-    public static GetNewAddressListAreaCdResponse deserializeInstance(final Object source) {
+    public static NewAddressListAreaCdResponse deserializeInstance(final Object source) {
         return deserializeInstance(
                 new ObjectMapper(),
                 source

@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlTransient;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -33,7 +34,7 @@ public class CmmMsgHeader
     @Serial
     private static final long serialVersionUID = 4236051073314958906L;
 
-    // ------------------------------------------------------------------------------------------------ responseTime
+    // ---------------------------------------------------------------------------------------------------- responseTime
 //        private static final String RESPONSE_TIME_PATTERN = "uuuuMMdd:HHmmssSSS"; // SSS 부분이 가변인 듯!
 
     private static final DateTimeFormatter RESPONSE_TIME_FORMATTER =
@@ -69,25 +70,28 @@ public class CmmMsgHeader
 //            }
 //        }
 
-    // --------------------------------------------------------------------------------------------------- successYN
+    // ------------------------------------------------------------------------------------------------------- successYN
     public static final String SUCCESS_YN_N = "N";
 
     public static final String SUCCESS_YN_Y = "Y";
 
-    // -------------------------------------------------------------------------------------- STATIC_FACTORY_METHODS
+    // ------------------------------------------------------------------------------------------------------ returnCode
+    public static final String RETURN_CODE_00 = "00";
 
-    // ------------------------------------------------------------------------------------------------ CONSTRUCTORS
+    // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
 
-    // -------------------------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
-    // ------------------------------------------------------------------------------------------------ requestMsgId
+    // -----------------------------------------------------------------------------------------------------------------
+
+    // ---------------------------------------------------------------------------------------------------- requestMsgId
     // just for the prefab values
     public CmmMsgHeader requestMsgId(final String requestMsgId) {
         setRequestMsgId(requestMsgId);
         return this;
     }
 
-    // ------------------------------------------------------------------------------------------------ responseTime
+    // ---------------------------------------------------------------------------------------------------- responseTime
 
     /**
      * Returns current value of {@code responseTime} property as mapped with specified function.
@@ -98,6 +102,7 @@ public class CmmMsgHeader
      * {@code responseTime} property is currently {@code null}.
      */
     @JsonIgnore
+//    @XmlTransient // JAXB annotation is placed on a method that is not a JAXB property
     public <R> R getResponseTimeAs(final Function<? super String, ? extends R> mapper) {
         return Optional.ofNullable(getResponseTime())
                 .map(mapper)
@@ -105,11 +110,12 @@ public class CmmMsgHeader
     }
 
     @JsonIgnore
+//    @XmlTransient // JAXB annotation is placed on a method that is not a JAXB property
     public LocalDateTime getResponseTimeAsLocalDateTime() {
         return getResponseTimeAs(v -> LocalDateTime.parse(v, RESPONSE_TIME_FORMATTER));
     }
 
-    // --------------------------------------------------------------------------------------------------- successYN
+    // ------------------------------------------------------------------------------------------------------- successYN
 
     /**
      * Returns current value of {@code successYN} property as a {@code boolean}.
@@ -124,28 +130,41 @@ public class CmmMsgHeader
                 .orElse(Boolean.FALSE);
     }
 
-    // -------------------------------------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------------------------------------
+    @XmlElement
     private String requestMsgId;
 
+    @XmlElement
     private String responseMsgId;
 
+    // -----------------------------------------------------------------------------------------------------------------
+    @XmlElement
     private String responseTime;
 
+    // -----------------------------------------------------------------------------------------------------------------
+    @XmlElement
     private String successYN;
 
+    @XmlElement
     private String returnCode;
 
+    @XmlElement
     private String errMsg;
 
+    // -----------------------------------------------------------------------------------------------------------------
     @PositiveOrZero
+    @XmlElement
     private Integer totalCount;
 
     @PositiveOrZero
+    @XmlElement
     private Integer countPerPage;
 
     @Positive
+    @XmlElement
     private Integer totalPage;
 
     @Positive
+    @XmlElement
     private Integer currentPage;
 }

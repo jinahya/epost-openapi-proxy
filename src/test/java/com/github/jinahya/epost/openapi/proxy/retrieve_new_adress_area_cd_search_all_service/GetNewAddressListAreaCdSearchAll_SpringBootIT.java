@@ -1,6 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.retrieve_new_adress_area_cd_search_all_service;
 
-import com.github.jinahya.epost.openapi.proxy.retrieve_new_adress_area_cd_service.GetNewAddressListAreaCdRequest;
+import com.github.jinahya.epost.openapi.proxy.retrieve_new_adress_area_cd_service.NewAddressListAreaCdRequest;
 import com.mycompany.Application;
 import jakarta.validation.Validator;
 import lombok.extern.slf4j.Slf4j;
@@ -78,11 +78,12 @@ class GetNewAddressListAreaCdSearchAll_SpringBootIT {
         final var requestSpec = webClient
                 .get()
                 .uri(b -> {
-                    final var uri = b.path(Constants.requestUri())
-                            .queryParam(GetNewAddressListAreaCdRequest.QUERY_PARAM_NAME_SERVICE_KEY, serviceKey)
-                            .queryParam(GetNewAddressListAreaCdRequest.QUERY_PARAM_NAME_SRCHWRD, srchwrd)
-                            .queryParam(GetNewAddressListAreaCdRequest.QUERY_PARAM_NAME_COUNT_PER_PAGE, countPerPage)
-                            .queryParam(GetNewAddressListAreaCdRequest.QUERY_PARAM_NAME_CURRENT_PAGE, currentPage)
+                    final var uri = b.path(
+                                    _RetrieveNewAddressAreaCdSearchAllServiceConstants.REQUEST_URI_GET_NEW_ADDRESS_LIST_AREA_CD_SEARCH_ALL)
+                            .queryParam(NewAddressListAreaCdRequest.QUERY_PARAM_NAME_SERVICE_KEY, serviceKey)
+                            .queryParam(NewAddressListAreaCdRequest.QUERY_PARAM_NAME_SRCHWRD, srchwrd)
+                            .queryParam(NewAddressListAreaCdRequest.QUERY_PARAM_NAME_COUNT_PER_PAGE, countPerPage)
+                            .queryParam(NewAddressListAreaCdRequest.QUERY_PARAM_NAME_CURRENT_PAGE, currentPage)
                             .build();
                     log.debug("uri: {}", uri.toASCIIString());
                     return uri;
@@ -93,18 +94,18 @@ class GetNewAddressListAreaCdSearchAll_SpringBootIT {
         final var responseSpec = requestSpec
                 .exchange()
                 .expectStatus().isOk();
-        if (false && mediaType != null) {
+        if (mediaType != null) {
             responseSpec
                     .expectHeader()
                     .contentTypeCompatibleWith(mediaType);
         }
         final var responseBody = Optional.ofNullable(
                         responseSpec
-                                .expectBody(GetNewAddressListAreaCdSearchAllResponse.class)
+                                .expectBody(NewAddressListAreaCdSearchAllResponse.class)
                                 .returnResult()
                                 .getResponseBody()
                 )
-//                .map(GetNewAddressListAreaCdSearchAllResponse::get)
+                .map(NewAddressListAreaCdSearchAllResponse::get)
                 .orElseThrow();
         log.debug("responseBody: {}", responseBody);
         assertThat(responseBody).isNotNull().satisfies(r -> {

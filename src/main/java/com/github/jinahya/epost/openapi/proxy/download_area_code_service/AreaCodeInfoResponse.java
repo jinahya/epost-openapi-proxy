@@ -1,11 +1,11 @@
 package com.github.jinahya.epost.openapi.proxy.download_area_code_service;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.github.jinahya.epost.openapi.proxy._common.AbstractType;
 import com.github.jinahya.epost.openapi.proxy._common.CmmMsgHeader;
+import com.github.jinahya.epost.openapi.proxy._common.Wrapping;
 import com.github.jinahya.epost.openapi.proxy._misc.jackson.databind.ObjectReaderUtils;
 import com.github.jinahya.epost.openapi.proxy._misc.xml.stream.XMLInputFactoryUtils;
 import jakarta.validation.Valid;
@@ -25,15 +25,16 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import java.io.Serial;
 import java.util.Objects;
 
-@JsonRootName(GetAreaCodeInfoResponse.ROOT_NAME)
-@XmlRootElement(name = GetAreaCodeInfoResponse.ROOT_NAME)
+//@JsonRootName(AreaCodeInfoResponse.ROOT_NAME)
+@XmlRootElement(name = AreaCodeInfoResponse.ROOT_NAME)
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
-public class GetAreaCodeInfoResponse
-        extends AbstractType {
+public class AreaCodeInfoResponse
+        extends AbstractType
+        implements Wrapping.Self<AreaCodeInfoResponse> {
 
     @Serial
     private static final long serialVersionUID = -1527464956712592866L;
@@ -47,7 +48,7 @@ public class GetAreaCodeInfoResponse
 
     // ---------------------------------------------------------------------------------------------------- cmmMsgHeader
     // just for the prefab values.
-    GetAreaCodeInfoResponse cmmMsgHeader(final CmmMsgHeader cmmMsgHeader) {
+    AreaCodeInfoResponse cmmMsgHeader(final CmmMsgHeader cmmMsgHeader) {
         setCmmMsgHeader(cmmMsgHeader);
         return this;
     }
@@ -66,41 +67,41 @@ public class GetAreaCodeInfoResponse
 
     static {
         try {
-            JAXB_CONTEXT = JAXBContext.newInstance(GetAreaCodeInfoResponse.class);
+            JAXB_CONTEXT = JAXBContext.newInstance(AreaCodeInfoResponse.class);
         } catch (final JAXBException jaxbe) {
             throw new ExceptionInInitializerError(jaxbe);
         }
     }
 
-    public static GetAreaCodeInfoResponse unmarshalInstance(final Object source)
+    public static AreaCodeInfoResponse unmarshalInstance(final Object source)
             throws JAXBException {
         return XMLInputFactoryUtils.unmarshalNoNamespacedInstance(
                 JAXB_CONTEXT,
-                GetAreaCodeInfoResponse.class,
+                AreaCodeInfoResponse.class,
                 source
         );
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    public static GetAreaCodeInfoResponse deserializeInstance(final ObjectReader reader,
-                                                              final Object source) {
+    public static AreaCodeInfoResponse deserializeInstance(final ObjectReader reader,
+                                                           final Object source) {
         return ObjectReaderUtils.readValue(
                 reader,
                 source
         );
     }
 
-    public static GetAreaCodeInfoResponse deserializeInstance(final ObjectMapper mapper,
-                                                              final Object source) {
+    public static AreaCodeInfoResponse deserializeInstance(final ObjectMapper mapper,
+                                                           final Object source) {
         Objects.requireNonNull(mapper, "mapper is null");
         return deserializeInstance(
-                mapper.readerFor(GetAreaCodeInfoResponse.class),
+                mapper.readerFor(AreaCodeInfoResponse.class),
                 source
         );
     }
 
-    public static GetAreaCodeInfoResponse deserializeInstance(final Jackson2ObjectMapperBuilder builder,
-                                                              final Object source) {
+    public static AreaCodeInfoResponse deserializeInstance(final Jackson2ObjectMapperBuilder builder,
+                                                           final Object source) {
         Objects.requireNonNull(builder, "builder is null");
         return deserializeInstance(
                 builder.build(),
@@ -108,7 +109,7 @@ public class GetAreaCodeInfoResponse
         );
     }
 
-    public static GetAreaCodeInfoResponse deserializeInstance(final Object source) {
+    public static AreaCodeInfoResponse deserializeInstance(final Object source) {
         return deserializeInstance(
                 new ObjectMapper(),
                 source

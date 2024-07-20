@@ -3,6 +3,7 @@ package com.github.jinahya.epost.openapi.proxy.retrieve_new_adress_area_cd_servi
 import com.mycompany.Application;
 import jakarta.validation.Validator;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.DisabledIf;
@@ -20,12 +22,18 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayName("/getNewAddressListAreaCd")
 @Import(
         value = {
                 ValidationAutoConfiguration.class
         }
 )
-@ContextConfiguration(classes = {Application.class})
+@ContextConfiguration(
+        classes = {
+                Application.class,
+//                EpostOpenapiProxyConfiguration.class
+        }
+)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Slf4j
 class GetNewAddressListAreaCd_SpringBootIT {
@@ -36,19 +44,19 @@ class GetNewAddressListAreaCd_SpringBootIT {
     private static Stream<Arguments> argumentsStream() {
         return Stream.of(
                 Arguments.of(
-                        GetNewAddressListAreaCdRequest.SearchSe.dong,
+                        NewAddressListAreaCdRequest.SearchSe.dong,
                         "주월동 408-1",
                         2,
                         1
                 ),
                 Arguments.of(
-                        GetNewAddressListAreaCdRequest.SearchSe.road,
+                        NewAddressListAreaCdRequest.SearchSe.road,
                         "세종로 17",
                         2,
                         1
                 ),
                 Arguments.of(
-                        GetNewAddressListAreaCdRequest.SearchSe.post,
+                        NewAddressListAreaCdRequest.SearchSe.post,
                         "61725",
                         2,
                         1
@@ -73,7 +81,7 @@ class GetNewAddressListAreaCd_SpringBootIT {
             "argumentsStreamWithMediaType"
     })
     @ParameterizedTest
-    void __(final GetNewAddressListAreaCdRequest.SearchSe searchSe, final String srchwrd, final int countPerPage,
+    void __(final NewAddressListAreaCdRequest.SearchSe searchSe, final String srchwrd, final int countPerPage,
             final int currentPage, final MediaType mediaType) {
         final var serviceKey = System.getProperty(SYSTEM_PROPERTY_SERVICE_KEY);
         assertThat(serviceKey)
@@ -82,34 +90,39 @@ class GetNewAddressListAreaCd_SpringBootIT {
         final var requestSpec = webClient
                 .get()
                 .uri(b -> {
-                    final var uri = b.path(Constants.requestUri())
-                            .queryParam(GetNewAddressListAreaCdRequest.QUERY_PARAM_NAME_SERVICE_KEY, serviceKey)
-                            .queryParam(GetNewAddressListAreaCdRequest.QUERY_PARAM_NAME_SEARCH_SE, searchSe.name())
-                            .queryParam(GetNewAddressListAreaCdRequest.QUERY_PARAM_NAME_SRCHWRD, srchwrd)
-                            .queryParam(GetNewAddressListAreaCdRequest.QUERY_PARAM_NAME_COUNT_PER_PAGE, countPerPage)
-                            .queryParam(GetNewAddressListAreaCdRequest.QUERY_PARAM_NAME_CURRENT_PAGE, currentPage)
+                    final var uri = b.path(
+                                    _RetrieveNewAdressAreaCdServiceConstants.REQUEST_URI_GET_NEW_ADDRESS_LIST_AREA_CD
+                            )
+//                            .queryParam(NewAddressListAreaCdRequest.QUERY_PARAM_NAME_SERVICE_KEY, serviceKey)
+                            .queryParam(NewAddressListAreaCdRequest.QUERY_PARAM_NAME_SEARCH_SE, searchSe.name())
+                            .queryParam(NewAddressListAreaCdRequest.QUERY_PARAM_NAME_SRCHWRD, srchwrd)
+//                            .queryParam(NewAddressListAreaCdRequest.QUERY_PARAM_NAME_SRCHWRD,
+//                                        URLEncoder.encode(srchwrd, StandardCharsets.UTF_8))
+                            .queryParam(NewAddressListAreaCdRequest.QUERY_PARAM_NAME_COUNT_PER_PAGE, countPerPage)
+                            .queryParam(NewAddressListAreaCdRequest.QUERY_PARAM_NAME_CURRENT_PAGE, currentPage)
                             .build();
                     log.debug("uri: {}", uri.toASCIIString());
                     return uri;
                 });
         if (mediaType != null) {
             requestSpec.accept(mediaType);
+            requestSpec.header(HttpHeaders.CACHE_CONTROL, "no-cache");
         }
         final var responseSpec = requestSpec
                 .exchange()
                 .expectStatus().isOk();
-        if (false && mediaType != null) {
+        if (mediaType != null) {
             responseSpec
                     .expectHeader()
                     .contentTypeCompatibleWith(mediaType);
         }
         final var responseBody = Optional.ofNullable(
                         responseSpec
-                                .expectBody(GetNewAddressListAreaCdResponse.class)
+                                .expectBody(NewAddressListAreaCdResponse.class)
                                 .returnResult()
                                 .getResponseBody()
                 )
-                .map(GetNewAddressListAreaCdResponse::get)
+                .map(NewAddressListAreaCdResponse::get)
                 .orElseThrow();
         log.debug("responseBody: {}", responseBody);
         assertThat(responseBody).isNotNull().satisfies(r -> {
@@ -134,7 +147,7 @@ class GetNewAddressListAreaCd_SpringBootIT {
                             assertThat(e.getLnmAdres()).contains(srchwrd);
                             break;
                         default:
-                            assertThat(searchSe).isSameAs(GetNewAddressListAreaCdRequest.SearchSe.post);
+                            assertThat(searchSe).isSameAs(NewAddressListAreaCdRequest.SearchSe.post);
                             assertThat(e.getZipNo()).isEqualTo(srchwrd);
                             break;
                     }
@@ -142,6 +155,9 @@ class GetNewAddressListAreaCd_SpringBootIT {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
+//    @Autowired
+//    private EpostOpenapiProxyConfiguration configuration;
+
     @Autowired
     private WebTestClient webClient;
 

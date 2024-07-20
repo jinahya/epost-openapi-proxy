@@ -22,7 +22,6 @@ import lombok.*;
 import java.io.Serial;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @XmlRootElement(name = NewAddressListAreaCdSearchAllResponse.ROOT_NAME)
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -73,10 +72,6 @@ public class NewAddressListAreaCdSearchAllResponse
     private List<@Valid @NotNull NewAddressListAreaCdSearchAll> newAddressListAreaCdSearchAll;
 
     // -----------------------------------------------------------------------------------------------------------------
-    public NewAddressListAreaCdSearchAllResponse get() {
-        return Optional.ofNullable(wrapped).orElse(this);
-    }
-
     @Valid
     @JsonProperty(ROOT_NAME)
     @Setter(AccessLevel.NONE)

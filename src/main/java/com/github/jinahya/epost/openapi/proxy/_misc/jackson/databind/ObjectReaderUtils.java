@@ -35,8 +35,8 @@ public final class ObjectReaderUtils {
     @SuppressWarnings({
             "java:S119"
     })
-    private static <T, SOURCE> T readValueHelper(final ObjectReader reader, final Class<SOURCE> type,
-                                                 final Object source) {
+    public static <T, SOURCE> T readValueHelper(final ObjectReader reader, final Class<SOURCE> type,
+                                                final Object source) {
         Objects.requireNonNull(type, "type is null");
         return readValue(reader, type, type.cast(source));
     }

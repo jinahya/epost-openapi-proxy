@@ -14,20 +14,20 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 @Slf4j
-class GetNewAddressListAreaCdSearchAllResponseTest
-        extends AbstractTypeTest<GetNewAddressListAreaCdSearchAllResponse> {
+class NewAddressListAreaCdSearchAllResponseTest
+        extends AbstractTypeTest<NewAddressListAreaCdSearchAllResponse> {
 
     @Nested
     class NewAddressListAreaCdSearchAllTest
-            extends AbstractAddressTest<GetNewAddressListAreaCdSearchAllResponse.NewAddressListAreaCdSearchAll> {
+            extends AbstractAddressTest<NewAddressListAreaCdSearchAllResponse.NewAddressListAreaCdSearchAll> {
 
         NewAddressListAreaCdSearchAllTest() {
-            super(GetNewAddressListAreaCdSearchAllResponse.NewAddressListAreaCdSearchAll.class);
+            super(NewAddressListAreaCdSearchAllResponse.NewAddressListAreaCdSearchAll.class);
         }
 
         @Override
-        protected SingleTypeEqualsVerifierApi<GetNewAddressListAreaCdSearchAllResponse.NewAddressListAreaCdSearchAll> __equals(
-                final SingleTypeEqualsVerifierApi<GetNewAddressListAreaCdSearchAllResponse.NewAddressListAreaCdSearchAll> verifierApi) {
+        protected SingleTypeEqualsVerifierApi<NewAddressListAreaCdSearchAllResponse.NewAddressListAreaCdSearchAll> __equals(
+                final SingleTypeEqualsVerifierApi<NewAddressListAreaCdSearchAllResponse.NewAddressListAreaCdSearchAll> verifierApi) {
             return super.__equals(verifierApi)
                     .withPrefabValues(
                             CmmMsgHeader.class,
@@ -45,22 +45,24 @@ class GetNewAddressListAreaCdSearchAllResponseTest
                             Map.of("b", new Object())
                     )
                     .withPrefabValues(
-                            GetNewAddressListAreaCdSearchAllResponse.class,
-                            new GetNewAddressListAreaCdSearchAllResponse().cmmMsgHeader(
+                            NewAddressListAreaCdSearchAllResponse.class,
+                            new NewAddressListAreaCdSearchAllResponse().cmmMsgHeader(
                                     new CmmMsgHeader().requestMsgId("a")),
-                            new GetNewAddressListAreaCdSearchAllResponse().cmmMsgHeader(
+                            new NewAddressListAreaCdSearchAllResponse().cmmMsgHeader(
                                     new CmmMsgHeader().requestMsgId("b"))
                     );
         }
     }
 
-    GetNewAddressListAreaCdSearchAllResponseTest() {
-        super(GetNewAddressListAreaCdSearchAllResponse.class);
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+    NewAddressListAreaCdSearchAllResponseTest() {
+        super(NewAddressListAreaCdSearchAllResponse.class);
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
     @Override
-    protected SingleTypeEqualsVerifierApi<GetNewAddressListAreaCdSearchAllResponse> __equals(
-            SingleTypeEqualsVerifierApi<GetNewAddressListAreaCdSearchAllResponse> verifierApi) {
+    protected SingleTypeEqualsVerifierApi<NewAddressListAreaCdSearchAllResponse> __equals(
+            SingleTypeEqualsVerifierApi<NewAddressListAreaCdSearchAllResponse> verifierApi) {
         return super.__equals(verifierApi)
                 .withPrefabValues(
                         CmmMsgHeader.class,
@@ -78,10 +80,10 @@ class GetNewAddressListAreaCdSearchAllResponseTest
                         Map.of("b", new Object())
                 )
                 .withPrefabValues(
-                        GetNewAddressListAreaCdSearchAllResponse.class,
-                        new GetNewAddressListAreaCdSearchAllResponse().cmmMsgHeader(
+                        NewAddressListAreaCdSearchAllResponse.class,
+                        new NewAddressListAreaCdSearchAllResponse().cmmMsgHeader(
                                 new CmmMsgHeader().requestMsgId("a")),
-                        new GetNewAddressListAreaCdSearchAllResponse().cmmMsgHeader(
+                        new NewAddressListAreaCdSearchAllResponse().cmmMsgHeader(
                                 new CmmMsgHeader().requestMsgId("b"))
                 );
     }
@@ -99,7 +101,7 @@ class GetNewAddressListAreaCdSearchAllResponseTest
     void __xml(final String resName) throws Throwable {
         final var unmarshalled = applyResourceAsStreamChecked(
                 resName,
-                GetNewAddressListAreaCdSearchAllResponse::unmarshalInstance
+                NewAddressListAreaCdSearchAllResponse::unmarshalInstance
         );
         verifyValid(unmarshalled);
     }
@@ -108,7 +110,9 @@ class GetNewAddressListAreaCdSearchAllResponseTest
     private static Stream<String> getJsonResNameStream() {
         return Stream.of(
                 "response1.json",
-                "response2.json"
+                "response2.json",
+                "response1_.json",
+                "response2_.json"
         );
     }
 
@@ -117,8 +121,8 @@ class GetNewAddressListAreaCdSearchAllResponseTest
     void __json(final String resName) throws Throwable {
         final var deserialized = applyResourceAsStreamChecked(
                 resName,
-                GetNewAddressListAreaCdSearchAllResponse::deserializeInstance
-        );
+                NewAddressListAreaCdSearchAllResponse::deserializeInstance
+        ).get();
         verifyValid(deserialized);
     }
 }
