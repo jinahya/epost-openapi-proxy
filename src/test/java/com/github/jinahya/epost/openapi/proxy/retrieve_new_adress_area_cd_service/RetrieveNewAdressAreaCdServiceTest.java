@@ -2,6 +2,7 @@ package com.github.jinahya.epost.openapi.proxy.retrieve_new_adress_area_cd_servi
 
 import jakarta.validation.Validator;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -178,4 +179,11 @@ class RetrieveNewAdressAreaCdServiceTest {
 
     @Autowired
     private Validator validator;
+
+
+    @Test
+    void __() {
+        System.out.println(new Integer(0) == new Integer(0));
+        System.out.println(new Integer(128) == new Integer(128));
+    }
 }
