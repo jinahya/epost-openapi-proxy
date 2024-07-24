@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.retrieve_new_adress_area_cd_search_all_service;
+package com.github.jinahya.epost.openapi.proxy.download_area_code_service;
 
 import com.github.jinahya.epost.openapi.proxy._common.AbstractType;
 import jakarta.validation.constraints.NotBlank;
@@ -15,7 +15,7 @@ import java.io.Serial;
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class NewAddressListAreaCdSearchAllRequest
+public class AreaCodeIndoRequest
         extends AbstractType {
 
     @Serial

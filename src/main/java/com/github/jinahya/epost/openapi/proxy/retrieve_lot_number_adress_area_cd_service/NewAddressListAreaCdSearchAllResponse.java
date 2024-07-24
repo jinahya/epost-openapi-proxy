@@ -1,14 +1,12 @@
-package com.github.jinahya.epost.openapi.proxy.retrieve_new_adress_area_cd_search_all_service;
+package com.github.jinahya.epost.openapi.proxy.retrieve_lot_number_adress_area_cd_service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.github.jinahya.epost.openapi.proxy._common.AbstractAddress;
 import com.github.jinahya.epost.openapi.proxy._common.AbstractType;
 import com.github.jinahya.epost.openapi.proxy._common.CmmMsgHeader;
-import com.github.jinahya.epost.openapi.proxy._common.Wrapping;
 import com.github.jinahya.epost.openapi.proxy._misc.jackson.databind.ObjectReaderUtils;
 import com.github.jinahya.epost.openapi.proxy._misc.xml.stream.XMLInputFactoryUtils;
 import jakarta.validation.Valid;
@@ -20,23 +18,19 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.*;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serial;
 import java.util.List;
 import java.util.Objects;
 
-//@JsonRootName(NewAddressListAreaCdSearchAllResponse.ROOT_NAME)
 @XmlRootElement(name = NewAddressListAreaCdSearchAllResponse.ROOT_NAME)
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
-@Slf4j
 public class NewAddressListAreaCdSearchAllResponse
-        extends AbstractType
-        implements Wrapping.Self<NewAddressListAreaCdSearchAllResponse> {
+        extends AbstractType {
 
     @Serial
     private static final long serialVersionUID = -1527464956712592866L;
@@ -44,7 +38,6 @@ public class NewAddressListAreaCdSearchAllResponse
     // -----------------------------------------------------------------------------------------------------------------
     static final String ROOT_NAME = "NewAddressListResponse";
 
-    // -----------------------------------------------------------------------------------------------------------------
     private static final String NAME_NEW_ADDRESS_LIST_AREA_CD_SEARCH_ALL = "newAddressListAreaCdSearchAll";
 
     @Setter
@@ -105,7 +98,6 @@ public class NewAddressListAreaCdSearchAllResponse
         );
     }
 
-    // -----------------------------------------------------------------------------------------------------------------
     public static NewAddressListAreaCdSearchAllResponse deserializeInstance(final ObjectReader reader,
                                                                             final Object source) {
         return ObjectReaderUtils.readValue(
@@ -117,9 +109,6 @@ public class NewAddressListAreaCdSearchAllResponse
     public static NewAddressListAreaCdSearchAllResponse deserializeInstance(final ObjectMapper mapper,
                                                                             final Object source) {
         Objects.requireNonNull(mapper, "mapper is null");
-        if (!mapper.isEnabled(DeserializationFeature.UNWRAP_ROOT_VALUE)) {
-            log.warn("mapper is not enabled with {}", DeserializationFeature.UNWRAP_ROOT_VALUE);
-        }
         return deserializeInstance(
                 mapper.readerFor(NewAddressListAreaCdSearchAllResponse.class),
                 source
