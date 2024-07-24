@@ -7,16 +7,15 @@ module com.github.jinahya.epost.openapi.proxy {
     requires jakarta.xml.bind;
     requires java.xml;
     requires static lombok;
+    requires reactor.core;
+    requires spring.beans;
     requires spring.boot.autoconfigure;
     requires spring.boot;
-    requires spring.cloud.gateway.server;
-    requires reactor.core;
-    requires spring.web;
-    requires spring.core;
-    requires org.slf4j;
-    requires java.desktop;
-    requires spring.beans;
     requires spring.context;
+    requires spring.core;
+    requires spring.cloud.gateway.server;
+    requires spring.web;
+    requires org.slf4j;
 
     exports com.github.jinahya.epost.openapi.proxy._common;
     exports com.github.jinahya.epost.openapi.proxy.download_area_code_service;

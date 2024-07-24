@@ -52,12 +52,12 @@ public class ModifiedAddRequestParameterGatewayFilterFactory
                 return chain.filter(exchange.mutate().request(newRequest).build());
             }
 
-            @Override
-            public String toString() {
-                return filterToStringCreator(ModifiedAddRequestParameterGatewayFilterFactory.this)
-                        .append(config.getName(), config.getValue())
-                        .toString();
-            }
+//            @Override
+//            public String toString() {
+//                return filterToStringCreator(ModifiedAddRequestParameterGatewayFilterFactory.this)
+//                        .append(config.getName(), config.getValue())
+//                        .toString();
+//            }
         };
     }
 

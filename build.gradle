@@ -2,9 +2,9 @@ plugins {
     id 'java'
 //    id 'jvm-test-suite' // https://docs.gradle.org/current/userguide/jvm_test_suite_plugin.html#jvm_test_suite_plugin
     id "com.github.ben-manes.versions" version "0.51.0"
-    id 'org.springframework.boot' version '3.3.1'
+    id 'org.springframework.boot' version '3.3.2'
     // https://docs.spring.io/spring-boot/appendix/dependency-versions/coordinates.html
-    id 'io.spring.dependency-management' version '1.1.5'
+    id 'io.spring.dependency-management' version '1.1.6'
 //    id 'jacoco'
     id 'idea'
 }
@@ -25,7 +25,7 @@ configurations {
 }
 
 repositories {
-    mavenLocal()
+//    mavenLocal()
     mavenCentral()
 }
 
