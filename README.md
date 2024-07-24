@@ -61,6 +61,17 @@ and `classpath:application-epost-openapi-proxy-production.yaml`.
 
 You can(or should) override various configuration properties through your own `application.(properties|yaml)` file.
 
+#### Service key
+
+Set `epost.openapi.proxy.service-key` property with an url-**decoded** value.
+
+```yaml
+epost:
+  openapi:
+    proxy:
+      service-key: <url-decoded-value>
+```
+
 #### Timeouts
 
 See [Http timeouts configuration](https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/http-timeouts-configuration.html).

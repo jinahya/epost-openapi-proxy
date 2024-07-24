@@ -17,13 +17,12 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.filter.factory;
 
 import org.springframework.cloud.gateway.filter.GatewayFilter;
-import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.factory.AbstractNameValueGatewayFilterFactory;
-import org.springframework.web.server.ServerWebExchange;
+import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
-import reactor.core.publisher.Mono;
 
-import static org.springframework.cloud.gateway.support.GatewayToStringStyler.filterToStringCreator;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * A modified <a
@@ -34,30 +33,30 @@ import static org.springframework.cloud.gateway.support.GatewayToStringStyler.fi
  * href="https://github.com/spring-cloud/spring-cloud-gateway/blob/main/spring-cloud-gateway-server/src/main/java/org/springframework/cloud/gateway/filter/factory/AddRequestParameterGatewayFilterFactory.java">The
  * original source</a>
  */
-public class ModifiedAddRequestParameterGatewayFilterFactory
+@Component
+public class _AddRequestParameterIfNotPresentGatewayFilterFactory
         extends AbstractNameValueGatewayFilterFactory {
 
     @Override
     public GatewayFilter apply(final NameValueConfig config) {
-        return new GatewayFilter() {
-            @Override
-            public Mono<Void> filter(final ServerWebExchange exchange, final GatewayFilterChain chain) {
-                final var request = exchange.getRequest();
-                final var uri = request.getURI();
-                final var builder = UriComponentsBuilder.fromUri(uri);
-                request.getQueryParams().forEach(builder::replaceQueryParam);
-                builder.queryParam(config.getName(), config.getValue());
-                final var newUri = builder.build(true).toUri();
-                final var newRequest = exchange.getRequest().mutate().uri(newUri).build();
-                return chain.filter(exchange.mutate().request(newRequest).build());
+        return (e, c) -> {
+            final var request = e.getRequest();
+            final var uri = request.getURI();
+            final var builder = UriComponentsBuilder.fromUri(uri);
+            final var present = request.getQueryParams().containsKey(config.getName());
+            request.getQueryParams().forEach((k, l) -> builder.replaceQueryParam(
+                    URLEncoder.encode(k, StandardCharsets.UTF_8),
+                    l.stream().map(v -> URLEncoder.encode(v, StandardCharsets.UTF_8)).toList()
+            ));
+            if (!present) {
+                builder.queryParam(
+                        URLEncoder.encode(config.getName(), StandardCharsets.UTF_8),
+                        URLEncoder.encode(config.getValue(), StandardCharsets.UTF_8)
+                );
             }
-
-//            @Override
-//            public String toString() {
-//                return filterToStringCreator(ModifiedAddRequestParameterGatewayFilterFactory.this)
-//                        .append(config.getName(), config.getValue())
-//                        .toString();
-//            }
+            final var newUri = builder.build(true).toUri();
+            final var newRequest = e.getRequest().mutate().uri(newUri).build();
+            return c.filter(e.mutate().request(newRequest).build());
         };
     }
 
