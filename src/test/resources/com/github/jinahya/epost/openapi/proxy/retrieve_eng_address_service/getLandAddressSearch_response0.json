@@ -1,0 +1,20 @@
+{
+  "LandAddressEngSearchListResponse": {
+    "cmmMsgHeader": {
+      "requestMsgId": "",
+      "responseMsgId": "",
+      "responseTime": "20240725:141510700",
+      "successYN": "Y",
+      "returnCode": "00",
+      "errMsg": "",
+      "totalCount": 1,
+      "countPerPage": 2,
+      "totalPage": 1,
+      "currentPage": 1
+    },
+    "landAddressEngSearchList": {
+      "engAddress": "43-4, Daeho-dong, Naju-si, Jeollanam-do, 58243, REP. OF KOREA",
+      "areaCode": 58243
+    }
+  }
+}

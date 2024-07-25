@@ -1,6 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.retrieve_eng_address_service;
 
-public final class _RetrieveEngAddressService {
+public final class _RetrieveEngAddressServiceConstants {
 
     public static final String REQUEST_URI_GET_STATE_LIST =
             "/postal/retrieveEngAddressService/retrieveEngAddressService/getStateList";
@@ -27,7 +27,7 @@ public final class _RetrieveEngAddressService {
             "/postal/retrieveEngAddressService/retrieveEngAddressService/getLandAddressSearch";
 
     // -----------------------------------------------------------------------------------------------------------------
-    private _RetrieveEngAddressService() {
+    private _RetrieveEngAddressServiceConstants() {
         throw new AssertionError("instantiation is not allowed");
     }
 }

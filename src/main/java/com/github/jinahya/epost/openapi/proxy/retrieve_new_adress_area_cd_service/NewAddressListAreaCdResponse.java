@@ -2,7 +2,6 @@ package com.github.jinahya.epost.openapi.proxy.retrieve_new_adress_area_cd_servi
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.github.jinahya.epost.openapi.proxy._common.AbstractType;
@@ -37,7 +36,7 @@ public class NewAddressListAreaCdResponse
         implements Wrapping.Self<NewAddressListAreaCdResponse> {
 
     @Serial
-    private static final long serialVersionUID = -1527464956712592866L;
+    private static final long serialVersionUID = 774107822436988264L;
 
     // -----------------------------------------------------------------------------------------------------------------
     static final String ROOT_NAME = "NewAddressListResponse";

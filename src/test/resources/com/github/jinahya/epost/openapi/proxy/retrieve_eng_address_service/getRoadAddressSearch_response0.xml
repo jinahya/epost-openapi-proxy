@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RoadAddressEngSearchListResponse>
+  <cmmMsgHeader>
+    <requestMsgId></requestMsgId>
+    <responseMsgId></responseMsgId>
+    <responseTime>20240725:14100727</responseTime>
+    <successYN>Y</successYN>
+    <returnCode>00</returnCode>
+    <errMsg></errMsg>
+    <totalCount>1</totalCount>
+    <countPerPage>2</countPerPage>
+    <totalPage>1</totalPage>
+    <currentPage>1</currentPage>
+  </cmmMsgHeader>
+  <roadAddressEngSearchList>
+    <engAddress>45-40, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+</RoadAddressEngSearchListResponse>

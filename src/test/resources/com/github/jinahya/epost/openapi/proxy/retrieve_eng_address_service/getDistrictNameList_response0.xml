@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DistrictEngListResponse>
+  <cmmMsgHeader>
+    <requestMsgId></requestMsgId>
+    <responseMsgId></responseMsgId>
+    <responseTime>20240725:141256611</responseTime>
+    <successYN>Y</successYN>
+    <returnCode>00</returnCode>
+    <errMsg></errMsg>
+  </cmmMsgHeader>
+  <districtEngList>
+    <districtEngName>Dado-myeon</districtEngName>
+  </districtEngList>
+  <districtEngList>
+    <districtEngName>Daegi-dong</districtEngName>
+  </districtEngList>
+  <districtEngList>
+    <districtEngName>Daeho-dong</districtEngName>
+  </districtEngList>
+  <districtEngList>
+    <districtEngName>Dasi-myeon</districtEngName>
+  </districtEngList>
+  <districtEngList>
+    <districtEngName>Donggang-myeon</districtEngName>
+  </districtEngList>
+  <districtEngList>
+    <districtEngName>Dongsu-dong</districtEngName>
+  </districtEngList>
+</DistrictEngListResponse>

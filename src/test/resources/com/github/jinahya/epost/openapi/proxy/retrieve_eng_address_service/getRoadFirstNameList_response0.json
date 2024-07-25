@@ -1,0 +1,94 @@
+{
+  "RoadEngFirstNameListResponse": {
+    "cmmMsgHeader": {
+      "requestMsgId": "",
+      "responseMsgId": "",
+      "responseTime": "20240725:140816621",
+      "successYN": "Y",
+      "returnCode": "00",
+      "errMsg": ""
+    },
+    "roadEngFirstNameList": [
+      {
+        "roadEngFirstName": "A",
+        "cnt": 3
+      },
+      {
+        "roadEngFirstName": "B",
+        "cnt": 47
+      },
+      {
+        "roadEngFirstName": "C",
+        "cnt": 21
+      },
+      {
+        "roadEngFirstName": "D",
+        "cnt": 77
+      },
+      {
+        "roadEngFirstName": "E",
+        "cnt": 3
+      },
+      {
+        "roadEngFirstName": "G",
+        "cnt": 83
+      },
+      {
+        "roadEngFirstName": "H",
+        "cnt": 64
+      },
+      {
+        "roadEngFirstName": "I",
+        "cnt": 17
+      },
+      {
+        "roadEngFirstName": "J",
+        "cnt": 63
+      },
+      {
+        "roadEngFirstName": "K",
+        "cnt": 1
+      },
+      {
+        "roadEngFirstName": "M",
+        "cnt": 28
+      },
+      {
+        "roadEngFirstName": "N",
+        "cnt": 44
+      },
+      {
+        "roadEngFirstName": "O",
+        "cnt": 26
+      },
+      {
+        "roadEngFirstName": "P",
+        "cnt": 20
+      },
+      {
+        "roadEngFirstName": "R",
+        "cnt": 1
+      },
+      {
+        "roadEngFirstName": "S",
+        "cnt": 163
+      },
+      {
+        "roadEngFirstName": "T",
+        "cnt": 7
+      },
+      {
+        "roadEngFirstName": "U",
+        "cnt": 12
+      },
+      {
+        "roadEngFirstName": "W",
+        "cnt": 36
+      },
+      {
+        "roadEngFirstName": "Y",
+        "cnt": 57
+      }
+    ]
+  }
+}

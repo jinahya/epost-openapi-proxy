@@ -19,7 +19,7 @@ public class AreaCodeIndoRequest
         extends AbstractType {
 
     @Serial
-    private static final long serialVersionUID = -7468923602062739458L;
+    private static final long serialVersionUID = -3775051159492651672L;
 
     // -----------------------------------------------------------------------------------------------------------------
     public static final String QUERY_PARAM_NAME_SERVICE_KEY = "serviceKey";

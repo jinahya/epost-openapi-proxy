@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.Element;
 import jakarta.xml.bind.annotation.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.xml.namespace.QName;
 import java.io.Serial;
@@ -19,6 +20,7 @@ import java.util.Map;
 @Setter
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SuperBuilder(toBuilder = true)
 public abstract class AbstractType
         implements Serializable {
 
