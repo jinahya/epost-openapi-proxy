@@ -37,7 +37,7 @@ public class AreaCodeInfoResponse
         implements Wrapping.Self<AreaCodeInfoResponse> {
 
     @Serial
-    private static final long serialVersionUID = -1527464956712592866L;
+    private static final long serialVersionUID = 9803126941295821L;
 
     // -----------------------------------------------------------------------------------------------------------------
     static final String ROOT_NAME = "AreaCodeInfoResponse";

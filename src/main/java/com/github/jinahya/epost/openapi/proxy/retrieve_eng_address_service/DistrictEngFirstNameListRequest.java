@@ -16,30 +16,33 @@ import java.util.Objects;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder(toBuilder = true)
-public class CityEngListRequest
+public class DistrictEngFirstNameListRequest
         extends AbstractType {
 
     @Serial
-    private static final long serialVersionUID = 2981550532310902459L;
+    private static final long serialVersionUID = -6632649622472952951L;
 
     // -----------------------------------------------------------------------------------------------------------------
-    public CityEngListRequest.CityEngListRequestBuilder<?, ?> builderFrom(
-            final StateEngListResponse.StateEngList stateEngList) {
+    public static DistrictEngFirstNameListRequest.DistrictEngFirstNameListRequestBuilder<?, ?> builderFrom(
+            final StateEngListResponse.StateEngList stateEngList,
+            final CityEngListResponse.CityEngList cityEngList) {
         Objects.requireNonNull(stateEngList, "stateEngList is null");
+        Objects.requireNonNull(cityEngList, "cityEngList is null");
         return builder()
-                .stateEngName(stateEngList.getStateEngName()
-                );
+                .stateEngName(stateEngList.getStateEngName())
+                .cityEngName(cityEngList.getCityEngName());
     }
 
-    public CityEngListRequest from(final StateEngListResponse.StateEngList stateEngList) {
-        return builderFrom(stateEngList).build();
+    public static DistrictEngFirstNameListRequest from(final StateEngListResponse.StateEngList stateEngList,
+                                                       final CityEngListResponse.CityEngList cityEngList) {
+        return builderFrom(stateEngList, cityEngList)
+                .build();
     }
-
-    // ---------------------------------------------------------------------------------------------------- stateEngName
-
-    // ----------------------------------------------------------------------------------------------------- cityEngName
 
     // -----------------------------------------------------------------------------------------------------------------
     @NotBlank
     private String stateEngName;
+
+    @NotBlank
+    private String cityEngName;
 }

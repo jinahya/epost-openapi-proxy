@@ -39,7 +39,7 @@ public class NewAddressListAreaCdSearchAllResponse
         implements Wrapping.Self<NewAddressListAreaCdSearchAllResponse> {
 
     @Serial
-    private static final long serialVersionUID = -1527464956712592866L;
+    private static final long serialVersionUID = 8214625216695174852L;
 
     // -----------------------------------------------------------------------------------------------------------------
     static final String ROOT_NAME = "NewAddressListResponse";
@@ -55,7 +55,7 @@ public class NewAddressListAreaCdSearchAllResponse
             extends AbstractAddress {
 
         @Serial
-        private static final long serialVersionUID = -3719216662681924951L;
+        private static final long serialVersionUID = 2648926399901817807L;
     }
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS

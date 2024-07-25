@@ -1,0 +1,78 @@
+{
+  "DistrictEngFirstNameListResponse": {
+    "cmmMsgHeader": {
+      "requestMsgId": "",
+      "responseMsgId": "",
+      "responseTime": "20240725:141136837",
+      "successYN": "Y",
+      "returnCode": "00",
+      "errMsg": ""
+    },
+    "districtEngFirstNameList": [
+      {
+        "districtEngFirstName": "A",
+        "cnt": 1
+      },
+      {
+        "districtEngFirstName": "B",
+        "cnt": 5
+      },
+      {
+        "districtEngFirstName": "C",
+        "cnt": 1
+      },
+      {
+        "districtEngFirstName": "D",
+        "cnt": 6
+      },
+      {
+        "districtEngFirstName": "G",
+        "cnt": 8
+      },
+      {
+        "districtEngFirstName": "I",
+        "cnt": 1
+      },
+      {
+        "districtEngFirstName": "J",
+        "cnt": 3
+      },
+      {
+        "districtEngFirstName": "M",
+        "cnt": 1
+      },
+      {
+        "districtEngFirstName": "N",
+        "cnt": 4
+      },
+      {
+        "districtEngFirstName": "O",
+        "cnt": 1
+      },
+      {
+        "districtEngFirstName": "P",
+        "cnt": 1
+      },
+      {
+        "districtEngFirstName": "S",
+        "cnt": 10
+      },
+      {
+        "districtEngFirstName": "T",
+        "cnt": 1
+      },
+      {
+        "districtEngFirstName": "U",
+        "cnt": 1
+      },
+      {
+        "districtEngFirstName": "W",
+        "cnt": 1
+      },
+      {
+        "districtEngFirstName": "Y",
+        "cnt": 2
+      }
+    ]
+  }
+}

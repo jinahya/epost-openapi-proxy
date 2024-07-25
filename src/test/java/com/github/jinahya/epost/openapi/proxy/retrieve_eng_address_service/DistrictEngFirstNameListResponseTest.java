@@ -10,17 +10,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-class StateEngListResponseTest
-        extends AbstractSelfWrappingResponseTypeTest<StateEngListResponse> {
+class DistrictEngFirstNameListResponseTest
+        extends AbstractSelfWrappingResponseTypeTest<DistrictEngFirstNameListResponse> {
 
-    StateEngListResponseTest() {
-        super(StateEngListResponse.class);
+    DistrictEngFirstNameListResponseTest() {
+        super(DistrictEngFirstNameListResponse.class);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     @Override
-    protected SingleTypeEqualsVerifierApi<StateEngListResponse> __equals(
-            SingleTypeEqualsVerifierApi<StateEngListResponse> verifierApi) {
+    protected SingleTypeEqualsVerifierApi<DistrictEngFirstNameListResponse> __equals(
+            SingleTypeEqualsVerifierApi<DistrictEngFirstNameListResponse> verifierApi) {
         return super.__equals(verifierApi)
                 .withPrefabValues(
                         CmmMsgHeader.class,
@@ -28,20 +28,20 @@ class StateEngListResponseTest
                         new CmmMsgHeader().requestMsgId("b")
                 )
                 .withPrefabValues(
-                        java.util.List.class,
+                        List.class,
                         List.of(new Object()),
                         List.of(new Object())
                 )
                 .withPrefabValues(
-                        java.util.Map.class,
+                        Map.class,
                         Map.of("a", new Object()),
                         Map.of("b", new Object())
                 )
                 .withPrefabValues(
-                        StateEngListResponse.class,
-                        new StateEngListResponse().cmmMsgHeader(
+                        DistrictEngFirstNameListResponse.class,
+                        new DistrictEngFirstNameListResponse().cmmMsgHeader(
                                 new CmmMsgHeader().requestMsgId("a")),
-                        new StateEngListResponse().cmmMsgHeader(
+                        new DistrictEngFirstNameListResponse().cmmMsgHeader(
                                 new CmmMsgHeader().requestMsgId("b"))
                 );
     }
@@ -49,7 +49,7 @@ class StateEngListResponseTest
     // -----------------------------------------------------------------------------------------------------------------
     private static Stream<String> getXmlResNameStream() {
         return Stream.of(
-                "getStateList_response0.xml"
+                "getDistrictFirstNameList_response0.xml"
         );
     }
 
@@ -58,14 +58,14 @@ class StateEngListResponseTest
     void __xml(final String resName) throws Throwable {
         final var unmarshalled = applyResourceAsStreamChecked(
                 resName,
-                StateEngListResponse::unmarshalInstance
+                DistrictEngFirstNameListResponse::unmarshalInstance
         );
         verifyValid(unmarshalled);
     }
 
     private static Stream<String> getJsonResNameStream() {
         return Stream.of(
-                "getStateList_response0.json"
+                "getDistrictFirstNameList_response0.json"
         );
     }
 
@@ -74,7 +74,7 @@ class StateEngListResponseTest
     void __json(final String resName) throws Throwable {
         final var unmarshalled = applyResourceAsStreamChecked(
                 resName,
-                StateEngListResponse::deserializeInstance
+                DistrictEngFirstNameListResponse::deserializeInstance
         );
         verifyValid(unmarshalled);
     }

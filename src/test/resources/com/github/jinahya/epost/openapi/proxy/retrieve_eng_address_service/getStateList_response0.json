@@ -1,0 +1,65 @@
+{
+  "StateEngListResponse": {
+    "cmmMsgHeader": {
+      "requestMsgId": "",
+      "responseMsgId": "",
+      "responseTime": "20240725:140423442",
+      "successYN": "Y",
+      "returnCode": "00",
+      "errMsg": ""
+    },
+    "stateEngList": [
+      {
+        "stateEngName": "Busan"
+      },
+      {
+        "stateEngName": "Chungcheongbuk-do"
+      },
+      {
+        "stateEngName": "Chungcheongnam-do"
+      },
+      {
+        "stateEngName": "Daegu"
+      },
+      {
+        "stateEngName": "Daejeon"
+      },
+      {
+        "stateEngName": "Gangwon-do"
+      },
+      {
+        "stateEngName": "Gwangju"
+      },
+      {
+        "stateEngName": "Gyeonggi-do"
+      },
+      {
+        "stateEngName": "Gyeongsangbuk-do"
+      },
+      {
+        "stateEngName": "Gyeongsangnam-do"
+      },
+      {
+        "stateEngName": "Incheon"
+      },
+      {
+        "stateEngName": "Jeju-do"
+      },
+      {
+        "stateEngName": "Jeollanam-do"
+      },
+      {
+        "stateEngName": "Jeonbuk-do"
+      },
+      {
+        "stateEngName": "Sejong-si"
+      },
+      {
+        "stateEngName": "Seoul"
+      },
+      {
+        "stateEngName": "Ulsan"
+      }
+    ]
+  }
+}
