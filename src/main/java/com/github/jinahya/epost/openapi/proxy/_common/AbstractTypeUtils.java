@@ -8,6 +8,8 @@ import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public final class AbstractTypeUtils {
@@ -25,6 +27,26 @@ public final class AbstractTypeUtils {
                 clazz,
                 source
         );
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    private static final Map<Class<?>, JAXBContext> CONTEXTS = new HashMap<>();
+
+    private static JAXBContext context(final Class<?> clazz) {
+        Objects.requireNonNull(clazz, "clazz is null");
+        return CONTEXTS.computeIfAbsent(clazz, k -> {
+            try {
+                return JAXBContext.newInstance(k);
+            } catch (final JAXBException jaxbe) {
+                throw new RuntimeException("failed to create context for " + k, jaxbe);
+            }
+        });
+    }
+
+    public static <T extends AbstractType> T unmarshalNoNamespacedInstance(final Class<T> clazz,
+                                                                           final Object source)
+            throws JAXBException {
+        return unmarshalNoNamespacedInstance(context(clazz), clazz, source);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

@@ -5,6 +5,7 @@ import jakarta.validation.Validator;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration;
@@ -33,29 +34,37 @@ import static org.assertj.core.api.Assertions.assertThat;
 )
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Slf4j
-class GetStateList_SpringBootIT {
+class GetCityList_SpringBootIT {
 
     // -----------------------------------------------------------------------------------------------------------------
-    private static Stream<MediaType> getMediaTypeStream() {
+    private static Stream<Arguments> getArgumentsStream() {
         return Stream.of(
-                null,
-                MediaType.APPLICATION_XML,
-                MediaType.APPLICATION_JSON
+                Arguments.of("Jeollanam-do")
         );
+    }
+
+    private static Stream<Arguments> getArgumentsWithMediaTypeStream() {
+        return getArgumentsStream().flatMap(a -> {
+            final var got = a.get();
+            return Stream
+                    .of(null, MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON)
+                    .map(m -> Arguments.of(got[0], m));
+        });
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     @MethodSource({
-            "getMediaTypeStream"
+            "getArgumentsWithMediaTypeStream"
     })
     @ParameterizedTest
-    void __(final MediaType mediaType) {
+    void __(final String stateEngName, final MediaType mediaType) {
         final var requestSpec = webClient
                 .get()
                 .uri(b -> {
-                    final var uri = b.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_STATE_LIST)
-                            .build();
-                    log.debug("uri: {}", uri.toASCIIString());
+                    final var uri = CityEngListRequest.builder().stateEngName(stateEngName).build().set(b).build();
+//                    final var uri = b.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_CITY_LIST)
+//                            .queryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NM, stateEngName)
+//                            .build();
                     return uri;
                 });
         if (mediaType != null) {
@@ -71,11 +80,11 @@ class GetStateList_SpringBootIT {
         }
         final var responseBody = Optional.ofNullable(
                         responseSpec
-                                .expectBody(StateEngListResponse.class)
+                                .expectBody(CityEngListResponse.class)
                                 .returnResult()
                                 .getResponseBody()
                 )
-                .map(StateEngListResponse::get)
+                .map(CityEngListResponse::get)
                 .orElseThrow();
         assertThat(responseBody).isNotNull().satisfies(r -> {
             assertThat(validator.validate(r)).isEmpty();
@@ -85,8 +94,8 @@ class GetStateList_SpringBootIT {
             log.debug("responseTime: {}", h.getResponseTime());
             log.debug("responseTimeAsLocalDateTime: {}", h.getResponseTimeAsLocalDateTime());
         });
-        responseBody.getStateEngList().forEach(e -> {
-            log.debug("address: {}", e);
+        responseBody.getCityEngList().forEach(e -> {
+            log.debug("cityEngList: {}", e);
         });
     }
 

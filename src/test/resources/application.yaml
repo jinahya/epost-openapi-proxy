@@ -22,7 +22,8 @@ spring:
 epost:
   openapi:
     proxy:
-      service-key: IfJN7A3cBBPttYf/FcFWC8pNDT3mi3SRSsDJmyAXQAUOlqvkQhP4ggZkHzhacIhEEJzcswWo8fraVeUBAOxQng==
+      service-key: QO8Jo5UWN4rASy9NIoiUXwQBSbOmphw6UT41sDCNzo8bBQDmJuseGioU3KK94sgHrXmliI5SGphq1akyyWJ5Qg==
+#      service-key: IfJN7A3cBBPttYf/FcFWC8pNDT3mi3SRSsDJmyAXQAUOlqvkQhP4ggZkHzhacIhEEJzcswWo8fraVeUBAOxQng==
 #      service-key: IfJN7A3cBBPttYf%2FFcFWC8pNDT3mi3SRSsDJmyAXQAUOlqvkQhP4ggZkHzhacIhEEJzcswWo8fraVeUBAOxQng%3D%3D
       routes:
         retrieve_new_adress_area_cd_search_all_service:

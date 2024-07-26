@@ -16,12 +16,13 @@ import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.*;
 
 import java.io.Serial;
 import java.util.List;
 
-//@XmlRootElement(name = StateEngListResponse.ROOT_NAME)
+@XmlRootElement(name = CityEngListResponse.ROOT_NAME)
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
 @Getter

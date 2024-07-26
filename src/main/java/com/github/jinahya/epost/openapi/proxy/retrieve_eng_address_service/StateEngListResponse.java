@@ -2,6 +2,7 @@ package com.github.jinahya.epost.openapi.proxy.retrieve_eng_address_service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.github.jinahya.epost.openapi.proxy._common.AbstractSelfWrappingResponseType;
@@ -16,12 +17,14 @@ import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.*;
 
 import java.io.Serial;
 import java.util.List;
 
-//@XmlRootElement(name = StateEngListResponse.ROOT_NAME)
+@JsonRootName(StateEngListResponse.ROOT_NAME)
+@XmlRootElement(name = StateEngListResponse.ROOT_NAME)
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
 @Getter
@@ -67,6 +70,7 @@ public class StateEngListResponse
 
     // -----------------------------------------------------------------------------------------------------------------
     @Valid
+    @NotNull
     private CmmMsgHeader cmmMsgHeader;
 
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)

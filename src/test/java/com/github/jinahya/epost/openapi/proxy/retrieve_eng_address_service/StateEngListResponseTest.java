@@ -1,6 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.retrieve_eng_address_service;
 
 import com.github.jinahya.epost.openapi.proxy._common.AbstractSelfWrappingResponseTypeTest;
+import com.github.jinahya.epost.openapi.proxy._common.AbstractTypeUtils;
 import com.github.jinahya.epost.openapi.proxy._common.CmmMsgHeader;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -58,11 +59,12 @@ class StateEngListResponseTest
     void __xml(final String resName) throws Throwable {
         final var unmarshalled = applyResourceAsStreamChecked(
                 resName,
-                StateEngListResponse::unmarshalInstance
+                r -> AbstractTypeUtils.unmarshalNoNamespacedInstance(StateEngListResponse.class, r)
         );
         verifyValid(unmarshalled);
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
     private static Stream<String> getJsonResNameStream() {
         return Stream.of(
                 "getStateList_response0.json"
@@ -72,10 +74,12 @@ class StateEngListResponseTest
     @MethodSource({"getJsonResNameStream"})
     @ParameterizedTest
     void __json(final String resName) throws Throwable {
-        final var unmarshalled = applyResourceAsStreamChecked(
+        // -------------------------------------------------------------------------------------------------------- when
+        final var deserialized = applyResourceAsStreamChecked(
                 resName,
-                StateEngListResponse::deserializeInstance
+                r -> AbstractTypeUtils.deserializeInstance(StateEngListResponse.class, r).get()
         );
-        verifyValid(unmarshalled);
+        // -------------------------------------------------------------------------------------------------------- then
+        verifyValid(deserialized);
     }
 }

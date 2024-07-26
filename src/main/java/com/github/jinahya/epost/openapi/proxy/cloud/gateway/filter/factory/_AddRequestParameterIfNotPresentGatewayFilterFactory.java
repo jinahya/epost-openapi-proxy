@@ -22,6 +22,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -34,8 +35,10 @@ import java.nio.charset.StandardCharsets;
  * original source</a>
  */
 @Component
-public class _AddRequestParameterIfNotPresentGatewayFilterFactory
+class _AddRequestParameterIfNotPresentGatewayFilterFactory
         extends AbstractNameValueGatewayFilterFactory {
+
+    private static final Charset CHARSET = StandardCharsets.UTF_8;
 
     @Override
     public GatewayFilter apply(final NameValueConfig config) {
@@ -45,17 +48,17 @@ public class _AddRequestParameterIfNotPresentGatewayFilterFactory
             final var builder = UriComponentsBuilder.fromUri(uri);
             final var present = request.getQueryParams().containsKey(config.getName());
             request.getQueryParams().forEach((k, l) -> builder.replaceQueryParam(
-                    URLEncoder.encode(k, StandardCharsets.UTF_8),
-                    l.stream().map(v -> URLEncoder.encode(v, StandardCharsets.UTF_8)).toList()
+                    URLEncoder.encode(k, CHARSET),
+                    l.stream().map(v -> URLEncoder.encode(v, CHARSET)).toList()
             ));
             if (!present) {
                 builder.queryParam(
-                        URLEncoder.encode(config.getName(), StandardCharsets.UTF_8),
-                        URLEncoder.encode(config.getValue(), StandardCharsets.UTF_8)
+                        URLEncoder.encode(config.getName(), CHARSET),
+                        URLEncoder.encode(config.getValue(), CHARSET)
                 );
             }
             final var newUri = builder.build(true).toUri();
-            final var newRequest = e.getRequest().mutate().uri(newUri).build();
+            final var newRequest = request.mutate().uri(newUri).build();
             return c.filter(e.mutate().request(newRequest).build());
         };
     }

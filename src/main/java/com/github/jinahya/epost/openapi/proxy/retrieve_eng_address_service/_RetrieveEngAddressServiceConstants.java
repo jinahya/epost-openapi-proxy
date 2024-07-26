@@ -27,6 +27,11 @@ public final class _RetrieveEngAddressServiceConstants {
             "/postal/retrieveEngAddressService/retrieveEngAddressService/getLandAddressSearch";
 
     // -----------------------------------------------------------------------------------------------------------------
+    public static final String PARAM_STATE_ENG_NM = "stateEngNm";
+
+    public static final String PARAM_STATE_ENG_NAME = "stateEngName";
+
+    // -----------------------------------------------------------------------------------------------------------------
     private _RetrieveEngAddressServiceConstants() {
         throw new AssertionError("instantiation is not allowed");
     }

@@ -1,12 +1,13 @@
 package com.github.jinahya.epost.openapi.proxy.retrieve_eng_address_service;
 
-import com.github.jinahya.epost.openapi.proxy._common.AbstractType;
+import com.github.jinahya.epost.openapi.proxy._common.AbstractRequestType;
 import jakarta.validation.constraints.NotBlank;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.springframework.web.util.UriBuilder;
 
 import java.io.Serial;
 import java.util.Objects;
@@ -17,7 +18,7 @@ import java.util.Objects;
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder(toBuilder = true)
 public class CityEngListRequest
-        extends AbstractType {
+        extends AbstractRequestType {
 
     @Serial
     private static final long serialVersionUID = 2981550532310902459L;
@@ -33,6 +34,16 @@ public class CityEngListRequest
 
     public CityEngListRequest from(final StateEngListResponse.StateEngList stateEngList) {
         return builderFrom(stateEngList).build();
+    }
+
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+
+    // -----------------------------------------------------------------------------------------------------------------
+    public UriBuilder set(final UriBuilder builder) {
+        return super.set(builder)
+                .path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_CITY_LIST)
+                .replaceQueryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NM, stateEngName)
+                ;
     }
 
     // ---------------------------------------------------------------------------------------------------- stateEngName

@@ -1,6 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.retrieve_eng_address_service;
 
 import com.github.jinahya.epost.openapi.proxy._common.AbstractSelfWrappingResponseTypeTest;
+import com.github.jinahya.epost.openapi.proxy._common.AbstractTypeUtils;
 import com.github.jinahya.epost.openapi.proxy._common.CmmMsgHeader;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -72,10 +73,10 @@ class RoadEngListResponseTest
     @MethodSource({"getJsonResNameStream"})
     @ParameterizedTest
     void __json(final String resName) throws Throwable {
-        final var unmarshalled = applyResourceAsStreamChecked(
+        final var deserialized = applyResourceAsStreamChecked(
                 resName,
-                RoadEngListResponse::deserializeInstance
+                r -> AbstractTypeUtils.deserializeInstance(RoadEngListResponse.class, r).get()
         );
-        verifyValid(unmarshalled);
+        verifyValid(deserialized);
     }
 }
