@@ -37,9 +37,10 @@ public class DistrictEngListRequest
                 .districtEngFirstName(districtEngFirstNameList.getDistrictEngFirstName());
     }
 
-    public static DistrictEngListRequest from(final StateEngListResponse.StateEngList stateEngList,
-                                              final CityEngListResponse.CityEngList cityEngList,
-                                              final DistrictEngFirstNameListResponse.DistrictEngFirstNameList districtEngFirstNameList) {
+    public static DistrictEngListRequest from(
+            final StateEngListResponse.StateEngList stateEngList,
+            final CityEngListResponse.CityEngList cityEngList,
+            final DistrictEngFirstNameListResponse.DistrictEngFirstNameList districtEngFirstNameList) {
         return builderFrom(stateEngList, cityEngList, districtEngFirstNameList)
                 .build();
     }
