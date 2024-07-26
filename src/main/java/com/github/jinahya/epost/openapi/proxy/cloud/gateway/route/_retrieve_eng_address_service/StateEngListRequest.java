@@ -1,10 +1,8 @@
-package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
+package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng_address_service;
 
 import com.github.jinahya.epost.openapi.proxy._common.AbstractRequestType;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.springframework.web.util.UriBuilder;
 
 import java.io.Serial;
@@ -13,6 +11,8 @@ import java.io.Serial;
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@SuperBuilder(toBuilder = true)
 public class StateEngListRequest
         extends AbstractRequestType {
 
@@ -21,6 +21,8 @@ public class StateEngListRequest
 
     @Override
     protected UriBuilder set(final UriBuilder builder) {
-        return super.set(builder);
+        return super.set(
+                builder.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_STATE_LIST)
+        );
     }
 }

@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
+package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng_address_service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,55 +11,49 @@ import com.github.jinahya.epost.openapi.proxy._common.CmmMsgHeader;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.*;
 
 import java.io.Serial;
 import java.util.List;
 
-//@XmlRootElement(name = StateEngListResponse.ROOT_NAME)
+@XmlRootElement(name = RoadEngListResponse.ROOT_NAME)
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
-public class DistrictEngFirstNameListResponse
-        extends AbstractSelfWrappingResponseType<DistrictEngFirstNameListResponse> {
+public class RoadEngListResponse
+        extends AbstractSelfWrappingResponseType<RoadEngListResponse> {
 
     @Serial
-    private static final long serialVersionUID = 1731787869103028619L;
+    private static final long serialVersionUID = 2017574848867792334L;
 
     // -----------------------------------------------------------------------------------------------------------------
-    static final String ROOT_NAME = "DistrictEngFirstNameListResponse";
+    static final String ROOT_NAME = "RoadEngListResponse";
 
-    private static final String NAME_DISTRICT_ENG_FIRST_NAME_LIST = "districtEngFirstNameList";
+    // -----------------------------------------------------------------------------------------------------------------
+    private static final String NAME_ROAD_ENG_LIST = "roadEngList";
 
     @Setter
     @Getter
     @ToString(callSuper = true)
     @EqualsAndHashCode(callSuper = true)
-    public static class DistrictEngFirstNameList
+    public static class RoadEngList
             extends AbstractType {
 
         @Serial
-        private static final long serialVersionUID = -7393190937923231268L;
+        private static final long serialVersionUID = 2944701965921059011L;
 
-        @Size(max = 1)
         @NotBlank
         @JsonProperty
         @XmlElement
-        private String districtEngFirstName;
-
-        @Positive
-//        @PositiveOrZero
-        @NotNull
-        private Integer cnt;
+        private String roadEngName;
     }
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
@@ -68,7 +62,7 @@ public class DistrictEngFirstNameListResponse
 
     // ---------------------------------------------------------------------------------------------------- cmmMsgHeader
     // just for the prefab values.
-    DistrictEngFirstNameListResponse cmmMsgHeader(final CmmMsgHeader cmmMsgHeader) {
+    RoadEngListResponse cmmMsgHeader(final CmmMsgHeader cmmMsgHeader) {
         setCmmMsgHeader(cmmMsgHeader);
         return this;
     }
@@ -78,52 +72,52 @@ public class DistrictEngFirstNameListResponse
     private CmmMsgHeader cmmMsgHeader;
 
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
-    @JsonProperty(NAME_DISTRICT_ENG_FIRST_NAME_LIST)
-    @XmlElement(name = NAME_DISTRICT_ENG_FIRST_NAME_LIST)
-    private List<@Valid @NotNull DistrictEngFirstNameList> districtEngFirstNameList;
+    @JsonProperty(NAME_ROAD_ENG_LIST)
+    @XmlElement(name = NAME_ROAD_ENG_LIST)
+    private List<@Valid @NotNull RoadEngList> roadEngList;
 
     // -----------------------------------------------------------------------------------------------------------------
     @Valid
     @JsonProperty(ROOT_NAME)
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.NONE)
-    private DistrictEngFirstNameListResponse wrapped;
+    private RoadEngListResponse wrapped;
 
     // -----------------------------------------------------------------------------------------------------------------
     private static final JAXBContext JAXB_CONTEXT;
 
     static {
         try {
-            JAXB_CONTEXT = JAXBContext.newInstance(DistrictEngFirstNameListResponse.class);
+            JAXB_CONTEXT = JAXBContext.newInstance(RoadEngListResponse.class);
         } catch (final JAXBException jaxbe) {
             throw new ExceptionInInitializerError(jaxbe);
         }
     }
 
-    public static DistrictEngFirstNameListResponse unmarshalInstance(final Object source) throws JAXBException {
+    public static RoadEngListResponse unmarshalInstance(final Object source) throws JAXBException {
         return AbstractTypeUtils.unmarshalNoNamespacedInstance(
                 JAXB_CONTEXT,
-                DistrictEngFirstNameListResponse.class,
+                RoadEngListResponse.class,
                 source
         );
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    public static DistrictEngFirstNameListResponse deserializeInstance(final ObjectReader reader, final Object source) {
+    public static RoadEngListResponse deserializeInstance(final ObjectReader reader, final Object source) {
         return AbstractTypeUtils.deserializeInstance(reader, source);
     }
 
-    public static DistrictEngFirstNameListResponse deserializeInstance(final ObjectMapper mapper, final Object source) {
+    public static RoadEngListResponse deserializeInstance(final ObjectMapper mapper, final Object source) {
         return AbstractTypeUtils.deserializeInstance(
                 mapper,
-                DistrictEngFirstNameListResponse.class,
+                RoadEngListResponse.class,
                 source
         );
     }
 
-    public static DistrictEngFirstNameListResponse deserializeInstance(final Object source) {
+    public static RoadEngListResponse deserializeInstance(final Object source) {
         return AbstractTypeUtils.deserializeInstance(
-                DistrictEngFirstNameListResponse.class,
+                RoadEngListResponse.class,
                 source
         );
     }

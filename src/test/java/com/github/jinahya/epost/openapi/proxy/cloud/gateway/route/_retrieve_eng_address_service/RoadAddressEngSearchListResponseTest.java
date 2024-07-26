@@ -1,8 +1,8 @@
-package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
+package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng_address_service;
 
 import com.github.jinahya.epost.openapi.proxy._common.AbstractSelfWrappingResponseTypeTest;
+import com.github.jinahya.epost.openapi.proxy._common.AbstractTypeUtils;
 import com.github.jinahya.epost.openapi.proxy._common.CmmMsgHeader;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.DistrictEngFirstNameListResponse;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -11,17 +11,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-class DistrictEngFirstNameListResponseTest
-        extends AbstractSelfWrappingResponseTypeTest<DistrictEngFirstNameListResponse> {
+class RoadAddressEngSearchListResponseTest
+        extends AbstractSelfWrappingResponseTypeTest<RoadAddressEngSearchListResponse> {
 
-    DistrictEngFirstNameListResponseTest() {
-        super(DistrictEngFirstNameListResponse.class);
+    RoadAddressEngSearchListResponseTest() {
+        super(RoadAddressEngSearchListResponse.class);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     @Override
-    protected SingleTypeEqualsVerifierApi<DistrictEngFirstNameListResponse> __equals(
-            SingleTypeEqualsVerifierApi<DistrictEngFirstNameListResponse> verifierApi) {
+    protected SingleTypeEqualsVerifierApi<RoadAddressEngSearchListResponse> __equals(
+            final SingleTypeEqualsVerifierApi<RoadAddressEngSearchListResponse> verifierApi) {
         return super.__equals(verifierApi)
                 .withPrefabValues(
                         CmmMsgHeader.class,
@@ -39,10 +39,10 @@ class DistrictEngFirstNameListResponseTest
                         Map.of("b", new Object())
                 )
                 .withPrefabValues(
-                        DistrictEngFirstNameListResponse.class,
-                        new DistrictEngFirstNameListResponse().cmmMsgHeader(
+                        RoadAddressEngSearchListResponse.class,
+                        new RoadAddressEngSearchListResponse().cmmMsgHeader(
                                 new CmmMsgHeader().requestMsgId("a")),
-                        new DistrictEngFirstNameListResponse().cmmMsgHeader(
+                        new RoadAddressEngSearchListResponse().cmmMsgHeader(
                                 new CmmMsgHeader().requestMsgId("b"))
                 );
     }
@@ -50,7 +50,7 @@ class DistrictEngFirstNameListResponseTest
     // -----------------------------------------------------------------------------------------------------------------
     private static Stream<String> getXmlResNameStream() {
         return Stream.of(
-                "getDistrictFirstNameList_response0.xml"
+                "getRoadAddressSearch_response0.xml"
         );
     }
 
@@ -59,24 +59,24 @@ class DistrictEngFirstNameListResponseTest
     void __xml(final String resName) throws Throwable {
         final var unmarshalled = applyResourceAsStreamChecked(
                 resName,
-                DistrictEngFirstNameListResponse::unmarshalInstance
+                r -> AbstractTypeUtils.unmarshalNoNamespacedInstance(RoadAddressEngSearchListResponse.class, r)
         );
         verifyValid(unmarshalled);
     }
 
     private static Stream<String> getJsonResNameStream() {
         return Stream.of(
-                "getDistrictFirstNameList_response0.json"
+                "getRoadAddressSearch_response0.json"
         );
     }
 
     @MethodSource({"getJsonResNameStream"})
     @ParameterizedTest
     void __json(final String resName) throws Throwable {
-        final var unmarshalled = applyResourceAsStreamChecked(
+        final var deserialized = applyResourceAsStreamChecked(
                 resName,
-                DistrictEngFirstNameListResponse::deserializeInstance
+                r -> AbstractTypeUtils.deserializeInstance(RoadAddressEngSearchListResponse.class, r).get()
         );
-        verifyValid(unmarshalled);
+        verifyValid(deserialized);
     }
 }

@@ -1,9 +1,7 @@
-package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
+package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng_address_service;
 
 import com.github.jinahya.epost.openapi.proxy._common.AbstractSelfWrappingResponseTypeTest;
-import com.github.jinahya.epost.openapi.proxy._common.AbstractTypeUtils;
 import com.github.jinahya.epost.openapi.proxy._common.CmmMsgHeader;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.RoadEngListResponse;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -12,17 +10,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-class RoadEngListResponseTest
-        extends AbstractSelfWrappingResponseTypeTest<RoadEngListResponse> {
+class CityEngListResponseTest
+        extends AbstractSelfWrappingResponseTypeTest<CityEngListResponse> {
 
-    RoadEngListResponseTest() {
-        super(RoadEngListResponse.class);
+    CityEngListResponseTest() {
+        super(CityEngListResponse.class);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     @Override
-    protected SingleTypeEqualsVerifierApi<RoadEngListResponse> __equals(
-            SingleTypeEqualsVerifierApi<RoadEngListResponse> verifierApi) {
+    protected SingleTypeEqualsVerifierApi<CityEngListResponse> __equals(
+            SingleTypeEqualsVerifierApi<CityEngListResponse> verifierApi) {
         return super.__equals(verifierApi)
                 .withPrefabValues(
                         CmmMsgHeader.class,
@@ -40,10 +38,10 @@ class RoadEngListResponseTest
                         Map.of("b", new Object())
                 )
                 .withPrefabValues(
-                        RoadEngListResponse.class,
-                        new RoadEngListResponse().cmmMsgHeader(
+                        CityEngListResponse.class,
+                        new CityEngListResponse().cmmMsgHeader(
                                 new CmmMsgHeader().requestMsgId("a")),
-                        new RoadEngListResponse().cmmMsgHeader(
+                        new CityEngListResponse().cmmMsgHeader(
                                 new CmmMsgHeader().requestMsgId("b"))
                 );
     }
@@ -51,7 +49,7 @@ class RoadEngListResponseTest
     // -----------------------------------------------------------------------------------------------------------------
     private static Stream<String> getXmlResNameStream() {
         return Stream.of(
-                "getRoadNameList_response0.xml"
+                "getCityList_response0.xml"
         );
     }
 
@@ -60,24 +58,24 @@ class RoadEngListResponseTest
     void __xml(final String resName) throws Throwable {
         final var unmarshalled = applyResourceAsStreamChecked(
                 resName,
-                RoadEngListResponse::unmarshalInstance
+                CityEngListResponse::unmarshalInstance
         );
         verifyValid(unmarshalled);
     }
 
     private static Stream<String> getJsonResNameStream() {
         return Stream.of(
-                "getRoadNameList_response0.json"
+                "getCityList_response0.json"
         );
     }
 
     @MethodSource({"getJsonResNameStream"})
     @ParameterizedTest
     void __json(final String resName) throws Throwable {
-        final var deserialized = applyResourceAsStreamChecked(
+        final var unmarshalled = applyResourceAsStreamChecked(
                 resName,
-                r -> AbstractTypeUtils.deserializeInstance(RoadEngListResponse.class, r).get()
+                CityEngListResponse::deserializeInstance
         );
-        verifyValid(deserialized);
+        verifyValid(unmarshalled);
     }
 }

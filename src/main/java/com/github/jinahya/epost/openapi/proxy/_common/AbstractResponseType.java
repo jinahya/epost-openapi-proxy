@@ -7,4 +7,6 @@ public abstract class AbstractResponseType
 
     @Serial
     private static final long serialVersionUID = 3542834861055866296L;
+
+    // TODO: define cmmMsgHeader, here
 }

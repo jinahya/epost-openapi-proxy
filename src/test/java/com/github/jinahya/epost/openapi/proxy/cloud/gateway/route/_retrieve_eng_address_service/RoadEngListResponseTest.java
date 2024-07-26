@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
+package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng_address_service;
 
 import com.github.jinahya.epost.openapi.proxy._common.AbstractSelfWrappingResponseTypeTest;
 import com.github.jinahya.epost.openapi.proxy._common.AbstractTypeUtils;
@@ -11,17 +11,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-class RoadEngFirstNameListResponseTest
-        extends AbstractSelfWrappingResponseTypeTest<RoadEngFirstNameListResponse> {
+class RoadEngListResponseTest
+        extends AbstractSelfWrappingResponseTypeTest<RoadEngListResponse> {
 
-    RoadEngFirstNameListResponseTest() {
-        super(RoadEngFirstNameListResponse.class);
+    RoadEngListResponseTest() {
+        super(RoadEngListResponse.class);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     @Override
-    protected SingleTypeEqualsVerifierApi<RoadEngFirstNameListResponse> __equals(
-            SingleTypeEqualsVerifierApi<RoadEngFirstNameListResponse> verifierApi) {
+    protected SingleTypeEqualsVerifierApi<RoadEngListResponse> __equals(
+            SingleTypeEqualsVerifierApi<RoadEngListResponse> verifierApi) {
         return super.__equals(verifierApi)
                 .withPrefabValues(
                         CmmMsgHeader.class,
@@ -39,10 +39,10 @@ class RoadEngFirstNameListResponseTest
                         Map.of("b", new Object())
                 )
                 .withPrefabValues(
-                        RoadEngFirstNameListResponse.class,
-                        new RoadEngFirstNameListResponse().cmmMsgHeader(
+                        RoadEngListResponse.class,
+                        new RoadEngListResponse().cmmMsgHeader(
                                 new CmmMsgHeader().requestMsgId("a")),
-                        new RoadEngFirstNameListResponse().cmmMsgHeader(
+                        new RoadEngListResponse().cmmMsgHeader(
                                 new CmmMsgHeader().requestMsgId("b"))
                 );
     }
@@ -50,7 +50,7 @@ class RoadEngFirstNameListResponseTest
     // -----------------------------------------------------------------------------------------------------------------
     private static Stream<String> getXmlResNameStream() {
         return Stream.of(
-                "getRoadFirstNameList_response0.xml"
+                "getRoadNameList_response0.xml"
         );
     }
 
@@ -59,15 +59,14 @@ class RoadEngFirstNameListResponseTest
     void __xml(final String resName) throws Throwable {
         final var unmarshalled = applyResourceAsStreamChecked(
                 resName,
-                r -> AbstractTypeUtils.unmarshalNoNamespacedInstance(RoadEngFirstNameListResponse.class, r)
+                RoadEngListResponse::unmarshalInstance
         );
         verifyValid(unmarshalled);
     }
 
-    // -----------------------------------------------------------------------------------------------------------------
     private static Stream<String> getJsonResNameStream() {
         return Stream.of(
-                "getRoadFirstNameList_response0.json"
+                "getRoadNameList_response0.json"
         );
     }
 
@@ -76,7 +75,7 @@ class RoadEngFirstNameListResponseTest
     void __json(final String resName) throws Throwable {
         final var deserialized = applyResourceAsStreamChecked(
                 resName,
-                r -> AbstractTypeUtils.deserializeInstance(RoadEngFirstNameListResponse.class, r).get()
+                r -> AbstractTypeUtils.deserializeInstance(RoadEngListResponse.class, r).get()
         );
         verifyValid(deserialized);
     }

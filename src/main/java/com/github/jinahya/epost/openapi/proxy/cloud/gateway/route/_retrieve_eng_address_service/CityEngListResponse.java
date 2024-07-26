@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
+package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng_address_service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -16,42 +16,46 @@ import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serial;
 import java.util.List;
 
-//@XmlRootElement(name = StateEngListResponse.ROOT_NAME)
+@XmlRootElement(name = CityEngListResponse.ROOT_NAME)
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
-public class DistrictEngListResponse
-        extends AbstractSelfWrappingResponseType<DistrictEngListResponse> {
+public class CityEngListResponse
+        extends AbstractSelfWrappingResponseType<CityEngListResponse> {
 
     @Serial
-    private static final long serialVersionUID = -7654933306929922530L;
+    private static final long serialVersionUID = 2105048637913742678L;
 
     // -----------------------------------------------------------------------------------------------------------------
-    static final String ROOT_NAME = "DistrictEngListResponse";
+    static final String ROOT_NAME = "CityEngListResponse";
 
-    private static final String NAME_DISTRICT_ENG_LIST = "districtEngList";
+    private static final String NAME_CITY_ENG_LIST = "cityEngList";
 
     @Setter
     @Getter
     @ToString(callSuper = true)
     @EqualsAndHashCode(callSuper = true)
-    public static class DistrictEngList
+    @NoArgsConstructor
+    @SuperBuilder(toBuilder = true)
+    public static class CityEngList
             extends AbstractType {
 
         @Serial
-        private static final long serialVersionUID = -3888280332264139184L;
+        private static final long serialVersionUID = -4416152072794741619L;
 
         @NotBlank
         @JsonProperty
         @XmlElement
-        private String districtEngName;
+        private String cityEngName;
     }
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
@@ -60,7 +64,7 @@ public class DistrictEngListResponse
 
     // ---------------------------------------------------------------------------------------------------- cmmMsgHeader
     // just for the prefab values.
-    DistrictEngListResponse cmmMsgHeader(final CmmMsgHeader cmmMsgHeader) {
+    CityEngListResponse cmmMsgHeader(final CmmMsgHeader cmmMsgHeader) {
         setCmmMsgHeader(cmmMsgHeader);
         return this;
     }
@@ -70,52 +74,52 @@ public class DistrictEngListResponse
     private CmmMsgHeader cmmMsgHeader;
 
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
-    @JsonProperty(NAME_DISTRICT_ENG_LIST)
-    @XmlElement(name = NAME_DISTRICT_ENG_LIST)
-    private List<@Valid @NotNull DistrictEngList> districtEngList;
+    @JsonProperty(NAME_CITY_ENG_LIST)
+    @XmlElement(name = NAME_CITY_ENG_LIST)
+    private List<@Valid @NotNull CityEngList> cityEngList;
 
     // -----------------------------------------------------------------------------------------------------------------
     @Valid
     @JsonProperty(ROOT_NAME)
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.NONE)
-    private DistrictEngListResponse wrapped;
+    private CityEngListResponse wrapped;
 
     // -----------------------------------------------------------------------------------------------------------------
     private static final JAXBContext JAXB_CONTEXT;
 
     static {
         try {
-            JAXB_CONTEXT = JAXBContext.newInstance(DistrictEngListResponse.class);
+            JAXB_CONTEXT = JAXBContext.newInstance(CityEngListResponse.class);
         } catch (final JAXBException jaxbe) {
             throw new ExceptionInInitializerError(jaxbe);
         }
     }
 
-    public static DistrictEngListResponse unmarshalInstance(final Object source) throws JAXBException {
+    public static CityEngListResponse unmarshalInstance(final Object source) throws JAXBException {
         return AbstractTypeUtils.unmarshalNoNamespacedInstance(
                 JAXB_CONTEXT,
-                DistrictEngListResponse.class,
+                CityEngListResponse.class,
                 source
         );
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    public static DistrictEngListResponse deserializeInstance(final ObjectReader reader, final Object source) {
+    public static CityEngListResponse deserializeInstance(final ObjectReader reader, final Object source) {
         return AbstractTypeUtils.deserializeInstance(reader, source);
     }
 
-    public static DistrictEngListResponse deserializeInstance(final ObjectMapper mapper, final Object source) {
+    public static CityEngListResponse deserializeInstance(final ObjectMapper mapper, final Object source) {
         return AbstractTypeUtils.deserializeInstance(
                 mapper,
-                DistrictEngListResponse.class,
+                CityEngListResponse.class,
                 source
         );
     }
 
-    public static DistrictEngListResponse deserializeInstance(final Object source) {
+    public static CityEngListResponse deserializeInstance(final Object source) {
         return AbstractTypeUtils.deserializeInstance(
-                DistrictEngListResponse.class,
+                CityEngListResponse.class,
                 source
         );
     }

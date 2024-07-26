@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
+package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng_address_service;
 
 import com.github.jinahya.epost.openapi.proxy._common.AbstractRequestType;
 import jakarta.validation.constraints.NotBlank;
@@ -54,10 +54,11 @@ public class RoadEngFirstNameListRequest
 
     @Override
     protected UriBuilder set(final UriBuilder builder) {
-        return super.set(builder)
-                .replaceQueryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NAME, stateEngName)
-                .replaceQueryParam(_RetrieveEngAddressServiceConstants.PARAM_CITY_ENG_NAME, cityEngName)
-                ;
+        return super.set(
+                builder.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_ROAD_FIRST_NAME_LIST)
+                        .replaceQueryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NAME, stateEngName)
+                        .replaceQueryParam(_RetrieveEngAddressServiceConstants.PARAM_CITY_ENG_NAME, cityEngName)
+        );
     }
 
     // ---------------------------------------------------------------------------------------------------- stateEngName

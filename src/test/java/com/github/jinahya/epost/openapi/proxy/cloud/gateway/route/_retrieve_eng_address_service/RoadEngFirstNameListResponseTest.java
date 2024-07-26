@@ -1,9 +1,8 @@
-package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
+package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng_address_service;
 
 import com.github.jinahya.epost.openapi.proxy._common.AbstractSelfWrappingResponseTypeTest;
 import com.github.jinahya.epost.openapi.proxy._common.AbstractTypeUtils;
 import com.github.jinahya.epost.openapi.proxy._common.CmmMsgHeader;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.StateEngListResponse;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -12,17 +11,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-class StateEngListResponseTest
-        extends AbstractSelfWrappingResponseTypeTest<StateEngListResponse> {
+class RoadEngFirstNameListResponseTest
+        extends AbstractSelfWrappingResponseTypeTest<RoadEngFirstNameListResponse> {
 
-    StateEngListResponseTest() {
-        super(StateEngListResponse.class);
+    RoadEngFirstNameListResponseTest() {
+        super(RoadEngFirstNameListResponse.class);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     @Override
-    protected SingleTypeEqualsVerifierApi<StateEngListResponse> __equals(
-            SingleTypeEqualsVerifierApi<StateEngListResponse> verifierApi) {
+    protected SingleTypeEqualsVerifierApi<RoadEngFirstNameListResponse> __equals(
+            SingleTypeEqualsVerifierApi<RoadEngFirstNameListResponse> verifierApi) {
         return super.__equals(verifierApi)
                 .withPrefabValues(
                         CmmMsgHeader.class,
@@ -30,20 +29,20 @@ class StateEngListResponseTest
                         new CmmMsgHeader().requestMsgId("b")
                 )
                 .withPrefabValues(
-                        java.util.List.class,
+                        List.class,
                         List.of(new Object()),
                         List.of(new Object())
                 )
                 .withPrefabValues(
-                        java.util.Map.class,
+                        Map.class,
                         Map.of("a", new Object()),
                         Map.of("b", new Object())
                 )
                 .withPrefabValues(
-                        StateEngListResponse.class,
-                        new StateEngListResponse().cmmMsgHeader(
+                        RoadEngFirstNameListResponse.class,
+                        new RoadEngFirstNameListResponse().cmmMsgHeader(
                                 new CmmMsgHeader().requestMsgId("a")),
-                        new StateEngListResponse().cmmMsgHeader(
+                        new RoadEngFirstNameListResponse().cmmMsgHeader(
                                 new CmmMsgHeader().requestMsgId("b"))
                 );
     }
@@ -51,7 +50,7 @@ class StateEngListResponseTest
     // -----------------------------------------------------------------------------------------------------------------
     private static Stream<String> getXmlResNameStream() {
         return Stream.of(
-                "getStateList_response0.xml"
+                "getRoadFirstNameList_response0.xml"
         );
     }
 
@@ -60,7 +59,7 @@ class StateEngListResponseTest
     void __xml(final String resName) throws Throwable {
         final var unmarshalled = applyResourceAsStreamChecked(
                 resName,
-                r -> AbstractTypeUtils.unmarshalNoNamespacedInstance(StateEngListResponse.class, r)
+                r -> AbstractTypeUtils.unmarshalNoNamespacedInstance(RoadEngFirstNameListResponse.class, r)
         );
         verifyValid(unmarshalled);
     }
@@ -68,19 +67,17 @@ class StateEngListResponseTest
     // -----------------------------------------------------------------------------------------------------------------
     private static Stream<String> getJsonResNameStream() {
         return Stream.of(
-                "getStateList_response0.json"
+                "getRoadFirstNameList_response0.json"
         );
     }
 
     @MethodSource({"getJsonResNameStream"})
     @ParameterizedTest
     void __json(final String resName) throws Throwable {
-        // -------------------------------------------------------------------------------------------------------- when
         final var deserialized = applyResourceAsStreamChecked(
                 resName,
-                r -> AbstractTypeUtils.deserializeInstance(StateEngListResponse.class, r).get()
+                r -> AbstractTypeUtils.deserializeInstance(RoadEngFirstNameListResponse.class, r).get()
         );
-        // -------------------------------------------------------------------------------------------------------- then
         verifyValid(deserialized);
     }
 }

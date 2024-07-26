@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
+package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng_address_service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,49 +11,53 @@ import com.github.jinahya.epost.openapi.proxy._common.CmmMsgHeader;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.*;
 
 import java.io.Serial;
 import java.util.List;
 
-@XmlRootElement(name = RoadEngListResponse.ROOT_NAME)
+//@XmlRootElement(name = StateEngListResponse.ROOT_NAME)
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
-public class RoadEngListResponse
-        extends AbstractSelfWrappingResponseType<RoadEngListResponse> {
+public class LandAddressEngSearchListResponse
+        extends AbstractSelfWrappingResponseType<LandAddressEngSearchListResponse> {
 
     @Serial
-    private static final long serialVersionUID = 2017574848867792334L;
+    private static final long serialVersionUID = -6712632432291074179L;
 
     // -----------------------------------------------------------------------------------------------------------------
-    static final String ROOT_NAME = "RoadEngListResponse";
+    static final String ROOT_NAME = "LandAddressEngSearchListResponse";
 
-    // -----------------------------------------------------------------------------------------------------------------
-    private static final String NAME_ROAD_ENG_LIST = "roadEngList";
+    private static final String NAME_LAND_ADDRESS_ENG_SEARCH_LIST = "landAddressEngSearchList";
 
     @Setter
     @Getter
     @ToString(callSuper = true)
     @EqualsAndHashCode(callSuper = true)
-    public static class RoadEngList
+    public static class LandAddressEngSearchList
             extends AbstractType {
 
         @Serial
-        private static final long serialVersionUID = 2944701965921059011L;
+        private static final long serialVersionUID = 7006810512668078489L;
 
         @NotBlank
         @JsonProperty
-        @XmlElement
-        private String roadEngName;
+        @XmlElement(required = true)
+        private String engAddress;
+
+        @Size(min = 5, max = 5)
+        @NotNull
+        @XmlElement(required = true)
+        private String areaCode;
     }
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
@@ -62,7 +66,7 @@ public class RoadEngListResponse
 
     // ---------------------------------------------------------------------------------------------------- cmmMsgHeader
     // just for the prefab values.
-    RoadEngListResponse cmmMsgHeader(final CmmMsgHeader cmmMsgHeader) {
+    LandAddressEngSearchListResponse cmmMsgHeader(final CmmMsgHeader cmmMsgHeader) {
         setCmmMsgHeader(cmmMsgHeader);
         return this;
     }
@@ -72,52 +76,52 @@ public class RoadEngListResponse
     private CmmMsgHeader cmmMsgHeader;
 
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
-    @JsonProperty(NAME_ROAD_ENG_LIST)
-    @XmlElement(name = NAME_ROAD_ENG_LIST)
-    private List<@Valid @NotNull RoadEngList> roadEngList;
+    @JsonProperty(NAME_LAND_ADDRESS_ENG_SEARCH_LIST)
+    @XmlElement(name = NAME_LAND_ADDRESS_ENG_SEARCH_LIST)
+    private List<@Valid @NotNull LandAddressEngSearchList> landAddressEngSearchList;
 
     // -----------------------------------------------------------------------------------------------------------------
     @Valid
     @JsonProperty(ROOT_NAME)
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.NONE)
-    private RoadEngListResponse wrapped;
+    private LandAddressEngSearchListResponse wrapped;
 
     // -----------------------------------------------------------------------------------------------------------------
     private static final JAXBContext JAXB_CONTEXT;
 
     static {
         try {
-            JAXB_CONTEXT = JAXBContext.newInstance(RoadEngListResponse.class);
+            JAXB_CONTEXT = JAXBContext.newInstance(LandAddressEngSearchListResponse.class);
         } catch (final JAXBException jaxbe) {
             throw new ExceptionInInitializerError(jaxbe);
         }
     }
 
-    public static RoadEngListResponse unmarshalInstance(final Object source) throws JAXBException {
+    public static LandAddressEngSearchListResponse unmarshalInstance(final Object source) throws JAXBException {
         return AbstractTypeUtils.unmarshalNoNamespacedInstance(
                 JAXB_CONTEXT,
-                RoadEngListResponse.class,
+                LandAddressEngSearchListResponse.class,
                 source
         );
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    public static RoadEngListResponse deserializeInstance(final ObjectReader reader, final Object source) {
+    public static LandAddressEngSearchListResponse deserializeInstance(final ObjectReader reader, final Object source) {
         return AbstractTypeUtils.deserializeInstance(reader, source);
     }
 
-    public static RoadEngListResponse deserializeInstance(final ObjectMapper mapper, final Object source) {
+    public static LandAddressEngSearchListResponse deserializeInstance(final ObjectMapper mapper, final Object source) {
         return AbstractTypeUtils.deserializeInstance(
                 mapper,
-                RoadEngListResponse.class,
+                LandAddressEngSearchListResponse.class,
                 source
         );
     }
 
-    public static RoadEngListResponse deserializeInstance(final Object source) {
+    public static LandAddressEngSearchListResponse deserializeInstance(final Object source) {
         return AbstractTypeUtils.deserializeInstance(
-                RoadEngListResponse.class,
+                LandAddressEngSearchListResponse.class,
                 source
         );
     }

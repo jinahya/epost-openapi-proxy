@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
+package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng_address_service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,6 +11,8 @@ import com.github.jinahya.epost.openapi.proxy._common.CmmMsgHeader;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -18,44 +20,47 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 import java.io.Serial;
 import java.util.List;
 
-@XmlRootElement(name = CityEngListResponse.ROOT_NAME)
+@XmlRootElement(name = RoadEngFirstNameListResponse.ROOT_NAME)
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
-public class CityEngListResponse
-        extends AbstractSelfWrappingResponseType<CityEngListResponse> {
+public class RoadEngFirstNameListResponse
+        extends AbstractSelfWrappingResponseType<RoadEngFirstNameListResponse> {
 
     @Serial
-    private static final long serialVersionUID = 2105048637913742678L;
+    private static final long serialVersionUID = -669670987447183138L;
 
     // -----------------------------------------------------------------------------------------------------------------
-    static final String ROOT_NAME = "CityEngListResponse";
+    static final String ROOT_NAME = "RoadEngFirstNameListResponse";
 
-    private static final String NAME_CITY_ENG_LIST = "cityEngList";
+    private static final String NAME_ROAD_ENG_FIRST_NAME_LIST = "roadEngFirstNameList";
 
     @Setter
     @Getter
     @ToString(callSuper = true)
     @EqualsAndHashCode(callSuper = true)
-    @NoArgsConstructor
-    @SuperBuilder(toBuilder = true)
-    public static class CityEngList
+    public static class RoadEngFirstNameList
             extends AbstractType {
 
         @Serial
-        private static final long serialVersionUID = -4416152072794741619L;
+        private static final long serialVersionUID = -437925892962234479L;
 
+        @Size(max = 1)
         @NotBlank
         @JsonProperty
         @XmlElement
-        private String cityEngName;
+        private String roadEngFirstName;
+
+        @Positive
+//        @PositiveOrZero
+        @NotNull
+        private Integer cnt;
     }
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
@@ -64,7 +69,7 @@ public class CityEngListResponse
 
     // ---------------------------------------------------------------------------------------------------- cmmMsgHeader
     // just for the prefab values.
-    CityEngListResponse cmmMsgHeader(final CmmMsgHeader cmmMsgHeader) {
+    RoadEngFirstNameListResponse cmmMsgHeader(final CmmMsgHeader cmmMsgHeader) {
         setCmmMsgHeader(cmmMsgHeader);
         return this;
     }
@@ -74,52 +79,52 @@ public class CityEngListResponse
     private CmmMsgHeader cmmMsgHeader;
 
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
-    @JsonProperty(NAME_CITY_ENG_LIST)
-    @XmlElement(name = NAME_CITY_ENG_LIST)
-    private List<@Valid @NotNull CityEngList> cityEngList;
+    @JsonProperty(NAME_ROAD_ENG_FIRST_NAME_LIST)
+    @XmlElement(name = NAME_ROAD_ENG_FIRST_NAME_LIST)
+    private List<@Valid @NotNull RoadEngFirstNameList> roadEngFirstNameList;
 
     // -----------------------------------------------------------------------------------------------------------------
     @Valid
     @JsonProperty(ROOT_NAME)
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.NONE)
-    private CityEngListResponse wrapped;
+    private RoadEngFirstNameListResponse wrapped;
 
     // -----------------------------------------------------------------------------------------------------------------
     private static final JAXBContext JAXB_CONTEXT;
 
     static {
         try {
-            JAXB_CONTEXT = JAXBContext.newInstance(CityEngListResponse.class);
+            JAXB_CONTEXT = JAXBContext.newInstance(RoadEngFirstNameListResponse.class);
         } catch (final JAXBException jaxbe) {
             throw new ExceptionInInitializerError(jaxbe);
         }
     }
 
-    public static CityEngListResponse unmarshalInstance(final Object source) throws JAXBException {
+    public static RoadEngFirstNameListResponse unmarshalInstance(final Object source) throws JAXBException {
         return AbstractTypeUtils.unmarshalNoNamespacedInstance(
                 JAXB_CONTEXT,
-                CityEngListResponse.class,
+                RoadEngFirstNameListResponse.class,
                 source
         );
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    public static CityEngListResponse deserializeInstance(final ObjectReader reader, final Object source) {
+    public static RoadEngFirstNameListResponse deserializeInstance(final ObjectReader reader, final Object source) {
         return AbstractTypeUtils.deserializeInstance(reader, source);
     }
 
-    public static CityEngListResponse deserializeInstance(final ObjectMapper mapper, final Object source) {
+    public static RoadEngFirstNameListResponse deserializeInstance(final ObjectMapper mapper, final Object source) {
         return AbstractTypeUtils.deserializeInstance(
                 mapper,
-                CityEngListResponse.class,
+                RoadEngFirstNameListResponse.class,
                 source
         );
     }
 
-    public static CityEngListResponse deserializeInstance(final Object source) {
+    public static RoadEngFirstNameListResponse deserializeInstance(final Object source) {
         return AbstractTypeUtils.deserializeInstance(
-                CityEngListResponse.class,
+                RoadEngFirstNameListResponse.class,
                 source
         );
     }

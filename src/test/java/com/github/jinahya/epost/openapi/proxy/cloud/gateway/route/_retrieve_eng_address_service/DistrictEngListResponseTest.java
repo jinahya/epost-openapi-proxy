@@ -1,8 +1,7 @@
-package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
+package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng_address_service;
 
 import com.github.jinahya.epost.openapi.proxy._common.AbstractSelfWrappingResponseTypeTest;
 import com.github.jinahya.epost.openapi.proxy._common.CmmMsgHeader;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.CityEngListResponse;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -11,17 +10,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-class CityEngListResponseTest
-        extends AbstractSelfWrappingResponseTypeTest<CityEngListResponse> {
+class DistrictEngListResponseTest
+        extends AbstractSelfWrappingResponseTypeTest<DistrictEngListResponse> {
 
-    CityEngListResponseTest() {
-        super(CityEngListResponse.class);
+    DistrictEngListResponseTest() {
+        super(DistrictEngListResponse.class);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     @Override
-    protected SingleTypeEqualsVerifierApi<CityEngListResponse> __equals(
-            SingleTypeEqualsVerifierApi<CityEngListResponse> verifierApi) {
+    protected SingleTypeEqualsVerifierApi<DistrictEngListResponse> __equals(
+            SingleTypeEqualsVerifierApi<DistrictEngListResponse> verifierApi) {
         return super.__equals(verifierApi)
                 .withPrefabValues(
                         CmmMsgHeader.class,
@@ -39,10 +38,10 @@ class CityEngListResponseTest
                         Map.of("b", new Object())
                 )
                 .withPrefabValues(
-                        CityEngListResponse.class,
-                        new CityEngListResponse().cmmMsgHeader(
+                        DistrictEngListResponse.class,
+                        new DistrictEngListResponse().cmmMsgHeader(
                                 new CmmMsgHeader().requestMsgId("a")),
-                        new CityEngListResponse().cmmMsgHeader(
+                        new DistrictEngListResponse().cmmMsgHeader(
                                 new CmmMsgHeader().requestMsgId("b"))
                 );
     }
@@ -50,7 +49,7 @@ class CityEngListResponseTest
     // -----------------------------------------------------------------------------------------------------------------
     private static Stream<String> getXmlResNameStream() {
         return Stream.of(
-                "getCityList_response0.xml"
+                "getDistrictNameList_response0.xml"
         );
     }
 
@@ -59,14 +58,14 @@ class CityEngListResponseTest
     void __xml(final String resName) throws Throwable {
         final var unmarshalled = applyResourceAsStreamChecked(
                 resName,
-                CityEngListResponse::unmarshalInstance
+                DistrictEngListResponse::unmarshalInstance
         );
         verifyValid(unmarshalled);
     }
 
     private static Stream<String> getJsonResNameStream() {
         return Stream.of(
-                "getCityList_response0.json"
+                "getDistrictNameList_response0.json"
         );
     }
 
@@ -75,7 +74,7 @@ class CityEngListResponseTest
     void __json(final String resName) throws Throwable {
         final var unmarshalled = applyResourceAsStreamChecked(
                 resName,
-                CityEngListResponse::deserializeInstance
+                DistrictEngListResponse::deserializeInstance
         );
         verifyValid(unmarshalled);
     }

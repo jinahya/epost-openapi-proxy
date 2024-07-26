@@ -1,6 +1,7 @@
-package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
+package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng_address_service;
 
-import com.github.jinahya.epost.openapi.proxy._common.AbstractType;
+import com.github.jinahya.epost.openapi.proxy._common.AbstractRequestType;
+import com.github.jinahya.epost.openapi.proxy._common._Constants;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -10,9 +11,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.UriBuilder;
+import reactor.core.publisher.Mono;
 
 import java.io.Serial;
 import java.util.Objects;
+import java.util.Optional;
 
 @Setter
 @Getter
@@ -20,7 +25,7 @@ import java.util.Objects;
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder(toBuilder = true)
 public class RoadAddressEngSearchListRequest
-        extends AbstractType {
+        extends AbstractRequestType {
 
     @Serial
     private static final long serialVersionUID = 3206249731898344984L;
@@ -47,6 +52,29 @@ public class RoadAddressEngSearchListRequest
                                                        final RoadEngListResponse.RoadEngList roadEngList) {
         return builderFrom(stateEngList, cityEngList, roadEngFirstNameList, roadEngList)
                 .build();
+    }
+
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+
+    // -----------------------------------------------------------------------------------------------------------------
+
+    @Override
+    protected UriBuilder set(final UriBuilder builder) {
+        return super.set(
+                builder.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_ROAD_ADDRESS_SEARCH)
+                        .queryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NAME, stateEngName)
+                        .queryParam(_RetrieveEngAddressServiceConstants.PARAM_CITY_ENG_NAME, cityEngName)
+                        .queryParam(_RetrieveEngAddressServiceConstants.PARAM_ROAD_ENG_FIRST_NAME, roadEngFirstName)
+                        .queryParam(_RetrieveEngAddressServiceConstants.PARAM_ROAD_ENG_NAME, roadEngName)
+                        .queryParamIfPresent(_RetrieveEngAddressServiceConstants.PARAM_KEYWORD,
+                                             Optional.ofNullable(keyword))
+                        .queryParam(_Constants.PARAM_COUNT_PER_PAGE, countPerPage)
+                        .queryParam(_Constants.PARAM_CURRENT_PAGE, currentPage)
+        );
+    }
+
+    public Mono<RoadAddressEngSearchListResponse> get(final WebClient webClient) {
+        return get(webClient, RoadAddressEngSearchListResponse.class);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
