@@ -1,13 +1,11 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng_address_service;
 
-import com.github.jinahya.epost.openapi.proxy._common.AbstractType;
+import com.github.jinahya.epost.openapi.proxy._common.AbstractRequestType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.web.util.UriBuilder;
 
 import java.io.Serial;
 import java.util.Objects;
@@ -16,9 +14,10 @@ import java.util.Objects;
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 public class DistrictEngListRequest
-        extends AbstractType {
+        extends AbstractRequestType {
 
     @Serial
     private static final long serialVersionUID = -6793297919987439959L;
@@ -43,6 +42,17 @@ public class DistrictEngListRequest
             final DistrictEngFirstNameListResponse.DistrictEngFirstNameList districtEngFirstNameList) {
         return builderFrom(stateEngList, cityEngList, districtEngFirstNameList)
                 .build();
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+
+    @Override
+    protected UriBuilder set(UriBuilder builder) {
+        return super.set(
+                builder.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_DISTRICT_NAME_LIST)
+                        .queryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NAME, stateEngName)
+                        .queryParam(_RetrieveEngAddressServiceConstants.PARAM_CITY_ENG_NAME, cityEngName)
+        );
     }
 
     // -----------------------------------------------------------------------------------------------------------------

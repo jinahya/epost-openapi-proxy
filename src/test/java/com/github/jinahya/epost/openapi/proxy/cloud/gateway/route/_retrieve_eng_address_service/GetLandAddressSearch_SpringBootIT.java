@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("/getRoadAddressSearch")
+@DisplayName("/getLandAddressSearch")
 //@Import(
 //        value = {
 //                ValidationAutoConfiguration.class
@@ -29,11 +29,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 //)
 //@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Slf4j
-class GetRoadAddressSearch_SpringBootIT
+class GetLandAddressSearch_SpringBootIT
         extends _SpringBootIT {
 
-    static RoadAddressEngSearchListResponse exchange(final WebTestClient client,
-                                                     final RoadAddressEngSearchListRequest request,
+    static LandAddressEngSearchListResponse exchange(final WebTestClient client,
+                                                     final LandAddressEngSearchListRequest request,
                                                      final String cacheControl) {
         final var requestSpec = client.get().uri(b -> request.set(b).build());
         Optional.ofNullable(request.getAccept()).ifPresent(requestSpec::accept);
@@ -49,7 +49,7 @@ class GetRoadAddressSearch_SpringBootIT
         });
         final var responseBody = Optional.ofNullable(
                         responseSpec
-                                .expectBody(RoadAddressEngSearchListResponse.class)
+                                .expectBody(LandAddressEngSearchListResponse.class)
                                 .returnResult()
                                 .getResponseBody()
                 )
@@ -60,13 +60,13 @@ class GetRoadAddressSearch_SpringBootIT
             log.debug("responseTime: {}", h.getResponseTime());
             log.debug("responseTimeAsLocalDateTime: {}", h.getResponseTimeAsLocalDateTime());
         });
-        responseBody.getRoadAddressEngSearchList().forEach(e -> {
-            log.debug("roadEngFirstName: {}", e);
+        responseBody.getLandAddressEngSearchList().forEach(e -> {
+            log.debug("landEngFirstName: {}", e);
         });
         return responseBody;
     }
 
-    static RoadAddressEngSearchListResponse verify(final RoadAddressEngSearchListResponse response,
+    static LandAddressEngSearchListResponse verify(final LandAddressEngSearchListResponse response,
                                                    final Validator validator) {
         assertThat(response).isNotNull().satisfies(r -> {
             assertThat(validator.validate(r)).isEmpty();
@@ -80,15 +80,15 @@ class GetRoadAddressSearch_SpringBootIT
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    static Stream<RoadAddressEngSearchListRequest> getRequestStream() {
+    static Stream<LandAddressEngSearchListRequest> getRequestStream() {
         return AbstractRequestTypeTestUtils.mapMediaType(
                 Stream.of(
-                        RoadAddressEngSearchListRequest.builder()
+                        LandAddressEngSearchListRequest.builder()
                                 .stateEngName("Jeollanam-do")
                                 .cityEngName("Naju-si")
-                                .roadEngFirstName("D")
-                                .roadEngName("Daeho-gil")
-                                .keyword("45-40")
+                                .districtEngFirstName("D")
+                                .districtEngName("Daeho-dong")
+                                .keyword("43.4")
                                 .countPerPage(2)
                                 .currentPage(1)
                                 .build()
@@ -101,7 +101,7 @@ class GetRoadAddressSearch_SpringBootIT
             "getRequestStream"
     })
     @ParameterizedTest
-    void __(final RoadAddressEngSearchListRequest request) {
+    void __(final LandAddressEngSearchListRequest request) {
         final var response = exchange(webTestClient(), request, "no-cache");
         verify(response, validator());
     }

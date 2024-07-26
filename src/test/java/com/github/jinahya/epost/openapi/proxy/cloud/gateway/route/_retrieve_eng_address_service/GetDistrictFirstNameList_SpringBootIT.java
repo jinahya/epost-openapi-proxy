@@ -7,35 +7,30 @@ import jakarta.validation.Validator;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.lang.Nullable;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("/getRoadAddressSearch")
-//@Import(
-//        value = {
-//                ValidationAutoConfiguration.class
-//        }
-//)
-//@ContextConfiguration(
-//        classes = {
-//                Application.class
-//        }
-//)
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@DisplayName("/getNewAddressListAreaCd")
 @Slf4j
-class GetRoadAddressSearch_SpringBootIT
+class GetDistrictFirstNameList_SpringBootIT
         extends _SpringBootIT {
 
-    static RoadAddressEngSearchListResponse exchange(final WebTestClient client,
-                                                     final RoadAddressEngSearchListRequest request,
-                                                     final String cacheControl) {
-        final var requestSpec = client.get().uri(b -> request.set(b).build());
+    static DistrictEngFirstNameListResponse exchange(final WebTestClient testClient,
+                                                 final DistrictEngFirstNameListRequest request,
+                                                 final @Nullable String cacheControl) {
+        Objects.requireNonNull(testClient, "testClient is null");
+        Objects.requireNonNull(request, "request is null");
+        Objects.requireNonNull(cacheControl, "cacheControl is null");
+        final var requestSpec = testClient.get().uri(b -> request.set(b).build());
         Optional.ofNullable(request.getAccept()).ifPresent(requestSpec::accept);
         Optional.ofNullable(cacheControl).ifPresent(cc -> {
             requestSpec.header(HttpHeaders.CACHE_CONTROL, cc);
@@ -49,7 +44,7 @@ class GetRoadAddressSearch_SpringBootIT
         });
         final var responseBody = Optional.ofNullable(
                         responseSpec
-                                .expectBody(RoadAddressEngSearchListResponse.class)
+                                .expectBody(DistrictEngFirstNameListResponse.class)
                                 .returnResult()
                                 .getResponseBody()
                 )
@@ -60,14 +55,10 @@ class GetRoadAddressSearch_SpringBootIT
             log.debug("responseTime: {}", h.getResponseTime());
             log.debug("responseTimeAsLocalDateTime: {}", h.getResponseTimeAsLocalDateTime());
         });
-        responseBody.getRoadAddressEngSearchList().forEach(e -> {
-            log.debug("roadEngFirstName: {}", e);
-        });
         return responseBody;
     }
 
-    static RoadAddressEngSearchListResponse verify(final RoadAddressEngSearchListResponse response,
-                                                   final Validator validator) {
+    static DistrictEngFirstNameListResponse verify(final DistrictEngFirstNameListResponse response, final Validator validator) {
         assertThat(response).isNotNull().satisfies(r -> {
             assertThat(validator.validate(r)).isEmpty();
         });
@@ -80,17 +71,22 @@ class GetRoadAddressSearch_SpringBootIT
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    static Stream<RoadAddressEngSearchListRequest> getRequestStream() {
+    static Stream<Arguments> getArgumentsStream() {
+        return GetCityList_SpringBootIT.getArgumentsStream()
+                .flatMap(a -> {
+                    final var got = a.get();
+                    return Stream.of("Naju-si")
+                            .map(cen -> Arguments.of(got[0], cen));
+                });
+    }
+
+    private static Stream<DistrictEngFirstNameListRequest> getRequestStream() {
         return AbstractRequestTypeTestUtils.mapMediaType(
                 Stream.of(
-                        RoadAddressEngSearchListRequest.builder()
+                        DistrictEngFirstNameListRequest
+                                .builder()
                                 .stateEngName("Jeollanam-do")
                                 .cityEngName("Naju-si")
-                                .roadEngFirstName("D")
-                                .roadEngName("Daeho-gil")
-                                .keyword("45-40")
-                                .countPerPage(2)
-                                .currentPage(1)
                                 .build()
                 )
         );
@@ -101,8 +97,11 @@ class GetRoadAddressSearch_SpringBootIT
             "getRequestStream"
     })
     @ParameterizedTest
-    void __(final RoadAddressEngSearchListRequest request) {
+    void __(final DistrictEngFirstNameListRequest request) {
         final var response = exchange(webTestClient(), request, "no-cache");
         verify(response, validator());
+        response.getDistrictEngFirstNameList().forEach(e -> {
+            log.debug("districtEngFirstName: {}", e);
+        });
     }
 }

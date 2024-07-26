@@ -42,6 +42,11 @@ public final class _RetrieveEngAddressServiceConstants {
     public static final String PARAM_KEYWORD = "keyword";
 
     // -----------------------------------------------------------------------------------------------------------------
+    public static final String PARAM_DISTRICT_ENG_FIRST_NAME = "districtEngFirstName";
+
+    public static final String PARAM_DISTRICT_ENG_NAME = "districtEngName";
+
+    // -----------------------------------------------------------------------------------------------------------------
     private _RetrieveEngAddressServiceConstants() {
         throw new AssertionError("instantiation is not allowed");
     }

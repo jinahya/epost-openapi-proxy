@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.lang.Nullable;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -23,9 +22,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Slf4j
 class GetRoadNameList_SpringBootIT
         extends _SpringBootIT {
-
-    @Autowired
-    private WebTestClient webTestClient;
 
     static RoadEngListResponse exchange(final WebTestClient testClient, final RoadEngListRequest request,
                                         final @Nullable String cacheControl) {

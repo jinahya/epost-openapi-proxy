@@ -1,26 +1,27 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng_address_service;
 
-import com.github.jinahya.epost.openapi.proxy._common.AbstractType;
+import com.github.jinahya.epost.openapi.proxy._common.AbstractRequestType;
+import com.github.jinahya.epost.openapi.proxy._common._Constants;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.web.util.UriBuilder;
 
 import java.io.Serial;
 import java.util.Objects;
+import java.util.Optional;
 
 @Setter
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 public class LandAddressEngSearchListRequest
-        extends AbstractType {
+        extends AbstractRequestType {
 
     @Serial
     private static final long serialVersionUID = -1827246138318731047L;
@@ -49,6 +50,26 @@ public class LandAddressEngSearchListRequest
             final DistrictEngListResponse.DistrictEngList districtEngList) {
         return builderFrom(stateEngList, cityEngList, districtEngFirstNameList, districtEngList)
                 .build();
+    }
+
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+
+    // -----------------------------------------------------------------------------------------------------------------
+
+    @Override
+    protected UriBuilder set(final UriBuilder builder) {
+        return super.set(
+                builder.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_LAND_ADDRESS_SEARCH)
+                        .queryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NAME, stateEngName)
+                        .queryParam(_RetrieveEngAddressServiceConstants.PARAM_CITY_ENG_NAME, cityEngName)
+                        .queryParam(_RetrieveEngAddressServiceConstants.PARAM_DISTRICT_ENG_FIRST_NAME,
+                                    districtEngFirstName)
+                        .queryParam(_RetrieveEngAddressServiceConstants.PARAM_DISTRICT_ENG_NAME, districtEngName)
+                        .queryParamIfPresent(_RetrieveEngAddressServiceConstants.PARAM_KEYWORD,
+                                             Optional.ofNullable(keyword))
+                        .queryParam(_Constants.PARAM_COUNT_PER_PAGE, countPerPage)
+                        .queryParam(_Constants.PARAM_CURRENT_PAGE, currentPage)
+        );
     }
 
     // -----------------------------------------------------------------------------------------------------------------

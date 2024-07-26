@@ -74,8 +74,24 @@ public abstract class AbstractRequestType
     @EqualsAndHashCode.Exclude
     private String serviceKey;
 
+    // -----------------------------------------------------------------------------------------------------------------
+    @JsonIgnore
+    @XmlTransient
+    @EqualsAndHashCode.Exclude
+    private HttpMethod httpMethod;
+
+    @JsonIgnore
+    @XmlTransient
+    @EqualsAndHashCode.Exclude
+    private Function<UriBuilder, URI> uriFunction;
+
     @JsonIgnore
     @XmlTransient
     @EqualsAndHashCode.Exclude
     private MediaType accept;
+
+    @JsonIgnore
+    @XmlTransient
+    @EqualsAndHashCode.Exclude
+    private String cacheControl;
 }
