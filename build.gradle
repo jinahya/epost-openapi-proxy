@@ -55,8 +55,10 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
 
+    implementation 'org.springframework.boot:spring-boot-starter-hateoas' // spring.main.web-application-type: reactive!
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+//    implementation 'org.springframework.hateoas:spring-hateoas'
 
     implementation platform('jakarta.platform:jakarta.jakartaee-bom:11.0.0-M4')
     compileOnly 'jakarta.xml.bind:jakarta.xml.bind-api'

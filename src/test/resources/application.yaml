@@ -26,11 +26,11 @@ epost:
 #      service-key: IfJN7A3cBBPttYf/FcFWC8pNDT3mi3SRSsDJmyAXQAUOlqvkQhP4ggZkHzhacIhEEJzcswWo8fraVeUBAOxQng==
 #      service-key: IfJN7A3cBBPttYf%2FFcFWC8pNDT3mi3SRSsDJmyAXQAUOlqvkQhP4ggZkHzhacIhEEJzcswWo8fraVeUBAOxQng%3D%3D
       routes:
-        retrieve_new_adress_area_cd_search_all_service:
+        _retrieve_new_adress_area_cd_search_all_service:
           cache: 10m,128MB
           connect-timeout: 1024
           response-timeout: 2048
-        retrieve_new_adress_area_cd_service:
+        _retrieve_new_adress_area_cd_service:
           cache: 10m,128MB
           connect-timeout: 1024
           response-timeout: 2048
