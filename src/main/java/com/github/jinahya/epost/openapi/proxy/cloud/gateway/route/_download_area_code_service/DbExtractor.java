@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.download_area_code_service;
+package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._download_area_code_service;
 
 import java.io.BufferedReader;
 import java.io.IOException;

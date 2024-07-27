@@ -22,28 +22,29 @@ class DistrictEngListResponseTest
     protected SingleTypeEqualsVerifierApi<DistrictEngListResponse> __equals(
             SingleTypeEqualsVerifierApi<DistrictEngListResponse> verifierApi) {
         return super.__equals(verifierApi)
-                .withPrefabValues(
-                        CmmMsgHeader.class,
-                        new CmmMsgHeader().requestMsgId("a"),
-                        new CmmMsgHeader().requestMsgId("b")
-                )
-                .withPrefabValues(
-                        List.class,
-                        List.of(new Object()),
-                        List.of(new Object())
-                )
-                .withPrefabValues(
-                        Map.class,
-                        Map.of("a", new Object()),
-                        Map.of("b", new Object())
-                )
-                .withPrefabValues(
-                        DistrictEngListResponse.class,
-                        new DistrictEngListResponse().cmmMsgHeader(
-                                new CmmMsgHeader().requestMsgId("a")),
-                        new DistrictEngListResponse().cmmMsgHeader(
-                                new CmmMsgHeader().requestMsgId("b"))
-                );
+//                .withPrefabValues(
+//                        CmmMsgHeader.class,
+//                        new CmmMsgHeader().requestMsgId("a"),
+//                        new CmmMsgHeader().requestMsgId("b")
+//                )
+//                .withPrefabValues(
+//                        List.class,
+//                        List.of(new Object()),
+//                        List.of(new Object())
+//                )
+//                .withPrefabValues(
+//                        Map.class,
+//                        Map.of("a", new Object()),
+//                        Map.of("b", new Object())
+//                )
+//                .withPrefabValues(
+//                        DistrictEngListResponse.class,
+//                        new DistrictEngListResponse().cmmMsgHeader(
+//                                new CmmMsgHeader().requestMsgId("a")),
+//                        new DistrictEngListResponse().cmmMsgHeader(
+//                                new CmmMsgHeader().requestMsgId("b"))
+//                );
+        ;
     }
 
     // -----------------------------------------------------------------------------------------------------------------

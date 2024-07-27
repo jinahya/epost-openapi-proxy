@@ -1,5 +1,8 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route;
 
+import com.github.jinahya.epost.openapi.proxy._common.AbstractRequestType;
+import com.github.jinahya.epost.openapi.proxy._common.AbstractResponseType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng_address_service.StateEngListResponse;
 import com.mycompany.Application;
 import jakarta.validation.Validator;
 import lombok.AccessLevel;
@@ -14,6 +17,11 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.Objects;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 @Import(
         value = {
                 ValidationAutoConfiguration.class
@@ -27,6 +35,36 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Slf4j
 public abstract class _SpringBootIT {
+
+//    protected static <REQUEST extends AbstractRequestType<REQUEST>, RESPONSE extends AbstractResponseType<RESPONSE>>
+//    StateEngListResponse exchange(final WebTestClient client, final REQUEST request, Class<RESPONSE> responseClass) {
+//        Objects.requireNonNull(client, "client is null");
+//        Objects.requireNonNull(request, "request is null");
+//        final var requestSpec = client
+//                .method(request.getHttpMethod())
+//                .uri(request::acceptUriConsumerAndBuild)
+//                .headers(request::acceptHeaders);
+//        // -------------------------------------------------------------------------------------------------------- when
+//        final var responseSpec = requestSpec.exchange();
+//        // -------------------------------------------------------------------------------------------------------- then
+//        responseSpec.expectStatus().isOk();
+//        final var responseBody = Optional.ofNullable(
+//                        responseSpec
+//                                .expectBody(responseClass)
+//                                .returnResult()
+//                                .getResponseBody()
+//                )
+//                .orElseThrow();
+//        assertThat(responseBody.getCmmMsgHeader()).isNotNull().satisfies(h -> {
+//            assertThat(h.isSucceeded()).isTrue();
+//            log.debug("responseTime: {}", h.getResponseTime());
+//            log.debug("responseTimeAsLocalDateTime: {}", h.getResponseTimeAsLocalDateTime());
+//        });
+//        responseBody.getStateEngList().forEach(e -> {
+//            log.debug("roadEngFirstName: {}", e);
+//        });
+//        return responseBody;
+//    }
 
     // -----------------------------------------------------------------------------------------------------------------
     @Autowired

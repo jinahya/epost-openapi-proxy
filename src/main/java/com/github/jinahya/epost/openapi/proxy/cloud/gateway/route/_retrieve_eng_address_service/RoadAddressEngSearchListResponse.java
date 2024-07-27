@@ -22,8 +22,8 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
 @Getter
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = false)
 public class RoadAddressEngSearchListResponse
         extends AbstractSelfWrappingResponseType<RoadAddressEngSearchListResponse> {
 
@@ -69,9 +69,9 @@ public class RoadAddressEngSearchListResponse
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    @Valid
-    @NotNull
-    private CmmMsgHeader cmmMsgHeader;
+//    @Valid
+//    @NotNull
+//    private CmmMsgHeader cmmMsgHeader;
 
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     @JsonProperty(NAME_ROAD_ADDRESS_ENG_SEARCH_LIST)

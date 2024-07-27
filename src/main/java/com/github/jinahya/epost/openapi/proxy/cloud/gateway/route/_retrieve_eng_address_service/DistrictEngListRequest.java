@@ -3,46 +3,59 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng
 import com.github.jinahya.epost.openapi.proxy._common.AbstractRequestType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.web.util.UriBuilder;
 
 import java.io.Serial;
-import java.util.Objects;
+import java.util.function.BiConsumer;
 
 @Setter
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor
-@SuperBuilder(toBuilder = true)
 public class DistrictEngListRequest
-        extends AbstractRequestType {
+        extends AbstractRequestType<DistrictEngListRequest> {
 
     @Serial
     private static final long serialVersionUID = -6793297919987439959L;
 
-    // -----------------------------------------------------------------------------------------------------------------
-    public static DistrictEngListRequest.DistrictEngListRequestBuilder<?, ?> builderFrom(
-            final StateEngListResponse.StateEngList stateEngList,
-            final CityEngListResponse.CityEngList cityEngList,
-            final DistrictEngFirstNameListResponse.DistrictEngFirstNameList districtEngFirstNameList) {
-        Objects.requireNonNull(stateEngList, "stateEngList is null");
-        Objects.requireNonNull(cityEngList, "cityEngList is null");
-        Objects.requireNonNull(districtEngFirstNameList, "districtEngFirstNameList is null");
-        return builder()
-                .stateEngName(stateEngList.getStateEngName())
-                .cityEngName(cityEngList.getCityEngName())
-                .districtEngFirstName(districtEngFirstNameList.getDistrictEngFirstName());
+    // --------------------------------------------------------------------------------------------------- STATIC_FACTORY_METHODS
+    public static DistrictEngListRequest of(final String serviceKey, final String stateEngName,
+                                            final String cityEngName, final String districtEngFirstName) {
+        final DistrictEngListRequest instance = new DistrictEngListRequest();
+        instance.setServiceKey(serviceKey);
+        instance.setStateEngName(stateEngName);
+        instance.setCityEngName(cityEngName);
+        instance.setDistrictEngFirstName(districtEngFirstName);
+        return instance;
     }
 
-    public static DistrictEngListRequest from(
-            final StateEngListResponse.StateEngList stateEngList,
-            final CityEngListResponse.CityEngList cityEngList,
-            final DistrictEngFirstNameListResponse.DistrictEngFirstNameList districtEngFirstNameList) {
-        return builderFrom(stateEngList, cityEngList, districtEngFirstNameList)
-                .build();
+    // -----------------------------------------------------------------------------------------------------------------
+    private static final BiConsumer<? super DistrictEngListRequest, ? super UriBuilder> URI_CONSUMER = (s, b) -> {
+        b.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_DISTRICT_NAME_LIST)
+                .queryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NAME, s.getStateEngName())
+                .queryParam(_RetrieveEngAddressServiceConstants.PARAM_CITY_ENG_NAME, s.getCityEngName())
+                .queryParam(_RetrieveEngAddressServiceConstants.PARAM_DISTRICT_ENG_FIRST_NAME,
+                            s.getDistrictEngFirstName());
+    };
+
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+
+    /**
+     * Creates a new instance.
+     */
+    public DistrictEngListRequest() {
+        super();
+        setUriConsumer(URI_CONSUMER);
     }
+
+//    public DistrictEngListRequest(final DistrictEngListRequest.DistrictEngListRequestBuilder<?, ?> builder) {
+//        super(builder);
+//        setUriConsumer(URI_CONSUMER);
+//    }
 
     // -----------------------------------------------------------------------------------------------------------------
 

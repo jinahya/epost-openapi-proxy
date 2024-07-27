@@ -28,8 +28,8 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
 @Getter
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = false)
 public class DistrictEngFirstNameListResponse
         extends AbstractSelfWrappingResponseType<DistrictEngFirstNameListResponse> {
 
@@ -76,8 +76,8 @@ public class DistrictEngFirstNameListResponse
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    @Valid
-    private CmmMsgHeader cmmMsgHeader;
+//    @Valid
+//    private CmmMsgHeader cmmMsgHeader;
 
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     @JsonProperty(NAME_DISTRICT_ENG_FIRST_NAME_LIST)

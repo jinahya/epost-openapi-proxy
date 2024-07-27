@@ -8,9 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -33,20 +33,17 @@ class GetLandAddressSearch_SpringBootIT
         extends _SpringBootIT {
 
     static LandAddressEngSearchListResponse exchange(final WebTestClient client,
-                                                     final LandAddressEngSearchListRequest request,
-                                                     final String cacheControl) {
-        final var requestSpec = client.get().uri(b -> request.set(b).build());
-        Optional.ofNullable(request.getAccept()).ifPresent(requestSpec::accept);
-        Optional.ofNullable(cacheControl).ifPresent(cc -> {
-            requestSpec.header(HttpHeaders.CACHE_CONTROL, cc);
-        });
+                                                     final LandAddressEngSearchListRequest request) {
+        Objects.requireNonNull(client, "client is null");
+        Objects.requireNonNull(request, "request is null");
+        final var requestSpec = client
+                .method(request.getHttpMethod())
+                .uri(request::acceptUriConsumerAndBuild)
+                .headers(request::acceptHeaders);
         // -------------------------------------------------------------------------------------------------------- when
         final var responseSpec = requestSpec.exchange();
         // -------------------------------------------------------------------------------------------------------- then
         responseSpec.expectStatus().isOk();
-        Optional.ofNullable(request.getAccept()).ifPresent(a -> {
-            responseSpec.expectHeader().contentTypeCompatibleWith(a);
-        });
         final var responseBody = Optional.ofNullable(
                         responseSpec
                                 .expectBody(LandAddressEngSearchListResponse.class)
@@ -83,15 +80,16 @@ class GetLandAddressSearch_SpringBootIT
     static Stream<LandAddressEngSearchListRequest> getRequestStream() {
         return AbstractRequestTypeTestUtils.mapMediaType(
                 Stream.of(
-                        LandAddressEngSearchListRequest.builder()
-                                .stateEngName("Jeollanam-do")
-                                .cityEngName("Naju-si")
-                                .districtEngFirstName("D")
-                                .districtEngName("Daeho-dong")
-                                .keyword("43.4")
-                                .countPerPage(2)
-                                .currentPage(1)
-                                .build()
+                        LandAddressEngSearchListRequest.of(
+                                null,
+                                "Jeollanam-do",
+                                "Naju-si",
+                                "D",
+                                "Daeho-dong",
+                                "43.4",
+                                2,
+                                1
+                        )
                 )
         );
     }
@@ -102,7 +100,7 @@ class GetLandAddressSearch_SpringBootIT
     })
     @ParameterizedTest
     void __(final LandAddressEngSearchListRequest request) {
-        final var response = exchange(webTestClient(), request, "no-cache");
+        final var response = exchange(webTestClient(), request);
         verify(response, validator());
     }
 }

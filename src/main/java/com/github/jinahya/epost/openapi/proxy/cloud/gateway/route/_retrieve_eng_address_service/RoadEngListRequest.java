@@ -7,45 +7,49 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 import org.springframework.web.util.UriBuilder;
 
 import java.io.Serial;
-import java.util.Objects;
+import java.util.function.BiConsumer;
 
 @Setter
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-@SuperBuilder(toBuilder = true)
 public class RoadEngListRequest
-        extends AbstractRequestType {
+        extends AbstractRequestType<RoadEngListRequest> {
 
     @Serial
     private static final long serialVersionUID = 1235816016916872587L;
 
+    // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
+    public static RoadEngListRequest of(final String serviceKey, final String stateEngName,
+                                        final String cityEngName,
+                                        final String roadEngFirstName) {
+        final var instance = AbstractRequestType.of(RoadEngListRequest::new, serviceKey);
+        instance.setStateEngName(stateEngName);
+        instance.setCityEngName(cityEngName);
+        instance.setRoadEngFirstName(roadEngFirstName);
+        return instance;
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
-    public static RoadEngListRequest.RoadEngListRequestBuilder<?, ?> builderFrom(
-            final StateEngListResponse.StateEngList stateEngList,
-            final CityEngListResponse.CityEngList cityEngList,
-            final RoadEngFirstNameListResponse.RoadEngFirstNameList roadEngFirstNameList) {
-        Objects.requireNonNull(stateEngList, "stateEngList is null");
-        Objects.requireNonNull(cityEngList, "cityEngList is null");
-        Objects.requireNonNull(roadEngFirstNameList, "roadEngFirstNameList is null");
-        return builder()
-                .stateEngName(stateEngList.getStateEngName())
-                .cityEngName(cityEngList.getCityEngName())
-                .roadEngFirstName(roadEngFirstNameList.getRoadEngFirstName());
-    }
-
-    public static RoadEngListRequest from(final StateEngListResponse.StateEngList stateEngList,
-                                          final CityEngListResponse.CityEngList cityEngList,
-                                          final RoadEngFirstNameListResponse.RoadEngFirstNameList roadEngFirstNameList) {
-        return builderFrom(stateEngList, cityEngList, roadEngFirstNameList)
-                .build();
-    }
-
+    private static final BiConsumer<? super RoadEngListRequest, ? super UriBuilder> URI_CONSUMER = (s, b) -> {
+        b.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_ROAD_NAME_LIST)
+                .queryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NAME, s.getStateEngName())
+                .queryParam(_RetrieveEngAddressServiceConstants.PARAM_CITY_ENG_NAME, s.getCityEngName())
+                .queryParam(_RetrieveEngAddressServiceConstants.PARAM_ROAD_ENG_FIRST_NAME, s.getRoadEngFirstName())
+        ;
+    };
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+
+    public RoadEngListRequest() {
+        super();
+        setUriConsumer(
+                URI_CONSUMER,
+                false
+        );
+    }
 
     // -----------------------------------------------------------------------------------------------------------------
 

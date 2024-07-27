@@ -27,8 +27,8 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
 @Getter
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = false)
 public class LandAddressEngSearchListResponse
         extends AbstractSelfWrappingResponseType<LandAddressEngSearchListResponse> {
 
@@ -73,8 +73,8 @@ public class LandAddressEngSearchListResponse
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    @Valid
-    private CmmMsgHeader cmmMsgHeader;
+//    @Valid
+//    private CmmMsgHeader cmmMsgHeader;
 
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     @JsonProperty(NAME_LAND_ADDRESS_ENG_SEARCH_LIST)

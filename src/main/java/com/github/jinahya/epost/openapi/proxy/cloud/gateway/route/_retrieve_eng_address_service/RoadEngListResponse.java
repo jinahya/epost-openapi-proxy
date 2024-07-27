@@ -26,8 +26,8 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
 @Getter
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = false)
 public class RoadEngListResponse
         extends AbstractSelfWrappingResponseType<RoadEngListResponse> {
 
@@ -68,8 +68,8 @@ public class RoadEngListResponse
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    @Valid
-    private CmmMsgHeader cmmMsgHeader;
+//    @Valid
+//    private CmmMsgHeader cmmMsgHeader;
 
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     @JsonProperty(NAME_ROAD_ENG_LIST)

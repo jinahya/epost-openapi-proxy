@@ -111,4 +111,4 @@ __service_key.sh
 
 
 src/test/resources/application.yaml
-src/test/resources/com/github/jinahya/epost/openapi/proxy/download_area_code_service/zipcode_DB.zip
+src/test/resources/com/github/jinahya/epost/openapi/proxy/cloud/gateway/route/_download_area_code_service/zipcode_DB.zip

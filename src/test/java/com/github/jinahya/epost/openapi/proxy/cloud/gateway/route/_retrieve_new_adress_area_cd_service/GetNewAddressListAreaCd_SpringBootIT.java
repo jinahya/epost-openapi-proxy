@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng_address_service;
+package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_new_adress_area_cd_service;
 
 import com.github.jinahya.epost.openapi.proxy._common.AbstractRequestTypeTestUtils;
 import com.github.jinahya.epost.openapi.proxy._common.AbstractSelfWrappingResponseType;
@@ -10,29 +10,21 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("/getRoadAddressSearch")
-//@Import(
-//        value = {
-//                ValidationAutoConfiguration.class
-//        }
-//)
-//@ContextConfiguration(
-//        classes = {
-//                Application.class
-//        }
-//)
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@DisplayName("/getNewAddressListAreaCd")
 @Slf4j
-class GetRoadAddressSearch_SpringBootIT
+class GetNewAddressListAreaCd_SpringBootIT
         extends _SpringBootIT {
 
-    static RoadAddressEngSearchListResponse exchange(final WebTestClient client,
-                                                     final RoadAddressEngSearchListRequest request) {
+    static NewAddressListAreaCdResponse exchange(final WebTestClient client,
+                                                 final NewAddressListAreaCdRequest request) {
+        Objects.requireNonNull(client, "client is null");
+        Objects.requireNonNull(request, "request is null");
         final var requestSpec = client
                 .method(request.getHttpMethod())
                 .uri(request::acceptUriConsumerAndBuild)
@@ -43,7 +35,7 @@ class GetRoadAddressSearch_SpringBootIT
         responseSpec.expectStatus().isOk();
         final var responseBody = Optional.ofNullable(
                         responseSpec
-                                .expectBody(RoadAddressEngSearchListResponse.class)
+                                .expectBody(NewAddressListAreaCdResponse.class)
                                 .returnResult()
                                 .getResponseBody()
                 )
@@ -54,14 +46,13 @@ class GetRoadAddressSearch_SpringBootIT
             log.debug("responseTime: {}", h.getResponseTime());
             log.debug("responseTimeAsLocalDateTime: {}", h.getResponseTimeAsLocalDateTime());
         });
-        responseBody.getRoadAddressEngSearchList().forEach(e -> {
-            log.debug("roadEngFirstName: {}", e);
+        responseBody.getNewAddressListAreaCdList().forEach(e -> {
+            log.debug("newAddressListAreaCd: {}", e);
         });
         return responseBody;
     }
 
-    static RoadAddressEngSearchListResponse verify(final RoadAddressEngSearchListResponse response,
-                                                   final Validator validator) {
+    static NewAddressListAreaCdResponse verify(final NewAddressListAreaCdResponse response, final Validator validator) {
         assertThat(response).isNotNull().satisfies(r -> {
             assertThat(validator.validate(r)).isEmpty();
         });
@@ -74,16 +65,27 @@ class GetRoadAddressSearch_SpringBootIT
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    static Stream<RoadAddressEngSearchListRequest> getRequestStream() {
+    private static Stream<NewAddressListAreaCdRequest> getRequestStream() {
         return AbstractRequestTypeTestUtils.mapMediaType(
                 Stream.of(
-                        RoadAddressEngSearchListRequest.of(
+                        NewAddressListAreaCdRequest.of(
                                 null,
-                                "Jeollanam-do",
-                                "Naju-si",
-                                "D",
-                                "Daeho-gil",
-                                "45-40",
+                                NewAddressListAreaCdRequest.SearchSe.dong,
+                                "주월동 408-1",
+                                2,
+                                1
+                        ),
+                        NewAddressListAreaCdRequest.of(
+                                null,
+                                NewAddressListAreaCdRequest.SearchSe.road,
+                                "세종로 17",
+                                2,
+                                1
+                        ),
+                        NewAddressListAreaCdRequest.of(
+                                null,
+                                NewAddressListAreaCdRequest.SearchSe.post,
+                                "61725",
                                 2,
                                 1
                         )
@@ -96,8 +98,11 @@ class GetRoadAddressSearch_SpringBootIT
             "getRequestStream"
     })
     @ParameterizedTest
-    void __(final RoadAddressEngSearchListRequest request) {
+    void __(final NewAddressListAreaCdRequest request) {
         final var response = exchange(webTestClient(), request);
         verify(response, validator());
+        response.getNewAddressListAreaCdList().forEach(e -> {
+            log.debug("address: {}", e);
+        });
     }
 }

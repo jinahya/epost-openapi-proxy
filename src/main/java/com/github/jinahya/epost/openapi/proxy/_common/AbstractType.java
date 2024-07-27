@@ -5,36 +5,45 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.Element;
 import jakarta.xml.bind.annotation.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.xml.namespace.QName;
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Supplier;
 
+/**
+ * @param <SELF> self type paramter
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EqualsAndHashCode
 @SuperBuilder(toBuilder = true)
-public abstract class AbstractType
+public abstract class AbstractType<SELF extends AbstractType<SELF>>
         implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1503731084647974030L;
 
-//    // -----------------------------------------------------------------------------------------------------------------
-//    protected static <TYPE extends AbstractType> TYPE deserializeInstance(final ObjectReader objectReader,
-//                                                                          final Class<TYPE> typeClass,
-//                                                                          final Object valueSource) {
-//        Objects.requireNonNull(objectReader, "objectReader is null");
-//        Objects.requireNonNull(valueSource, "valueSource is null");
-//        return typeClass.cast(ObjectReaderUtils.readValue(objectReader, valueSource));
-//    }
+    // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
+    protected static <T extends AbstractType<?>> T of(final Supplier<? extends T> initializer) {
+        final var instance = Objects.requireNonNull(initializer.get(), "null initialized from " + initializer);
+        return instance;
+    }
+
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+    /**
+     * Creates a new instance.
+     */
+    protected AbstractType() {
+        super();
+    }
 
     // ------------------------------------------------------------------------------------------------ java.lang.Object
     @Override
@@ -83,18 +92,16 @@ public abstract class AbstractType
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    // should be empty!
-    @JsonIgnore
     @Size(max = 0, message = "no unknown attributes are expected")
+    @JsonIgnore
     @XmlAnyAttribute
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.NONE)
     @EqualsAndHashCode.Exclude
     private Map<QName, Object> unknownAttributes;
 
-    // should be empty!
-    @JsonIgnore
     @Size(max = 0, message = "no unknown elements are expected")
+    @JsonIgnore
     @XmlAnyElement
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.NONE)

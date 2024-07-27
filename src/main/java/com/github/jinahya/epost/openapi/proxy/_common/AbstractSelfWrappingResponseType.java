@@ -1,10 +1,18 @@
 package com.github.jinahya.epost.openapi.proxy._common;
 
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+
 import java.io.Serial;
 
-public abstract class AbstractSelfWrappingResponseType<T extends AbstractSelfWrappingResponseType<T>>
-        extends AbstractResponseType
-        implements Wrapping.Self<T> {
+@Setter
+@Getter
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public abstract class AbstractSelfWrappingResponseType<SELF extends AbstractSelfWrappingResponseType<SELF>>
+        extends AbstractResponseType<SELF>
+        implements Wrapping.Self<SELF> {
 
     @Serial
     private static final long serialVersionUID = 6895247353547450259L;

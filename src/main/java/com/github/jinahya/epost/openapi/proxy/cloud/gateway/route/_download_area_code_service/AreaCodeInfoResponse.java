@@ -1,14 +1,12 @@
-package com.github.jinahya.epost.openapi.proxy.download_area_code_service;
+package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._download_area_code_service;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
-import com.github.jinahya.epost.openapi.proxy._common.AbstractType;
+import com.github.jinahya.epost.openapi.proxy._common.AbstractSelfWrappingResponseType;
 import com.github.jinahya.epost.openapi.proxy._common.CmmMsgHeader;
-import com.github.jinahya.epost.openapi.proxy._common.Wrapping;
 import com.github.jinahya.epost.openapi.proxy._misc.jackson.databind.ObjectReaderUtils;
 import com.github.jinahya.epost.openapi.proxy._misc.xml.stream.XMLInputFactoryUtils;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
@@ -30,11 +28,10 @@ import java.util.Objects;
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
 @Getter
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = false)
 public class AreaCodeInfoResponse
-        extends AbstractType
-        implements Wrapping.Self<AreaCodeInfoResponse> {
+        extends AbstractSelfWrappingResponseType<AreaCodeInfoResponse> {
 
     @Serial
     private static final long serialVersionUID = 9803126941295821L;
@@ -54,8 +51,8 @@ public class AreaCodeInfoResponse
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    @Valid
-    private CmmMsgHeader cmmMsgHeader;
+//    @Valid
+//    private CmmMsgHeader cmmMsgHeader;
 
     @NotBlank
     @JsonProperty(required = true)

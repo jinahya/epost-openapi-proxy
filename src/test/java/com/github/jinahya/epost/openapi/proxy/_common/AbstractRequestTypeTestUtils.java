@@ -2,11 +2,12 @@ package com.github.jinahya.epost.openapi.proxy._common;
 
 import org.springframework.http.MediaType;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 public final class AbstractRequestTypeTestUtils {
 
-    public static <T extends AbstractRequestType> Stream<T> mapMediaType(final Stream<? extends T> stream) {
+    public static <T extends AbstractRequestType<T>> Stream<T> mapMediaType(final Stream<? extends T> stream) {
         return stream.flatMap(e -> {
             return Stream.of(
                             null,
@@ -14,7 +15,13 @@ public final class AbstractRequestTypeTestUtils {
                             MediaType.APPLICATION_JSON
                     )
                     .map(mt -> {
-                        e.setAccept(mt);
+                        final var headersConsumer = e.getHeadersConsumer();
+                        e.setHeadersConsumer(h -> {
+                            headersConsumer.accept(h);
+                            if (mt != null) {
+                                h.setAccept(List.of(mt));
+                            }
+                        });
                         return e;
                     });
         });

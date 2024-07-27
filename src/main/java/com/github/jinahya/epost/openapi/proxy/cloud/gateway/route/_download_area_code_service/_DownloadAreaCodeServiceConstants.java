@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.download_area_code_service;
+package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._download_area_code_service;
 
 public final class _DownloadAreaCodeServiceConstants {
 

@@ -7,10 +7,8 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlTransient;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
@@ -26,10 +24,12 @@ import static java.time.temporal.ChronoField.NANO_OF_SECOND;
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
 @Getter
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor
+@SuperBuilder(toBuilder = true)
 public class CmmMsgHeader
-        extends AbstractType {
+        extends AbstractType<CmmMsgHeader> {
 
     @Serial
     private static final long serialVersionUID = 4236051073314958906L;
@@ -69,6 +69,10 @@ public class CmmMsgHeader
 //                return v.format(RESPONSE_TIME_FORMATTER);
 //            }
 //        }
+
+    // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
+
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
     // ------------------------------------------------------------------------------------------------------- successYN
     public static final String SUCCESS_YN_N = "N";

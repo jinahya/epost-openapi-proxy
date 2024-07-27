@@ -27,8 +27,8 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
 @Getter
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = false)
 public class CityEngListResponse
         extends AbstractSelfWrappingResponseType<CityEngListResponse> {
 
@@ -45,9 +45,8 @@ public class CityEngListResponse
     @ToString(callSuper = true)
     @EqualsAndHashCode(callSuper = true)
     @NoArgsConstructor
-    @SuperBuilder(toBuilder = true)
     public static class CityEngList
-            extends AbstractType {
+            extends AbstractType<CityEngList> {
 
         @Serial
         private static final long serialVersionUID = -4416152072794741619L;
@@ -70,8 +69,8 @@ public class CityEngListResponse
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    @Valid
-    private CmmMsgHeader cmmMsgHeader;
+//    @Valid
+//    private CmmMsgHeader cmmMsgHeader;
 
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     @JsonProperty(NAME_CITY_ENG_LIST)

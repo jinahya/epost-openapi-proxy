@@ -9,8 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.lang.Nullable;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.util.Objects;
@@ -19,29 +17,23 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("/getNewAddressListAreaCd")
+@DisplayName("/getDistrictFirstNameList")
 @Slf4j
 class GetDistrictFirstNameList_SpringBootIT
         extends _SpringBootIT {
 
-    static DistrictEngFirstNameListResponse exchange(final WebTestClient testClient,
-                                                 final DistrictEngFirstNameListRequest request,
-                                                 final @Nullable String cacheControl) {
-        Objects.requireNonNull(testClient, "testClient is null");
+    static DistrictEngFirstNameListResponse exchange(final WebTestClient client,
+                                                     final DistrictEngFirstNameListRequest request) {
+        Objects.requireNonNull(client, "client is null");
         Objects.requireNonNull(request, "request is null");
-        Objects.requireNonNull(cacheControl, "cacheControl is null");
-        final var requestSpec = testClient.get().uri(b -> request.set(b).build());
-        Optional.ofNullable(request.getAccept()).ifPresent(requestSpec::accept);
-        Optional.ofNullable(cacheControl).ifPresent(cc -> {
-            requestSpec.header(HttpHeaders.CACHE_CONTROL, cc);
-        });
+        final var requestSpec = client
+                .method(request.getHttpMethod())
+                .uri(request::acceptUriConsumerAndBuild)
+                .headers(request::acceptHeaders);
         // -------------------------------------------------------------------------------------------------------- when
         final var responseSpec = requestSpec.exchange();
         // -------------------------------------------------------------------------------------------------------- then
         responseSpec.expectStatus().isOk();
-        Optional.ofNullable(request.getAccept()).ifPresent(a -> {
-            responseSpec.expectHeader().contentTypeCompatibleWith(a);
-        });
         final var responseBody = Optional.ofNullable(
                         responseSpec
                                 .expectBody(DistrictEngFirstNameListResponse.class)
@@ -58,7 +50,8 @@ class GetDistrictFirstNameList_SpringBootIT
         return responseBody;
     }
 
-    static DistrictEngFirstNameListResponse verify(final DistrictEngFirstNameListResponse response, final Validator validator) {
+    static DistrictEngFirstNameListResponse verify(final DistrictEngFirstNameListResponse response,
+                                                   final Validator validator) {
         assertThat(response).isNotNull().satisfies(r -> {
             assertThat(validator.validate(r)).isEmpty();
         });
@@ -83,11 +76,7 @@ class GetDistrictFirstNameList_SpringBootIT
     private static Stream<DistrictEngFirstNameListRequest> getRequestStream() {
         return AbstractRequestTypeTestUtils.mapMediaType(
                 Stream.of(
-                        DistrictEngFirstNameListRequest
-                                .builder()
-                                .stateEngName("Jeollanam-do")
-                                .cityEngName("Naju-si")
-                                .build()
+                        DistrictEngFirstNameListRequest.of(null, "Jeollanam-do", "Naju-si")
                 )
         );
     }
@@ -98,7 +87,7 @@ class GetDistrictFirstNameList_SpringBootIT
     })
     @ParameterizedTest
     void __(final DistrictEngFirstNameListRequest request) {
-        final var response = exchange(webTestClient(), request, "no-cache");
+        final var response = exchange(webTestClient(), request);
         verify(response, validator());
         response.getDistrictEngFirstNameList().forEach(e -> {
             log.debug("districtEngFirstName: {}", e);

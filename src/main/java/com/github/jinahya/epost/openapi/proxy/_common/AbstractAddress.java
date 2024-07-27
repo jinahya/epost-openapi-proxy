@@ -15,10 +15,10 @@ import java.io.Serial;
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
 @Getter
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = false)
 public abstract class AbstractAddress
-        extends AbstractType {
+        extends AbstractType<AbstractAddress> {
 
     @Serial
     private static final long serialVersionUID = -4210995980428120824L;

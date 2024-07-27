@@ -6,41 +6,47 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 import org.springframework.web.util.UriBuilder;
 
 import java.io.Serial;
-import java.util.Objects;
+import java.util.function.BiConsumer;
 
 @Setter
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-@SuperBuilder(toBuilder = true)
 public class DistrictEngFirstNameListRequest
-        extends AbstractRequestType {
+        extends AbstractRequestType<DistrictEngFirstNameListRequest> {
 
     @Serial
     private static final long serialVersionUID = -6632649622472952951L;
 
-    // -----------------------------------------------------------------------------------------------------------------
-    public static DistrictEngFirstNameListRequest.DistrictEngFirstNameListRequestBuilder<?, ?> builderFrom(
-            final StateEngListResponse.StateEngList stateEngList,
-            final CityEngListResponse.CityEngList cityEngList) {
-        Objects.requireNonNull(stateEngList, "stateEngList is null");
-        Objects.requireNonNull(cityEngList, "cityEngList is null");
-        return builder()
-                .stateEngName(stateEngList.getStateEngName())
-                .cityEngName(cityEngList.getCityEngName());
+    // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
+    public static DistrictEngFirstNameListRequest of(final String serviceKey, final String stateEngName,
+                                                     final String cityEngName) {
+        final var instance = AbstractRequestType.of(DistrictEngFirstNameListRequest::new, serviceKey);
+        instance.setStateEngName(stateEngName);
+        instance.setCityEngName(cityEngName);
+        return instance;
     }
 
-    public static DistrictEngFirstNameListRequest from(final StateEngListResponse.StateEngList stateEngList,
-                                                       final CityEngListResponse.CityEngList cityEngList) {
-        return builderFrom(stateEngList, cityEngList)
-                .build();
-    }
+    // -----------------------------------------------------------------------------------------------------------------
+    private static final BiConsumer<? super DistrictEngFirstNameListRequest, ? super UriBuilder> URI_CONSUMER =
+            (s, b) -> {
+                b.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_DISTRICT_FIRST_NAME_LIST)
+                        .queryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NAME, s.getStateEngName())
+                        .queryParam(_RetrieveEngAddressServiceConstants.PARAM_CITY_ENG_NAME, s.getCityEngName())
+                ;
+            };
 
     // ------------------------------------------------------------------------------------------------------- CONSTRUCTORS
+    public DistrictEngFirstNameListRequest() {
+        super();
+        setUriConsumer(
+                URI_CONSUMER,
+                true
+        );
+    }
 
     // -----------------------------------------------------------------------------------------------------------------
 

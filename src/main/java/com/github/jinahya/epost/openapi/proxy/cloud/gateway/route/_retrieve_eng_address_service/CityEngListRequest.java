@@ -6,37 +6,46 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 import org.springframework.web.util.UriBuilder;
 
 import java.io.Serial;
-import java.util.Objects;
+import java.util.function.BiConsumer;
 
 @Setter
 @Getter
-@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-@SuperBuilder(toBuilder = true)
+@ToString(callSuper = true)
 public class CityEngListRequest
-        extends AbstractRequestType {
+        extends AbstractRequestType<CityEngListRequest> {
 
     @Serial
     private static final long serialVersionUID = 2981550532310902459L;
 
-    // -----------------------------------------------------------------------------------------------------------------
-    public CityEngListRequest.CityEngListRequestBuilder<?, ?> builderFrom(
-            final StateEngListResponse.StateEngList stateEngList) {
-        Objects.requireNonNull(stateEngList, "stateEngList is null");
-        return builder()
-                .stateEngName(stateEngList.getStateEngName()
-                );
+    // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
+    public static CityEngListRequest of(final String serviceKey, final String stateEngName) {
+        final CityEngListRequest instance = new CityEngListRequest();
+        instance.setServiceKey(serviceKey);
+        instance.setStateEngName(stateEngName);
+        return instance;
     }
 
-    public CityEngListRequest from(final StateEngListResponse.StateEngList stateEngList) {
-        return builderFrom(stateEngList).build();
-    }
+    // -----------------------------------------------------------------------------------------------------------------
+    private static final BiConsumer<? super CityEngListRequest, ? super UriBuilder> URI_CONSUMER = (s, b) -> {
+        b.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_CITY_LIST)
+                .queryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NM, s.getStateEngName())
+//                .queryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NAME, s.getStateEngName())
+        ;
+    };
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+
+    public CityEngListRequest() {
+        super();
+        setUriConsumer(
+                URI_CONSUMER,
+                true
+        );
+    }
 
     // -----------------------------------------------------------------------------------------------------------------
     public UriBuilder set(final UriBuilder builder) {

@@ -23,28 +23,29 @@ class RoadAddressEngSearchListResponseTest
     protected SingleTypeEqualsVerifierApi<RoadAddressEngSearchListResponse> __equals(
             final SingleTypeEqualsVerifierApi<RoadAddressEngSearchListResponse> verifierApi) {
         return super.__equals(verifierApi)
-                .withPrefabValues(
-                        CmmMsgHeader.class,
-                        new CmmMsgHeader().requestMsgId("a"),
-                        new CmmMsgHeader().requestMsgId("b")
-                )
-                .withPrefabValues(
-                        List.class,
-                        List.of(new Object()),
-                        List.of(new Object())
-                )
-                .withPrefabValues(
-                        Map.class,
-                        Map.of("a", new Object()),
-                        Map.of("b", new Object())
-                )
-                .withPrefabValues(
-                        RoadAddressEngSearchListResponse.class,
-                        new RoadAddressEngSearchListResponse().cmmMsgHeader(
-                                new CmmMsgHeader().requestMsgId("a")),
-                        new RoadAddressEngSearchListResponse().cmmMsgHeader(
-                                new CmmMsgHeader().requestMsgId("b"))
-                );
+//                .withPrefabValues(
+//                        CmmMsgHeader.class,
+//                        new CmmMsgHeader().requestMsgId("a"),
+//                        new CmmMsgHeader().requestMsgId("b")
+//                )
+//                .withPrefabValues(
+//                        List.class,
+//                        List.of(new Object()),
+//                        List.of(new Object())
+//                )
+//                .withPrefabValues(
+//                        Map.class,
+//                        Map.of("a", new Object()),
+//                        Map.of("b", new Object())
+//                )
+//                .withPrefabValues(
+//                        RoadAddressEngSearchListResponse.class,
+//                        new RoadAddressEngSearchListResponse().cmmMsgHeader(
+//                                new CmmMsgHeader().requestMsgId("a")),
+//                        new RoadAddressEngSearchListResponse().cmmMsgHeader(
+//                                new CmmMsgHeader().requestMsgId("b"))
+//                )
+                ;
     }
 
     // -----------------------------------------------------------------------------------------------------------------

@@ -13,6 +13,7 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serial;
 import java.util.List;
@@ -22,8 +23,9 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
 @Getter
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor
 public class StateEngListResponse
         extends AbstractSelfWrappingResponseType<StateEngListResponse> {
 
@@ -40,8 +42,9 @@ public class StateEngListResponse
     @Getter
     @ToString(callSuper = true)
     @EqualsAndHashCode(callSuper = true)
+    @NoArgsConstructor
     public static class StateEngList
-            extends AbstractType {
+            extends AbstractType<StateEngList> {
 
         @Serial
         private static final long serialVersionUID = 1923480486008916847L;
@@ -65,9 +68,9 @@ public class StateEngListResponse
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    @Valid
-    @NotNull
-    private CmmMsgHeader cmmMsgHeader;
+//    @Valid
+//    @NotNull
+//    private CmmMsgHeader cmmMsgHeader;
 
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     @JsonProperty(NAME_STATE_ENG_LIST)

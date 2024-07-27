@@ -9,8 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.lang.Nullable;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.util.Objects;
@@ -25,23 +23,17 @@ class GetCityList_SpringBootIT
         extends _SpringBootIT {
 
     // -----------------------------------------------------------------------------------------------------------------
-    static CityEngListResponse exchange(final WebTestClient testClient, final CityEngListRequest request,
-                                        final @Nullable String cacheControl) {
-        Objects.requireNonNull(testClient, "testClient is null");
+    static CityEngListResponse exchange(final WebTestClient client, final CityEngListRequest request) {
+        Objects.requireNonNull(client, "client is null");
         Objects.requireNonNull(request, "request is null");
-        Objects.requireNonNull(cacheControl, "cacheControl is null");
-        final var requestSpec = testClient.get().uri(b -> request.set(b).build());
-        Optional.ofNullable(request.getAccept()).ifPresent(requestSpec::accept);
-        Optional.ofNullable(cacheControl).ifPresent(cc -> {
-            requestSpec.header(HttpHeaders.CACHE_CONTROL, cc);
-        });
+        final var requestSpec = client
+                .method(request.getHttpMethod())
+                .uri(request::acceptUriConsumerAndBuild)
+                .headers(request::acceptHeaders);
         // -------------------------------------------------------------------------------------------------------- when
         final var responseSpec = requestSpec.exchange();
         // -------------------------------------------------------------------------------------------------------- then
         responseSpec.expectStatus().isOk();
-        Optional.ofNullable(request.getAccept()).ifPresent(a -> {
-            responseSpec.expectHeader().contentTypeCompatibleWith(a);
-        });
         final var responseBody = Optional.ofNullable(
                         responseSpec
                                 .expectBody(CityEngListResponse.class)
@@ -83,9 +75,7 @@ class GetCityList_SpringBootIT
     private static Stream<CityEngListRequest> getRequestStream() {
         return AbstractRequestTypeTestUtils.mapMediaType(
                 Stream.of(
-                        CityEngListRequest.builder()
-                                .stateEngName("Jeollanam-do")
-                                .build()
+                        CityEngListRequest.of(null, "Jeollanam-do")
                 )
         );
     }
@@ -96,7 +86,7 @@ class GetCityList_SpringBootIT
     })
     @ParameterizedTest
     void __(final CityEngListRequest request) {
-        final var response = exchange(webTestClient(), request, "no-cache");
+        final var response = exchange(webTestClient(), request);
         verify(response, validator());
         response.getCityEngList().forEach(e -> {
             log.debug("cityEngList: {}", e);

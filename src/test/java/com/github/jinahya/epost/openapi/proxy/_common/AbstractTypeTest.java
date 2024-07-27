@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
@@ -123,7 +125,18 @@ public abstract class AbstractTypeTest<TYPE extends AbstractType> {
                         "unknownAttributes",
                         "unknownElements",
                         "unknownProperties"
-                );
+                )
+                .withPrefabValues(
+                        List.class,
+                        List.of(new Object()),
+                        List.of(new Object())
+                )
+                .withPrefabValues(
+                        Map.class,
+                        Map.of("a", new Object()),
+                        Map.of("b", new Object())
+                )
+                ;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
