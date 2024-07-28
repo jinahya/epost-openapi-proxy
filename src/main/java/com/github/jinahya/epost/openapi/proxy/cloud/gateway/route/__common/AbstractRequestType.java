@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy._common;
+package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.xml.bind.annotation.XmlTransient;
@@ -34,7 +34,7 @@ public abstract class AbstractRequestType<SELF extends AbstractRequestType<SELF>
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
     protected static <T extends AbstractRequestType<?>> T of(final Supplier<? extends T> initializer,
                                                              final String serviceKey) {
-        final var instance = AbstractType.of(initializer);
+        final var instance = of(initializer);
         instance.setServiceKey(serviceKey);
         return instance;
     }

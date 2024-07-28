@@ -1,6 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route;
-
-import com.github.jinahya.epost.openapi.proxy._common.AbstractRequestType;
+package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common;
 
 public interface PaginatedRequest<T extends AbstractRequestType<T> & PaginatedRequest<T>> {
 

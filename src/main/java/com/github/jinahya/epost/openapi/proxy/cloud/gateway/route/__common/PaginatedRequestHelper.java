@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route;
+package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common;
 
 import com.github.jinahya.epost.openapi.proxy._misc.invoke.LookupHelper;
 

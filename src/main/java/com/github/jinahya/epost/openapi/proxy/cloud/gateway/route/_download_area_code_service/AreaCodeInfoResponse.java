@@ -3,8 +3,8 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._download_are
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
-import com.github.jinahya.epost.openapi.proxy._common.AbstractSelfWrappingResponseType;
-import com.github.jinahya.epost.openapi.proxy._common.CmmMsgHeader;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractSelfWrappingResponseType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.CmmMsgHeader;
 import com.github.jinahya.epost.openapi.proxy._misc.jackson.databind.ObjectReaderUtils;
 import com.github.jinahya.epost.openapi.proxy._misc.xml.stream.XMLInputFactoryUtils;
 import jakarta.validation.constraints.NotBlank;
