@@ -13,7 +13,6 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 import java.io.Serial;
 import java.util.List;

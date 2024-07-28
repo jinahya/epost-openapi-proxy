@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.retrieve_lot_number_adress_area_cd_service;
+package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_lot_number_adress_area_cd_service;
 
 import com.github.jinahya.epost.openapi.proxy._common.AbstractType;
 import jakarta.validation.constraints.NotBlank;

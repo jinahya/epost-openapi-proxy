@@ -2,6 +2,7 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng
 
 import com.github.jinahya.epost.openapi.proxy._common.AbstractRequestType;
 import com.github.jinahya.epost.openapi.proxy._common._Constants;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.PaginatedRequest;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -22,7 +23,8 @@ import java.util.function.BiConsumer;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class LandAddressEngSearchListRequest
-        extends AbstractRequestType<LandAddressEngSearchListRequest> {
+        extends AbstractRequestType<LandAddressEngSearchListRequest>
+        implements PaginatedRequest<LandAddressEngSearchListRequest> {
 
     @Serial
     private static final long serialVersionUID = -1827246138318731047L;

@@ -59,5 +59,4 @@ class _AddRequestParameterGatewayFilterFactory
             return c.filter(e.mutate().request(newRequest).build());
         };
     }
-
 }

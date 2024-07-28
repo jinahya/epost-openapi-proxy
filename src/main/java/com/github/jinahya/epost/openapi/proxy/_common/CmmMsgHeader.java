@@ -8,7 +8,6 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlTransient;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
@@ -27,7 +26,6 @@ import static java.time.temporal.ChronoField.NANO_OF_SECOND;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @NoArgsConstructor
-@SuperBuilder(toBuilder = true)
 public class CmmMsgHeader
         extends AbstractType<CmmMsgHeader> {
 

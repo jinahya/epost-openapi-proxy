@@ -11,6 +11,7 @@ import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 public abstract class AbstractResponseTypeTest<TYPE extends AbstractResponseType<?>>
         extends AbstractTypeTest<TYPE> {
 
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
     protected AbstractResponseTypeTest(final Class<TYPE> typeClass) {
         super(typeClass);
     }
@@ -20,8 +21,8 @@ public abstract class AbstractResponseTypeTest<TYPE extends AbstractResponseType
     protected SingleTypeEqualsVerifierApi<TYPE> __equals(final SingleTypeEqualsVerifierApi<TYPE> verifierApi) {
         final var instance1 = newTypeInstance();
         final var instance2 = newTypeInstance();
-        instance1.cmmMsgHeader(new CmmMsgHeader().requestMsgId("a"));
-        instance2.cmmMsgHeader(new CmmMsgHeader().requestMsgId("b"));
+        instance1.setCmmMsgHeader(new CmmMsgHeader().requestMsgId("a"));
+        instance2.setCmmMsgHeader(new CmmMsgHeader().requestMsgId("b"));
         assert !instance2.equals(instance1);
         return super.__equals(verifierApi)
                 .withPrefabValues(

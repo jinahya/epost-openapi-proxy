@@ -1,8 +1,5 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route;
 
-import com.github.jinahya.epost.openapi.proxy._common.AbstractRequestType;
-import com.github.jinahya.epost.openapi.proxy._common.AbstractResponseType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng_address_service.StateEngListResponse;
 import com.mycompany.Application;
 import jakarta.validation.Validator;
 import lombok.AccessLevel;
@@ -16,11 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.reactive.server.WebTestClient;
-
-import java.util.Objects;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @Import(
         value = {

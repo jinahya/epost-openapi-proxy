@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.retrieve_lot_number_adress_area_cd_service;
+package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_lot_number_adress_area_cd_service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;

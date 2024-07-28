@@ -1,25 +1,18 @@
-package com.github.jinahya.epost.openapi.proxy.retrieve_new_adress_area_cd_search_all_service;
+package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_new_adress_area_cd_search_all_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_new_adress_area_cd_service.NewAddressListAreaCdRequest;
 import com.mycompany.Application;
 import jakarta.validation.Validator;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.DisabledIf;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.util.Optional;
 import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @Import(
         value = {

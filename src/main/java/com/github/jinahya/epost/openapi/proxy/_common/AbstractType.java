@@ -9,7 +9,6 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 import javax.xml.namespace.QName;
 import java.io.Serial;
@@ -18,13 +17,14 @@ import java.util.*;
 import java.util.function.Supplier;
 
 /**
- * @param <SELF> self type paramter
+ * An abstract type class.
+ *
+ * @param <SELF> self type parameter
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
 @Getter
 @EqualsAndHashCode
-@SuperBuilder(toBuilder = true)
 public abstract class AbstractType<SELF extends AbstractType<SELF>>
         implements Serializable {
 
@@ -38,6 +38,7 @@ public abstract class AbstractType<SELF extends AbstractType<SELF>>
     }
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+
     /**
      * Creates a new instance.
      */

@@ -2,13 +2,10 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng
 
 import com.github.jinahya.epost.openapi.proxy._common.AbstractSelfWrappingResponseTypeTest;
 import com.github.jinahya.epost.openapi.proxy._common.AbstractTypeUtils;
-import com.github.jinahya.epost.openapi.proxy._common.CmmMsgHeader;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
 class RoadAddressEngSearchListResponseTest

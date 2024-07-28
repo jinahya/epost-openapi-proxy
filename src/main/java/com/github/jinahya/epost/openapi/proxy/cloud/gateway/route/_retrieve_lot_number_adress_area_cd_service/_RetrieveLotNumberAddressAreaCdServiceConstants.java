@@ -1,6 +1,6 @@
-package com.github.jinahya.epost.openapi.proxy.retrieve_new_adress_area_cd_search_all_service;
+package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_lot_number_adress_area_cd_service;
 
-final class _RetrieveNewAddressAreaCdSearchAllServiceConstants {
+final class _RetrieveLotNumberAddressAreaCdServiceConstants {
 
     public static final String REQUEST_URI_GET_NEW_ADDRESS_LIST_AREA_CD_SEARCH_ALL =
             "/postal" +
@@ -9,7 +9,7 @@ final class _RetrieveNewAddressAreaCdSearchAllServiceConstants {
                     "/getNewAddressListAreaCdSearchAll";
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
-    private _RetrieveNewAddressAreaCdSearchAllServiceConstants() {
+    private _RetrieveLotNumberAddressAreaCdServiceConstants() {
         throw new AssertionError("instantiation is not allowed");
     }
 }

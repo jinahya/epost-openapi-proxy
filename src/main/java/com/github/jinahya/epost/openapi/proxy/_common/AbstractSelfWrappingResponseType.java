@@ -1,7 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy._common;
 
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 import java.io.Serial;
 

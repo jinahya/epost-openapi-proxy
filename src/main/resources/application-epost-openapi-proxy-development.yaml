@@ -34,17 +34,6 @@ spring:
           metadata:
             connect-timeout: ${epost.openapi.proxy.routes._retrieve_eng_address_service.connect-timeout:1024}
             response-timeout: ${epost.openapi.proxy.routes._retrieve_eng_address_service.response-timeout:4096}
-        - id: _retrieve_eng_address_service_states
-#          uri: http://openapi.epost.go.kr
-          uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getStateList
-          predicates:
-            - Method=GET
-            - Path=/api/retrieveEngAddressService/states
-            - Header=Accept, application/hal\+json
-          filters:
-            - SetRequestHeader=Accept, application/xml
-#            - SetRequestHeader=Cache-Control, no-cache
-#            - RewritePath=/api/retrieveEngAddressService/states, /postal/retrieveEngAddressService/retrieveEngAddressService/getStateList
         # ------------------------------------------------------------------ _retrieve_lot_number_adress_area_cd_service
         - id: _retrieve_lot_number_adress_area_cd_service # https://www.data.go.kr/iim/api/selectAPIAcountView.do
           uri: http://openapi.epost.go.kr

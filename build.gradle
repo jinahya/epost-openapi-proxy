@@ -38,7 +38,8 @@ ext {
 dependencyManagement {
     imports {
         // https://search.maven.org/artifact/org.springframework.boot/spring-boot-dependencies
-        mavenBom "org.springframework.boot:spring-boot-dependencies:3.3.1"
+        mavenBom "org.springframework.boot:spring-boot-dependencies:3.3.2"
+        // https://search.maven.org/artifact/org.springframework.cloud/spring-cloud-dependencies
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }

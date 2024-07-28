@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.retrieve_new_adress_area_cd_search_all_service;
+package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_new_adress_area_cd_search_all_service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6,9 +6,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.github.jinahya.epost.openapi.proxy._common.AbstractAddress;
-import com.github.jinahya.epost.openapi.proxy._common.AbstractType;
+import com.github.jinahya.epost.openapi.proxy._common.AbstractSelfWrappingResponseType;
 import com.github.jinahya.epost.openapi.proxy._common.CmmMsgHeader;
-import com.github.jinahya.epost.openapi.proxy._common.Wrapping;
 import com.github.jinahya.epost.openapi.proxy._misc.jackson.databind.ObjectReaderUtils;
 import com.github.jinahya.epost.openapi.proxy._misc.xml.stream.XMLInputFactoryUtils;
 import jakarta.validation.Valid;
@@ -26,17 +25,15 @@ import java.io.Serial;
 import java.util.List;
 import java.util.Objects;
 
-//@JsonRootName(NewAddressListAreaCdSearchAllResponse.ROOT_NAME)
 @XmlRootElement(name = NewAddressListAreaCdSearchAllResponse.ROOT_NAME)
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
 @Getter
 @ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @Slf4j
 public class NewAddressListAreaCdSearchAllResponse
-        extends AbstractType
-        implements Wrapping.Self<NewAddressListAreaCdSearchAllResponse> {
+        extends AbstractSelfWrappingResponseType<NewAddressListAreaCdSearchAllResponse> {
 
     @Serial
     private static final long serialVersionUID = 8214625216695174852L;
@@ -70,9 +67,6 @@ public class NewAddressListAreaCdSearchAllResponse
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    @Valid
-    private CmmMsgHeader cmmMsgHeader;
-
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     @JsonProperty(NAME_NEW_ADDRESS_LIST_AREA_CD_SEARCH_ALL)
     @XmlElement(name = NAME_NEW_ADDRESS_LIST_AREA_CD_SEARCH_ALL)
