@@ -1,0 +1,80 @@
+{
+  "CityEngListResponse": {
+    "cmmMsgHeader": {
+      "requestMsgId": "",
+      "responseMsgId": "",
+      "responseTime": "20240725:140549147",
+      "successYN": "Y",
+      "returnCode": "00",
+      "errMsg": ""
+    },
+    "cityEngList": [
+      {
+        "cityEngName": "Boseong-gun"
+      },
+      {
+        "cityEngName": "Damyang-gun"
+      },
+      {
+        "cityEngName": "Gangjin-gun"
+      },
+      {
+        "cityEngName": "Goheung-gun"
+      },
+      {
+        "cityEngName": "Gokseong-gun"
+      },
+      {
+        "cityEngName": "Gurye-gun"
+      },
+      {
+        "cityEngName": "Gwangyang-si"
+      },
+      {
+        "cityEngName": "Haenam-gun"
+      },
+      {
+        "cityEngName": "Hampyeong-gun"
+      },
+      {
+        "cityEngName": "Hwasun-gun"
+      },
+      {
+        "cityEngName": "Jangheung-gun"
+      },
+      {
+        "cityEngName": "Jangseong-gun"
+      },
+      {
+        "cityEngName": "Jindo-gun"
+      },
+      {
+        "cityEngName": "Mokpo-si"
+      },
+      {
+        "cityEngName": "Muan-gun"
+      },
+      {
+        "cityEngName": "Naju-si"
+      },
+      {
+        "cityEngName": "Sinan-gun"
+      },
+      {
+        "cityEngName": "Suncheon-si"
+      },
+      {
+        "cityEngName": "Wando-gun"
+      },
+      {
+        "cityEngName": "Yeongam-gun"
+      },
+      {
+        "cityEngName": "Yeonggwang-gun"
+      },
+      {
+        "cityEngName": "Yeosu-si"
+      }
+    ]
+  }
+}
