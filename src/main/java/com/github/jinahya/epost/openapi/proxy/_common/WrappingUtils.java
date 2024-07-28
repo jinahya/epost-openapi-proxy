@@ -1,8 +1,8 @@
 package com.github.jinahya.epost.openapi.proxy._common;
 
+import com.github.jinahya.epost.openapi.proxy._misc.invoke.LookupHelper;
 import org.springframework.util.ReflectionUtils;
 
-import java.lang.invoke.MethodHandles;
 import java.lang.invoke.VarHandle;
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -31,22 +31,6 @@ final class WrappingUtils {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    private static final MethodHandles.Lookup LOOKUP = MethodHandles.lookup();
-
-    private static final Map<Class<?>, MethodHandles.Lookup> LOOKUPS = new HashMap<>();
-
-    private static MethodHandles.Lookup lookup(final Class<?> clazz) {
-        Objects.requireNonNull(clazz, "clazz is null");
-        return LOOKUPS.computeIfAbsent(clazz, k -> {
-            try {
-                return MethodHandles.privateLookupIn(k, LOOKUP);
-            } catch (final IllegalAccessException iae) {
-                throw new RuntimeException("failed to get private lookup for " + k, iae);
-            }
-        });
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
     private static final Map<Class<?>, VarHandle> HANDLES = new HashMap<>();
 
     private static VarHandle handle(final Class<?> clazz, final Object wrapper) {
@@ -54,7 +38,7 @@ final class WrappingUtils {
         return HANDLES.computeIfAbsent(clazz, k -> {
             final var field = field(k, wrapper);
             try {
-                return lookup(k).unreflectVarHandle(field);
+                return LookupHelper.privateLookup(k).unreflectVarHandle(field);
             } catch (final IllegalAccessException iae) {
                 throw new RuntimeException("failed to unreflect" + field, iae);
             }

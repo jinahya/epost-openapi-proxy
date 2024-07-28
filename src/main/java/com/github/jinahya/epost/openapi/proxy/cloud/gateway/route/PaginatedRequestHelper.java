@@ -1,6 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route;
 
-import com.github.jinahya.epost.openapi.proxy.lang.invoke.LookupHelper;
+import com.github.jinahya.epost.openapi.proxy._misc.invoke.LookupHelper;
 
 import java.lang.invoke.VarHandle;
 import java.lang.reflect.Field;

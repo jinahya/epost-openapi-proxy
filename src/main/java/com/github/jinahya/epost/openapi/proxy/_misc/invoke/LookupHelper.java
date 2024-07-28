@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.lang.invoke;
+package com.github.jinahya.epost.openapi.proxy._misc.invoke;
 
 import java.lang.invoke.MethodHandles;
 import java.util.HashMap;
