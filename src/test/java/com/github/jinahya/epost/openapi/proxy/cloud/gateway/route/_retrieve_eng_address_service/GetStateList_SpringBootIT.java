@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.test.context.junit.jupiter.DisabledIf;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.util.Objects;
@@ -79,6 +80,21 @@ class GetStateList_SpringBootIT
     @ParameterizedTest
     void __(final StateEngListRequest request) {
         final var response = exchange(webTestClient(), request);
+        verify(response, validator());
+        response.getStateEngList().forEach(e -> {
+            log.debug("address: {}", e);
+        });
+    }
+
+    @DisabledIf("#{systemProperties['" + SYSTEM_PROPERTY_SERVICE_KEY + "'] == null}")
+    @MethodSource({
+            "getRequestStreamWithMediaTypes"
+    })
+    @ParameterizedTest
+    void exchange__(final StateEngListRequest request) {
+        final var response = request.serviceKey(serviceKey())
+                .exchange(webClient())
+                .block();
         verify(response, validator());
         response.getStateEngList().forEach(e -> {
             log.debug("address: {}", e);

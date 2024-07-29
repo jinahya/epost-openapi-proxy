@@ -2,7 +2,7 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedResponseType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.CmmMsgHeader;
 import jakarta.validation.Valid;
@@ -24,9 +24,9 @@ import java.util.List;
 @Getter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@NoArgsConstructor
 public class StateEngListResponse
-        extends AbstractResponseType<StateEngListResponse> {
+//        extends AbstractResponseType<StateEngListResponse> {
+        extends AbstractPairedResponseType<StateEngListResponse, StateEngListRequest> {
 
     @Serial
     private static final long serialVersionUID = 4043100661470226062L;
@@ -58,6 +58,9 @@ public class StateEngListResponse
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+    public StateEngListResponse() {
+        super(StateEngListRequest.class);
+    }
 
     // ---------------------------------------------------------------------------------------------------- cmmMsgHeader
     // just for the prefab values.

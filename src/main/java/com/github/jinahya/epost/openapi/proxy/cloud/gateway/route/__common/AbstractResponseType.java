@@ -49,7 +49,7 @@ public abstract class AbstractResponseType<SELF extends AbstractResponseType<SEL
 
     // --------------------------------------------------------------------------------------------------------- wrapped
     @SuppressWarnings({"unchecked"})
-    public SELF get() {
+    public final SELF get() {
         if (wrapped != null) {
             return wrapped;
         }
