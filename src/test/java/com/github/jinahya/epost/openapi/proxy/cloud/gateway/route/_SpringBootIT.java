@@ -60,10 +60,20 @@ public abstract class _SpringBootIT {
     }
 
     // ------------------------------------------------------------------------------------------------------- validator
-    protected void assertValid(final Object object) {
+    protected <T> T assertValid(final T object) {
         Objects.requireNonNull(object, "object is null");
         assertThat(validator().validate(object))
                 .isEmpty();
+        return object;
+    }
+
+    protected <T extends AbstractResponseType<T>> T assertSucceeded(final T response) {
+        assertThat(response.getCmmMsgHeader()).isNotNull().satisfies(h -> {
+            assertThat(h.isSucceeded()).isTrue();
+            log.debug("responseTime: {}", h.getResponseTime());
+            log.debug("responseTimeAsLocalDateTime: {}", h.getResponseTimeAsLocalDateTime());
+        });
+        return response;
     }
 
     // ----------------------------------------------------------------------------------------------------- serviceKey

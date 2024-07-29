@@ -32,6 +32,7 @@ public class CityEngListResponse
     // -----------------------------------------------------------------------------------------------------------------
     static final String ROOT_NAME = "CityEngListResponse";
 
+    // -----------------------------------------------------------------------------------------------------------------
     private static final String NAME_CITY_ENG_LIST = "cityEngList";
 
     @Setter
@@ -45,6 +46,7 @@ public class CityEngListResponse
         @Serial
         private static final long serialVersionUID = -4416152072794741619L;
 
+        // -------------------------------------------------------------------------------------------------------------
         @NotBlank
         @JsonProperty
         @XmlElement
