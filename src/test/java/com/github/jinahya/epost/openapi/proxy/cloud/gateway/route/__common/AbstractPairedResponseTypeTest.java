@@ -3,11 +3,11 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common;
 import org.springframework.core.ResolvableType;
 
 public abstract class AbstractPairedResponseTypeTest<
-        TYPE extends AbstractPairedResponseType<TYPE, REQUEST>,
-        REQUEST extends AbstractRequestType<REQUEST>>
-        extends AbstractResponseTypeTest<TYPE> {
+        RESPONSE extends AbstractPairedResponseType<RESPONSE, REQUEST>,
+        REQUEST extends AbstractPairedRequestType<REQUEST, RESPONSE>>
+        extends AbstractResponseTypeTest<RESPONSE> {
 
-    protected AbstractPairedResponseTypeTest(final Class<TYPE> typeClass) {
+    protected AbstractPairedResponseTypeTest(final Class<RESPONSE> typeClass) {
         super(typeClass);
     }
 

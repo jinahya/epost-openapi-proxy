@@ -1,6 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng_address_service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedResponseType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractType;
@@ -48,7 +49,16 @@ public class StateEngListResponse
         @Serial
         private static final long serialVersionUID = 1923480486008916847L;
 
-        // -------------------------------------------------------------------------------------------------------------
+        // ------------------------------------------------------------------------------------------------------- parent
+        public StateEngList parent(final StateEngListResponse parent) {
+            setParent(parent);
+            return this;
+        }
+
+        // -----------------------------------------------------------------------------------------------------------------
+        @JsonIgnore
+        private transient StateEngListResponse parent;
+
         @NotBlank
         @JsonProperty
         @XmlElement

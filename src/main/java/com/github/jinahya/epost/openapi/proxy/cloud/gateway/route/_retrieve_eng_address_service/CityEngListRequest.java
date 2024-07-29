@@ -40,6 +40,13 @@ public class CityEngListRequest
         return instance;
     }
 
+    static CityEngListRequest from(final StateEngListResponse.StateEngList stateEngList) {
+        return from(
+                stateEngList.getParent().getRequestInstance(),
+                stateEngList
+        );
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
     private static final BiConsumer<? super CityEngListRequest, ? super UriBuilder> URI_CONSUMER = (s, b) -> {
         b.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_CITY_LIST)

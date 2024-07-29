@@ -108,15 +108,13 @@ class GetRoadAddressSearch_SpringBootIT
     @DisabledIf("#{systemProperties['" + SYSTEM_PROPERTY_SERVICE_KEY + "'] == null}")
     @Test
     void __() {
-        final var stateEngListRequest = new StateEngListRequest().serviceKey(serviceKey());
-        stateEngListRequest
-                .exchange(webClient(), StateEngListResponse.class)
-                .map(AbstractResponseType::get)
+        new StateEngListRequest()
+                .serviceKey(serviceKey())
+                .exchange(webClient())
                 .<StateEngListResponse>handle(this::handle)
-                .flatMapMany(v -> Flux.fromStream(v.getStateEngList().stream().limit(2)))
-                .map(stateEngList -> CityEngListRequest.from(stateEngListRequest, stateEngList))
+                .flatMapMany(selr -> Flux.fromStream(selr.getStateEngList().stream().map(e -> e.parent(selr)).limit(2)))
+                .map(CityEngListRequest::from)
                 .flatMap(cityEngListRequest -> cityEngListRequest.exchange(webClient(), CityEngListResponse.class))
-                .map(AbstractResponseType::get)
                 .blockLast();
     }
 }

@@ -21,7 +21,7 @@ import java.util.Objects;
 })
 public abstract class AbstractPairedRequestType<
         SELF extends AbstractPairedRequestType<SELF, RESPONSE>,
-        RESPONSE extends AbstractResponseType<RESPONSE>>
+        RESPONSE extends AbstractPairedResponseType<RESPONSE, SELF>>
         extends AbstractRequestType<SELF> {
 
     @Serial
@@ -42,9 +42,11 @@ public abstract class AbstractPairedRequestType<
     // ------------------------------------------------------------------------------------------------ java.lang.Object
 
     // -----------------------------------------------------------------------------------------------------------------
+    @SuppressWarnings({"unchecked"})
     public Mono<RESPONSE> exchange(final WebClient webClient) {
         return exchange(webClient, responseClass)
-                .map(AbstractResponseType::get);
+                .map(AbstractResponseType::get)
+                .map(v -> v.requestInstance((SELF) this));
     }
 
     // -----------------------------------------------------------------------------------------------------------------

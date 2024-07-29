@@ -19,16 +19,25 @@ import java.util.Objects;
 })
 public abstract class AbstractPairedResponseType<
         SELF extends AbstractPairedResponseType<SELF, REQUEST>,
-        REQUEST extends AbstractRequestType<REQUEST>>
+        REQUEST extends AbstractPairedRequestType<REQUEST, SELF>>
         extends AbstractResponseType<SELF> {
 
     @Serial
     private static final long serialVersionUID = -9157434345601279739L;
 
-    // ------------------------------------------------------------------------------------------------------ CONSTRUCTORS
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
     protected AbstractPairedResponseType(final Class<REQUEST> requestClass) {
         super();
         this.requestClass = Objects.requireNonNull(requestClass, "requestClass is null");
+    }
+
+    // ---------------------------------------------------------------------------------------------------- requestClass
+
+    // ------------------------------------------------------------------------------------------------- requestInstance
+    @SuppressWarnings({"unchecked"})
+    public SELF requestInstance(final REQUEST requestInstance) {
+        setRequestInstance(requestInstance);
+        return (SELF) this;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
