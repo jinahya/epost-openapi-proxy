@@ -5,7 +5,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.web.util.UriBuilder;
 
 import java.io.Serial;
 
@@ -27,14 +26,6 @@ public class StateEngListRequest
                     b.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_STATE_LIST);
                 },
                 true
-        );
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    @Override
-    protected UriBuilder set(final UriBuilder builder) {
-        return super.set(
-                builder.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_STATE_LIST)
         );
     }
 }

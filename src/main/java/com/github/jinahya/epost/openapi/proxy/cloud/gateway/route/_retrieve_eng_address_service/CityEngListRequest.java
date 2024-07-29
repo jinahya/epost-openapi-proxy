@@ -58,15 +58,6 @@ public class CityEngListRequest
         );
     }
 
-    // -----------------------------------------------------------------------------------------------------------------
-    public UriBuilder set(final UriBuilder builder) {
-        return super.set(
-                builder
-                        .path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_CITY_LIST)
-                        .replaceQueryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NM, stateEngName)
-        );
-    }
-
     // ---------------------------------------------------------------------------------------------------- stateEngName
     public CityEngListRequest stateEngName(final String stateEngName) {
         setStateEngName(stateEngName);

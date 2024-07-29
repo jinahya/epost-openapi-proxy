@@ -52,19 +52,6 @@ public class RoadEngListRequest
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-
-    @Override
-    protected UriBuilder set(final UriBuilder builder) {
-        return super.set(
-                builder.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_ROAD_NAME_LIST)
-                        .replaceQueryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NAME, stateEngName)
-                        .replaceQueryParam(_RetrieveEngAddressServiceConstants.PARAM_CITY_ENG_NAME, cityEngName)
-                        .replaceQueryParam(_RetrieveEngAddressServiceConstants.PARAM_ROAD_ENG_FIRST_NAME,
-                                           roadEngFirstName)
-        );
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
     @NotBlank
     private String stateEngName;
 

@@ -66,13 +66,6 @@ public abstract class AbstractRequestType<SELF extends AbstractRequestType<SELF>
                 .exchangeToMono(r -> r.bodyToMono(responseType));
     }
 
-    protected UriBuilder set(final UriBuilder builder) {
-        Objects.requireNonNull(builder, "builder is null");
-        return builder
-                .queryParamIfPresent(_Constants.PARAM_SERVICE_KEY, Optional.ofNullable(serviceKey))
-                ;
-    }
-
     // ------------------------------------------------------------------------------------------------------ serviceKey
     @SuppressWarnings({"unchecked"})
     public SELF serviceKey(final String serviceKey) {

@@ -67,17 +67,6 @@ public class RoadEngFirstNameListRequest
         );
     }
 
-    // -----------------------------------------------------------------------------------------------------------------
-
-    @Override
-    protected UriBuilder set(final UriBuilder builder) {
-        return super.set(
-                builder.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_ROAD_FIRST_NAME_LIST)
-                        .replaceQueryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NAME, stateEngName)
-                        .replaceQueryParam(_RetrieveEngAddressServiceConstants.PARAM_CITY_ENG_NAME, cityEngName)
-        );
-    }
-
     // ---------------------------------------------------------------------------------------------------- stateEngName
 
     // ----------------------------------------------------------------------------------------------------- cityEngName

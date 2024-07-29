@@ -52,22 +52,6 @@ public class DistrictEngListRequest
         setUriConsumer(URI_CONSUMER);
     }
 
-//    public DistrictEngListRequest(final DistrictEngListRequest.DistrictEngListRequestBuilder<?, ?> builder) {
-//        super(builder);
-//        setUriConsumer(URI_CONSUMER);
-//    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-
-    @Override
-    protected UriBuilder set(UriBuilder builder) {
-        return super.set(
-                builder.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_DISTRICT_NAME_LIST)
-                        .queryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NAME, stateEngName)
-                        .queryParam(_RetrieveEngAddressServiceConstants.PARAM_CITY_ENG_NAME, cityEngName)
-        );
-    }
-
     // -----------------------------------------------------------------------------------------------------------------
     @NotBlank
     private String stateEngName;

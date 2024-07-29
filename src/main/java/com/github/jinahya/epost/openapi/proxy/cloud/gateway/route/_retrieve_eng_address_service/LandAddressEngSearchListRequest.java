@@ -1,8 +1,8 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng_address_service;
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractRequestType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common._Constants;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.PaginatedRequest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common._Constants;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -91,24 +91,6 @@ public class LandAddressEngSearchListRequest
     public LandAddressEngSearchListRequest() {
         super();
         setUriConsumer(URI_CONSUMER);
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-
-    @Override
-    protected UriBuilder set(final UriBuilder builder) {
-        return super.set(
-                builder.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_LAND_ADDRESS_SEARCH)
-                        .queryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NAME, stateEngName)
-                        .queryParam(_RetrieveEngAddressServiceConstants.PARAM_CITY_ENG_NAME, cityEngName)
-                        .queryParam(_RetrieveEngAddressServiceConstants.PARAM_DISTRICT_ENG_FIRST_NAME,
-                                    districtEngFirstName)
-                        .queryParam(_RetrieveEngAddressServiceConstants.PARAM_DISTRICT_ENG_NAME, districtEngName)
-                        .queryParamIfPresent(_RetrieveEngAddressServiceConstants.PARAM_KEYWORD,
-                                             Optional.ofNullable(keyword))
-                        .queryParam(_Constants.PARAM_COUNT_PER_PAGE, countPerPage)
-                        .queryParam(_Constants.PARAM_CURRENT_PAGE, currentPage)
-        );
     }
 
     // -----------------------------------------------------------------------------------------------------------------

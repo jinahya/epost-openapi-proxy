@@ -65,23 +65,6 @@ public class RoadAddressEngSearchListRequest
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-
-    @Override
-    protected UriBuilder set(final UriBuilder builder) {
-        return super.set(
-                builder.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_ROAD_ADDRESS_SEARCH)
-                        .queryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NAME, stateEngName)
-                        .queryParam(_RetrieveEngAddressServiceConstants.PARAM_CITY_ENG_NAME, cityEngName)
-                        .queryParam(_RetrieveEngAddressServiceConstants.PARAM_ROAD_ENG_FIRST_NAME, roadEngFirstName)
-                        .queryParam(_RetrieveEngAddressServiceConstants.PARAM_ROAD_ENG_NAME, roadEngName)
-                        .queryParamIfPresent(_RetrieveEngAddressServiceConstants.PARAM_KEYWORD,
-                                             Optional.ofNullable(keyword))
-                        .queryParam(_Constants.PARAM_COUNT_PER_PAGE, countPerPage)
-                        .queryParam(_Constants.PARAM_CURRENT_PAGE, currentPage)
-        );
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
     @NotBlank
     private String stateEngName;
 
