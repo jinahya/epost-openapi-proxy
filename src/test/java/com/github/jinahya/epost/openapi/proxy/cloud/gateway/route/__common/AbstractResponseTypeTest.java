@@ -8,7 +8,7 @@ import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
  * @param <TYPE> subclass type parameter
  * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
  */
-public abstract class AbstractResponseTypeTest<TYPE extends AbstractResponseType<?>>
+public abstract class AbstractResponseTypeTest<TYPE extends AbstractResponseType<TYPE>>
         extends AbstractTypeTest<TYPE> {
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
@@ -25,6 +25,7 @@ public abstract class AbstractResponseTypeTest<TYPE extends AbstractResponseType
         instance2.setCmmMsgHeader(new CmmMsgHeader().requestMsgId("b"));
         assert !instance2.equals(instance1);
         return super.__equals(verifierApi)
+//                .withIgnoredFields("wrapped")
                 .withPrefabValues(
                         CmmMsgHeader.class,
                         new CmmMsgHeader().requestMsgId("a"),
@@ -32,5 +33,14 @@ public abstract class AbstractResponseTypeTest<TYPE extends AbstractResponseType
                 )
                 .withPrefabValues(typeClass, instance1, instance2)
                 ;
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    protected TYPE instance1() {
+        return newTypeInstance().cmmMsgHeader(new CmmMsgHeader().requestMsgId("a"));
+    }
+
+    protected TYPE instance2() {
+        return newTypeInstance().cmmMsgHeader(new CmmMsgHeader().requestMsgId("a"));
     }
 }

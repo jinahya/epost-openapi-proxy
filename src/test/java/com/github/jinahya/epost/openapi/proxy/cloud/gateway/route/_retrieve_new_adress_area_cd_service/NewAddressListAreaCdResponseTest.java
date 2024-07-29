@@ -1,6 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_new_adress_area_cd_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractSelfWrappingResponseTypeTest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseTypeTest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractTypeTest;
 import lombok.extern.slf4j.Slf4j;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
@@ -13,8 +13,9 @@ import java.util.stream.Stream;
 
 @Slf4j
 class NewAddressListAreaCdResponseTest
-        extends AbstractSelfWrappingResponseTypeTest<NewAddressListAreaCdResponse> {
+        extends AbstractResponseTypeTest<NewAddressListAreaCdResponse> {
 
+    // -----------------------------------------------------------------------------------------------------------------
     @DisplayName("NewAddressListAreaCd")
     @Nested
     class NewAddressListAreaCdTest
@@ -37,11 +38,16 @@ class NewAddressListAreaCdResponseTest
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-
     @Override
     protected SingleTypeEqualsVerifierApi<NewAddressListAreaCdResponse> __equals(
             final SingleTypeEqualsVerifierApi<NewAddressListAreaCdResponse> verifierApi) {
-        return super.__equals(verifierApi);
+        return super.__equals(verifierApi)
+//                .withPrefabValues(
+//                        Object.class,
+//                        instance1(),
+//                        instance2()
+//                )
+                ;
     }
 
     // -----------------------------------------------------------------------------------------------------------------

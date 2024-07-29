@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractSelfWrappingResponseType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.CmmMsgHeader;
 import com.github.jinahya.epost.openapi.proxy._misc.jackson.databind.ObjectReaderUtils;
 import com.github.jinahya.epost.openapi.proxy._misc.xml.stream.XMLInputFactoryUtils;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.CmmMsgHeader;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -31,7 +31,8 @@ import java.util.Objects;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class NewAddressListAreaCdResponse
-        extends AbstractSelfWrappingResponseType<NewAddressListAreaCdResponse> {
+//        extends AbstractSelfWrappingResponseType<NewAddressListAreaCdResponse> {
+        extends AbstractResponseType<NewAddressListAreaCdResponse> {
 
     @Serial
     private static final long serialVersionUID = 774107822436988264L;
@@ -46,7 +47,7 @@ public class NewAddressListAreaCdResponse
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
     public static class NewAddressListAreaCd
-            extends AbstractType {
+            extends AbstractType<NewAddressListAreaCd> {
 
         @Serial
         private static final long serialVersionUID = 493013101186485936L;
@@ -72,6 +73,13 @@ public class NewAddressListAreaCdResponse
         return this;
     }
 
+    // --------------------------------------------------------------------------------------------------------- wrapped
+    @JsonProperty(ROOT_NAME)
+    @Override
+    public NewAddressListAreaCdResponse getWrapped() {
+        return super.getWrapped();
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
 //    @Valid
 //    private CmmMsgHeader cmmMsgHeader;
@@ -81,12 +89,12 @@ public class NewAddressListAreaCdResponse
     @XmlElement(name = NAME_NEW_ADDRESS_LIST_AREA_CD)
     private List<@Valid @NotNull NewAddressListAreaCd> newAddressListAreaCdList;
 
-    // -----------------------------------------------------------------------------------------------------------------
-    @Valid
-    @JsonProperty(ROOT_NAME)
-    @Setter(AccessLevel.NONE)
-    @Getter(AccessLevel.NONE)
-    private NewAddressListAreaCdResponse wrapped;
+//    // -----------------------------------------------------------------------------------------------------------------
+//    @Valid
+//    @JsonProperty(ROOT_NAME)
+//    @Setter(AccessLevel.NONE)
+//    @Getter(AccessLevel.NONE)
+//    private NewAddressListAreaCdResponse wrapped;
 
     // -----------------------------------------------------------------------------------------------------------------
     private static final JAXBContext JAXB_CONTEXT;

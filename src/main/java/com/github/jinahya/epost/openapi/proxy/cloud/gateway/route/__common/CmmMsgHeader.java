@@ -88,7 +88,7 @@ public class CmmMsgHeader
 
     // ---------------------------------------------------------------------------------------------------- requestMsgId
     // just for the prefab values
-    public CmmMsgHeader requestMsgId(final String requestMsgId) {
+    CmmMsgHeader requestMsgId(final String requestMsgId) {
         setRequestMsgId(requestMsgId);
         return this;
     }
