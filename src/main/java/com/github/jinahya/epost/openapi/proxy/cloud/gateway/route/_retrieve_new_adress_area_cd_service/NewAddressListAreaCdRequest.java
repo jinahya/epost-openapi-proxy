@@ -1,10 +1,13 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_new_adress_area_cd_service;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractRequestType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common._Constants;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.xml.bind.annotation.XmlEnum;
+import jakarta.xml.bind.annotation.XmlEnumValue;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,22 +31,58 @@ public class NewAddressListAreaCdRequest
     @SuppressWarnings({
             "java:S115" // not 'DONG' but 'dong'
     })
+    @XmlEnum(String.class)
     public enum SearchSe {
 
         /**
          * 동(읍/면)명.
          */
-        dong,
+        @XmlEnumValue("dong")
+        DONG("dong"),
 
         /**
          * 도로명[default].
          */
-        road,
+        @XmlEnumValue("road")
+        ROAD,
 
         /**
          * 우편번호
          */
-        post
+        @XmlEnumValue("post")
+        POST;
+
+        // -------------------------------------------------------------------------------------------------------------
+        public static SearchSe valueOfText(final String text) {
+            for (final SearchSe e : SearchSe.values()) {
+                if (e.text().equals(text)) {
+                    return e;
+                }
+            }
+            throw new IllegalArgumentException("no value for '" + text + "'");
+        }
+
+        // -------------------------------------------------------------------------------------------------------------
+        SearchSe(final String text) {
+            this.text = text;
+        }
+
+        // -------------------------------------------------------------------------------------------------------------
+        SearchSe() {
+            this(null);
+        }
+
+        // -------------------------------------------------------------------------------------------------------------
+        @JsonValue
+        public String text() {
+            if (text != null) {
+                return text;
+            }
+            return name().toLowerCase();
+        }
+
+        // -------------------------------------------------------------------------------------------------------------
+        private final String text;
     }
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS

@@ -24,6 +24,9 @@ import java.util.function.Supplier;
 @Getter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@SuppressWarnings({
+        "java:S119" // <SELF ...>
+})
 public abstract class AbstractRequestType<SELF extends AbstractRequestType<SELF>>
         extends AbstractType<SELF> {
 

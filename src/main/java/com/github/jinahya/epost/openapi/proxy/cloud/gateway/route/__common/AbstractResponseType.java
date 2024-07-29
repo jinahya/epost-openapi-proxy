@@ -14,6 +14,9 @@ import java.util.Objects;
 //@EqualsAndHashCode(callSuper = true)
 @ToString(includeFieldNames = false)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SuppressWarnings({
+        "java:S119" // <SELF ...>
+})
 public abstract class AbstractResponseType<SELF extends AbstractResponseType<SELF>>
         extends AbstractType<SELF> {
 

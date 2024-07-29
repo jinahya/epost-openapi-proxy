@@ -70,21 +70,21 @@ class GetNewAddressListAreaCd_SpringBootIT
                 Stream.of(
                         NewAddressListAreaCdRequest.of(
                                 null,
-                                NewAddressListAreaCdRequest.SearchSe.dong,
+                                NewAddressListAreaCdRequest.SearchSe.DONG,
                                 "주월동 408-1",
                                 2,
                                 1
                         ),
                         NewAddressListAreaCdRequest.of(
                                 null,
-                                NewAddressListAreaCdRequest.SearchSe.road,
+                                NewAddressListAreaCdRequest.SearchSe.ROAD,
                                 "세종로 17",
                                 2,
                                 1
                         ),
                         NewAddressListAreaCdRequest.of(
                                 null,
-                                NewAddressListAreaCdRequest.SearchSe.post,
+                                NewAddressListAreaCdRequest.SearchSe.POST,
                                 "61725",
                                 2,
                                 1
