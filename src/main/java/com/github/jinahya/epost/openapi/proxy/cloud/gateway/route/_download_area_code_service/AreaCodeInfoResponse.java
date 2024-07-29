@@ -3,10 +3,10 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._download_are
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractSelfWrappingResponseType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.CmmMsgHeader;
 import com.github.jinahya.epost.openapi.proxy._misc.jackson.databind.ObjectReaderUtils;
 import com.github.jinahya.epost.openapi.proxy._misc.xml.stream.XMLInputFactoryUtils;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.CmmMsgHeader;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
@@ -23,7 +23,6 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import java.io.Serial;
 import java.util.Objects;
 
-//@JsonRootName(AreaCodeInfoResponse.ROOT_NAME)
 @XmlRootElement(name = AreaCodeInfoResponse.ROOT_NAME)
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
@@ -31,7 +30,7 @@ import java.util.Objects;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class AreaCodeInfoResponse
-        extends AbstractSelfWrappingResponseType<AreaCodeInfoResponse> {
+        extends AbstractResponseType<AreaCodeInfoResponse> {
 
     @Serial
     private static final long serialVersionUID = 9803126941295821L;
@@ -51,9 +50,6 @@ public class AreaCodeInfoResponse
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-//    @Valid
-//    private CmmMsgHeader cmmMsgHeader;
-
     @NotBlank
     @JsonProperty(required = true)
     @XmlElement(required = true, nillable = false)

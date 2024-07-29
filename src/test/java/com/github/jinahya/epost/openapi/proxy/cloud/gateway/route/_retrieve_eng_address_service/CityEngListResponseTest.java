@@ -1,6 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng_address_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractSelfWrappingResponseTypeTest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseTypeTest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractTypeUtils;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -8,7 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 class CityEngListResponseTest
-        extends AbstractSelfWrappingResponseTypeTest<CityEngListResponse> {
+        extends AbstractResponseTypeTest<CityEngListResponse> {
 
     CityEngListResponseTest() {
         super(CityEngListResponse.class);
@@ -34,11 +35,12 @@ class CityEngListResponseTest
     void __xml(final String resName) throws Throwable {
         final var unmarshalled = applyResourceAsStreamChecked(
                 resName,
-                CityEngListResponse::unmarshalInstance
+                r -> AbstractTypeUtils.unmarshalNoNamespacedInstance(CityEngListResponse.class, r)
         );
         verifyValid(unmarshalled);
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
     private static Stream<String> getJsonResNameStream() {
         return Stream.of(
                 "getCityList_response0.json"
@@ -50,7 +52,7 @@ class CityEngListResponseTest
     void __json(final String resName) throws Throwable {
         final var unmarshalled = applyResourceAsStreamChecked(
                 resName,
-                CityEngListResponse::deserializeInstance
+                r -> AbstractTypeUtils.deserializeInstance(CityEngListResponse.class, r)
         );
         verifyValid(unmarshalled);
     }

@@ -2,7 +2,7 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._SpringBootIT;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractRequestTypeTestUtils;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractSelfWrappingResponseType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
 import jakarta.validation.Validator;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -38,7 +38,7 @@ class GetStateList_SpringBootIT
                                 .returnResult()
                                 .getResponseBody()
                 )
-                .map(AbstractSelfWrappingResponseType::get)
+                .map(AbstractResponseType::get)
                 .orElseThrow();
         assertThat(responseBody.getCmmMsgHeader()).isNotNull().satisfies(h -> {
             assertThat(h.isSucceeded()).isTrue();

@@ -2,9 +2,8 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractSelfWrappingResponseType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.CmmMsgHeader;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -13,7 +12,10 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serial;
 import java.util.List;
@@ -25,7 +27,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class RoadAddressEngSearchListResponse
-        extends AbstractSelfWrappingResponseType<RoadAddressEngSearchListResponse> {
+        extends AbstractResponseType<RoadAddressEngSearchListResponse> {
 
     @Serial
     private static final long serialVersionUID = -8470164971827744847L;
@@ -41,7 +43,7 @@ public class RoadAddressEngSearchListResponse
     @ToString(callSuper = true)
     @EqualsAndHashCode(callSuper = true)
     public static class RoadAddressEngSearchList
-            extends AbstractType {
+            extends AbstractType<RoadAddressEngSearchList> {
 
         @Serial
         private static final long serialVersionUID = -4962767662385926995L;
@@ -62,26 +64,17 @@ public class RoadAddressEngSearchListResponse
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
     // ---------------------------------------------------------------------------------------------------- cmmMsgHeader
-    // just for the prefab values.
-    RoadAddressEngSearchListResponse cmmMsgHeader(final CmmMsgHeader cmmMsgHeader) {
-        setCmmMsgHeader(cmmMsgHeader);
-        return this;
+
+    // --------------------------------------------------------------------------------------------------------- wrapped
+    @JsonProperty(ROOT_NAME)
+    @Override
+    public RoadAddressEngSearchListResponse getWrapped() {
+        return super.getWrapped();
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-//    @Valid
-//    @NotNull
-//    private CmmMsgHeader cmmMsgHeader;
-
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     @JsonProperty(NAME_ROAD_ADDRESS_ENG_SEARCH_LIST)
     @XmlElement(name = NAME_ROAD_ADDRESS_ENG_SEARCH_LIST)
     private List<@Valid @NotNull RoadAddressEngSearchList> roadAddressEngSearchList;
-
-    // -----------------------------------------------------------------------------------------------------------------
-    @Valid
-    @JsonProperty(ROOT_NAME)
-    @Setter(AccessLevel.NONE)
-    @Getter(AccessLevel.NONE)
-    private RoadAddressEngSearchListResponse wrapped;
 }

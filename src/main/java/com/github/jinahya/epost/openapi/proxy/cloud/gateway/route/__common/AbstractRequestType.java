@@ -18,7 +18,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 @Setter
@@ -67,43 +66,11 @@ public abstract class AbstractRequestType<SELF extends AbstractRequestType<SELF>
                 .exchangeToMono(r -> r.bodyToMono(responseType));
     }
 
-    public <T extends AbstractSelfWrappingResponseType<T>> Mono<T> exchangeAndGet(final WebClient webClient,
-                                                                                  final Class<T> responseType) {
-        return exchange(webClient, responseType)
-                .map(AbstractSelfWrappingResponseType::get);
-    }
-
     protected UriBuilder set(final UriBuilder builder) {
         Objects.requireNonNull(builder, "builder is null");
         return builder
                 .queryParamIfPresent(_Constants.PARAM_SERVICE_KEY, Optional.ofNullable(serviceKey))
                 ;
-    }
-
-    protected <T extends AbstractResponseType<T>> Mono<T> exchange(final WebClient webClient,
-                                                                   final HttpMethod httpMethod,
-                                                                   final Function<UriBuilder, URI> uriFunction,
-                                                                   Class<T> responseType) {
-        Objects.requireNonNull(webClient, "webClient is null");
-        Objects.requireNonNull(httpMethod, "httpMethod is null");
-        Objects.requireNonNull(responseType, "responseType is null");
-        return webClient
-                .method(httpMethod)
-                .uri(uriFunction)
-                .exchangeToMono(r -> r.bodyToMono(responseType));
-    }
-
-    protected <T extends AbstractResponseType<T>> Mono<T> exchange(final WebClient webClient,
-                                                                   final HttpMethod httpMethod,
-                                                                   final Class<T> responseType) {
-        Objects.requireNonNull(webClient, "webClient is null");
-        Objects.requireNonNull(httpMethod, "httpMethod is null");
-        Objects.requireNonNull(responseType, "responseType is null");
-        return exchange(webClient, httpMethod, b -> set(b).build(), responseType);
-    }
-
-    protected <T extends AbstractResponseType<T>> Mono<T> get(final WebClient webClient, final Class<T> responseType) {
-        return exchange(webClient, HttpMethod.GET, responseType);
     }
 
     // ------------------------------------------------------------------------------------------------------ serviceKey

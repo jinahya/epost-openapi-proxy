@@ -2,7 +2,7 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._SpringBootIT;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractRequestTypeTestUtils;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractSelfWrappingResponseType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
 import jakarta.validation.Validator;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -50,7 +50,7 @@ class GetRoadAddressSearch_SpringBootIT
                                 .returnResult()
                                 .getResponseBody()
                 )
-                .map(AbstractSelfWrappingResponseType::get)
+                .map(AbstractResponseType::get)
                 .orElseThrow();
         assertThat(responseBody.getCmmMsgHeader()).isNotNull().satisfies(h -> {
             assertThat(h.isSucceeded()).isTrue();
@@ -110,11 +110,13 @@ class GetRoadAddressSearch_SpringBootIT
     void __() {
         final var stateEngListRequest = new StateEngListRequest().serviceKey(serviceKey());
         stateEngListRequest
-                .exchangeAndGet(webClient(), StateEngListResponse.class)
+                .exchange(webClient(), StateEngListResponse.class)
+                .map(AbstractResponseType::get)
                 .<StateEngListResponse>handle(this::handle)
                 .flatMapMany(v -> Flux.fromStream(v.getStateEngList().stream().limit(2)))
                 .map(stateEngList -> CityEngListRequest.from(stateEngListRequest, stateEngList))
-                .map(cityEngListRequest -> cityEngListRequest.exchangeAndGet(webClient(), CityEngListResponse.class))
+                .flatMap(cityEngListRequest -> cityEngListRequest.exchange(webClient(), CityEngListResponse.class))
+                .map(AbstractResponseType::get)
                 .blockLast();
     }
 }

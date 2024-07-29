@@ -1,7 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_new_adress_area_cd_search_all_service;
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractAddressTest;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractSelfWrappingResponseTypeTest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseTypeTest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractTypeUtils;
 import lombok.extern.slf4j.Slf4j;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 @Slf4j
 class NewAddressListAreaCdSearchAllResponseTest
-        extends AbstractSelfWrappingResponseTypeTest<NewAddressListAreaCdSearchAllResponse> {
+        extends AbstractResponseTypeTest<NewAddressListAreaCdSearchAllResponse> {
 
     @Nested
     class NewAddressListAreaCdSearchAllTest

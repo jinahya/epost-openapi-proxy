@@ -11,9 +11,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriBuilder;
-import reactor.core.publisher.Mono;
 
 import java.io.Serial;
 import java.util.Optional;
@@ -81,10 +79,6 @@ public class RoadAddressEngSearchListRequest
                         .queryParam(_Constants.PARAM_COUNT_PER_PAGE, countPerPage)
                         .queryParam(_Constants.PARAM_CURRENT_PAGE, currentPage)
         );
-    }
-
-    public Mono<RoadAddressEngSearchListResponse> get(final WebClient webClient) {
-        return get(webClient, RoadAddressEngSearchListResponse.class);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

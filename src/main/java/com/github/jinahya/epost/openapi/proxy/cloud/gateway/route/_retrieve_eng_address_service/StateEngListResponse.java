@@ -2,7 +2,7 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractSelfWrappingResponseType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.CmmMsgHeader;
 import jakarta.validation.Valid;
@@ -26,7 +26,7 @@ import java.util.List;
 @ToString(callSuper = true)
 @NoArgsConstructor
 public class StateEngListResponse
-        extends AbstractSelfWrappingResponseType<StateEngListResponse> {
+        extends AbstractResponseType<StateEngListResponse> {
 
     @Serial
     private static final long serialVersionUID = 4043100661470226062L;
@@ -66,20 +66,16 @@ public class StateEngListResponse
         return this;
     }
 
-    // -----------------------------------------------------------------------------------------------------------------
-//    @Valid
-//    @NotNull
-//    private CmmMsgHeader cmmMsgHeader;
+    // --------------------------------------------------------------------------------------------------------- wrapped
+    @JsonProperty(ROOT_NAME)
+    @Override
+    public StateEngListResponse getWrapped() {
+        return super.getWrapped();
+    }
 
+    // -----------------------------------------------------------------------------------------------------------------
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     @JsonProperty(NAME_STATE_ENG_LIST)
     @XmlElement(name = NAME_STATE_ENG_LIST)
     private List<@Valid @NotNull StateEngList> stateEngList;
-
-    // -----------------------------------------------------------------------------------------------------------------
-    @Valid
-    @JsonProperty(ROOT_NAME)
-    @Setter(AccessLevel.NONE)
-    @Getter(AccessLevel.NONE)
-    private StateEngListResponse wrapped;
 }

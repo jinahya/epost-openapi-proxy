@@ -4,8 +4,6 @@ import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._SpringBootIT;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.junit.jupiter.DisabledIf;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 @Slf4j
 class CityEngList_SpringBootIT
@@ -28,7 +26,7 @@ class CityEngList_SpringBootIT
         final var cityEngRequest = new CityEngListRequest()
                 .serviceKey(serviceKey())
                 .stateEngName("Jeollanam-do");
-        final var cityEngResponse = cityEngRequest.exchangeAndGet(webClient(), CityEngListResponse.class)
+        final var cityEngResponse = cityEngRequest.exchange(webClient(), CityEngListResponse.class)
                 .<CityEngListResponse>handle(this::handle)
                 .block();
         assertValid(cityEngResponse);
