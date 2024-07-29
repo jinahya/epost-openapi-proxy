@@ -25,7 +25,7 @@ import java.util.stream.Stream;
 class GetNewAddressListAreaCdSearchAll_SpringBootIT {
 
     // -----------------------------------------------------------------------------------------------------------------
-    private static final String SYSTEM_PROPERTY_SERVICE_KEY = "serviceKey";
+//    private static final String SYSTEM_PROPERTY_SERVICE_KEY = "serviceKey";
 
     private static Stream<Arguments> argumentsStream() {
         return Stream.of(

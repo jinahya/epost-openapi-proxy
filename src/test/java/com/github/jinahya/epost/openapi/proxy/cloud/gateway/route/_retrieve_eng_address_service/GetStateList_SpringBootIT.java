@@ -1,8 +1,8 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng_address_service;
 
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._SpringBootIT;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractRequestTypeTestUtils;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractSelfWrappingResponseType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._SpringBootIT;
 import jakarta.validation.Validator;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -64,7 +64,7 @@ class GetStateList_SpringBootIT
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    private static Stream<StateEngListRequest> getRequestStream() {
+    private static Stream<StateEngListRequest> getRequestStreamWithMediaTypes() {
         return AbstractRequestTypeTestUtils.mapMediaType(
                 Stream.of(
                         new StateEngListRequest()
@@ -74,7 +74,7 @@ class GetStateList_SpringBootIT
 
     // -----------------------------------------------------------------------------------------------------------------
     @MethodSource({
-            "getRequestStream"
+            "getRequestStreamWithMediaTypes"
     })
     @ParameterizedTest
     void __(final StateEngListRequest request) {

@@ -1,6 +1,10 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route;
 
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractRequestType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common._Constants;
 import com.mycompany.Application;
+import jakarta.annotation.PostConstruct;
 import jakarta.validation.Validator;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -8,11 +12,18 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.SynchronousSink;
+
+import java.util.Objects;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Import(
         value = {
@@ -28,35 +39,37 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 @Slf4j
 public abstract class _SpringBootIT {
 
-//    protected static <REQUEST extends AbstractRequestType<REQUEST>, RESPONSE extends AbstractResponseType<RESPONSE>>
-//    StateEngListResponse exchange(final WebTestClient client, final REQUEST request, Class<RESPONSE> responseClass) {
-//        Objects.requireNonNull(client, "client is null");
-//        Objects.requireNonNull(request, "request is null");
-//        final var requestSpec = client
-//                .method(request.getHttpMethod())
-//                .uri(request::acceptUriConsumerAndBuild)
-//                .headers(request::acceptHeaders);
-//        // -------------------------------------------------------------------------------------------------------- when
-//        final var responseSpec = requestSpec.exchange();
-//        // -------------------------------------------------------------------------------------------------------- then
-//        responseSpec.expectStatus().isOk();
-//        final var responseBody = Optional.ofNullable(
-//                        responseSpec
-//                                .expectBody(responseClass)
-//                                .returnResult()
-//                                .getResponseBody()
-//                )
-//                .orElseThrow();
-//        assertThat(responseBody.getCmmMsgHeader()).isNotNull().satisfies(h -> {
-//            assertThat(h.isSucceeded()).isTrue();
-//            log.debug("responseTime: {}", h.getResponseTime());
-//            log.debug("responseTimeAsLocalDateTime: {}", h.getResponseTimeAsLocalDateTime());
-//        });
-//        responseBody.getStateEngList().forEach(e -> {
-//            log.debug("roadEngFirstName: {}", e);
-//        });
-//        return responseBody;
-//    }
+    protected static final String SYSTEM_PROPERTY_SERVICE_KEY = "serviceKey";
+
+    // -----------------------------------------------------------------------------------------------------------------
+    @PostConstruct
+    private void doOnPostConstruct() {
+        log.debug("serviceKey: {}", serviceKey);
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    protected <T extends AbstractResponseType<T>> void handle(final T value, final SynchronousSink<T> sink) {
+        Objects.requireNonNull(value, "value is null");
+        Objects.requireNonNull(sink, "sink is null");
+        final var cmmMsgHandler = value.getCmmMsgHeader();
+        if (cmmMsgHandler.isSucceeded()) {
+            sink.next(value);
+        } else {
+            sink.error(new RuntimeException("unsuccessful response: " + value));
+        }
+    }
+
+    // ------------------------------------------------------------------------------------------------------- validator
+    protected void assertValid(final Object object) {
+        Objects.requireNonNull(object, "object is null");
+        assertThat(validator().validate(object))
+                .isEmpty();
+    }
+
+    // ----------------------------------------------------------------------------------------------------- serviceKey
+    protected <T extends AbstractRequestType<T>> T serviceKey(final T request) {
+        return request.serviceKey(serviceKey);
+    }
 
     // -----------------------------------------------------------------------------------------------------------------
     @Autowired
@@ -70,4 +83,16 @@ public abstract class _SpringBootIT {
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.PROTECTED)
     private Validator validator;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    @Accessors(fluent = true)
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.PROTECTED)
+    private final WebClient webClient = WebClient.builder().baseUrl(_Constants.BASE_URL_DEVELOPMENT).build();
+
+    @Value("#{systemProperties['" + SYSTEM_PROPERTY_SERVICE_KEY + "']}")
+    @Accessors(fluent = true)
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.PROTECTED)
+    private String serviceKey;
 }

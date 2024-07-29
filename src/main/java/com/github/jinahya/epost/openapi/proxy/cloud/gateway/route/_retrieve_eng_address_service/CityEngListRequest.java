@@ -9,6 +9,7 @@ import lombok.ToString;
 import org.springframework.web.util.UriBuilder;
 
 import java.io.Serial;
+import java.util.Objects;
 import java.util.function.BiConsumer;
 
 @Setter
@@ -26,6 +27,16 @@ public class CityEngListRequest
         final CityEngListRequest instance = new CityEngListRequest();
         instance.setServiceKey(serviceKey);
         instance.setStateEngName(stateEngName);
+        return instance;
+    }
+
+    public static CityEngListRequest from(final StateEngListRequest stateEngListRequest,
+                                          final StateEngListResponse.StateEngList stateEngList) {
+        Objects.requireNonNull(stateEngListRequest, "stateEngListRequest is null");
+        Objects.requireNonNull(stateEngList, "stateEngList is null");
+        final CityEngListRequest instance = new CityEngListRequest();
+        instance.setServiceKey(stateEngListRequest.getServiceKey());
+        instance.setStateEngName(stateEngList.getStateEngName());
         return instance;
     }
 
@@ -57,8 +68,10 @@ public class CityEngListRequest
     }
 
     // ---------------------------------------------------------------------------------------------------- stateEngName
-
-    // ----------------------------------------------------------------------------------------------------- cityEngName
+    public CityEngListRequest stateEngName(final String stateEngName) {
+        setStateEngName(stateEngName);
+        return this;
+    }
 
     // -----------------------------------------------------------------------------------------------------------------
     @NotBlank

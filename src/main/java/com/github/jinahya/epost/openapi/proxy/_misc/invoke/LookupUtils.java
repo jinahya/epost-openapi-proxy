@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public final class LookupHelper {
+public final class LookupUtils {
 
     // -----------------------------------------------------------------------------------------------------------------
     private static final MethodHandles.Lookup LOOKUP = MethodHandles.lookup();
@@ -24,7 +24,7 @@ public final class LookupHelper {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    private LookupHelper() {
+    private LookupUtils() {
         throw new AssertionError("instantiation is not allowed");
     }
 }

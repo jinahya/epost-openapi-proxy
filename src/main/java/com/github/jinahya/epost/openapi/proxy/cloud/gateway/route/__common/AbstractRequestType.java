@@ -67,6 +67,12 @@ public abstract class AbstractRequestType<SELF extends AbstractRequestType<SELF>
                 .exchangeToMono(r -> r.bodyToMono(responseType));
     }
 
+    public <T extends AbstractSelfWrappingResponseType<T>> Mono<T> exchangeAndGet(final WebClient webClient,
+                                                                                  final Class<T> responseType) {
+        return exchange(webClient, responseType)
+                .map(AbstractSelfWrappingResponseType::get);
+    }
+
     protected UriBuilder set(final UriBuilder builder) {
         Objects.requireNonNull(builder, "builder is null");
         return builder
@@ -101,6 +107,11 @@ public abstract class AbstractRequestType<SELF extends AbstractRequestType<SELF>
     }
 
     // ------------------------------------------------------------------------------------------------------ serviceKey
+    @SuppressWarnings({"unchecked"})
+    public SELF serviceKey(final String serviceKey) {
+        setServiceKey(serviceKey);
+        return (SELF) this;
+    }
 
     // ------------------------------------------------------------------------------------------------------ httpMethod
 

@@ -1,6 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common;
 
-import com.github.jinahya.epost.openapi.proxy._misc.invoke.LookupHelper;
+import com.github.jinahya.epost.openapi.proxy._misc.invoke.LookupUtils;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.invoke.VarHandle;
@@ -38,7 +38,7 @@ final class WrappingUtils {
         return HANDLES.computeIfAbsent(clazz, k -> {
             final var field = field(k, wrapper);
             try {
-                return LookupHelper.privateLookup(k).unreflectVarHandle(field);
+                return LookupUtils.privateLookup(k).unreflectVarHandle(field);
             } catch (final IllegalAccessException iae) {
                 throw new RuntimeException("failed to unreflect" + field, iae);
             }
