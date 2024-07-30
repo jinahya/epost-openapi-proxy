@@ -1,0 +1,3 @@
+spring:
+  config:
+    import: classpath:application-epost-openapi-proxy-production.yaml

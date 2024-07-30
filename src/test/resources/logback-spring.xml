@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+  <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+  <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+  <!--  <root level="debug">-->
+  <root level="debug">
+    <appender-ref ref="CONSOLE"/>
+  </root>
+
+  <logger name="org.springframework" level="trace"/>
+  <logger name="org.springframework.boot.autoconfigure.web" level="trace"/>
+  <logger name="org.springframework.core.codec.StringDecoder" level="trace"/>
+  <logger name="org.springframework.cloud.gateway" level="trace"/>
+  <logger name="org.springframework.cloud.gateway.handler.RoutePredicateHandlerMapping" level="trace"/>
+  <logger name="org.springframework.http.server.reactive" level="trace"/>
+  <logger name="org.springframework.web.reactive" level="trace"/>
+  <logger name="readtor.netty" level="debug"/>
+  <logger name="redisratelimiter" level="debug"/>
+
+</configuration>
