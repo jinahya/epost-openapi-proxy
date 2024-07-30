@@ -1,5 +1,7 @@
 # epost-openapi-proxy
 
+[![Java CI with Gradle](https://github.com/jinahya/epost-openapi-proxy/actions/workflows/gradle.yml/badge.svg)](https://github.com/jinahya/epost-openapi-proxy/actions/workflows/gradle.yml)
+
 ## Abstract
 
 An application for
