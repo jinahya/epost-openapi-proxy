@@ -112,3 +112,6 @@ __service_key.sh
 
 src/test/resources/application.yaml
 src/test/resources/com/github/jinahya/epost/openapi/proxy/cloud/gateway/route/_download_area_code_service/zipcode_DB.zip
+src/test/resources/com/github/jinahya/epost/openapi/proxy/cloud/gateway/route/_download_area_code_service/areacd_chgaddr_DB.zip
+src/test/resources/com/github/jinahya/epost/openapi/proxy/cloud/gateway/route/_download_area_code_service/areacd_rangeaddr_DB.zip
+src/test/resources/com/github/jinahya/epost/openapi/proxy/cloud/gateway/route/_download_area_code_service/areacd_pobox_DB.zip
