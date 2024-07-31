@@ -80,9 +80,12 @@ class GetStateList_SpringBootIT
     @ParameterizedTest
     void __(final StateEngListRequest request) {
         final var response = exchange(webTestClient(), request);
-        verify(response, validator());
-        response.getStateEngList().forEach(e -> {
-            log.debug("address: {}", e);
+        assertThat(response).isNotNull().satisfies(r -> {
+            assertValid(r);
+            assertSucceeded(r);
+            response.getStateEngList().forEach(e -> {
+                log.debug("stateEngList: {}", e);
+            });
         });
     }
 
@@ -95,9 +98,12 @@ class GetStateList_SpringBootIT
         final var response = request.serviceKey(serviceKey())
                 .exchange(webClient())
                 .block();
-        verify(response, validator());
-        response.getStateEngList().forEach(e -> {
-            log.debug("address: {}", e);
+        assertThat(response).isNotNull().satisfies(r -> {
+            assertValid(r);
+            assertSucceeded(r);
+            response.getStateEngList().forEach(e -> {
+                log.debug("stateEngList: {}", e);
+            });
         });
     }
 }
