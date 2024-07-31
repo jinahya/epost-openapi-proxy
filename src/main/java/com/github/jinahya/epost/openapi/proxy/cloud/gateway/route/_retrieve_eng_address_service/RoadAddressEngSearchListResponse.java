@@ -2,7 +2,7 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedResponseType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -27,7 +27,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class RoadAddressEngSearchListResponse
-        extends AbstractResponseType<RoadAddressEngSearchListResponse> {
+        extends AbstractPairedResponseType<RoadAddressEngSearchListResponse, RoadAddressEngSearchListRequest> {
 
     @Serial
     private static final long serialVersionUID = -8470164971827744847L;
@@ -62,6 +62,10 @@ public class RoadAddressEngSearchListResponse
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+
+    public RoadAddressEngSearchListResponse() {
+        super(RoadAddressEngSearchListRequest.class);
+    }
 
     // ---------------------------------------------------------------------------------------------------- cmmMsgHeader
 

@@ -1,5 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng_address_service;
 
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedRequestType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractRequestType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common._Constants;
 import io.micrometer.common.lang.Nullable;
@@ -11,9 +12,11 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.lang.NonNull;
 import org.springframework.web.util.UriBuilder;
 
 import java.io.Serial;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
@@ -22,12 +25,26 @@ import java.util.function.BiConsumer;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class RoadAddressEngSearchListRequest
-        extends AbstractRequestType<RoadAddressEngSearchListRequest> {
+        extends AbstractPairedRequestType<RoadAddressEngSearchListRequest, RoadAddressEngSearchListResponse> {
 
     @Serial
     private static final long serialVersionUID = 3206249731898344984L;
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
+
+    /**
+     * Creates a new instance with specified arguments.
+     *
+     * @param serviceKey       a value for {@link #getServiceKey() serviceKey} property.
+     * @param stateEngName     a value for {@link #getStateEngName() sateEngName} property.
+     * @param cityEngName      a value for {@link #getCityEngName() cityEngName} property.
+     * @param roadEngFirstName
+     * @param roadEngName
+     * @param keyword
+     * @param countPerPage     a value for {@link #getCountPerPage() countPerPage} property.
+     * @param currentPage
+     * @return a new instance.
+     */
     public static RoadAddressEngSearchListRequest of(final @Nullable String serviceKey, final String stateEngName,
                                                      final String cityEngName, final String roadEngFirstName,
                                                      final String roadEngName, final @Nullable String keyword,
@@ -41,6 +58,25 @@ public class RoadAddressEngSearchListRequest
         instance.setCountPerPage(countPerPage);
         instance.setCurrentPage(currentPage);
         return instance;
+    }
+
+    public static RoadAddressEngSearchListRequest from(
+            final @NonNull RoadEngFirstNameListRequest roadEngFirstNameListRequest,
+            final @NonNull RoadEngFirstNameListResponse.RoadEngFirstNameList roadEngFirstNameList,
+            final String roadEngName, final @Nullable String keyword,
+            final Integer countPerPage, final Integer currentPage) {
+        Objects.requireNonNull(roadEngFirstNameListRequest, "roadEngFirstNameListRequest is null");
+        Objects.requireNonNull(roadEngFirstNameList, "roadEngFirstNameList is null");
+        return of(
+                roadEngFirstNameListRequest.getServiceKey(),
+                roadEngFirstNameListRequest.getStateEngName(),
+                roadEngFirstNameListRequest.getCityEngName(),
+                roadEngFirstNameList.getRoadEngFirstName(),
+                roadEngName,
+                keyword,
+                countPerPage,
+                currentPage
+        );
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -60,7 +96,7 @@ public class RoadAddressEngSearchListRequest
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
     public RoadAddressEngSearchListRequest() {
-        super();
+        super(RoadAddressEngSearchListResponse.class);
         setUriConsumer(URI_CONSUMER, true);
     }
 
