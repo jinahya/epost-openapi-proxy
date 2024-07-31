@@ -1,0 +1,18 @@
+{
+  "DelivAreaCdResponse": {
+    "cmmMsgHeader": {
+      "requestMsgId": "",
+      "responseMsgId": "",
+      "responseTime": "20240731:121342527",
+      "successYN": "Y",
+      "returnCode": "00",
+      "errMsg": ""
+    },
+    "delivAreaCdList": {
+      "arrCnpoNm": "광주M",
+      "delivPoNm": "나주",
+      "delivAreaCd": "광15290507",
+      "courseNo": "054"
+    }
+  }
+}

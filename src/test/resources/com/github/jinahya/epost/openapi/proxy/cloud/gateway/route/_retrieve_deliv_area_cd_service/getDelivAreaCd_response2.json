@@ -1,0 +1,17 @@
+{
+  "DelivAreaCdResponse": {
+    "cmmMsgHeader": {
+      "requestMsgId": "",
+      "responseMsgId": "",
+      "responseTime": "20240731:12141773",
+      "successYN": "Y",
+      "returnCode": "00",
+      "errMsg": ""
+    },
+    "delivAreaCdList": {
+      "arrCnpoNm": "광주M",
+      "delivPoNm": "나주",
+      "delivAreaCd": "광15290511"
+    }
+  }
+}

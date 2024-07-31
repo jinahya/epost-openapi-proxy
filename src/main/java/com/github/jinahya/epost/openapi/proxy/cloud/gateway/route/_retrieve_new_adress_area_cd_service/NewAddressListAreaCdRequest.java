@@ -86,7 +86,7 @@ public class NewAddressListAreaCdRequest
     }
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
-    public static NewAddressListAreaCdRequest of(final String serviceKey, final SearchSe searchSe, final String srchwrd,
+    public static NewAddressListAreaCdRequest of(final String serviceKey, final String searchSe, final String srchwrd,
                                                  final Integer countPerPage, final Integer currentPage) {
         final var instance = AbstractRequestType.of(NewAddressListAreaCdRequest::new, serviceKey);
         instance.setSearchSe(searchSe);
@@ -121,7 +121,7 @@ public class NewAddressListAreaCdRequest
 
     // -----------------------------------------------------------------------------------------------------------------
     @NotNull
-    private SearchSe searchSe;
+    private String searchSe;
 
     @NotBlank
     private String srchwrd;

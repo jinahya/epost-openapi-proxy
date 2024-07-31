@@ -1,0 +1,63 @@
+<application xmlns="http://research.sun.com/wadl/2006/10" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <grammars>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified">
+      <xs:element name="CmmResponse" type="cmmResponse"/>
+      <xs:element name="DelivAreaCdResponse" type="delivAreaCdResponse"/>
+      <xs:complexType name="delivAreaCdResponse">
+        <xs:complexContent>
+          <xs:extension base="cmmResponse">
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="0" name="delivAreaCdList" nillable="true" type="DelivAreaCdList"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="cmmResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="cmmMsgHeader" type="CmmMsgHeader"/>
+          <xs:element minOccurs="0" name="errorCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="errorMessage" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DelivAreaCdList">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arrCnpoNm" type="xs:string"/>
+          <xs:element minOccurs="0" name="delivPoNm" type="xs:string"/>
+          <xs:element minOccurs="0" name="delivAreaCd" type="xs:string"/>
+          <xs:element minOccurs="0" name="courseNo" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CmmMsgHeader">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="requestMsgId" type="xs:string"/>
+          <xs:element minOccurs="0" name="responseMsgId" type="xs:string"/>
+          <xs:element minOccurs="0" name="responseTime" type="xs:string"/>
+          <xs:element minOccurs="0" name="successYN" type="xs:string"/>
+          <xs:element minOccurs="0" name="returnCode" type="xs:string"/>
+          <xs:element minOccurs="0" name="errMsg" type="xs:string"/>
+          <xs:element minOccurs="0" name="totalCount" type="xs:string"/>
+          <xs:element minOccurs="0" name="countPerPage" type="xs:string"/>
+          <xs:element minOccurs="0" name="totalPage" type="xs:string"/>
+          <xs:element minOccurs="0" name="currentPage" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </grammars>
+  <resources base="http://openapi.epost.go.kr:80/postal/retrieveDelivAreaCdService">
+    <resource path="/retrieveDelivAreaCdService">
+      <resource path="/getDelivAreaCd/">
+        <method name="GET">
+          <request>
+            <param name="zip" style="query" type="xs:string"/>
+            <param name="addr" style="query" type="xs:string"/>
+            <param name="maildivcd" style="query" type="xs:string"/>
+          </request>
+          <response>
+            <representation mediaType="application/xml"/>
+            <representation mediaType="application/json"/>
+          </response>
+        </method>
+      </resource>
+    </resource>
+  </resources>
+</application>

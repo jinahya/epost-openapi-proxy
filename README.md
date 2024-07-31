@@ -174,3 +174,5 @@ spring:
 [과학기술정보통신부 우정사업본부_우편번호 정보조회]: https://www.data.go.kr/data/15056971/openapi.do
 
 [과학기술정보통신부 우정사업본부_도로명주소조회서비스]: https://www.data.go.kr/data/15000124/openapi.do
+
+[과학기술정보통신부 우정사업본부_집배구 구분코드 조회서비스]: https://www.data.go.kr/data/15057018/openapi.do

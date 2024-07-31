@@ -57,7 +57,7 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
 
-    implementation 'org.springframework.boot:spring-boot-starter-hateoas' // spring.main.web-application-type: reactive!
+//    implementation 'org.springframework.boot:spring-boot-starter-hateoas' // spring.main.web-application-type: reactive!
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
 //    implementation 'org.springframework.hateoas:spring-hateoas'
@@ -104,34 +104,38 @@ tasks.withType(JavaCompile).configureEach {
     }
 }
 
-tasks.named('test') {
+tasks.named('test', Test) {
     useJUnitPlatform()
     systemProperties = System.properties // https://stackoverflow.com/a/40839018/330457
     exclude "**/*IT.class"
 }
 
 // https://docs.gradle.org/current/userguide/java_testing.html#sec:configuring_java_integration_tests
-sourceSets {
-    intTest {
-        compileClasspath += sourceSets.main.output
-        runtimeClasspath += sourceSets.main.output
-    }
-}
+// https://docs.gradle.org/current/samples/sample_jvm_multi_project_with_additional_test_types.html
+def integrationTest = sourceSets.create('integrationTest')
+//sourceSets {
+//    intTest {
+//        compileClasspath += sourceSets.main.output
+//        runtimeClasspath += sourceSets.main.output
+//    }
+//}
 configurations {
-    intTestImplementation.extendsFrom implementation
-    intTestRuntimeOnly.extendsFrom runtimeOnly
+    intTestImplementation.extendsFrom testImplementation
+    intTestRuntimeOnly.extendsFrom testRuntimeOnly
 }
 tasks.register('integrationTest', Test) {
     description = 'Runs integration tests.'
     group = 'verification'
-    testClassesDirs = sourceSets.intTest.output.classesDirs
-    classpath = sourceSets.intTest.runtimeClasspath
+//    testClassesDirs = sourceSets.intTest.output.classesDirs
+//    classpath = sourceSets.intTest.runtimeClasspath
+//    testClassesDirs = integrationTest.output.classesDirs
+//    classpath = integrationTest.runtimeClasspath
     shouldRunAfter test
     useJUnitPlatform()
     testLogging {
         events "passed"
     }
-    include '**/*Test.class'
+    exclude '**/*Test.class'
     include '**/*IT.class'
     systemProperties = System.properties
 }
@@ -157,3 +161,4 @@ sonar {
         property "sonar.host.url", "https://sonarcloud.io"
     }
 }
+System.setProperty("sonar.gradle.skipCompile", "true")

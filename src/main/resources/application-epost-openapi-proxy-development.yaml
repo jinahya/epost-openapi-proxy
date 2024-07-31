@@ -23,6 +23,19 @@ spring:
           metadata:
             connect-timeout: ${epost.openapi.proxy.routes._retrieve_new_adress_area_cd_search_all_service.connect-timeout:1024}   # connect-timeout must be specified in milliseconds.
             response-timeout: ${epost.openapi.proxy.routes._retrieve_new_adress_area_cd_search_all_service.response-timeout:4096} # response-timeout must be specified in milliseconds.
+        # ------------------------------------------------------------------------------ _retrieve_deliv_area_cd_service
+        - id: _retrieve_deliv_area_cd_service # https://www.data.go.kr/data/15000302/openapi.do
+          uri: http://openapi.epost.go.kr
+          predicates:
+            - Method=GET
+            - Path=/postal/retrieveDelivAreaCdService/retrieveDelivAreaCdService/{operation}
+          filters:
+            - _AddRequestParameterIfNotPresent=ServiceKey, ${epost.openapi.proxy.service-key}
+            - AddResponseHeader=Vary, Accept
+            - LocalResponseCache=${epost.openapi.proxy.routes._retrieve_deliv_area_cd_service.cache:10m,128MB}
+          metadata:
+            connect-timeout: ${epost.openapi.proxy.routes._retrieve_new_adress_area_cd_search_all_service.connect-timeout:1024}   # connect-timeout must be specified in milliseconds.
+            response-timeout: ${epost.openapi.proxy.routes._retrieve_new_adress_area_cd_search_all_service.response-timeout:4096} # response-timeout must be specified in milliseconds.
         # -------------------------------------------------------------------------------- _retrieve_eng_address_service
         - id: _retrieve_eng_address_service
           uri: http://openapi.epost.go.kr
@@ -91,5 +104,5 @@ spring:
   #    deserialization:
   #      unwrap-root-value: true
 
-  main:
-    web-application-type: reactive
+#  main:
+#    web-application-type: reactive

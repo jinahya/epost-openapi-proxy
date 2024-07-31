@@ -21,7 +21,7 @@ public class StateEngListRequest
     // -------------------------------------------------------------------------------------------------- CONSTRUCTORS
     public StateEngListRequest() {
         super(StateEngListResponse.class);
-        super.setUriConsumer(
+        setUriConsumer(
                 (s, b) -> {
                     b.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_STATE_LIST);
                 },
