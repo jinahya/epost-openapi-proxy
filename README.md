@@ -35,11 +35,11 @@ epost:
 ```
 
 
-## How to use/extend
+## How to use / extend
 
 ### Add `@SpringBootApplication` class
 
-Add your own `@SprinbBootApplication` class uses `com.github.jinahya.openapi.proxy.NoOp.class` for component scanning.
+Add [`com.github.jinahya.openapi.proxy.NoOp.class`](src/main/java/com/github/jinahya/epost/openapi/proxy/NoOp) to the componenet-scanning path.
 
 e.g.
 
