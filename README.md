@@ -37,17 +37,15 @@ epost:
 
 ## How to use / extend
 
-### Add `@SpringBootApplication` class
+### Component-scanning
 
-Add [`com.github.jinahya.openapi.proxy.NoOp.class`](src/main/java/com/github/jinahya/epost/openapi/proxy/NoOp) to the componenet-scanning path.
+Add [`com.github.jinahya.openapi.proxy.NoOp.class`](src/main/java/com/github/jinahya/epost/openapi/proxy/NoOp) to the component-scanning path.
 
 e.g.
 
 https://github.com/jinahya/epost-openapi-proxy/blob/75b114f36b20a12d1ba93ead76818959c11f5735/src/test/java/com/mycompany/Application.java#L1-L17
 
-### Add `application.(properties|yaml)` file
-
-Add your own `application.(properties|yaml)` file.
+### Application properties
 
 See [application.yaml](src/test/resources/application.yaml), [application-development.yaml](src/test/resources/application-development.yaml),
 and [application-production.yaml](src/test/resources/application-production.yaml).
@@ -110,13 +108,27 @@ epost:
   openapi:
     proxy:
       routes:
-        retrieve_new_adress_area_cd_search_all_service:
+        _retrieve_new_adress_area_cd_search_all_service:
           connect-timeout: 1024  # connect-timeout must be specified in milliseconds.
           response-timeout: 4096 # response-timeout must be specified in milliseconds.
 
 ```
 
 #### Caching
+
+Enable caching by setting `spring.cloud.gateway.filter.local-response-cache.enabled` property with `true`.
+
+e.g.
+
+```yaml
+spring:
+  cloud:
+    gateway:
+      filter:
+        local-response-cache:
+          enabled: true
+```
+
 
 The [LocalResponseCache GatewayFilter Factory](https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/gatewayfilter-factories/local-cache-response-filter.html)
 is already configured.
@@ -133,23 +145,8 @@ epost:
   openapi:
     proxy:
       routes:
-        retrieve_new_adress_area_cd_search_all_service:
+        _retrieve_new_adress_area_cd_search_all_service:
           cache: 10m,128MB
-```
-
-##### Disabling caching
-
-Disable by overriding `spring.cloud.gateway.filter.local-response-cache.enabled` property.
-
-e.g.
-
-```yaml
-spring:
-  cloud:
-    gateway:
-      filter:
-        local-response-cache:
-          enabled: false
 ```
 
 ## Links
