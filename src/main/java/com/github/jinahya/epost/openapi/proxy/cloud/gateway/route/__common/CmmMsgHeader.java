@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -96,25 +97,32 @@ public class CmmMsgHeader
     // ---------------------------------------------------------------------------------------------------- responseTime
 
     /**
-     * Returns current value of {@code responseTime} property as mapped with specified function.
+     * Returns current value of {@code responseTime} property as mapped by specified function.
      *
      * @param mapper the function for mapping value.
      * @param <R>    result type parameter
-     * @return current value of {@code responseTime} property as mapped with {@code mapper}; {@code null} when the
+     * @return current value of {@code responseTime} property as mapped by {@code mapper}; {@code null} when the
      * {@code responseTime} property is currently {@code null}.
      */
-    @JsonIgnore
+//    @JsonIgnore
 //    @XmlTransient // JAXB annotation is placed on a method that is not a JAXB property
-    public <R> R getResponseTimeAs(final Function<? super String, ? extends R> mapper) {
+    public <R> R getResponseTimeAsMappedBy(final Function<? super String, ? extends R> mapper) {
+        Objects.requireNonNull(mapper, "mapper is null");
         return Optional.ofNullable(getResponseTime())
                 .map(mapper)
                 .orElse(null);
     }
 
+    /**
+     * Returns current value of {@code responseTime} property parsed into an instance of {@link LocalDateTime}.
+     *
+     * @return current value of the {@code responseTime} property parsed into an instance of {@link LocalDateTime};
+     * {@code null} when rns current value of {@code responseTime} property is {@code null}.
+     */
     @JsonIgnore
-//    @XmlTransient // JAXB annotation is placed on a method that is not a JAXB property
+    @XmlTransient // JAXB annotation is placed on a method that is not a JAXB property
     public LocalDateTime getResponseTimeAsLocalDateTime() {
-        return getResponseTimeAs(v -> LocalDateTime.parse(v, RESPONSE_TIME_FORMATTER));
+        return getResponseTimeAsMappedBy(v -> LocalDateTime.parse(v, RESPONSE_TIME_FORMATTER));
     }
 
     // ------------------------------------------------------------------------------------------------------- successYN
@@ -129,8 +137,19 @@ public class CmmMsgHeader
     public boolean isSucceeded() {
         return Optional.ofNullable(getSuccessYN())
                 .map(v -> v.equals(SUCCESS_YN_Y))
-                .orElse(Boolean.FALSE);
+                .orElse(false);
     }
+
+    // ------------------------------------------------------------------------------------------------------ returnCode
+    @JsonIgnore
+    @XmlTransient
+    public boolean isReturnCode00() {
+        return Optional.ofNullable(getReturnCode())
+                .map(v -> v.equals(RETURN_CODE_00))
+                .orElse(false);
+    }
+
+    // ---------------------------------------------------------------------------------------------------------- errMsg
 
     // -----------------------------------------------------------------------------------------------------------------
     @XmlElement
