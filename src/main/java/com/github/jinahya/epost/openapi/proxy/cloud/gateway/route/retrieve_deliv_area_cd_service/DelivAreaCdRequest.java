@@ -20,7 +20,7 @@ public class DelivAreaCdRequest
         extends AbstractPairedRequestType<DelivAreaCdRequest, DelivAreaCdResponse> {
 
     @Serial
-    private static final long serialVersionUID = 4471882633229837577L;
+    private static final long serialVersionUID = -4097942189442536529L;
 
     // -----------------------------------------------------------------------------------------------------------------
     public enum MailDivCd {
