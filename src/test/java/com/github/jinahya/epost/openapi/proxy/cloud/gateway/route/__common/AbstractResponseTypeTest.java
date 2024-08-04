@@ -25,7 +25,6 @@ public abstract class AbstractResponseTypeTest<TYPE extends AbstractResponseType
         instance2.setCmmMsgHeader(new CmmMsgHeader().requestMsgId("b"));
         assert !instance2.equals(instance1);
         return super.__equals(verifierApi)
-//                .withIgnoredFields("wrapped")
                 .withPrefabValues(
                         CmmMsgHeader.class,
                         new CmmMsgHeader().requestMsgId("a"),

@@ -11,14 +11,14 @@ using [Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway).
 
 ### Routes
 
-| api                              | service              | route.id                                          | notes |
-|----------------------------------|----------------------|---------------------------------------------------|-------|
-| [과학기술정보통신부 우정사업본부_우편번호 다운로드 서비스] | 우편번호 DB 다운로드 서비스     | `_download_area_code_service`                     |       |      
-| [과학기술정보통신부 우정사업본부_집배구 구분코드 조회서비스] | 집배구 구분코드 조회서비스     | `_retrieve_deliv_area_cd_service`                 |       |      
-| [과학기술정보통신부 우정사업본부_영문우편번호조회서비스]   | 영문 우편번호 조회 서비스       | `_retrieve_eng_address_service`                   |       |      
-| [과학기술정보통신부 우정사업본부_지번주소조회 서비스]    | 지번주소 5자리 우편번호 조회 서비스 | `_retrieve_lot_number_adress_area_cd_service`     |       |      
-| [과학기술정보통신부 우정사업본부_우편번호 정보조회]     | 통합검색 5자리 우편번호 조회서비스  | `_retrieve_new_adress_area_cd_search_all_service` |       |      
-| [과학기술정보통신부 우정사업본부_도로명주소조회서비스]    | 새주소 5자리 우편번호 조회서비스   | `_retrieve_new_adress_area_cd_service`            |       |     
+| api                               | service              | route.id                                         | notes |
+|-----------------------------------|----------------------|--------------------------------------------------|-------|
+| [과학기술정보통신부 우정사업본부_우편번호 다운로드 서비스]  | 우편번호 DB 다운로드 서비스     | `download_area_code_service`                     |       |      
+| [과학기술정보통신부 우정사업본부_집배구 구분코드 조회서비스] | 집배구 구분코드 조회서비스       | `retrieve_deliv_area_cd_service`                 |       |      
+| [과학기술정보통신부 우정사업본부_영문우편번호조회서비스]    | 영문 우편번호 조회 서비스       | `retrieve_eng_address_service`                   |       |      
+| [과학기술정보통신부 우정사업본부_지번주소조회 서비스]     | 지번주소 5자리 우편번호 조회 서비스 | `retrieve_lot_number_adress_area_cd_service`     |       |      
+| [과학기술정보통신부 우정사업본부_우편번호 정보조회]      | 통합검색 5자리 우편번호 조회서비스  | `retrieve_new_adress_area_cd_search_all_service` |       |      
+| [과학기술정보통신부 우정사업본부_도로명주소조회서비스]     | 새주소 5자리 우편번호 조회서비스   | `retrieve_new_adress_area_cd_service`            |       |     
 
 ## How to build
 
@@ -34,12 +34,12 @@ epost:
       service-key: ......................==
 ```
 
-
 ## How to use / extend
 
 ### Component-scanning
 
-Add [`com.github.jinahya.openapi.proxy.NoOp.class`](src/main/java/com/github/jinahya/epost/openapi/proxy/NoOp) to the component-scanning path.
+Add [`com.github.jinahya.openapi.proxy.NoOp.class`](src/main/java/com/github/jinahya/epost/openapi/proxy/NoOp) to the
+component-scanning path.
 
 e.g.
 
@@ -128,7 +128,6 @@ spring:
         local-response-cache:
           enabled: true
 ```
-
 
 The [LocalResponseCache GatewayFilter Factory](https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/gatewayfilter-factories/local-cache-response-filter.html)
 is already configured.
