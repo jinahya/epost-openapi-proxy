@@ -47,10 +47,8 @@ public abstract class AbstractResponseType<SELF extends AbstractResponseType<SEL
     @XmlElement
     private CmmMsgHeader cmmMsgHeader;
 
+    // -----------------------------------------------------------------------------------------------------------------
     @Valid
     @XmlTransient
-    @Setter(AccessLevel.NONE)
-    @Getter(AccessLevel.PUBLIC)
-//    @EqualsAndHashCode.Exclude
     private SELF wrapped;
 }

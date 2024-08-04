@@ -3,7 +3,6 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_eng
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedRequestType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractRequestType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common._Constants;
-import io.micrometer.common.lang.Nullable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -13,6 +12,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.web.util.UriBuilder;
 
 import java.io.Serial;
@@ -63,7 +63,7 @@ public class RoadAddressEngSearchListRequest
     public static RoadAddressEngSearchListRequest from(
             final @NonNull RoadEngFirstNameListRequest roadEngFirstNameListRequest,
             final @NonNull RoadEngFirstNameListResponse.RoadEngFirstNameList roadEngFirstNameList,
-            final String roadEngName, final @Nullable String keyword,
+            final String roadEngName, final @org.springframework.lang.Nullable String keyword,
             final Integer countPerPage, final Integer currentPage) {
         Objects.requireNonNull(roadEngFirstNameListRequest, "roadEngFirstNameListRequest is null");
         Objects.requireNonNull(roadEngFirstNameList, "roadEngFirstNameList is null");

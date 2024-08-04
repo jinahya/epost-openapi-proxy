@@ -2,6 +2,7 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._retrieve_new
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseTypeTest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractTypeTest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractTypeUtils;
 import lombok.extern.slf4j.Slf4j;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 import org.junit.jupiter.api.DisplayName;
@@ -63,7 +64,7 @@ class NewAddressListAreaCdResponseTest
     void __xml(final String resName) throws Throwable {
         final var unmarshalled = applyResourceAsStreamChecked(
                 resName,
-                NewAddressListAreaCdResponse::unmarshalInstance
+                r -> AbstractTypeUtils.unmarshalNoNamespacedInstance(NewAddressListAreaCdResponse.class, r)
         );
         verifyValid(unmarshalled);
     }
@@ -83,7 +84,7 @@ class NewAddressListAreaCdResponseTest
     void __json(final String resName) throws Throwable {
         final var deserialized = applyResourceAsStreamChecked(
                 resName,
-                NewAddressListAreaCdResponse::deserializeInstance
+                r -> AbstractTypeUtils.deserializeInstance(NewAddressListAreaCdResponse.class, r)
         ).get();
         verifyValid(deserialized);
     }

@@ -42,14 +42,6 @@ class GetCityList_SpringBootIT
                 )
                 .map(AbstractResponseType::get)
                 .orElseThrow();
-        assertThat(responseBody.getCmmMsgHeader()).isNotNull().satisfies(h -> {
-            assertThat(h.isSucceeded()).isTrue();
-            log.debug("responseTime: {}", h.getResponseTime());
-            log.debug("responseTimeAsLocalDateTime: {}", h.getResponseTimeAsLocalDateTime());
-        });
-        responseBody.getCityEngList().forEach(e -> {
-            log.debug("roadEngFirstName: {}", e);
-        });
         return responseBody;
     }
 
@@ -88,6 +80,11 @@ class GetCityList_SpringBootIT
     void __(final CityEngListRequest request) {
         final var response = exchange(webTestClient(), request);
         verify(response, validator());
+        assertThat(response.getCmmMsgHeader()).isNotNull().satisfies(h -> {
+            assertThat(h.isSucceeded()).isTrue();
+            log.debug("responseTime: {}", h.getResponseTime());
+            log.debug("responseTimeAsLocalDateTime: {}", h.getResponseTimeAsLocalDateTime());
+        });
         response.getCityEngList().forEach(e -> {
             log.debug("cityEngList: {}", e);
         });

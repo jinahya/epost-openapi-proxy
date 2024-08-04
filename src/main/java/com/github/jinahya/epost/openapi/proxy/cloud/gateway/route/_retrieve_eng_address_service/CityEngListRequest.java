@@ -50,8 +50,7 @@ public class CityEngListRequest
     // -----------------------------------------------------------------------------------------------------------------
     private static final BiConsumer<? super CityEngListRequest, ? super UriBuilder> URI_CONSUMER = (s, b) -> {
         b.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_CITY_LIST)
-                .queryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NM, s.getStateEngName())
-//                .queryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NAME, s.getStateEngName())
+                .queryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NAME, s.getStateEngName())
         ;
     };
 

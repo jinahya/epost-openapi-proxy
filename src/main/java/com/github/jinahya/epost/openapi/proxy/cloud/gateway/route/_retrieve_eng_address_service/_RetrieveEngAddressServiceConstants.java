@@ -27,9 +27,6 @@ public final class _RetrieveEngAddressServiceConstants {
     public static final String REQUEST_URI_GET_LAND_ADDRESS_SEARCH = REQUEST_URI + "/getLandAddressSearch";
 
     // -----------------------------------------------------------------------------------------------------------------
-    @Deprecated
-    public static final String PARAM_STATE_ENG_NM = "stateEngNm";
-
     public static final String PARAM_STATE_ENG_NAME = "stateEngName";
 
     public static final String PARAM_CITY_ENG_NAME = "cityEngName";

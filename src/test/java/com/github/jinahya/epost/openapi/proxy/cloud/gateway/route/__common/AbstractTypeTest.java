@@ -108,7 +108,7 @@ public abstract class AbstractTypeTest<TYPE extends AbstractType> {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    @Disabled
+//    @Disabled
     @DisplayName("equals")
     @Test
     void __equals() {
