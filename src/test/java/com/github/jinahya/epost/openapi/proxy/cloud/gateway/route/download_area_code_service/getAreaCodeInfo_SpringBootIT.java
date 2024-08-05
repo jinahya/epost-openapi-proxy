@@ -3,22 +3,19 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._SpringBootIT;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractRequestTypeTestUtils;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
+import com.github.jinahya.epost.openapi.proxy.web.readtive.funcion.client.WebClientUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.core.io.buffer.DataBuffer;
-import org.springframework.core.io.buffer.DataBufferUtils;
-import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.netty.http.client.HttpClient;
 
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URI;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.time.Duration;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.IntStream;
@@ -76,19 +73,45 @@ class getAreaCodeInfo_SpringBootIT
         final var response = exchange(webTestClient(), request);
         log.debug("file: {}", response.getFile());
         assertValid(response);
-        if (false) { // takes too long, baby...
-            final Path path = Files.createTempFile(null, null);
-            path.toFile().deleteOnExit();
-            final var body = WebClient.builder()
-                    .clientConnector(new ReactorClientHttpConnector(HttpClient.create().followRedirect(true)))
-                    .build()
-                    .get()
-                    .uri(URI.create(response.getFile()))
-                    .retrieve()
-                    .bodyToFlux(DataBuffer.class);
-            DataBufferUtils
-                    .write(body, path, StandardOpenOption.WRITE)
-                    .block();
+        if (true) {
+            WebClientUtils.download(response.getFile(), Duration.ofSeconds(10L), p -> {
+                try {
+                    log.debug("destination.size: {}", Files.size(p));
+                    try (final var stream = new FileInputStream(p.toFile())) {
+                        final var flags = new HashMap<String, Boolean>();
+                        AreaCodeInfoUtils.extract(
+                                stream,
+                                (n, m) -> {
+                                    if (flags.compute(n, (k, v) -> v == null)) {
+                                        log.debug("n: {}, m: {}", n, m);
+                                    }
+                                });
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }).block();
+        }
+        final var destination = Files.createTempFile(null, null);
+        if (false) {
+            try {
+                WebClientUtils.download(response.getFile(), Duration.ofSeconds(10L), destination,
+                                        StandardOpenOption.WRITE)
+                        .block();
+                log.debug("destination.size: {}", Files.size(destination));
+                try (final var stream = new FileInputStream(destination.toFile())) {
+                    final var flags = new HashMap<String, Boolean>();
+                    AreaCodeInfoUtils.extract(
+                            stream,
+                            (n, m) -> {
+                                if (flags.compute(n, (k, v) -> v == null)) {
+                                    log.debug("n: {}, m: {}", n, m);
+                                }
+                            });
+                }
+            } finally {
+                Files.delete(destination);
+            }
         }
     }
 }

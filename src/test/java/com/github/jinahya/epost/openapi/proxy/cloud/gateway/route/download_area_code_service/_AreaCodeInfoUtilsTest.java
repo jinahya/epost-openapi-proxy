@@ -11,7 +11,7 @@ import java.util.HashMap;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 @Slf4j
-class DbExtractorTest {
+class _AreaCodeInfoUtilsTest {
 
     @DisplayName("지역별 주소 DB")
     @ValueSource(strings = {
@@ -22,17 +22,16 @@ class DbExtractorTest {
     })
     @ParameterizedTest
     void extract__zipcode(final String resName) throws IOException {
-        final var resource = getClass().getResource(resName);
-        assumeTrue(resource != null, () -> "null resource for " + resource);
-        final var flags = new HashMap<String, Boolean>();
-        DbExtractor.extract(
-                resource,
-                null,
-                null,
-                (n, m) -> {
-                    if (flags.compute(n, (k, v) -> v == null)) {
-                        log.debug("n: {}, m: {}", n, m);
-                    }
-                });
+        try (var resource = getClass().getResourceAsStream(resName)) {
+            assumeTrue(resource != null, () -> "null resource for " + resource);
+            final var flags = new HashMap<String, Boolean>();
+            AreaCodeInfoUtils.extract(
+                    resource,
+                    (n, m) -> {
+                        if (flags.compute(n, (k, v) -> v == null)) {
+                            log.debug("n: {}, m: {}", n, m);
+                        }
+                    });
+        }
     }
 }
