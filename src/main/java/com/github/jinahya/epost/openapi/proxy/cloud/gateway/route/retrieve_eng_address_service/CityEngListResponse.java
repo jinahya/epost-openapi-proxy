@@ -1,6 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractType;
@@ -46,6 +47,10 @@ public class CityEngListResponse
         private static final long serialVersionUID = -4416152072794741619L;
 
         // -------------------------------------------------------------------------------------------------------------
+        @JsonIgnore
+        @EqualsAndHashCode.Exclude
+        private transient CityEngListResponse parent;
+
         @NotBlank
         @JsonProperty
         @XmlElement
@@ -56,9 +61,9 @@ public class CityEngListResponse
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
-    // ---------------------------------------------------------------------------------------------------- cmmMsgHeader
+    // ---------------------------------------------------------------------------------------------- super.cmmMsgHeader
 
-    // --------------------------------------------------------------------------------------------------------- wrapped
+    // --------------------------------------------------------------------------------------------------- super.wrapped
     @JsonProperty(ROOT_NAME)
     @Override
     public CityEngListResponse getWrapped() {

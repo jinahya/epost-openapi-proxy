@@ -82,8 +82,8 @@ public class LandAddressEngSearchListRequest
                 .queryParam(_RetrieveEngAddressServiceConstants.PARAM_DISTRICT_ENG_NAME, s.districtEngName)
                 .queryParamIfPresent(_RetrieveEngAddressServiceConstants.PARAM_KEYWORD,
                                      Optional.ofNullable(s.keyword))
-                .queryParam(_Constants.PARAM_COUNT_PER_PAGE, s.countPerPage)
-                .queryParam(_Constants.PARAM_CURRENT_PAGE, s.currentPage);
+                .queryParam(_Constants.REQUEST_PARAM_COUNT_PER_PAGE, s.countPerPage)
+                .queryParam(_Constants.REQUEST_PARAM_CURRENT_PAGE, s.currentPage);
     };
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS

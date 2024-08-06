@@ -1,5 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.web.readtive.funcion.client;
 
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area_code_service.AreaCodeInfoUtils;
+import io.micrometer.common.lang.NonNull;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
@@ -9,13 +11,16 @@ import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 import reactor.netty.http.client.HttpClient;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.time.Duration;
+import java.util.Map;
 import java.util.Objects;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public final class WebClientUtils {
@@ -69,6 +74,19 @@ public final class WebClientUtils {
                     }
                 }).subscribeOn(Schedulers.boundedElastic())
         ).then();
+    }
+
+    // https://stackoverflow.com/q/78832725/330457
+    public static Mono<Void> download(final String baseUrl, final Duration responseTimeout,
+                                      final @NonNull BiConsumer<? super String, ? super Map<String, String>> consumer) {
+        Objects.requireNonNull(consumer, "consumer is null");
+        return download(baseUrl, responseTimeout, p -> {
+            try (var stream = new FileInputStream(p.toFile())) {
+                AreaCodeInfoUtils.extract(stream, consumer);
+            } catch (final IOException ioe) {
+                throw new RuntimeException(ioe);
+            }
+        });
     }
 
     // -----------------------------------------------------------------------------------------------------------------

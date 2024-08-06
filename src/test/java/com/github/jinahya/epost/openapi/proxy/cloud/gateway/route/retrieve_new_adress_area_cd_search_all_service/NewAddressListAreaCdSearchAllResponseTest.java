@@ -3,6 +3,7 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractAddressTest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseTypeTest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractTypeUtils;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_search_all_service.NewAddressListAreaCdSearchAllResponse.NewAddressListAreaCdSearchAll;
 import lombok.extern.slf4j.Slf4j;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 import org.junit.jupiter.api.Nested;
@@ -15,19 +16,21 @@ import java.util.stream.Stream;
 class NewAddressListAreaCdSearchAllResponseTest
         extends AbstractResponseTypeTest<NewAddressListAreaCdSearchAllResponse> {
 
+    // -----------------------------------------------------------------------------------------------------------------
     @Nested
     class NewAddressListAreaCdSearchAllTest
-            extends AbstractAddressTest<NewAddressListAreaCdSearchAllResponse.NewAddressListAreaCdSearchAll> {
+            extends AbstractAddressTest<NewAddressListAreaCdSearchAll> {
 
         NewAddressListAreaCdSearchAllTest() {
-            super(NewAddressListAreaCdSearchAllResponse.NewAddressListAreaCdSearchAll.class);
+            super(NewAddressListAreaCdSearchAll.class);
         }
 
         @Override
-        protected SingleTypeEqualsVerifierApi<NewAddressListAreaCdSearchAllResponse.NewAddressListAreaCdSearchAll>
-        __equals(
-                final SingleTypeEqualsVerifierApi<NewAddressListAreaCdSearchAllResponse.NewAddressListAreaCdSearchAll> verifierApi) {
-            return super.__equals(verifierApi);
+        protected SingleTypeEqualsVerifierApi<NewAddressListAreaCdSearchAll> __equals(
+                final SingleTypeEqualsVerifierApi<NewAddressListAreaCdSearchAll> verifierApi) {
+            return super.__equals(verifierApi)
+//                    .withIgnoredFields("parent")
+                    ;
         }
     }
 

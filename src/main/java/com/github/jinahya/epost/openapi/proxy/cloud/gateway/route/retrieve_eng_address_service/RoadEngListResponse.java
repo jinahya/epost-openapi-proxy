@@ -1,6 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractType;
@@ -48,6 +49,11 @@ public class RoadEngListResponse
         @Serial
         private static final long serialVersionUID = 2944701965921059011L;
 
+        // -------------------------------------------------------------------------------------------------------------
+        @JsonIgnore
+        @EqualsAndHashCode.Exclude
+        private transient RoadEngListResponse parent;
+
         @NotBlank
         @JsonProperty
         @XmlElement
@@ -58,14 +64,9 @@ public class RoadEngListResponse
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
-    // ---------------------------------------------------------------------------------------------------- cmmMsgHeader
-    // just for the prefab values.
-    RoadEngListResponse cmmMsgHeader(final CmmMsgHeader cmmMsgHeader) {
-        setCmmMsgHeader(cmmMsgHeader);
-        return this;
-    }
+    // ---------------------------------------------------------------------------------------------- super.cmmMsgHeader
 
-    // --------------------------------------------------------------------------------------------------------- wrapped
+    // --------------------------------------------------------------------------------------------------- super.wrapped
     @JsonProperty(ROOT_NAME)
     @Override
     public RoadEngListResponse getWrapped() {

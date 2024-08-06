@@ -1,6 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedResponseType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractType;
@@ -48,6 +49,11 @@ public class RoadAddressEngSearchListResponse
         @Serial
         private static final long serialVersionUID = -4962767662385926995L;
 
+        // -------------------------------------------------------------------------------------------------------------
+        @JsonIgnore
+        @EqualsAndHashCode.Exclude
+        private transient RoadAddressEngSearchListResponse parent;
+
         @NotBlank
         @JsonProperty
         @XmlElement(required = true)
@@ -67,9 +73,9 @@ public class RoadAddressEngSearchListResponse
         super(RoadAddressEngSearchListRequest.class);
     }
 
-    // ---------------------------------------------------------------------------------------------------- cmmMsgHeader
+    // ---------------------------------------------------------------------------------------------- super.cmmMsgHeader
 
-    // --------------------------------------------------------------------------------------------------------- wrapped
+    // --------------------------------------------------------------------------------------------------- super.wrapped
     @JsonProperty(ROOT_NAME)
     @Override
     public RoadAddressEngSearchListResponse getWrapped() {

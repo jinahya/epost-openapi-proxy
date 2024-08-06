@@ -101,8 +101,8 @@ public class NewAddressListAreaCdRequest
         b.path(_RetrieveNewAdressAreaCdServiceConstants.REQUEST_URI_GET_NEW_ADDRESS_LIST_AREA_CD)
                 .queryParam(_RetrieveNewAdressAreaCdServiceConstants.PARAM_SEARCH_SE, s.getSearchSe())
                 .queryParam(_RetrieveNewAdressAreaCdServiceConstants.PARAM_SRCHWRD, s.getSrchwrd())
-                .queryParam(_Constants.PARAM_COUNT_PER_PAGE, s.getCountPerPage())
-                .queryParam(_Constants.PARAM_CURRENT_PAGE, s.getCurrentPage())
+                .queryParam(_Constants.REQUEST_PARAM_COUNT_PER_PAGE, s.getCountPerPage())
+                .queryParam(_Constants.REQUEST_PARAM_CURRENT_PAGE, s.getCurrentPage())
         ;
     };
 

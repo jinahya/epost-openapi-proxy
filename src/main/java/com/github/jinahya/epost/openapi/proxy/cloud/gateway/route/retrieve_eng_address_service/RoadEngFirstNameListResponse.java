@@ -1,6 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractType;
@@ -36,6 +37,7 @@ public class RoadEngFirstNameListResponse
     // -----------------------------------------------------------------------------------------------------------------
     static final String ROOT_NAME = "RoadEngFirstNameListResponse";
 
+    // -----------------------------------------------------------------------------------------------------------------
     private static final String NAME_ROAD_ENG_FIRST_NAME_LIST = "roadEngFirstNameList";
 
     @Setter
@@ -47,6 +49,11 @@ public class RoadEngFirstNameListResponse
 
         @Serial
         private static final long serialVersionUID = -437925892962234479L;
+
+        // -------------------------------------------------------------------------------------------------------------
+        @JsonIgnore
+        @EqualsAndHashCode.Exclude
+        private transient RoadEngFirstNameListResponse parent;
 
         @Size(max = 1)
         @NotBlank

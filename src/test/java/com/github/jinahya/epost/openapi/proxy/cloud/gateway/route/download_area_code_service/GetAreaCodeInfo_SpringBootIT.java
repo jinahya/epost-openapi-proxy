@@ -10,10 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Objects;
@@ -25,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("/getAreaCodeInfo")
 @Slf4j
-class getAreaCodeInfo_SpringBootIT
+class GetAreaCodeInfo_SpringBootIT
         extends _SpringBootIT {
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -73,45 +70,17 @@ class getAreaCodeInfo_SpringBootIT
         final var response = exchange(webTestClient(), request);
         log.debug("file: {}", response.getFile());
         assertValid(response);
-        if (false) { // takes too long!
-            WebClientUtils.download(response.getFile(), Duration.ofSeconds(10L), p -> {
-                try {
-                    log.debug("destination.size: {}", Files.size(p));
-                    try (final var stream = new FileInputStream(p.toFile())) {
-                        final var flags = new HashMap<String, Boolean>();
-                        AreaCodeInfoUtils.extract(
-                                stream,
-                                (n, m) -> {
-                                    if (flags.compute(n, (k, v) -> v == null)) {
-                                        log.debug("n: {}, m: {}", n, m);
-                                    }
-                                });
+        if (true) { // takes too long!
+            final var flags = new HashMap<String, Boolean>();
+            WebClientUtils.download(
+                    response.getFile(),
+                    Duration.ofSeconds(8L),
+                    (n, m) -> {
+                        if (flags.compute(n, (k, v) -> v == null)) {
+                            log.debug("n: {}, m: {}", n, m);
+                        }
                     }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }).block();
-        }
-        final var destination = Files.createTempFile(null, null);
-        if (false) {
-            try {
-                WebClientUtils.download(response.getFile(), Duration.ofSeconds(10L), destination,
-                                        StandardOpenOption.WRITE)
-                        .block();
-                log.debug("destination.size: {}", Files.size(destination));
-                try (final var stream = new FileInputStream(destination.toFile())) {
-                    final var flags = new HashMap<String, Boolean>();
-                    AreaCodeInfoUtils.extract(
-                            stream,
-                            (n, m) -> {
-                                if (flags.compute(n, (k, v) -> v == null)) {
-                                    log.debug("n: {}, m: {}", n, m);
-                                }
-                            });
-                }
-            } finally {
-                Files.delete(destination);
-            }
+            ).block();
         }
     }
 }

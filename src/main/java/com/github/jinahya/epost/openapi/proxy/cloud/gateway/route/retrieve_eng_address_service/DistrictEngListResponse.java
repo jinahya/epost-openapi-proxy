@@ -1,6 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractType;
@@ -34,6 +35,7 @@ public class DistrictEngListResponse
     // -----------------------------------------------------------------------------------------------------------------
     static final String ROOT_NAME = "DistrictEngListResponse";
 
+    // -----------------------------------------------------------------------------------------------------------------
     private static final String NAME_DISTRICT_ENG_LIST = "districtEngList";
 
     @Setter
@@ -46,6 +48,11 @@ public class DistrictEngListResponse
         @Serial
         private static final long serialVersionUID = -3888280332264139184L;
 
+        // -------------------------------------------------------------------------------------------------------------
+        @JsonIgnore
+        @EqualsAndHashCode.Exclude
+        private transient DistrictEngListResponse parent;
+
         @NotBlank
         @JsonProperty
         @XmlElement
@@ -56,9 +63,9 @@ public class DistrictEngListResponse
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
-    // ---------------------------------------------------------------------------------------------------- cmmMsgHeader
+    // ---------------------------------------------------------------------------------------------- super.cmmMsgHeader
 
-    // --------------------------------------------------------------------------------------------------------- wrapped
+    // --------------------------------------------------------------------------------------------------- super.wrapped
     @JsonProperty(ROOT_NAME)
     @Override
     public DistrictEngListResponse getWrapped() {

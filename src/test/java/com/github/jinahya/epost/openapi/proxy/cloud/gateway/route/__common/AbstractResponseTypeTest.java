@@ -30,6 +30,7 @@ public abstract class AbstractResponseTypeTest<TYPE extends AbstractResponseType
                         new CmmMsgHeader().requestMsgId("a"),
                         new CmmMsgHeader().requestMsgId("b")
                 )
+                .withPrefabValues(Object.class, instance1, instance2)
                 .withPrefabValues(AbstractResponseType.class, instance1, instance2)
                 ;
     }

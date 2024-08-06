@@ -1,6 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_search_all_service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractAddress;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
@@ -46,16 +47,21 @@ public class NewAddressListAreaCdSearchAllResponse
             extends AbstractAddress<NewAddressListAreaCdSearchAll> {
 
         @Serial
-        private static final long serialVersionUID = 2648926399901817807L;
+        private static final long serialVersionUID = -7680172168065174597L;
+
+        // -------------------------------------------------------------------------------------------------------------
+//        @JsonIgnore
+//        @EqualsAndHashCode.Exclude
+//        private transient NewAddressListAreaCdSearchAllResponse parent;
     }
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
-    // ---------------------------------------------------------------------------------------------------- cmmMsgHeader
+    // ---------------------------------------------------------------------------------------------- super.cmmMsgHeader
 
-    // --------------------------------------------------------------------------------------------------------- wrapped
+    // --------------------------------------------------------------------------------------------------- super.wrapped
     @JsonProperty(ROOT_NAME)
     @Override
     public NewAddressListAreaCdSearchAllResponse getWrapped() {

@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("/getDistrictFirstNameList")
+@DisplayName("/getDistrictNameList")
 @Slf4j
 class GetDistrictNameList_SpringBootIT
         extends _SpringBootIT {

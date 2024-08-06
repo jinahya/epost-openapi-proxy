@@ -11,9 +11,9 @@ public final class _Constants {
     public static final String PARAM_SERVICE_KEY = "serviceKey";
 
     // -----------------------------------------------------------------------------------------------------------------
-    public static final String PARAM_COUNT_PER_PAGE = "countPerPage";
+    public static final String REQUEST_PARAM_COUNT_PER_PAGE = "countPerPage";
 
-    public static final String PARAM_CURRENT_PAGE = "currentPage";
+    public static final String REQUEST_PARAM_CURRENT_PAGE = "currentPage";
 
     // -----------------------------------------------------------------------------------------------------------------
     private _Constants() {

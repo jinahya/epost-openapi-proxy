@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("/getNewAddressListAreaCd")
+@DisplayName("/getDelivAreaCd")
 @Slf4j
 class GetDelivAreaCd_SpringBootIT
         extends _SpringBootIT {

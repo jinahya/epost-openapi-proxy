@@ -89,8 +89,8 @@ public class RoadAddressEngSearchListRequest
                         .queryParam(_RetrieveEngAddressServiceConstants.PARAM_ROAD_ENG_NAME, s.roadEngName)
                         .queryParamIfPresent(_RetrieveEngAddressServiceConstants.PARAM_ROAD_ENG_FIRST_NAME,
                                              Optional.ofNullable(s.keyword))
-                        .queryParam(_Constants.PARAM_COUNT_PER_PAGE, s.countPerPage)
-                        .queryParam(_Constants.PARAM_CURRENT_PAGE, s.currentPage);
+                        .queryParam(_Constants.REQUEST_PARAM_COUNT_PER_PAGE, s.countPerPage)
+                        .queryParam(_Constants.REQUEST_PARAM_CURRENT_PAGE, s.currentPage);
             };
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 

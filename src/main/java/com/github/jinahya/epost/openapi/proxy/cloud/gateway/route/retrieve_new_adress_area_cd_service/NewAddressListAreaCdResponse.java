@@ -1,10 +1,10 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.CmmMsgHeader;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -19,6 +19,7 @@ import lombok.ToString;
 
 import java.io.Serial;
 import java.util.List;
+import java.util.Objects;
 
 @XmlRootElement(name = NewAddressListAreaCdResponse.ROOT_NAME)
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -27,7 +28,6 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class NewAddressListAreaCdResponse
-//        extends AbstractSelfWrappingResponseType<NewAddressListAreaCdResponse> {
         extends AbstractResponseType<NewAddressListAreaCdResponse> {
 
     @Serial
@@ -36,6 +36,7 @@ public class NewAddressListAreaCdResponse
     // -----------------------------------------------------------------------------------------------------------------
     static final String ROOT_NAME = "NewAddressListResponse";
 
+    // -----------------------------------------------------------------------------------------------------------------
     private static final String NAME_NEW_ADDRESS_LIST_AREA_CD = "newAddressListAreaCd";
 
     @Setter
@@ -48,7 +49,26 @@ public class NewAddressListAreaCdResponse
         @Serial
         private static final long serialVersionUID = 493013101186485936L;
 
-        // -----------------------------------------------------------------------------------------------------------------
+//        @Override
+//        public boolean equals(final Object obj) {
+//            if (this == obj) return true;
+//            if (!(obj instanceof NewAddressListAreaCd that)) return false;
+//            if (!super.equals(obj)) return false;
+//            return Objects.equals(zipNo, that.zipNo)
+//                    && Objects.equals(lnmAdres, that.lnmAdres)
+//                    && Objects.equals(rnAdres, that.rnAdres);
+//        }
+//
+//        @Override
+//        public int hashCode() {
+//            return Objects.hash(super.hashCode(), zipNo, lnmAdres, rnAdres);
+//        }
+//
+//        // -----------------------------------------------------------------------------------------------------------------
+//        @JsonIgnore
+//        @EqualsAndHashCode.Exclude
+//        private transient NewAddressListAreaCdResponse parent;
+
         @Pattern(regexp = "\\d{5}")
         @NotNull
         private String zipNo;
@@ -62,14 +82,9 @@ public class NewAddressListAreaCdResponse
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
-    // ---------------------------------------------------------------------------------------------------- cmmMsgHeader
-    // just for the prefab values.
-    NewAddressListAreaCdResponse cmmMsgHeader(final CmmMsgHeader cmmMsgHeader) {
-        setCmmMsgHeader(cmmMsgHeader);
-        return this;
-    }
+    // ---------------------------------------------------------------------------------------------- super.cmmMsgHeader
 
-    // --------------------------------------------------------------------------------------------------------- wrapped
+    // --------------------------------------------------------------------------------------------------- super.wrapped
     @JsonProperty(ROOT_NAME)
     @Override
     public NewAddressListAreaCdResponse getWrapped() {

@@ -8,6 +8,9 @@ final class _RetrieveNewAddressAreaCdSearchAllServiceConstants {
                     "/retrieveNewAdressAreaCdSearchAllService" +
                     "/getNewAddressListAreaCdSearchAll";
 
+    // -----------------------------------------------------------------------------------------------------------------
+    public static final String REQUEST_PARAM_SRCHWRD = "srchwrd";
+
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
     private _RetrieveNewAddressAreaCdSearchAllServiceConstants() {
         throw new AssertionError("instantiation is not allowed");

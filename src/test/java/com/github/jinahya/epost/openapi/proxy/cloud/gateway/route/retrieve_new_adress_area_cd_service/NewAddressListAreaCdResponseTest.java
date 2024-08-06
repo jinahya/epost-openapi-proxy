@@ -3,9 +3,9 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseTypeTest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractTypeTest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractTypeUtils;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_service.NewAddressListAreaCdResponse.NewAddressListAreaCd;
 import lombok.extern.slf4j.Slf4j;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -17,19 +17,20 @@ class NewAddressListAreaCdResponseTest
         extends AbstractResponseTypeTest<NewAddressListAreaCdResponse> {
 
     // -----------------------------------------------------------------------------------------------------------------
-    @DisplayName("NewAddressListAreaCd")
     @Nested
     class NewAddressListAreaCdTest
-            extends AbstractTypeTest<NewAddressListAreaCdResponse.NewAddressListAreaCd> {
+            extends AbstractTypeTest<NewAddressListAreaCd> {
 
         NewAddressListAreaCdTest() {
-            super(NewAddressListAreaCdResponse.NewAddressListAreaCd.class);
+            super(NewAddressListAreaCd.class);
         }
 
         @Override
-        protected SingleTypeEqualsVerifierApi<NewAddressListAreaCdResponse.NewAddressListAreaCd> __equals(
-                final SingleTypeEqualsVerifierApi<NewAddressListAreaCdResponse.NewAddressListAreaCd> verifierApi) {
-            return super.__equals(verifierApi);
+        protected SingleTypeEqualsVerifierApi<NewAddressListAreaCd> __equals(
+                final SingleTypeEqualsVerifierApi<NewAddressListAreaCd> verifierApi) {
+            return super.__equals(verifierApi)
+//                    .withIgnoredFields("parent")
+                    ;
         }
     }
 
@@ -43,11 +44,6 @@ class NewAddressListAreaCdResponseTest
     protected SingleTypeEqualsVerifierApi<NewAddressListAreaCdResponse> __equals(
             final SingleTypeEqualsVerifierApi<NewAddressListAreaCdResponse> verifierApi) {
         return super.__equals(verifierApi)
-//                .withPrefabValues(
-//                        Object.class,
-//                        instance1(),
-//                        instance2()
-//                )
                 ;
     }
 
