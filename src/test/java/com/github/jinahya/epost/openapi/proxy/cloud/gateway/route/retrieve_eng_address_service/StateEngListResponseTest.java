@@ -1,8 +1,8 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedResponseTypeTest;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractTypeUtils;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.*;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -11,6 +11,28 @@ import java.util.stream.Stream;
 class StateEngListResponseTest
         extends AbstractPairedResponseTypeTest<StateEngListResponse, StateEngListRequest> {
 
+    @Nested
+    class StateEngListTest
+            extends AbstractTypeTest<StateEngListResponse.StateEngList> {
+
+        StateEngListTest() {
+            super(StateEngListResponse.StateEngList.class);
+        }
+
+        @Override
+        protected SingleTypeEqualsVerifierApi<StateEngListResponse.StateEngList> __equals(
+                final SingleTypeEqualsVerifierApi<StateEngListResponse.StateEngList> verifierApi) {
+            return super.__equals(verifierApi)
+                    .withIgnoredFields("parent")
+                    .withPrefabValues(
+                            AbstractResponseType.class,
+                            AbstractResponseTypeTestUtils.prefabValue1(),
+                            AbstractResponseTypeTestUtils.prefabValue2())
+                    ;
+        }
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
     StateEngListResponseTest() {
         super(StateEngListResponse.class);
     }
