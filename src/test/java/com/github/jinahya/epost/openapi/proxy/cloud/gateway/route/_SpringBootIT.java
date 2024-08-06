@@ -45,6 +45,7 @@ public abstract class _SpringBootIT {
     // -----------------------------------------------------------------------------------------------------------------
     @Test
     void dontBother() {
+        // https://youtrack.jetbrains.com/issue/IDEA-357194/Abstract-test-class-with-no-test-method-doesnt-run
     }
 
     // -----------------------------------------------------------------------------------------------------------------
