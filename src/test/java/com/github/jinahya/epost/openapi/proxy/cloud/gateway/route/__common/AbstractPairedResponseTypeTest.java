@@ -1,5 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common;
 
+import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 import org.springframework.core.ResolvableType;
 
 public abstract class AbstractPairedResponseTypeTest<
@@ -9,6 +10,12 @@ public abstract class AbstractPairedResponseTypeTest<
 
     protected AbstractPairedResponseTypeTest(final Class<RESPONSE> typeClass) {
         super(typeClass);
+    }
+
+    @Override
+    protected SingleTypeEqualsVerifierApi<RESPONSE> __equals(SingleTypeEqualsVerifierApi<RESPONSE> verifierApi) {
+        return super.__equals(verifierApi)
+                .withIgnoredFields("requestClass");
     }
 
     // -----------------------------------------------------------------------------------------------------------------

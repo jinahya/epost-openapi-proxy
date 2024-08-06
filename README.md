@@ -38,7 +38,7 @@ epost:
 
 ### Component-scanning
 
-Add [`com.github.jinahya.openapi.proxy.NoOp.class`](src/main/java/com/github/jinahya/epost/openapi/proxy/NoOp) to the
+Add [`com.github.jinahya.openapi.proxy.NoOp.class`](src/main/java/com/github/jinahya/epost/openapi/proxy/_NoOp) to the
 component-scanning path.
 
 e.g.

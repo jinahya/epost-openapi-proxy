@@ -3,7 +3,6 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._SpringBootIT;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractRequestTypeTestUtils;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
-import jakarta.validation.Validator;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -50,19 +49,6 @@ class GetDistrictFirstNameList_SpringBootIT
         return responseBody;
     }
 
-    static DistrictEngFirstNameListResponse verify(final DistrictEngFirstNameListResponse response,
-                                                   final Validator validator) {
-        assertThat(response).isNotNull().satisfies(r -> {
-            assertThat(validator.validate(r)).isEmpty();
-        });
-        assertThat(response.getCmmMsgHeader()).isNotNull().satisfies(h -> {
-            assertThat(h.isSucceeded()).isTrue();
-            log.debug("responseTime: {}", h.getResponseTime());
-            log.debug("responseTimeAsLocalDateTime: {}", h.getResponseTimeAsLocalDateTime());
-        });
-        return response;
-    }
-
     // -----------------------------------------------------------------------------------------------------------------
     static Stream<Arguments> getArgumentsStream() {
         return GetCityList_SpringBootIT.getArgumentsStream()
@@ -88,7 +74,8 @@ class GetDistrictFirstNameList_SpringBootIT
     @ParameterizedTest
     void __(final DistrictEngFirstNameListRequest request) {
         final var response = exchange(webTestClient(), request);
-        verify(response, validator());
+        assertValid(response);
+        assertSucceeded(response);
         response.getDistrictEngFirstNameList().forEach(e -> {
             log.debug("districtEngFirstName: {}", e);
         });

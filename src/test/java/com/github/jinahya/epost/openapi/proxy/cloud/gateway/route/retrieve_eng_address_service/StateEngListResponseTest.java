@@ -9,7 +9,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 class StateEngListResponseTest
-//        extends AbstractResponseTypeTest<StateEngListResponse> {
         extends AbstractPairedResponseTypeTest<StateEngListResponse, StateEngListRequest> {
 
     StateEngListResponseTest() {

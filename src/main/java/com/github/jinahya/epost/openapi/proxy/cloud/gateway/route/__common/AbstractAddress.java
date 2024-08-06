@@ -17,8 +17,8 @@ import java.io.Serial;
 @Getter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public abstract class AbstractAddress
-        extends AbstractType<AbstractAddress> {
+public abstract class AbstractAddress<SELF extends AbstractAddress<SELF>>
+        extends AbstractType<SELF> {
 
     @Serial
     private static final long serialVersionUID = -4210995980428120824L;

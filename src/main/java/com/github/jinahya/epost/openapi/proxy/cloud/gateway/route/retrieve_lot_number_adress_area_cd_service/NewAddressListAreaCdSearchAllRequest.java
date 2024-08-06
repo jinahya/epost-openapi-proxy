@@ -16,7 +16,7 @@ import java.io.Serial;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class NewAddressListAreaCdSearchAllRequest
-        extends AbstractType {
+        extends AbstractType<NewAddressListAreaCdSearchAllRequest> {
 
     @Serial
     private static final long serialVersionUID = -9014063080411511379L;

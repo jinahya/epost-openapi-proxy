@@ -15,9 +15,9 @@ import java.util.Objects;
 public final class AbstractTypeUtils {
 
     // -----------------------------------------------------------------------------------------------------------------
-    public static <T extends AbstractType> T unmarshalNoNamespacedInstance(JAXBContext context,
-                                                                           final Class<T> clazz,
-                                                                           final Object source)
+    public static <T extends AbstractType<T>> T unmarshalNoNamespacedInstance(JAXBContext context,
+                                                                              final Class<T> clazz,
+                                                                              final Object source)
             throws JAXBException {
         if (context == null) {
             context = JAXBContext.newInstance(clazz);
@@ -43,22 +43,22 @@ public final class AbstractTypeUtils {
         });
     }
 
-    public static <T extends AbstractType> T unmarshalNoNamespacedInstance(final Class<T> clazz,
-                                                                           final Object source)
+    public static <T extends AbstractType<T>> T unmarshalNoNamespacedInstance(final Class<T> clazz,
+                                                                              final Object source)
             throws JAXBException {
         return unmarshalNoNamespacedInstance(context(clazz), clazz, source);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    public static <T extends AbstractType> T deserializeInstance(final ObjectReader reader, final Object source) {
+    public static <T extends AbstractType<T>> T deserializeInstance(final ObjectReader reader, final Object source) {
         return ObjectReaderUtils.readValue(
                 reader,
                 source
         );
     }
 
-    public static <T extends AbstractType> T deserializeInstance(final ObjectMapper mapper,
-                                                                 final Class<T> clazz, final Object source) {
+    public static <T extends AbstractType<T>> T deserializeInstance(final ObjectMapper mapper,
+                                                                    final Class<T> clazz, final Object source) {
         Objects.requireNonNull(mapper, "mapper is null");
         return deserializeInstance(
                 mapper.readerFor(clazz),
@@ -66,8 +66,8 @@ public final class AbstractTypeUtils {
         );
     }
 
-    public static <T extends AbstractType> T deserializeInstance(final Jackson2ObjectMapperBuilder builder,
-                                                                 final Class<T> clazz, final Object source) {
+    public static <T extends AbstractType<T>> T deserializeInstance(final Jackson2ObjectMapperBuilder builder,
+                                                                    final Class<T> clazz, final Object source) {
         Objects.requireNonNull(builder, "builder is null");
         return deserializeInstance(
                 builder.build(),
@@ -76,7 +76,7 @@ public final class AbstractTypeUtils {
         );
     }
 
-    public static <T extends AbstractType> T deserializeInstance(final Class<T> clazz, final Object source) {
+    public static <T extends AbstractType<T>> T deserializeInstance(final Class<T> clazz, final Object source) {
         return deserializeInstance(
                 new ObjectMapper(),
                 clazz,

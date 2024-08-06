@@ -1,6 +1,5 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractRequestType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common._Constants;
 import com.mycompany.Application;
@@ -11,8 +10,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -39,12 +38,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Slf4j
 public abstract class _SpringBootIT {
 
-    protected static final String SYSTEM_PROPERTY_SERVICE_KEY = "serviceKey";
-
-    // -----------------------------------------------------------------------------------------------------------------
     @PostConstruct
     private void doOnPostConstruct() {
-        log.debug("serviceKey: {}", serviceKey);
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    @Test
+    void dontBother() {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -70,15 +70,11 @@ public abstract class _SpringBootIT {
     protected <T extends AbstractResponseType<T>> T assertSucceeded(final T response) {
         assertThat(response.getCmmMsgHeader()).isNotNull().satisfies(h -> {
             assertThat(h.isSucceeded()).isTrue();
+            assertThat(h.isReturnCode00()).isTrue();
             log.debug("responseTime: {}", h.getResponseTime());
             log.debug("responseTimeAsLocalDateTime: {}", h.getResponseTimeAsLocalDateTime());
         });
         return response;
-    }
-
-    // ----------------------------------------------------------------------------------------------------- serviceKey
-    protected <T extends AbstractRequestType<T>> T serviceKey(final T request) {
-        return request.serviceKey(serviceKey);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -99,10 +95,4 @@ public abstract class _SpringBootIT {
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.PROTECTED)
     private final WebClient webClient = WebClient.builder().baseUrl(_Constants.BASE_URL_DEVELOPMENT).build();
-
-    @Value("#{systemProperties['" + SYSTEM_PROPERTY_SERVICE_KEY + "']}")
-    @Accessors(fluent = true)
-    @Setter(AccessLevel.NONE)
-    @Getter(AccessLevel.PROTECTED)
-    private String serviceKey;
 }

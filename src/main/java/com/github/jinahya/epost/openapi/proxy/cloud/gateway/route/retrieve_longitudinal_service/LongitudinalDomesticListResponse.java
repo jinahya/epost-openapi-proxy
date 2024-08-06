@@ -148,6 +148,7 @@ public class LongitudinalDomesticListResponse
 
         // -------------------------------------------------------------------------------------------------------------
         @JsonIgnore
+        @EqualsAndHashCode.Exclude
         private transient LongitudinalDomesticListResponse parent;
 
         // -------------------------------------------------------------------------------------------------------------

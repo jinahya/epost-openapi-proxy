@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedResponseType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.CmmMsgHeader;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -26,7 +25,6 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class StateEngListResponse
-//        extends AbstractResponseType<StateEngListResponse> {
         extends AbstractPairedResponseType<StateEngListResponse, StateEngListRequest> {
 
     @Serial
@@ -57,6 +55,7 @@ public class StateEngListResponse
 
         // -----------------------------------------------------------------------------------------------------------------
         @JsonIgnore
+        @EqualsAndHashCode.Exclude
         private transient StateEngListResponse parent;
 
         @NotBlank
@@ -68,18 +67,17 @@ public class StateEngListResponse
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+
+    /**
+     * Creates a new instance.
+     */
     public StateEngListResponse() {
         super(StateEngListRequest.class);
     }
 
-    // ---------------------------------------------------------------------------------------------------- cmmMsgHeader
-    // just for the prefab values.
-    StateEngListResponse cmmMsgHeader(final CmmMsgHeader cmmMsgHeader) {
-        setCmmMsgHeader(cmmMsgHeader);
-        return this;
-    }
+    // ---------------------------------------------------------------------------------------------- super.cmmMsgHeader
 
-    // --------------------------------------------------------------------------------------------------------- wrapped
+    // --------------------------------------------------------------------------------------------------- super.wrapped
     @JsonProperty(ROOT_NAME)
     @Override
     public StateEngListResponse getWrapped() {

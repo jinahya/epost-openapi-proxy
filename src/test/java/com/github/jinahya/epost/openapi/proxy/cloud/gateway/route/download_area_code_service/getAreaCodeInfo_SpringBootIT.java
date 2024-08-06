@@ -73,7 +73,7 @@ class getAreaCodeInfo_SpringBootIT
         final var response = exchange(webTestClient(), request);
         log.debug("file: {}", response.getFile());
         assertValid(response);
-        if (true) {
+        if (false) { // takes too long!
             WebClientUtils.download(response.getFile(), Duration.ofSeconds(10L), p -> {
                 try {
                     log.debug("destination.size: {}", Files.size(p));

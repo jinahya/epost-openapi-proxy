@@ -7,11 +7,12 @@ import jakarta.xml.bind.annotation.XmlTransient;
 import lombok.*;
 
 import java.io.Serial;
+import java.util.Objects;
 
 @Setter
 @Getter
 @ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
+//@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SuppressWarnings({
         "java:S119" // <SELF ...>
@@ -23,6 +24,31 @@ public abstract class AbstractResponseType<SELF extends AbstractResponseType<SEL
     private static final long serialVersionUID = 3542834861055866296L;
 
     // -----------------------------------------------------------------------------------------------------------------
+
+    // ------------------------------------------------------------------------------------------------ java.lang.Object
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof AbstractResponseType<?> that)) {
+            return false;
+        }
+        if (!super.equals(obj)) {
+            return false;
+        }
+        return Objects.equals(cmmMsgHeader, that.cmmMsgHeader)
+                && Objects.equals(wrapped, that.wrapped);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                super.hashCode(),
+                cmmMsgHeader,
+                wrapped
+        );
+    }
 
     // ---------------------------------------------------------------------------------------------------- cmmMsgHeader
     // just for the prefab values.

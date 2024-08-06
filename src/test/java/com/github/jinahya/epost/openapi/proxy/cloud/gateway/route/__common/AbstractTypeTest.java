@@ -7,7 +7,10 @@ import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.beans.IntrospectionException;
@@ -30,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @param <TYPE> subclass type parameter
  * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
  */
-public abstract class AbstractTypeTest<TYPE extends AbstractType> {
+public abstract class AbstractTypeTest<TYPE extends AbstractType<TYPE>> {
 
     // -----------------------------------------------------------------------------------------------------------------
     private static ValidatorFactory VALIDATOR_FACTORY = null;
@@ -108,7 +111,7 @@ public abstract class AbstractTypeTest<TYPE extends AbstractType> {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    @Disabled
+//    @Disabled
     @DisplayName("equals")
     @Test
     void __equals() {

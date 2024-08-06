@@ -43,7 +43,7 @@ public class RoadEngListResponse
     @ToString(callSuper = true)
     @EqualsAndHashCode(callSuper = true)
     public static class RoadEngList
-            extends AbstractType {
+            extends AbstractType<RoadEngList> {
 
         @Serial
         private static final long serialVersionUID = 2944701965921059011L;

@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
+import com.github.jinahya.epost.openapi.proxy._misc.jackson.databind.ObjectReaderUtils;
+import com.github.jinahya.epost.openapi.proxy._misc.xml.stream.XMLInputFactoryUtils;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractAddress;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.CmmMsgHeader;
-import com.github.jinahya.epost.openapi.proxy._misc.jackson.databind.ObjectReaderUtils;
-import com.github.jinahya.epost.openapi.proxy._misc.xml.stream.XMLInputFactoryUtils;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.xml.bind.JAXBContext;
@@ -30,7 +30,7 @@ import java.util.Objects;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
 public class NewAddressListAreaCdSearchAllResponse
-        extends AbstractType {
+        extends AbstractType<NewAddressListAreaCdSearchAllResponse> {
 
     @Serial
     private static final long serialVersionUID = -1527464956712592866L;
@@ -45,7 +45,7 @@ public class NewAddressListAreaCdSearchAllResponse
     @ToString(callSuper = true)
     @EqualsAndHashCode(callSuper = true)
     public static class NewAddressListAreaCdSearchAll
-            extends AbstractAddress {
+            extends AbstractAddress<NewAddressListAreaCdSearchAll> {
 
         @Serial
         private static final long serialVersionUID = -3719216662681924951L;

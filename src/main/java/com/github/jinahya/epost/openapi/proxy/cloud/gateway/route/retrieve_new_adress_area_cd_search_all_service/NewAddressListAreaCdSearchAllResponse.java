@@ -43,7 +43,7 @@ public class NewAddressListAreaCdSearchAllResponse
     @ToString(callSuper = true)
     @EqualsAndHashCode(callSuper = true)
     public static class NewAddressListAreaCdSearchAll
-            extends AbstractAddress {
+            extends AbstractAddress<NewAddressListAreaCdSearchAll> {
 
         @Serial
         private static final long serialVersionUID = 2648926399901817807L;

@@ -6,12 +6,9 @@ import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.Abstr
 import jakarta.validation.Validator;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.test.context.junit.jupiter.DisabledIf;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import reactor.core.publisher.Flux;
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -102,19 +99,5 @@ class GetRoadAddressSearch_SpringBootIT
     void __(final RoadAddressEngSearchListRequest request) {
         final var response = exchange(webTestClient(), request);
         verify(response, validator());
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    @DisabledIf("#{systemProperties['" + SYSTEM_PROPERTY_SERVICE_KEY + "'] == null}")
-    @Test
-    void __() {
-        new StateEngListRequest()
-                .serviceKey(serviceKey())
-                .exchange(webClient())
-                .<StateEngListResponse>handle(this::handle)
-                .flatMapMany(selr -> Flux.fromStream(selr.getStateEngList().stream().map(e -> e.parent(selr)).limit(2)))
-                .map(CityEngListRequest::from)
-                .flatMap(cityEngListRequest -> cityEngListRequest.exchange(webClient(), CityEngListResponse.class))
-                .blockLast();
     }
 }

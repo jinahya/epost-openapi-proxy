@@ -91,7 +91,6 @@ public class RoadAddressEngSearchListRequest
                                              Optional.ofNullable(s.keyword))
                         .queryParam(_Constants.PARAM_COUNT_PER_PAGE, s.countPerPage)
                         .queryParam(_Constants.PARAM_CURRENT_PAGE, s.currentPage);
-                ;
             };
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 

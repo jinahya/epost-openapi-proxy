@@ -27,8 +27,8 @@ public final class AbstractRequestTypeTestUtils {
         });
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
     private AbstractRequestTypeTestUtils() {
         throw new AssertionError("instantiation is not allowed");
     }
-
 }

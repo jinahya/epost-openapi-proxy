@@ -11,6 +11,7 @@ import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 public abstract class AbstractRequestTypeTest<TYPE extends AbstractRequestType<TYPE>>
         extends AbstractTypeTest<TYPE> {
 
+    // -----------------------------------------------------------------------------------------------------------------
     protected AbstractRequestTypeTest(final Class<TYPE> typeClass) {
         super(typeClass);
     }

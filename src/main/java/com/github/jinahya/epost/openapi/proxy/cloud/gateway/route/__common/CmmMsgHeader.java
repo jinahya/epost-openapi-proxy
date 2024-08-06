@@ -20,7 +20,11 @@ import java.util.function.Function;
 
 import static java.time.temporal.ChronoField.NANO_OF_SECOND;
 
-// -----------------------------------------------------------------------------------------------------------------
+/**
+ * A class for binding {@code /:cmmMsgHeader} part.
+ *
+ * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
 @Getter
@@ -128,9 +132,10 @@ public class CmmMsgHeader
     // ------------------------------------------------------------------------------------------------------- successYN
 
     /**
-     * Returns current value of {@code successYN} property as a {@code boolean}.
+     * Checks whether current value of {@code successYN} property is equal to {@value #SUCCESS_YN_Y}.
      *
-     * @return {@code true} if current value of {@code successYN} property is equal to {@value #SUCCESS_YN_Y}.
+     * @return {@code true} if current value of {@code successYN} property is equal to {@value #SUCCESS_YN_Y};
+     * {@code false} otherwise.
      */
     @JsonIgnore
     @XmlTransient
@@ -141,6 +146,13 @@ public class CmmMsgHeader
     }
 
     // ------------------------------------------------------------------------------------------------------ returnCode
+
+    /**
+     * Checks whether current value of {@code returnCode} property is equal to {@value #RETURN_CODE_00}.
+     *
+     * @return {@code true} if current value of {@code returnCode} property is equal to {@value #RETURN_CODE_00};
+     * {@code false} otherwise.
+     */
     @JsonIgnore
     @XmlTransient
     public boolean isReturnCode00() {
@@ -153,10 +165,10 @@ public class CmmMsgHeader
 
     // -----------------------------------------------------------------------------------------------------------------
     @XmlElement
-    private String requestMsgId;
+    private String requestMsgId; // 무엇에 쓰는 물건인고
 
     @XmlElement
-    private String responseMsgId;
+    private String responseMsgId; // 무엇에 쓰는 물건인고
 
     // -----------------------------------------------------------------------------------------------------------------
     @XmlElement
