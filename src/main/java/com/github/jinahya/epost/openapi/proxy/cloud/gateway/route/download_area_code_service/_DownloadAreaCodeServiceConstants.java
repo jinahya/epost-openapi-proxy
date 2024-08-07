@@ -8,6 +8,9 @@ public final class _DownloadAreaCodeServiceConstants {
                     "/downloadAreaCodeService" +
                     "/getAreaCodeInfo";
 
+    // -----------------------------------------------------------------------------------------------------------------
+    public static final String PARAM_NAME_DWLDSE = "dwldSe";
+
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
     private _DownloadAreaCodeServiceConstants() {
         throw new AssertionError("instantiation is not allowed");

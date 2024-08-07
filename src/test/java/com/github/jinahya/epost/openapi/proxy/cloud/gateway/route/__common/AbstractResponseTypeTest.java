@@ -12,6 +12,12 @@ public abstract class AbstractResponseTypeTest<TYPE extends AbstractResponseType
         extends AbstractTypeTest<TYPE> {
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+
+    /**
+     * Creates a new instance for testing specified type class.
+     *
+     * @param typeClass the type class to test.
+     */
     protected AbstractResponseTypeTest(final Class<TYPE> typeClass) {
         super(typeClass);
     }
@@ -19,28 +25,17 @@ public abstract class AbstractResponseTypeTest<TYPE extends AbstractResponseType
     // -----------------------------------------------------------------------------------------------------------------
     @Override
     protected SingleTypeEqualsVerifierApi<TYPE> __equals(final SingleTypeEqualsVerifierApi<TYPE> verifierApi) {
-        final var instance1 = newTypeInstance();
-        final var instance2 = newTypeInstance();
-        instance1.setCmmMsgHeader(new CmmMsgHeader().requestMsgId("a"));
-        instance2.setCmmMsgHeader(new CmmMsgHeader().requestMsgId("b"));
-        assert !instance2.equals(instance1);
         return super.__equals(verifierApi)
                 .withPrefabValues(
                         CmmMsgHeader.class,
-                        new CmmMsgHeader().requestMsgId("a"),
-                        new CmmMsgHeader().requestMsgId("b")
+                        CmmMsgHeaderTestUtils.prefabValue1(),
+                        CmmMsgHeaderTestUtils.prefabValue2()
                 )
-                .withPrefabValues(Object.class, instance1, instance2)
-                .withPrefabValues(AbstractResponseType.class, instance1, instance2)
+                .withPrefabValues(
+                        AbstractResponseType.class,
+                        AbstractResponseTypeTestUtils.prefabValue1(),
+                        AbstractResponseTypeTestUtils.prefabValue2()
+                )
                 ;
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    protected TYPE instance1() {
-        return newTypeInstance().cmmMsgHeader(new CmmMsgHeader().requestMsgId("a"));
-    }
-
-    protected TYPE instance2() {
-        return newTypeInstance().cmmMsgHeader(new CmmMsgHeader().requestMsgId("a"));
     }
 }

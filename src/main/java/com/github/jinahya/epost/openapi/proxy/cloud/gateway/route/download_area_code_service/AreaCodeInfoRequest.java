@@ -14,36 +14,84 @@ import java.util.function.BiConsumer;
 
 @Setter
 @Getter
-@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class AreaCodeInfoRequest
         extends AbstractRequestType<AreaCodeInfoRequest> {
 
     @Serial
     private static final long serialVersionUID = 7432210876083090440L;
 
-    // -----------------------------------------------------------------------------------------------------------------
-    public static final String PARAM_DWLDSE = "dwldSe";
+    // ---------------------------------------------------------------------------------------------------------- deldSe
+
+    /**
+     * 우편번호 전체.
+     */
+    public static final int DWLD_SE_1 = 1;
+
+    /**
+     * 우편번호 변경분.
+     */
+    public static final int DWLD_SE_2 = 2;
+
+    /**
+     * 범위 주소.
+     */
+    public static final int DWLD_SE_3 = 3;
+
+    /**
+     * 사서함 주소.
+     */
+    public static final int DWLD_SE_4 = 4;
 
     @XmlEnum(Integer.class)
     public enum DwldSe {
 
+        /**
+         * 우편번호 전체.
+         */
         _1,
 
+        /**
+         * 우편번호 변경분.
+         */
         _2,
 
+        /**
+         * 범위 주소.
+         */
         _3,
 
+        /**
+         * 사서함 주소.
+         */
         _4;
 
         public static DwldSe valueOf(final int value) {
-            for (final DwldSe e : DwldSe.values()) {
-                if (e.ordinal() == value) {
-                    return e;
+            for (final DwldSe v : DwldSe.values()) {
+                if (v.getValue() == value) {
+                    return v;
                 }
             }
             throw new IllegalArgumentException("no value for " + value);
         }
+
+        DwldSe(final Integer value) {
+            this.value = value;
+        }
+
+        DwldSe() {
+            this(null);
+        }
+
+        public int getValue() {
+            if (value == null) {
+                return ordinal() + 1;
+            }
+            return value;
+        }
+
+        private final Integer value;
     }
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
@@ -55,7 +103,7 @@ public class AreaCodeInfoRequest
     // -----------------------------------------------------------------------------------------------------------------
     private static final BiConsumer<? super AreaCodeInfoRequest, ? super UriBuilder> URI_CONSUMER = (s, b) -> {
         b.path(_DownloadAreaCodeServiceConstants.REQUEST_URI_GET_AREA_CODE_INFO)
-                .queryParam(PARAM_DWLDSE, s.getDwldSe())
+                .queryParam(_DownloadAreaCodeServiceConstants.PARAM_NAME_DWLDSE, s.getDwldSe())
         ;
     };
 
@@ -66,7 +114,10 @@ public class AreaCodeInfoRequest
      */
     public AreaCodeInfoRequest() {
         super();
-        setUriConsumer(URI_CONSUMER);
+        setUriConsumer(
+                URI_CONSUMER,
+                true
+        );
     }
 
     // ---------------------------------------------------------------------------------------------------------- dwldSe

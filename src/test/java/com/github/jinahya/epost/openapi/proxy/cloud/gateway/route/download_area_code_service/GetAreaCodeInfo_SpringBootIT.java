@@ -5,20 +5,20 @@ import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.Abstr
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
 import com.github.jinahya.epost.openapi.proxy.web.readtive.funcion.client.WebClientUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import reactor.core.publisher.Flux;
+import reactor.core.scheduler.Schedulers;
 
-import java.io.IOException;
-import java.time.Duration;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("/getAreaCodeInfo")
 @Slf4j
@@ -37,7 +37,7 @@ class GetAreaCodeInfo_SpringBootIT
         final var responseSpec = requestSpec.exchange();
         // -------------------------------------------------------------------------------------------------------- then
         responseSpec.expectStatus().isOk();
-        final var responseBody = Optional.ofNullable(
+        return Optional.ofNullable(
                         responseSpec
                                 .expectBody(AreaCodeInfoResponse.class)
                                 .returnResult()
@@ -45,12 +45,6 @@ class GetAreaCodeInfo_SpringBootIT
                 )
                 .map(AbstractResponseType::get)
                 .orElseThrow();
-        assertThat(responseBody.getCmmMsgHeader()).isNotNull().satisfies(h -> {
-            assertThat(h.isSucceeded()).isTrue();
-            log.debug("responseTime: {}", h.getResponseTime());
-            log.debug("responseTimeAsLocalDateTime: {}", h.getResponseTimeAsLocalDateTime());
-        });
-        return responseBody;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -62,19 +56,20 @@ class GetAreaCodeInfo_SpringBootIT
     }
 
     // -----------------------------------------------------------------------------------------------------------------
+    @Disabled
     @MethodSource({
             "getRequestStream"
     })
     @ParameterizedTest
-    void __(final AreaCodeInfoRequest request) throws IOException {
+    void __(final AreaCodeInfoRequest request) {
         final var response = exchange(webTestClient(), request);
         log.debug("file: {}", response.getFile());
         assertValid(response);
+        assertSucceeded(response);
         if (true) { // takes too long!
             final var flags = new HashMap<String, Boolean>();
             WebClientUtils.download(
                     response.getFile(),
-                    Duration.ofSeconds(8L),
                     (n, m) -> {
                         if (flags.compute(n, (k, v) -> v == null)) {
                             log.debug("n: {}, m: {}", n, m);
@@ -82,5 +77,32 @@ class GetAreaCodeInfo_SpringBootIT
                     }
             ).block();
         }
+    }
+
+    @Test
+    void __() {
+        Flux.fromStream(getRequestStream())
+                .parallel()
+                .runOn(Schedulers.boundedElastic())
+                .map(r -> exchange(webTestClient(), r))
+                .doOnNext(r -> {
+                    log.debug("file: {}", r.getFile());
+                    assertValid(r);
+                    assertSucceeded(r);
+                })
+                .flatMap(r -> {
+                    final var flags = new HashMap<String, Boolean>();
+                    return WebClientUtils.download(
+                            r.getFile(),
+                            (n, m) -> {
+                                if (flags.compute(n, (k, v) -> v == null)) {
+                                    log.debug("n: {}, m: {}", n, m);
+                                }
+                            }
+                    );
+                })
+                .sequential()
+                .blockLast();
+        ;
     }
 }

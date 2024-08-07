@@ -96,7 +96,10 @@ public class RoadAddressEngSearchListRequest
 
     public RoadAddressEngSearchListRequest() {
         super(RoadAddressEngSearchListResponse.class);
-        setUriConsumer(URI_CONSUMER, true);
+        setUriConsumer(
+                URI_CONSUMER,
+                true
+        );
     }
 
     // -----------------------------------------------------------------------------------------------------------------
