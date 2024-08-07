@@ -1,10 +1,9 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedResponseType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseElementType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -42,22 +41,12 @@ public class StateEngListResponse
     @EqualsAndHashCode(callSuper = true)
     @NoArgsConstructor
     public static class StateEngList
-            extends AbstractType<StateEngList> {
+            extends AbstractResponseElementType<StateEngList, StateEngListResponse> {
 
         @Serial
         private static final long serialVersionUID = 1923480486008916847L;
 
-        // ------------------------------------------------------------------------------------------------------- parent
-        public StateEngList parent(final StateEngListResponse parent) {
-            setParent(parent);
-            return this;
-        }
-
         // -----------------------------------------------------------------------------------------------------------------
-        @JsonIgnore
-        @EqualsAndHashCode.Exclude
-        private transient StateEngListResponse parent;
-
         @NotBlank
         @JsonProperty
         @XmlElement

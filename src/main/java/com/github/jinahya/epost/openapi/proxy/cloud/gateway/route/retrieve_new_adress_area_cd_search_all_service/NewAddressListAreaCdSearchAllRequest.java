@@ -1,6 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_search_all_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractRequestType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedRequestType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common._Constants;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,7 +19,7 @@ import java.util.function.BiConsumer;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class NewAddressListAreaCdSearchAllRequest
-        extends AbstractRequestType<NewAddressListAreaCdSearchAllRequest> {
+        extends AbstractPairedRequestType<NewAddressListAreaCdSearchAllRequest, NewAddressListAreaCdSearchAllResponse> {
 
     @Serial
     private static final long serialVersionUID = -7468923602062739458L;
@@ -51,7 +51,8 @@ public class NewAddressListAreaCdSearchAllRequest
             (s, b) -> {
                 b.path(_RetrieveNewAddressAreaCdSearchAllServiceConstants.
                                REQUEST_URI_GET_NEW_ADDRESS_LIST_AREA_CD_SEARCH_ALL)
-                        .queryParam(_RetrieveNewAddressAreaCdSearchAllServiceConstants.REQUEST_PARAM_SRCHWRD, s.getSrchwrd())
+                        .queryParam(_RetrieveNewAddressAreaCdSearchAllServiceConstants.REQUEST_PARAM_SRCHWRD,
+                                    s.getSrchwrd())
                         .queryParam(_Constants.REQUEST_PARAM_COUNT_PER_PAGE, s.getCountPerPage())
                         .queryParam(_Constants.REQUEST_PARAM_CURRENT_PAGE, s.getCurrentPage())
                 ;
@@ -59,7 +60,7 @@ public class NewAddressListAreaCdSearchAllRequest
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
     public NewAddressListAreaCdSearchAllRequest() {
-        super();
+        super(NewAddressListAreaCdSearchAllResponse.class);
         setUriConsumer(
                 URI_CONSUMER,
                 true

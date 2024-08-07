@@ -193,7 +193,8 @@
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>3.8.0</version>
           <configuration>
-            <doclint>all</doclint>
+<!--            <doclint>all</doclint>-->
+            <doclint>none</doclint>
             <tags>
               <tag>
                 <name>apiNote</name>

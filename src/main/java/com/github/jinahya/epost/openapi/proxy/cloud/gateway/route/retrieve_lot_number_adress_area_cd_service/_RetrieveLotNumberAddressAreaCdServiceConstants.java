@@ -8,6 +8,9 @@ final class _RetrieveLotNumberAddressAreaCdServiceConstants {
                     "/retrieveNewAdressAreaCdSearchAllService" +
                     "/getNewAddressListAreaCdSearchAll";
 
+    // -----------------------------------------------------------------------------------------------------------------
+    public static final String PARAM_NAME_SRCHWRD = "srchwrd";
+
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
     private _RetrieveLotNumberAddressAreaCdServiceConstants() {
         throw new AssertionError("instantiation is not allowed");

@@ -11,9 +11,11 @@ import java.util.stream.Stream;
 class StateEngListResponseTest
         extends AbstractPairedResponseTypeTest<StateEngListResponse, StateEngListRequest> {
 
+    // -----------------------------------------------------------------------------------------------------------------
     @Nested
     class StateEngListTest
-            extends AbstractTypeTest<StateEngListResponse.StateEngList> {
+//            extends AbstractTypeTest<StateEngListResponse.StateEngList> {
+            extends AbstractResponseElementTypeTest<StateEngListResponse.StateEngList, StateEngListResponse> {
 
         StateEngListTest() {
             super(StateEngListResponse.StateEngList.class);

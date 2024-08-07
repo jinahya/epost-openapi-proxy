@@ -37,6 +37,13 @@ public final class AreaCodeInfoUtils {
                 .forEach(m -> consumer.accept(name, m));
     }
 
+    /**
+     * Extracts specified DB file stream, and accepts entry names of {@code *.txt} and rows to specified consumer.
+     *
+     * @param stream   the DB file stream to extract.
+     * @param consumer the consumer.
+     * @throws IOException if an I/O error occurs.
+     */
     public static void extract(final @NonNull InputStream stream,
                                final @NonNull BiConsumer<? super String, ? super Map<String, String>> consumer)
             throws IOException {

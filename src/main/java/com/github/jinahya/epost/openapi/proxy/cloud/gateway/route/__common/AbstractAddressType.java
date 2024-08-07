@@ -17,7 +17,7 @@ import java.io.Serial;
 @Getter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public abstract class AbstractAddress<SELF extends AbstractAddress<SELF>>
+public abstract class AbstractAddressType<SELF extends AbstractAddressType<SELF>>
         extends AbstractType<SELF> {
 
     @Serial

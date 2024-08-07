@@ -1,8 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_search_all_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractAddressTest;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseTypeTest;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractTypeUtils;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedResponseTypeTest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseElementAddressTypeTest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_search_all_service.NewAddressListAreaCdSearchAllResponse.NewAddressListAreaCdSearchAll;
 import lombok.extern.slf4j.Slf4j;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
@@ -14,12 +13,16 @@ import java.util.stream.Stream;
 
 @Slf4j
 class NewAddressListAreaCdSearchAllResponseTest
-        extends AbstractResponseTypeTest<NewAddressListAreaCdSearchAllResponse> {
+        extends AbstractPairedResponseTypeTest<
+        NewAddressListAreaCdSearchAllResponse,
+        NewAddressListAreaCdSearchAllRequest> {
 
     // -----------------------------------------------------------------------------------------------------------------
     @Nested
     class NewAddressListAreaCdSearchAllTest
-            extends AbstractAddressTest<NewAddressListAreaCdSearchAll> {
+            extends AbstractResponseElementAddressTypeTest<
+            NewAddressListAreaCdSearchAll,
+            NewAddressListAreaCdSearchAllResponse> {
 
         NewAddressListAreaCdSearchAllTest() {
             super(NewAddressListAreaCdSearchAll.class);
@@ -28,9 +31,7 @@ class NewAddressListAreaCdSearchAllResponseTest
         @Override
         protected SingleTypeEqualsVerifierApi<NewAddressListAreaCdSearchAll> __equals(
                 final SingleTypeEqualsVerifierApi<NewAddressListAreaCdSearchAll> verifierApi) {
-            return super.__equals(verifierApi)
-//                    .withIgnoredFields("parent")
-                    ;
+            return super.__equals(verifierApi);
         }
     }
 
@@ -42,45 +43,39 @@ class NewAddressListAreaCdSearchAllResponseTest
     // -----------------------------------------------------------------------------------------------------------------
     @Override
     protected SingleTypeEqualsVerifierApi<NewAddressListAreaCdSearchAllResponse> __equals(
-            SingleTypeEqualsVerifierApi<NewAddressListAreaCdSearchAllResponse> verifierApi) {
+            final SingleTypeEqualsVerifierApi<NewAddressListAreaCdSearchAllResponse> verifierApi) {
         return super.__equals(verifierApi);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     private static Stream<String> getXmlResNameStream() {
         return Stream.of(
-                "response1.xml",
-                "response2.xml"
+                "getNewAddressListAreaCdSearchAll_response1.xml",
+                "getNewAddressListAreaCdSearchAll_response2.xml"
         );
     }
 
     @MethodSource({"getXmlResNameStream"})
     @ParameterizedTest
     void __xml(final String resName) throws Throwable {
-        final var unmarshalled = applyResourceAsStreamChecked(
-                resName,
-                r -> AbstractTypeUtils.unmarshalNoNamespacedInstance(NewAddressListAreaCdSearchAllResponse.class, r)
-        );
+        final var unmarshalled = unmarshalNoNamespacedInstanceFromResource(resName);
         verifyValid(unmarshalled);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     private static Stream<String> getJsonResNameStream() {
         return Stream.of(
-                "response1.json",
-                "response2.json",
-                "response1_.json",
-                "response2_.json"
+                "getNewAddressListAreaCdSearchAll_response1.json",
+                "getNewAddressListAreaCdSearchAll_response2.json",
+                "getNewAddressListAreaCdSearchAll_response1_.json",
+                "getNewAddressListAreaCdSearchAll_response2_.json"
         );
     }
 
     @MethodSource({"getJsonResNameStream"})
     @ParameterizedTest
     void __json(final String resName) throws Throwable {
-        final var deserialized = applyResourceAsStreamChecked(
-                resName,
-                r -> AbstractTypeUtils.deserializeInstance(NewAddressListAreaCdSearchAllResponse.class, r)
-        ).get();
+        final var deserialized = deserializeInstanceFromResource(resName).get();
         verifyValid(deserialized);
     }
 }

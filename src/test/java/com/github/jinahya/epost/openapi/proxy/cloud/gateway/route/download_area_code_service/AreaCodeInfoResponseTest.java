@@ -1,10 +1,10 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area_code_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseTypeTest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedResponseTypeTest;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 
 class AreaCodeInfoResponseTest
-        extends AbstractResponseTypeTest<AreaCodeInfoResponse> {
+        extends AbstractPairedResponseTypeTest<AreaCodeInfoResponse, AreaCodeInfoRequest> {
 
     AreaCodeInfoResponseTest() {
         super(AreaCodeInfoResponse.class);

@@ -6,11 +6,11 @@ public final class _RetrieveDelivAreaCdServiceConstants {
             "/postal/retrieveDelivAreaCdService/retrieveDelivAreaCdService/getDelivAreaCd";
 
     // -----------------------------------------------------------------------------------------------------------------
-    public static final String PARAM_ZIP = "zip";
+    public static final String PARAM_NAME_ZIP = "zip";
 
-    public static final String PARAM_ADDR = "addr";
+    public static final String PARAM_NAME_ADDR = "addr";
 
-    public static final String PARAM_MAIL_DIV_CD = "mailDivCd";
+    public static final String PARAM_NAME_MAIL_DIV_CD = "mailDivCd";
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
     private _RetrieveDelivAreaCdServiceConstants() {

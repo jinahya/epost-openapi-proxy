@@ -110,8 +110,23 @@ public abstract class AbstractTypeTest<TYPE extends AbstractType<TYPE>> {
         }
     }
 
+    protected TYPE unmarshalNoNamespacedInstanceFromResource(final String resName)
+            throws Throwable {
+        return applyResourceAsStreamChecked(
+                resName,
+                r -> AbstractTypeUtils.unmarshalNoNamespacedInstance(typeClass, r)
+        );
+    }
+
+    protected TYPE deserializeInstanceFromResource(final String resName)
+            throws Throwable {
+        return applyResourceAsStreamChecked(
+                resName,
+                r -> AbstractTypeUtils.deserializeInstance(typeClass, r)
+        );
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
-//    @Disabled
     @DisplayName("equals")
     @Test
     void __equals() {

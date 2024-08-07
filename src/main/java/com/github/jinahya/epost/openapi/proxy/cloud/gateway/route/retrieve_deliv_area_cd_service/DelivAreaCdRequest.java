@@ -22,7 +22,7 @@ public class DelivAreaCdRequest
     @Serial
     private static final long serialVersionUID = -4097942189442536529L;
 
-    // -----------------------------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------------------- mailDivCd
     public enum MailDivCd {
         _1,
         _2
@@ -44,9 +44,9 @@ public class DelivAreaCdRequest
         setUriConsumer(
                 (s, b) -> {
                     b.path(_RetrieveDelivAreaCdServiceConstants.REQUEST_URI_GET_DELIV_AREA_CD)
-                            .queryParam(_RetrieveDelivAreaCdServiceConstants.PARAM_ZIP, s.zip)
-                            .queryParam(_RetrieveDelivAreaCdServiceConstants.PARAM_ADDR, s.addr)
-                            .queryParam(_RetrieveDelivAreaCdServiceConstants.PARAM_MAIL_DIV_CD, s.mailDivCd);
+                            .queryParam(_RetrieveDelivAreaCdServiceConstants.PARAM_NAME_ZIP, s.zip)
+                            .queryParam(_RetrieveDelivAreaCdServiceConstants.PARAM_NAME_ADDR, s.addr)
+                            .queryParam(_RetrieveDelivAreaCdServiceConstants.PARAM_NAME_MAIL_DIV_CD, s.mailDivCd);
                 },
                 true
         );

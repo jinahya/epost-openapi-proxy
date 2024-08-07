@@ -1,7 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common._Constants;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.*;
 import com.mycompany.Application;
 import jakarta.annotation.PostConstruct;
 import jakarta.validation.Validator;
@@ -15,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.ResolvableType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -58,6 +58,48 @@ public abstract class _SpringBootIT {
         } else {
             sink.error(new RuntimeException("unsuccessful response: " + value));
         }
+    }
+
+    // --------------------------------------------------------------------------------------------------- webTestClient
+    protected <T extends AbstractRequestType<T>, U extends AbstractResponseType<U>> U exchange(
+            final T request, final Class<U> responseClass) {
+        Objects.requireNonNull(request, "request is null");
+        Objects.requireNonNull(responseClass, "responseClass is null");
+        return webTestClient()
+                .method(request.getHttpMethod())
+                .uri(request::acceptUriConsumerAndBuild)
+                .headers(request::acceptHeaders)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(responseClass)
+                .returnResult()
+                .getResponseBody()
+                .get();
+    }
+
+    protected <T extends AbstractPairedRequestType<T, U>, U extends AbstractPairedResponseType<U, T>> U exchange(
+            final Class<T> requestClass, final T request) {
+        Objects.requireNonNull(request, "request is null");
+        @SuppressWarnings({"unchecked"})
+        final var responseClass = (Class<U>)
+                ResolvableType.forType(requestClass)
+                        .as(AbstractPairedRequestType.class)
+                        .getGeneric(1).resolve();
+        return exchange(request, responseClass);
+    }
+
+    private <T extends AbstractPairedRequestType<T, U>, U extends AbstractPairedResponseType<U, T>> U exchangeHelp(
+            final Class<T> requestClass, final Object request) {
+        Objects.requireNonNull(requestClass, "requestClass is null");
+        Objects.requireNonNull(request, "request is null");
+        return exchange(requestClass, requestClass.cast(request));
+    }
+
+    @SuppressWarnings({"unchecked"})
+    protected <T extends AbstractPairedRequestType<T, U>, U extends AbstractPairedResponseType<U, T>> U exchange(
+            final T request) {
+        Objects.requireNonNull(request, "request is null");
+        return (U) exchangeHelp((Class<T>) request.getClass(), request);
     }
 
     // ------------------------------------------------------------------------------------------------------- validator

@@ -1,7 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area_code_service;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedResponseType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
@@ -23,7 +23,7 @@ import java.io.Serial;
 @ToString(callSuper = true)
 @Slf4j
 public class AreaCodeInfoResponse
-        extends AbstractResponseType<AreaCodeInfoResponse> {
+        extends AbstractPairedResponseType<AreaCodeInfoResponse, AreaCodeInfoRequest> {
 
     @Serial
     private static final long serialVersionUID = 9803126941295821L;
@@ -34,6 +34,9 @@ public class AreaCodeInfoResponse
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+    public AreaCodeInfoResponse() {
+        super(AreaCodeInfoRequest.class);
+    }
 
     // ---------------------------------------------------------------------------------------------------- cmmMsgHeader
 

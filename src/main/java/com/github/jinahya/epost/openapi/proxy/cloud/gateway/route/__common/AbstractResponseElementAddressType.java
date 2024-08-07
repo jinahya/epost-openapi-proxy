@@ -15,13 +15,13 @@ import java.io.Serial;
 @Getter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public abstract class AbstractResponseElementType<
-        SELF extends AbstractResponseElementType<SELF, PARENT>,
+public abstract class AbstractResponseElementAddressType<
+        SELF extends AbstractResponseElementAddressType<SELF, PARENT>,
         PARENT extends AbstractResponseType<PARENT>>
-        extends AbstractType<SELF> {
+        extends AbstractAddressType<SELF> {
 
     @Serial
-    private static final long serialVersionUID = 3439311955635107788L;
+    private static final long serialVersionUID = -970293755759217102L;
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 

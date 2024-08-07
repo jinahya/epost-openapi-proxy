@@ -54,7 +54,7 @@ public class NewAddressListAreaCdRequest
 
         // -------------------------------------------------------------------------------------------------------------
         public static SearchSe valueOfText(final String text) {
-            for (final SearchSe e : SearchSe.values()) {
+            for (final SearchSe e : values()) {
                 if (e.text().equals(text)) {
                     return e;
                 }

@@ -1,7 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractType;
@@ -19,7 +18,6 @@ import lombok.ToString;
 
 import java.io.Serial;
 import java.util.List;
-import java.util.Objects;
 
 @XmlRootElement(name = NewAddressListAreaCdResponse.ROOT_NAME)
 @XmlAccessorType(XmlAccessType.FIELD)

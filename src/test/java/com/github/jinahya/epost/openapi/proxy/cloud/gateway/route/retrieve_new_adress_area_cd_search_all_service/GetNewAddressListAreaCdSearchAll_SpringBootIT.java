@@ -2,44 +2,17 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._SpringBootIT;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractRequestTypeTestUtils;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 @DisplayName("/getNewAddressListAreaCdSearchAll")
 @Slf4j
 class GetNewAddressListAreaCdSearchAll_SpringBootIT
         extends _SpringBootIT {
-
-    static NewAddressListAreaCdSearchAllResponse exchange(final WebTestClient client,
-                                                          final NewAddressListAreaCdSearchAllRequest request) {
-        Objects.requireNonNull(client, "client is null");
-        Objects.requireNonNull(request, "request is null");
-        final var requestSpec = client
-                .method(request.getHttpMethod())
-                .uri(request::acceptUriConsumerAndBuild)
-                .headers(request::acceptHeaders);
-        // -------------------------------------------------------------------------------------------------------- when
-        final var responseSpec = requestSpec.exchange();
-        // -------------------------------------------------------------------------------------------------------- then
-        responseSpec.expectStatus().isOk();
-        final var responseBody = Optional.ofNullable(
-                        responseSpec
-                                .expectBody(NewAddressListAreaCdSearchAllResponse.class)
-                                .returnResult()
-                                .getResponseBody()
-                )
-                .map(AbstractResponseType::get)
-                .orElseThrow();
-        return responseBody;
-    }
 
     // -----------------------------------------------------------------------------------------------------------------
     private static Stream<NewAddressListAreaCdSearchAllRequest> getRequestStream() {
@@ -73,7 +46,7 @@ class GetNewAddressListAreaCdSearchAll_SpringBootIT
     })
     @ParameterizedTest
     void __(final NewAddressListAreaCdSearchAllRequest request) {
-        final var response = exchange(webTestClient(), request);
+        final var response = exchange(request);
         assertValid(response);
         assertSucceeded(response);
         response.getNewAddressListAreaCdSearchAll().forEach(e -> {

@@ -1,10 +1,9 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_search_all_service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractAddress;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedResponseType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseElementAddressType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -28,7 +27,9 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 public class NewAddressListAreaCdSearchAllResponse
-        extends AbstractResponseType<NewAddressListAreaCdSearchAllResponse> {
+        extends AbstractPairedResponseType<
+        NewAddressListAreaCdSearchAllResponse,
+        NewAddressListAreaCdSearchAllRequest> {
 
     @Serial
     private static final long serialVersionUID = 8214625216695174852L;
@@ -44,20 +45,20 @@ public class NewAddressListAreaCdSearchAllResponse
     @ToString(callSuper = true)
     @EqualsAndHashCode(callSuper = true)
     public static class NewAddressListAreaCdSearchAll
-            extends AbstractAddress<NewAddressListAreaCdSearchAll> {
+            extends AbstractResponseElementAddressType<
+            NewAddressListAreaCdSearchAll,
+            NewAddressListAreaCdSearchAllResponse> {
 
         @Serial
         private static final long serialVersionUID = -7680172168065174597L;
-
-        // -------------------------------------------------------------------------------------------------------------
-//        @JsonIgnore
-//        @EqualsAndHashCode.Exclude
-//        private transient NewAddressListAreaCdSearchAllResponse parent;
     }
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+    public NewAddressListAreaCdSearchAllResponse() {
+        super(NewAddressListAreaCdSearchAllRequest.class);
+    }
 
     // ---------------------------------------------------------------------------------------------- super.cmmMsgHeader
 

@@ -1,6 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area_code_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractRequestType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedRequestType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.xml.bind.annotation.XmlEnum;
 import lombok.EqualsAndHashCode;
@@ -17,7 +17,7 @@ import java.util.function.BiConsumer;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class AreaCodeInfoRequest
-        extends AbstractRequestType<AreaCodeInfoRequest> {
+        extends AbstractPairedRequestType<AreaCodeInfoRequest, AreaCodeInfoResponse> {
 
     @Serial
     private static final long serialVersionUID = 7432210876083090440L;
@@ -68,7 +68,7 @@ public class AreaCodeInfoRequest
         _4;
 
         public static DwldSe valueOf(final int value) {
-            for (final DwldSe v : DwldSe.values()) {
+            for (final DwldSe v : values()) {
                 if (v.getValue() == value) {
                     return v;
                 }
@@ -113,7 +113,7 @@ public class AreaCodeInfoRequest
      * Creates a new instance.
      */
     public AreaCodeInfoRequest() {
-        super();
+        super(AreaCodeInfoResponse.class);
         setUriConsumer(
                 URI_CONSUMER,
                 true

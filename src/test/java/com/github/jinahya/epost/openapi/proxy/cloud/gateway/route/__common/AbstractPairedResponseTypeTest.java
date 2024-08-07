@@ -4,18 +4,23 @@ import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 import org.springframework.core.ResolvableType;
 
 public abstract class AbstractPairedResponseTypeTest<
-        RESPONSE extends AbstractPairedResponseType<RESPONSE, REQUEST>,
-        REQUEST extends AbstractPairedRequestType<REQUEST, RESPONSE>>
-        extends AbstractResponseTypeTest<RESPONSE> {
+        TYPE extends AbstractPairedResponseType<TYPE, REQUEST>,
+        REQUEST extends AbstractPairedRequestType<REQUEST, TYPE>>
+        extends AbstractResponseTypeTest<TYPE> {
 
-    protected AbstractPairedResponseTypeTest(final Class<RESPONSE> typeClass) {
+    protected AbstractPairedResponseTypeTest(final Class<TYPE> typeClass) {
         super(typeClass);
     }
 
     @Override
-    protected SingleTypeEqualsVerifierApi<RESPONSE> __equals(SingleTypeEqualsVerifierApi<RESPONSE> verifierApi) {
+    protected SingleTypeEqualsVerifierApi<TYPE> __equals(final SingleTypeEqualsVerifierApi<TYPE> verifierApi) {
         return super.__equals(verifierApi)
-                .withIgnoredFields("requestClass");
+                .withIgnoredFields("requestClass")
+                .withPrefabValues(
+                        AbstractPairedResponseType.class,
+                        AbstractPairedResponseTypeTestUtils.prefabValue1(),
+                        AbstractPairedResponseTypeTestUtils.prefabValue2()
+                );
     }
 
     // -----------------------------------------------------------------------------------------------------------------

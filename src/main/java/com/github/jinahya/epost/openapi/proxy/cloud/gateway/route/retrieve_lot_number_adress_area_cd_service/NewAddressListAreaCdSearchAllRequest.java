@@ -1,6 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_lot_number_adress_area_cd_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedRequestType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -16,30 +16,21 @@ import java.io.Serial;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class NewAddressListAreaCdSearchAllRequest
-        extends AbstractType<NewAddressListAreaCdSearchAllRequest> {
+        extends AbstractPairedRequestType<NewAddressListAreaCdSearchAllRequest, NewAddressListAreaCdSearchAllResponse> {
 
     @Serial
     private static final long serialVersionUID = -9014063080411511379L;
-
-    // -----------------------------------------------------------------------------------------------------------------
-    public static final String QUERY_PARAM_NAME_SERVICE_KEY = "serviceKey";
-
-    // -----------------------------------------------------------------------------------------------------------------
-    public static final String QUERY_PARAM_NAME_SRCHWRD = "srchwrd";
-
-    // -----------------------------------------------------------------------------------------------------------------
-    public static final String QUERY_PARAM_NAME_COUNT_PER_PAGE = "countPerPage";
-
-    // -----------------------------------------------------------------------------------------------------------------
-    public static final String QUERY_PARAM_NAME_CURRENT_PAGE = "currentPage";
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
-    // -----------------------------------------------------------------------------------------------------------------
-    @NotBlank
-    private String serviceKey;
+    /**
+     * Creates a new instance.
+     */
+    public NewAddressListAreaCdSearchAllRequest() {
+        super(NewAddressListAreaCdSearchAllResponse.class);
+    }
 
     // -----------------------------------------------------------------------------------------------------------------
     @NotBlank
