@@ -10,7 +10,7 @@ spring:
         local-response-cache:
           enabled: true
       routes:
-        # ---------------------------------------------------------------------------------- download_area_code_service
+        # ----------------------------------------------------------------------------------- download_area_code_service
         - id: download_area_code_service # https://www.data.go.kr/data/15000302/openapi.do
           uri: http://openapi.epost.go.kr
           predicates:
@@ -23,7 +23,7 @@ spring:
           metadata:
             connect-timeout: ${epost.openapi.proxy.routes.retrieve_new_adress_area_cd_search_all_service.connect-timeout:1024}   # connect-timeout must be specified in milliseconds.
             response-timeout: ${epost.openapi.proxy.routes.retrieve_new_adress_area_cd_search_all_service.response-timeout:4096} # response-timeout must be specified in milliseconds.
-        # ------------------------------------------------------------------------------ retrieve_deliv_area_cd_service
+        # ------------------------------------------------------------------------------- retrieve_deliv_area_cd_service
         - id: retrieve_deliv_area_cd_service # https://www.data.go.kr/data/15000302/openapi.do
           uri: http://openapi.epost.go.kr
           predicates:
@@ -36,7 +36,7 @@ spring:
           metadata:
             connect-timeout: ${epost.openapi.proxy.routes.retrieve_new_adress_area_cd_search_all_service.connect-timeout:1024}   # connect-timeout must be specified in milliseconds.
             response-timeout: ${epost.openapi.proxy.routes.retrieve_new_adress_area_cd_search_all_service.response-timeout:4096} # response-timeout must be specified in milliseconds.
-        # -------------------------------------------------------------------------------- retrieve_eng_address_service
+        # --------------------------------------------------------------------------------- retrieve_eng_address_service
         - id: retrieve_eng_address_service
           uri: http://openapi.epost.go.kr
           predicates:
@@ -49,7 +49,22 @@ spring:
           metadata:
             connect-timeout: ${epost.openapi.proxy.routes.retrieve_eng_address_service.connect-timeout:1024}
             response-timeout: ${epost.openapi.proxy.routes.retrieve_eng_address_service.response-timeout:4096}
-        # ------------------------------------------------------------------------------- retrieve_longitudinal_service
+        - id: retrieve_eng_address_service_api_states
+          uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getStateList
+          predicates:
+          - Method=GET
+          - Path=/api/retrieveEngAddressService/states
+          filters:
+#          - SetRequestHeader=Accept, application/xml
+    #            - _AddRequestParameter=ServiceKey, ${epost.openapi.proxy.service-key}
+#            - AddResponseHeader=Vary, Accept
+#            - LocalResponseCache=${epost.openapi.proxy.routes.retrieve_eng_address_service.cache.time:10m},${epost.openapi.proxy.routes.retrieve_eng_address_service.cache.size:128MB}
+#          - SetResponseHeader=Content-Type, application/x-ndjson
+          - _States2
+#          metadata:
+#            connect-timeout: ${epost.openapi.proxy.routes.retrieve_eng_address_service.connect-timeout:1024}
+#            response-timeout: ${epost.openapi.proxy.routes.retrieve_eng_address_service.response-timeout:4096}
+        # -------------------------------------------------------------------------------- retrieve_longitudinal_service
         - id: retrieve_longitudinal_service
           uri: http://openapi.epost.go.kr
           predicates:
@@ -102,3 +117,5 @@ spring:
             # https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/http-timeouts-configuration.html
             connect-timeout: ${epost.openapi.proxy.routes.retrieve_new_adress_area_cd_service.connect-timeout:1024}  # connect-timeout must be specified in milliseconds.
             response-timeout: ${epost.openapi.proxy.routes.retrieve_new_adress_area_cd_service.response-timeout:4096} # response-timeout must be specified in milliseconds.
+  main:
+    web-application-type: reactive
