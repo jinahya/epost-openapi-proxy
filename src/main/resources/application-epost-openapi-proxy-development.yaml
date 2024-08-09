@@ -65,15 +65,14 @@ spring:
           - AddRequestParameter=stateEngName, {stateName}
           - Cities
         - id: retrieve_eng_address_service_api_roads
-#          uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getCityList
-          uri: no:/op
+          uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getRoadFirstNameList
           predicates:
           - Method=GET
           - Path=/api/retrieveEngAddressService/states/{stateName}/cities/{cityName}/roads
           filters:
           - AddRequestParameter=stateEngName, {stateName}
           - AddRequestParameter=cityEngName, {cityName}
-          - Cities
+          - Roads
         # -------------------------------------------------------------------------------- retrieve_longitudinal_service
         - id: retrieve_longitudinal_service
           uri: http://openapi.epost.go.kr

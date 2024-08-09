@@ -1,7 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.hateoas;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.StateEngListResponse;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.RoadEngListResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -29,10 +29,10 @@ public class Road
     }
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
-    public static Road from(final StateEngListResponse.StateEngList stateEngList) {
-        Objects.requireNonNull(stateEngList, "stateEngList is null");
+    public static Road from(final RoadEngListResponse.RoadEngList roadEngList) {
+        Objects.requireNonNull(roadEngList, "roadEngList is null");
         final var instance = new Road();
-        instance.setName(stateEngList.getStateEngName());
+        instance.setName(roadEngList.getRoadEngName());
         return instance;
     }
 
