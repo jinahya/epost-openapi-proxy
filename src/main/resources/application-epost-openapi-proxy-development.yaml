@@ -55,15 +55,25 @@ spring:
           - Method=GET
           - Path=/api/retrieveEngAddressService/states
           filters:
-#          - SetRequestHeader=Accept, application/xml
-    #            - _AddRequestParameter=ServiceKey, ${epost.openapi.proxy.service-key}
-#            - AddResponseHeader=Vary, Accept
-#            - LocalResponseCache=${epost.openapi.proxy.routes.retrieve_eng_address_service.cache.time:10m},${epost.openapi.proxy.routes.retrieve_eng_address_service.cache.size:128MB}
-#          - SetResponseHeader=Content-Type, application/x-ndjson
           - States
-#          metadata:
-#            connect-timeout: ${epost.openapi.proxy.routes.retrieve_eng_address_service.connect-timeout:1024}
-#            response-timeout: ${epost.openapi.proxy.routes.retrieve_eng_address_service.response-timeout:4096}
+        - id: retrieve_eng_address_service_api_cities
+          uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getCityList
+          predicates:
+          - Method=GET
+          - Path=/api/retrieveEngAddressService/states/{stateName}/cities
+          filters:
+          - AddRequestParameter=stateEngName, {stateName}
+          - Cities
+        - id: retrieve_eng_address_service_api_roads
+#          uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getCityList
+          uri: no:/op
+          predicates:
+          - Method=GET
+          - Path=/api/retrieveEngAddressService/states/{stateName}/cities/{cityName}/roads
+          filters:
+          - AddRequestParameter=stateEngName, {stateName}
+          - AddRequestParameter=cityEngName, {cityName}
+          - Cities
         # -------------------------------------------------------------------------------- retrieve_longitudinal_service
         - id: retrieve_longitudinal_service
           uri: http://openapi.epost.go.kr

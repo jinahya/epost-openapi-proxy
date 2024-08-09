@@ -4,8 +4,10 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.StateEngListResponse;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.CityEngListResponse;
 import com.github.jinahya.epost.openapi.proxy.http.codec.json._Jackson2JsonEncoder;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.hateoas.server.LinkBuilderFactory;
 import org.springframework.http.HttpHeaders;
@@ -29,16 +32,19 @@ import java.util.Objects;
 
 @Component
 @Slf4j
-class StatesGatewayFilterFactory
-        extends AbstractGatewayFilterFactory<StatesGatewayFilterFactory.Config> {
+class CitiesGatewayFilterFactory
+        extends AbstractGatewayFilterFactory<CitiesGatewayFilterFactory.Config> {
 
     // -----------------------------------------------------------------------------------------------------------------
+    @Setter
+    @Getter
     public static class Config {
 
+        private String stateName;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    StatesGatewayFilterFactory(final Jackson2ObjectMapperBuilder objectMapperBuilder, final EntityLinks entityLinks) {
+    CitiesGatewayFilterFactory(final Jackson2ObjectMapperBuilder objectMapperBuilder, final EntityLinks entityLinks) {
         super(Config.class);
         this.objectMapperBuilder = Objects.requireNonNull(objectMapperBuilder, "objectMapperBuilder is null");
         objectMapper = this.objectMapperBuilder
@@ -60,13 +66,24 @@ class StatesGatewayFilterFactory
                             new Jaxb2XmlDecoder(MimeType.valueOf(MediaType.APPLICATION_XML_VALUE))
                                     .decode(
                                             Flux.from(body),
-                                            ResolvableType.forType(StateEngListResponse.class),
+                                            ResolvableType.forType(CityEngListResponse.class),
                                             null,
                                             null
                                     )
-                                    .flatMap(selr -> Flux.fromIterable(((StateEngListResponse) selr).getStateEngList()))
-                                    .map(State::from)
-                                    .map(State::addLinks)
+                                    .doOnNext(celr -> {
+                                        log.debug("decoded: {}", celr);
+                                    })
+                                    .flatMap(celr -> Flux.fromIterable(((CityEngListResponse) celr).getCityEngList()))
+                                    .map(City::from)
+                                    .map(s -> {
+                                        final var link = Link.of("/orders/{id}/customer")
+                                                .expand(1)
+                                                .withRel("customer");
+                                        s.add(link);
+                                        final var requestUri = exchange.getRequest().getURI();
+                                        log.debug("requestUri: {}", requestUri);
+                                        return s;
+                                    })
                                     .map(sel -> {
                                         return new _Jackson2JsonEncoder(objectMapper)
                                                 .encodeValue(
