@@ -3,6 +3,9 @@ spring:
     name: epost-openapi-proxy
   cloud:
     gateway:
+      filter:
+        local-response-cache:
+          enabled: false
       httpclient:
         # https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/http-timeouts-configuration.html
         connect-timeout: 1024  # connect-timeout must be specified in milliseconds.

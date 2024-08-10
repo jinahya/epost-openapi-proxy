@@ -1,15 +1,18 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.hateoas;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.RoadEngListResponse;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.web.server.ServerWebExchange;
 
+import java.util.Map;
 import java.util.Objects;
 
 @Setter
@@ -20,34 +23,45 @@ import java.util.Objects;
 public class Road
         extends RepresentationModel<Road> {
 
-    static String getHref(final String name) {
-        return _Constants.REQUEST_URI_STATES + '/' + name;
-    }
-
-    static String getHref(final Road state) {
-        return getHref(state.getName());
+    static String getHref(final Road road) {
+        return City.getHref(road.getCity()) + '/' + road.wrapped.getRoadEngName();
     }
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
-    public static Road from(final RoadEngListResponse.RoadEngList roadEngList) {
-        Objects.requireNonNull(roadEngList, "roadEngList is null");
+    public static Road of(final City city, final RoadEngListResponse.RoadEngList wrapped) {
+        Objects.requireNonNull(city, "city is null");
+        Objects.requireNonNull(wrapped, "wrapped is null");
         final var instance = new Road();
-        instance.setName(roadEngList.getRoadEngName());
+        instance.city = city;
+        instance.wrapped = wrapped;
         return instance;
+    }
+
+    static Road from(final ServerWebExchange exchange, final RoadEngListResponse.RoadEngList wrapped) {
+        final var city = City.from(exchange);
+        return of(city, wrapped);
+    }
+
+    static String roadName(final ServerWebExchange exchange) {
+        Objects.requireNonNull(exchange, "exchange is null");
+        final Map<String, String> variables = exchange.getAttribute(
+                ServerWebExchangeUtils.URI_TEMPLATE_VARIABLES_ATTRIBUTE
+        );
+        assert variables != null;
+        return variables.get(_Constants.PATH_NAME_ROAD_NAME);
+    }
+
+    static Road from(final ServerWebExchange exchange) {
+        final var wrapped = RoadEngListResponse.RoadEngList.of(roadName(exchange));
+        return from(exchange, wrapped);
     }
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
     // ----------------------------------------------------------------------------------------------------- super.links
     public Road addLinks() {
-        add(
-                Link.of(getHref(this))
-                        .withRel(IanaLinkRelations.SELF)
-        );
-        add(
-                Link.of(getHref(this) + '/' + _Constants.REL_CITIES)
-                        .withRel(_Constants.REL_CITIES)
-        );
+        add(Link.of(getHref(this)).withRel(IanaLinkRelations.SELF));
+        add(Link.of(getHref(this) + '/' + _Constants.REL_ADDRESSES).withRel(_Constants.REL_ADDRESSES));
         return this;
     }
 
@@ -57,7 +71,8 @@ public class Road
     @NotNull
     private City city;
 
-    // -----------------------------------------------------------------------------------------------------------------
-    @NotBlank
-    private String name;
+    @JsonUnwrapped
+    @Valid
+    @NotNull
+    private RoadEngListResponse.RoadEngList wrapped;
 }

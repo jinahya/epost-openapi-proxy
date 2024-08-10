@@ -22,12 +22,12 @@ public interface PaginatedRequest<T extends AbstractRequestType<T> & PaginatedRe
         return PaginatedRequestHelper.getCurrentPage(this);
     }
 
-    default void setCurrentPage(Integer currentPage) {
+    default void setCurrentPage(final Integer currentPage) {
         PaginatedRequestHelper.setCurrentPage(this, currentPage);
     }
 
     @SuppressWarnings({"unchecked"})
-    default T currentPage(Integer currentPage) {
+    default T currentPage(final Integer currentPage) {
         setCurrentPage(currentPage);
         return (T) this;
     }

@@ -1,14 +1,16 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.hateoas;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.CityEngListResponse;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.web.server.ServerWebExchange;
 
+import java.util.Map;
 import java.util.Objects;
 
 @Setter
@@ -19,38 +21,57 @@ import java.util.Objects;
 public class City
         extends RepresentationModel<City> {
 
-    static String getHref(final State state, final String name) {
-        return _Constants.REQUEST_URI_STATES + '/' + name;
-    }
-
-    static String getHref(final State state, City city) {
-        return getHref(state, city.getName());
+    static String getHref(final City city) {
+        return State.getHref(city.getState())
+                + '/' + _Constants.REL_CITIES
+                + '/' + city.getWrapped().getCityEngName();
     }
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
-    public static City from(final CityEngListResponse.CityEngList cityEngList) {
-        Objects.requireNonNull(cityEngList, "cityEngList is null");
+    static City of(final State state, final CityEngListResponse.CityEngList wrapped) {
+        Objects.requireNonNull(state, "state is null");
+        Objects.requireNonNull(wrapped, "wrapped is null");
         final var instance = new City();
-        instance.setName(cityEngList.getCityEngName());
+        instance.setState(state);
+        instance.setWrapped(wrapped);
         return instance;
+    }
+
+    static City from(final ServerWebExchange exchange, final CityEngListResponse.CityEngList wrapped) {
+        final var state = State.from(exchange);
+        return City.of(state, wrapped);
+    }
+
+    static String cityName(final ServerWebExchange exchange) {
+        Objects.requireNonNull(exchange, "exchange is null");
+        final Map<String, String> variables = exchange.getAttribute(
+                ServerWebExchangeUtils.URI_TEMPLATE_VARIABLES_ATTRIBUTE
+        );
+        assert variables != null;
+        return variables.get(_Constants.PATH_NAME_CITY_NAME);
+    }
+
+    static City from(final ServerWebExchange exchange) {
+        final var wrapped = CityEngListResponse.CityEngList.of(cityName(exchange));
+        return from(exchange, wrapped);
     }
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
     // ----------------------------------------------------------------------------------------------------- super.links
     public City addLinks() {
-        return add(
-                Link.of(getHref(state, this))
-                        .withRel(_Constants.REL_CITIES)
-        );
+        add(Link.of(getHref(this)).withRel(_Constants.REL_CITIES));
+        add(Link.of(getHref(this) + '/' + _Constants.REL_ROADS).withRel(_Constants.REL_ROADS));
+        add(Link.of(getHref(this) + '/' + _Constants.REL_LANDS).withRel(_Constants.REL_LANDS));
+        return this;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     @JsonIgnore
-    @Valid
     @NotNull
     private State state;
 
-    @NotBlank
-    private String name;
+    @JsonUnwrapped
+    @NotNull
+    private CityEngListResponse.CityEngList wrapped;
 }

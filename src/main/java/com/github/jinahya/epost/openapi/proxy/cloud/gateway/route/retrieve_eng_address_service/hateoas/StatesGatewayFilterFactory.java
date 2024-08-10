@@ -65,7 +65,7 @@ class StatesGatewayFilterFactory
                                             null
                                     )
                                     .flatMap(selr -> Flux.fromIterable(((StateEngListResponse) selr).getStateEngList()))
-                                    .map(State::from)
+                                    .map(State::of)
                                     .map(State::addLinks)
                                     .map(sel -> {
                                         return new _Jackson2JsonEncoder(objectMapper)

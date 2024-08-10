@@ -1,7 +1,5 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.hateoas;
 
-//import jakarta.xml.bind.annotation.XmlType;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.CityEngListResponse;
@@ -12,14 +10,10 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.io.buffer.DataBuffer;
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.server.EntityLinks;
-import org.springframework.hateoas.server.LinkBuilderFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.xml.Jaxb2XmlDecoder;
@@ -45,17 +39,15 @@ class CitiesGatewayFilterFactory
     static class Config
             extends StatesGatewayFilterFactory.Config {
 
-        private String stateName;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    CitiesGatewayFilterFactory(final Jackson2ObjectMapperBuilder objectMapperBuilder, final EntityLinks entityLinks) {
+    CitiesGatewayFilterFactory(final Jackson2ObjectMapperBuilder objectMapperBuilder) {
         super(Config.class);
         this.objectMapperBuilder = Objects.requireNonNull(objectMapperBuilder, "objectMapperBuilder is null");
         objectMapper = this.objectMapperBuilder
                 .featuresToDisable(SerializationFeature.INDENT_OUTPUT)
                 .build();
-        this.entityLinks = Objects.requireNonNull(entityLinks, "entityLinks is null");
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -79,16 +71,8 @@ class CitiesGatewayFilterFactory
                                         log.debug("decoded: {}", celr);
                                     })
                                     .flatMap(celr -> Flux.fromIterable(((CityEngListResponse) celr).getCityEngList()))
-                                    .map(City::from)
-                                    .map(s -> {
-                                        final var link = Link.of("/orders/{id}/customer")
-                                                .expand(1)
-                                                .withRel("customer");
-                                        s.add(link);
-                                        final var requestUri = exchange.getRequest().getURI();
-                                        log.debug("requestUri: {}", requestUri);
-                                        return s;
-                                    })
+                                    .map(cel -> City.from(exchange, cel))
+                                    .map(City::addLinks)
                                     .map(sel -> {
                                         return new _Jackson2JsonEncoder(objectMapper)
                                                 .encodeValue(
@@ -114,9 +98,4 @@ class CitiesGatewayFilterFactory
     private final Jackson2ObjectMapperBuilder objectMapperBuilder;
 
     private final ObjectMapper objectMapper;
-
-    private final EntityLinks entityLinks;
-
-    @Autowired
-    private LinkBuilderFactory linkBuilderFactory;
 }

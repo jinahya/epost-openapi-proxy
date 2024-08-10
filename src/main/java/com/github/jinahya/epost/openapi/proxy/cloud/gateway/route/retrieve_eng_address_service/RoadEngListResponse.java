@@ -50,6 +50,13 @@ public class RoadEngListResponse
         private static final long serialVersionUID = 2944701965921059011L;
 
         // -------------------------------------------------------------------------------------------------------------
+        public static RoadEngList of(final String roadEngName) {
+            final var instance = new RoadEngList();
+            instance.setRoadEngName(roadEngName);
+            return instance;
+        }
+
+        // -------------------------------------------------------------------------------------------------------------
         @JsonIgnore
         @EqualsAndHashCode.Exclude
         private transient RoadEngListResponse parent;

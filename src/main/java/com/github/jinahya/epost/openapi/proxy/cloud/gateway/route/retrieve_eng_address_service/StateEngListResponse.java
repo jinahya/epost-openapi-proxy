@@ -47,6 +47,13 @@ public class StateEngListResponse
         private static final long serialVersionUID = 1923480486008916847L;
 
         // -----------------------------------------------------------------------------------------------------------------
+        public static StateEngList of(final String stateEngName) {
+            final var instance = new StateEngList();
+            instance.setStateEngName(stateEngName);
+            return instance;
+        }
+
+        // -----------------------------------------------------------------------------------------------------------------
         @NotBlank
         @JsonProperty
         @XmlElement

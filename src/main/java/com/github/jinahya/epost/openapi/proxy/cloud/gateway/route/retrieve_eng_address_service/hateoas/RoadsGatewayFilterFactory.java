@@ -12,7 +12,6 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.ResolvableType;
@@ -46,8 +45,6 @@ class RoadsGatewayFilterFactory
     static class Config
             extends CitiesGatewayFilterFactory.Config {
 
-        @Value("${cityName}")
-        private String cityName;
     }
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
@@ -78,7 +75,6 @@ class RoadsGatewayFilterFactory
             final var baseUrl = UriComponentsBuilder
                     .fromUriString(requestUrl.getProtocol() + "://" + requestUrl.getHost() + ':' + requestUrl.getPort())
                     .build();
-//                    .build(config.getStateName(), config.getCityName());
             final var webClient = WebClient.builder()
                     .baseUrl(baseUrl.toString())
                     .build();
@@ -102,10 +98,12 @@ class RoadsGatewayFilterFactory
                                             exchange.getRequest().getQueryParams().getFirst(
                                                     _RetrieveEngAddressServiceConstants.PARAM_CITY_ENG_NAME),
                                             webClient))
-                                    .map(rel -> {
+                                    .map(rel -> Road.from(exchange, rel))
+                                    .map(Road::addLinks)
+                                    .map(r -> {
                                         return new _Jackson2JsonEncoder(objectMapper)
                                                 .encodeValue(
-                                                        rel,
+                                                        r,
                                                         getDelegate().bufferFactory(),
                                                         ResolvableType.forType(State.class),
                                                         null,

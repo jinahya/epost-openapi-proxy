@@ -200,4 +200,9 @@ public class CmmMsgHeader
     @Positive
     @XmlElement
     private Integer currentPage;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    public boolean hasNextPage() {
+        return currentPage != null && totalPage != null && currentPage < totalPage;
+    }
 }

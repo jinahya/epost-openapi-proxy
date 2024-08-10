@@ -46,6 +46,13 @@ public class CityEngListResponse
         @Serial
         private static final long serialVersionUID = -4416152072794741619L;
 
+        // -----------------------------------------------------------------------------------------------------------------
+        public static CityEngList of(final String cityEngName) {
+            final var instance = new CityEngList();
+            instance.setCityEngName(cityEngName);
+            return instance;
+        }
+
         // -------------------------------------------------------------------------------------------------------------
         @JsonIgnore
         @EqualsAndHashCode.Exclude

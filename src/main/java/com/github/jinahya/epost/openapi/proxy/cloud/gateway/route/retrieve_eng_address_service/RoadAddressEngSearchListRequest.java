@@ -2,6 +2,7 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedRequestType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractRequestType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.PaginatedRequest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common._Constants;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -25,7 +26,8 @@ import java.util.function.BiConsumer;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class RoadAddressEngSearchListRequest
-        extends AbstractPairedRequestType<RoadAddressEngSearchListRequest, RoadAddressEngSearchListResponse> {
+        extends AbstractPairedRequestType<RoadAddressEngSearchListRequest, RoadAddressEngSearchListResponse>
+        implements PaginatedRequest<RoadAddressEngSearchListRequest> {
 
     @Serial
     private static final long serialVersionUID = 3206249731898344984L;
@@ -46,7 +48,7 @@ public class RoadAddressEngSearchListRequest
      * @return a new instance.
      */
     public static RoadAddressEngSearchListRequest of(final @Nullable String serviceKey, final String stateEngName,
-                                                     final String cityEngName, final String roadEngFirstName,
+                                                     final String cityEngName, final @Nullable String roadEngFirstName,
                                                      final String roadEngName, final @Nullable String keyword,
                                                      final Integer countPerPage, final Integer currentPage) {
         final var instance = AbstractRequestType.of(RoadAddressEngSearchListRequest::new, serviceKey);
@@ -85,7 +87,8 @@ public class RoadAddressEngSearchListRequest
                 b.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_ROAD_ADDRESS_SEARCH)
                         .queryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NAME, s.getStateEngName())
                         .queryParam(_RetrieveEngAddressServiceConstants.PARAM_CITY_ENG_NAME, s.getCityEngName())
-                        .queryParam(_RetrieveEngAddressServiceConstants.PARAM_ROAD_ENG_FIRST_NAME, s.roadEngFirstName)
+                        .queryParamIfPresent(_RetrieveEngAddressServiceConstants.PARAM_ROAD_ENG_FIRST_NAME,
+                                             Optional.ofNullable(s.roadEngFirstName))
                         .queryParam(_RetrieveEngAddressServiceConstants.PARAM_ROAD_ENG_NAME, s.roadEngName)
                         .queryParamIfPresent(_RetrieveEngAddressServiceConstants.PARAM_ROAD_ENG_FIRST_NAME,
                                              Optional.ofNullable(s.keyword))
