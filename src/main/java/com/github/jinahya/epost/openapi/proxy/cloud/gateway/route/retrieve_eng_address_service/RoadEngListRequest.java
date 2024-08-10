@@ -1,5 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
 
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedRequestType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractRequestType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -17,15 +18,14 @@ import java.util.function.BiConsumer;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class RoadEngListRequest
-        extends AbstractRequestType<RoadEngListRequest> {
+        extends AbstractPairedRequestType<RoadEngListRequest, RoadEngListResponse> {
 
     @Serial
     private static final long serialVersionUID = 1235816016916872587L;
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
     public static RoadEngListRequest of(final String serviceKey, final String stateEngName,
-                                        final String cityEngName,
-                                        final String roadEngFirstName) {
+                                        final String cityEngName, final String roadEngFirstName) {
         final var instance = AbstractRequestType.of(RoadEngListRequest::new, serviceKey);
         instance.setStateEngName(stateEngName);
         instance.setCityEngName(cityEngName);
@@ -41,10 +41,10 @@ public class RoadEngListRequest
                 .queryParam(_RetrieveEngAddressServiceConstants.PARAM_ROAD_ENG_FIRST_NAME, s.getRoadEngFirstName())
         ;
     };
-    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
     public RoadEngListRequest() {
-        super();
+        super(RoadEngListResponse.class);
         setUriConsumer(
                 URI_CONSUMER,
                 true

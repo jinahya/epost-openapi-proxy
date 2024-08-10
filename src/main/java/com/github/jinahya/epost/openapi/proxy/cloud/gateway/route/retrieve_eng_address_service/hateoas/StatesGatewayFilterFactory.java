@@ -33,7 +33,7 @@ class StatesGatewayFilterFactory
         extends AbstractGatewayFilterFactory<StatesGatewayFilterFactory.Config> {
 
     // -----------------------------------------------------------------------------------------------------------------
-    public static class Config {
+    static class Config {
 
     }
 

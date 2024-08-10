@@ -84,7 +84,7 @@ public abstract class AbstractType<SELF extends AbstractType<SELF>>
     }
 
     // ----------------------------------------------------------------------------------------------- unknownProperties
-
+    @JsonIgnore
     public Map<String, Object> getUnknownProperties() {
         if (unknownProperties == null) {
             unknownProperties = new HashMap<>();

@@ -6,8 +6,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.CityEngListResponse;
 import com.github.jinahya.epost.openapi.proxy.http.codec.json._Jackson2JsonEncoder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,10 @@ class CitiesGatewayFilterFactory
     // -----------------------------------------------------------------------------------------------------------------
     @Setter
     @Getter
-    public static class Config {
+    @EqualsAndHashCode(callSuper = true)
+    @ToString(callSuper = true)
+    static class Config
+            extends StatesGatewayFilterFactory.Config {
 
         private String stateName;
     }

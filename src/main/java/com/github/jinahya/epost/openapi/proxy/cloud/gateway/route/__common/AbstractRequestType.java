@@ -66,7 +66,15 @@ public abstract class AbstractRequestType<SELF extends AbstractRequestType<SELF>
                     return b.build();
                 })
                 .headers(headersConsumer)
-                .exchangeToMono(r -> r.bodyToMono(responseType));
+                .exchangeToMono(r -> r.bodyToMono(responseType).map(AbstractResponseType::get))
+                .handle((r, s) -> {
+                    if (!r.getCmmMsgHeader().isSucceeded()) {
+                        s.error(new RuntimeException("unsuccessful result: " + r));
+                    } else {
+                        s.next(r);
+                    }
+                })
+                ;
     }
 
     // ------------------------------------------------------------------------------------------------------ serviceKey

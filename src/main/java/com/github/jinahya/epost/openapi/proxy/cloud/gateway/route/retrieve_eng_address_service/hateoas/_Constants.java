@@ -8,7 +8,9 @@ class _Constants {
 
     static final String REQUEST_URI_STATES = REQUEST_URI + "/states";
 
-    static final String REQUEST_URI_CITIES = REQUEST_URI_STATES + "/cities";
+    static final String REQUEST_URI_CITIES = REQUEST_URI_STATES + "/{stateName}/cities";
+
+    static final String REQUEST_URI_ROADS = REQUEST_URI_CITIES + "/{cityName}/roads";
 
     // -----------------------------------------------------------------------------------------------------------------
     static final String REL_STATE = "state";

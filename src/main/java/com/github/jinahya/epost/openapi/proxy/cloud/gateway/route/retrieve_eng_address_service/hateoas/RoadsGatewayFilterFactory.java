@@ -5,19 +5,18 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.RoadEngFirstNameListResponse;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service._RetrieveEngAddressServiceConstants;
 import com.github.jinahya.epost.openapi.proxy.http.codec.json._Jackson2JsonEncoder;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.annotation.PostConstruct;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.io.buffer.DataBuffer;
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.server.EntityLinks;
-import org.springframework.hateoas.server.LinkBuilderFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.xml.Jaxb2XmlDecoder;
@@ -25,10 +24,13 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.server.reactive.ServerHttpResponseDecorator;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MimeType;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.Objects;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 @Component
 @Slf4j
@@ -38,18 +40,26 @@ class RoadsGatewayFilterFactory
     // -----------------------------------------------------------------------------------------------------------------
     @Setter
     @Getter
-    public static class Config {
+    @EqualsAndHashCode(callSuper = true)
+    @ToString(callSuper = true)
+    @NoArgsConstructor(access = AccessLevel.PACKAGE)
+    static class Config
+            extends CitiesGatewayFilterFactory.Config {
 
+        @Value("${cityName}")
+        private String cityName;
     }
 
-    // -----------------------------------------------------------------------------------------------------------------
-    RoadsGatewayFilterFactory(final Jackson2ObjectMapperBuilder objectMapperBuilder, final EntityLinks entityLinks) {
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+    RoadsGatewayFilterFactory() {
         super(Config.class);
-        this.objectMapperBuilder = Objects.requireNonNull(objectMapperBuilder, "objectMapperBuilder is null");
-        objectMapper = this.objectMapperBuilder
+    }
+
+    @PostConstruct
+    private void onPostConstruct() {
+        objectMapper = objectMapperBuilder
                 .featuresToDisable(SerializationFeature.INDENT_OUTPUT)
                 .build();
-        this.entityLinks = Objects.requireNonNull(entityLinks, "entityLinks is null");
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -58,6 +68,20 @@ class RoadsGatewayFilterFactory
     @Override
     public GatewayFilter apply(final Config config) {
         return (exchange, chain) -> {
+            log.debug("exchange.request.uri: {}", exchange.getRequest().getURI());
+            final URL requestUrl;
+            try {
+                requestUrl = exchange.getRequest().getURI().toURL();
+            } catch (final MalformedURLException murle) {
+                throw new RuntimeException(murle);
+            }
+            final var baseUrl = UriComponentsBuilder
+                    .fromUriString(requestUrl.getProtocol() + "://" + requestUrl.getHost() + ':' + requestUrl.getPort())
+                    .build();
+//                    .build(config.getStateName(), config.getCityName());
+            final var webClient = WebClient.builder()
+                    .baseUrl(baseUrl.toString())
+                    .build();
             final var responseDecorator = new ServerHttpResponseDecorator(exchange.getResponse()) {
                 @Override
                 public Mono<Void> writeWith(final Publisher<? extends DataBuffer> body) {
@@ -69,29 +93,19 @@ class RoadsGatewayFilterFactory
                                             null,
                                             null
                                     )
-                                    .doOnNext(refnlr -> {
-                                        log.debug("decoded: {}", refnlr);
+                                    .doOnNext(d -> {
+                                        log.debug("decoded: {}", d);
                                     })
-                                    .flatMap(refnlr -> Flux.fromIterable(
-                                            ((RoadEngFirstNameListResponse) refnlr).getRoadEngFirstNameList())
-                                    )
-                                    .map(refn -> {
-
-                                        return null;
-                                    })
-                                    .map(s -> {
-                                        final var link = Link.of("/orders/{id}/customer")
-                                                .expand(1)
-                                                .withRel("customer");
-                                        s.add(link);
-                                        final var requestUri = exchange.getRequest().getURI();
-                                        log.debug("requestUri: {}", requestUri);
-                                        return s;
-                                    })
-                                    .map(sel -> {
+                                    .flatMap(r -> ((RoadEngFirstNameListResponse) r).retrieveRoadEngList(
+                                            exchange.getRequest().getQueryParams().getFirst(
+                                                    _RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NAME),
+                                            exchange.getRequest().getQueryParams().getFirst(
+                                                    _RetrieveEngAddressServiceConstants.PARAM_CITY_ENG_NAME),
+                                            webClient))
+                                    .map(rel -> {
                                         return new _Jackson2JsonEncoder(objectMapper)
                                                 .encodeValue(
-                                                        sel,
+                                                        rel,
                                                         getDelegate().bufferFactory(),
                                                         ResolvableType.forType(State.class),
                                                         null,
@@ -109,13 +123,11 @@ class RoadsGatewayFilterFactory
         };
     }
 
+    // ------------------------------------------------------------------------------------------------------- webClient
+
     // -----------------------------------------------------------------------------------------------------------------
-    private final Jackson2ObjectMapperBuilder objectMapperBuilder;
-
-    private final ObjectMapper objectMapper;
-
-    private final EntityLinks entityLinks;
-
     @Autowired
-    private LinkBuilderFactory linkBuilderFactory;
+    private Jackson2ObjectMapperBuilder objectMapperBuilder;
+
+    private ObjectMapper objectMapper;
 }

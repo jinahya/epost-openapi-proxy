@@ -18,7 +18,7 @@ public class StateEngListRequest
     @Serial
     private static final long serialVersionUID = 4471882633229837577L;
 
-    // -------------------------------------------------------------------------------------------------- CONSTRUCTORS
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
     public StateEngListRequest() {
         super(StateEngListResponse.class);
         setUriConsumer(
