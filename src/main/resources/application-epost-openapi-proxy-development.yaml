@@ -6,9 +6,9 @@ spring:
     gateway:
       #      default-filters:
       #        - _AddRequestParameter=ServiceKey, ${epost.openapi.proxy.service-key}
-#      filter:
-#        local-response-cache:
-#          enabled: true
+      filter:
+        local-response-cache:
+          enabled: true
       routes:
         # ----------------------------------------------------------------------------------- download_area_code_service
         - id: download_area_code_service # https://www.data.go.kr/data/15000302/openapi.do
@@ -89,6 +89,7 @@ spring:
           - AddRequestParameter=countPerPage, 1
           - AddRequestParameter=currentPage, 1
           - RoadAddresses
+          - LocalResponseCache=${epost.openapi.proxy.routes.retrieve_eng_address_service_api_road_addresses.cache:8m,128MB}
         # -------------------------------------------------------------------------------- retrieve_longitudinal_service
         - id: retrieve_longitudinal_service
           uri: http://openapi.epost.go.kr

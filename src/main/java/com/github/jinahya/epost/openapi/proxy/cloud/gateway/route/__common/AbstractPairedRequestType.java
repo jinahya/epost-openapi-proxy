@@ -45,7 +45,6 @@ public abstract class AbstractPairedRequestType<
     @SuppressWarnings({"unchecked"})
     public Mono<RESPONSE> exchange(final WebClient webClient) {
         return exchange(webClient, responseClass)
-                .map(AbstractResponseType::get)
                 .map(v -> v.requestInstance((SELF) this));
     }
 
