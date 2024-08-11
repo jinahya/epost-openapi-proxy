@@ -9,7 +9,9 @@ import com.github.jinahya.epost.openapi.proxy.http.codec.json._Jackson2JsonEncod
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
+import org.springframework.cloud.gateway.filter.OrderedGatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.core.Ordered;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
@@ -47,46 +49,50 @@ class StatesGatewayFilterFactory
     // https://velog.io/@ljft183/SpringCloudGateway3
     @Override
     public GatewayFilter apply(final Config config) {
-        return (e, c) -> {
-            final var decorator = new ServerHttpResponseDecorator(e.getResponse()) {
-                @Override
-                public Mono<Void> writeWith(final Publisher<? extends DataBuffer> body) {
-                    return super.writeWith(
-                            new Jaxb2XmlDecoder().decode(
-                                            Flux.from(body),
-                                            ResolvableType.forType(StateEngListResponse.class),
-                                            null,
-                                            null
-                                    )
-                                    .flatMap(selr -> Flux.fromIterable(((StateEngListResponse) selr).getStateEngList()))
-                                    .map(State::of)
-                                    .map(State::addLinks)
-                                    .map(s -> new _Jackson2JsonEncoder(objectMapper).encodeValue(
-                                            s,
-                                            getDelegate().bufferFactory(),
-                                            ResolvableType.forType(State.class),
-                                            null,
-                                            null
-                                    ))
-                                    .map(db -> db.ensureWritable(1).write((byte) 0x0A))
-                                    .doOnNext(db -> {
-                                        log.debug("db: {}", db);
-                                    })
-                                    .doOnComplete(() -> {
-                                        log.debug("completed");
-                                    })
-                    );
-                }
-            };
-            e.getResponse().getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_NDJSON_VALUE);
+        return new OrderedGatewayFilter(
+                (e, c) -> {
+                    final var decorator = new ServerHttpResponseDecorator(e.getResponse()) {
+                        @Override
+                        public Mono<Void> writeWith(final Publisher<? extends DataBuffer> body) {
+                            return super.writeWith(
+                                    new Jaxb2XmlDecoder().decode(
+                                                    Flux.from(body),
+                                                    ResolvableType.forType(StateEngListResponse.class),
+                                                    null,
+                                                    null
+                                            )
+                                            .flatMap(selr -> Flux.fromIterable(
+                                                    ((StateEngListResponse) selr).getStateEngList()))
+                                            .map(State::of)
+                                            .map(State::addLinks)
+                                            .map(s -> new _Jackson2JsonEncoder(objectMapper).encodeValue(
+                                                    s,
+                                                    getDelegate().bufferFactory(),
+                                                    ResolvableType.forType(State.class),
+                                                    null,
+                                                    null
+                                            ))
+                                            .map(db -> db.ensureWritable(1).write((byte) 0x0A))
+                                            .doOnNext(db -> {
+                                                log.debug("db: {}", db);
+                                            })
+                                            .doOnComplete(() -> {
+                                                log.debug("completed");
+                                            })
+                            );
+                        }
+                    };
+                    e.getResponse().getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_NDJSON_VALUE);
 //            e.getResponse().beforeCommit(() -> {
 //                e.getResponse().getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_NDJSON_VALUE);
 //                return Mono.empty();
 //            });
-            return c.filter(
-                    e.mutate().response(decorator).build()
-            );
-        };
+                    return c.filter(
+                            e.mutate().response(decorator).build()
+                    );
+                },
+                Ordered.HIGHEST_PRECEDENCE
+        );
     }
 
     // -----------------------------------------------------------------------------------------------------------------

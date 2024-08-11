@@ -29,7 +29,7 @@ spring:
       filter:
         local-response-cache:
           enabled: true
-          size: 32MB
+          size: 128MB
           time-to-live: 8m
       global-filter:
         local-response-cache:
