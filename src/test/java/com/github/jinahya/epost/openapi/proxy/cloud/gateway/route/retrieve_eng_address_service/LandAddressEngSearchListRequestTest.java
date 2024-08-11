@@ -1,9 +1,9 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractRequestTypeTest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedRequestTypeTest;
 
 class LandAddressEngSearchListRequestTest
-        extends AbstractRequestTypeTest<LandAddressEngSearchListRequest> {
+        extends AbstractPairedRequestTypeTest<LandAddressEngSearchListRequest, LandAddressEngSearchListResponse> {
 
     LandAddressEngSearchListRequestTest() {
         super(LandAddressEngSearchListRequest.class);

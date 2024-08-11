@@ -6,9 +6,7 @@ import org.springdoc.core.properties.SwaggerUiConfigParameters;
 import org.springdoc.core.utils.Constants;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionLocator;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 
 import java.util.HashSet;
 import java.util.List;
@@ -18,7 +16,7 @@ import java.util.Set;
 @Slf4j
 class SwaggerConfig {
 
-//    @Bean
+    //    @Bean
     public Set<AbstractSwaggerUiConfigProperties.SwaggerUrl> apis(
             final RouteDefinitionLocator locator,
             final SwaggerUiConfigParameters swaggerUiConfigParameters) {

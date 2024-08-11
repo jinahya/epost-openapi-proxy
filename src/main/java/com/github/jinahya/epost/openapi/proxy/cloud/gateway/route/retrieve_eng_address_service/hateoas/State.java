@@ -5,7 +5,6 @@ import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_a
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
-import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.web.server.ServerWebExchange;

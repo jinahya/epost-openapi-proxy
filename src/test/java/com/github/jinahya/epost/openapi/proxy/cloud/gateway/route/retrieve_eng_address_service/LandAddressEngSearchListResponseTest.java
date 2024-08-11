@@ -1,10 +1,10 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseTypeTest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedResponseTypeTest;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 
 class LandAddressEngSearchListResponseTest
-        extends AbstractResponseTypeTest<LandAddressEngSearchListResponse> {
+        extends AbstractPairedResponseTypeTest<LandAddressEngSearchListResponse, LandAddressEngSearchListRequest> {
 
     LandAddressEngSearchListResponseTest() {
         super(LandAddressEngSearchListResponse.class);

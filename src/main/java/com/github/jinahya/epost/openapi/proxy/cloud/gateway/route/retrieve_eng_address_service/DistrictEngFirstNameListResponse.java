@@ -3,7 +3,7 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedResponseType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -18,6 +18,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
 
 import java.io.Serial;
 import java.util.List;
@@ -29,7 +31,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class DistrictEngFirstNameListResponse
-        extends AbstractResponseType<DistrictEngFirstNameListResponse> {
+        extends AbstractPairedResponseType<DistrictEngFirstNameListResponse, DistrictEngFirstNameListRequest> {
 
     @Serial
     private static final long serialVersionUID = 1731787869103028619L;
@@ -70,6 +72,9 @@ public class DistrictEngFirstNameListResponse
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+    public DistrictEngFirstNameListResponse() {
+        super(DistrictEngFirstNameListRequest.class);
+    }
 
     // ---------------------------------------------------------------------------------------------- super.cmmMsgHeader
 
@@ -85,4 +90,16 @@ public class DistrictEngFirstNameListResponse
     @JsonProperty(NAME_DISTRICT_ENG_FIRST_NAME_LIST)
     @XmlElement(name = NAME_DISTRICT_ENG_FIRST_NAME_LIST)
     private List<@Valid @NotNull DistrictEngFirstNameList> districtEngFirstNameList;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    public Flux<DistrictEngListResponse.DistrictEngList> retrieveDistrictEngList(
+            final String stateName, final String cityName, final WebClient webClient) {
+        if (districtEngFirstNameList == null) {
+            throw new IllegalStateException("roadEngFirstNameList is currently not set");
+        }
+        return Flux.fromIterable(districtEngFirstNameList)
+                .map(defnl -> DistrictEngListRequest.of(null, stateName, cityName, defnl.districtEngFirstName))
+                .concatMap(relr -> relr.exchange(webClient))
+                .flatMap(relr -> Flux.fromIterable(relr.getDistrictEngList()));
+    }
 }

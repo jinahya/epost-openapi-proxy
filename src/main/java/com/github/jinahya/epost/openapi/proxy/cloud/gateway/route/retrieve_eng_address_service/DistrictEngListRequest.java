@@ -1,6 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractRequestType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedRequestType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
@@ -17,7 +17,7 @@ import java.util.function.BiConsumer;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class DistrictEngListRequest
-        extends AbstractRequestType<DistrictEngListRequest> {
+        extends AbstractPairedRequestType<DistrictEngListRequest, DistrictEngListResponse> {
 
     @Serial
     private static final long serialVersionUID = -6793297919987439959L;
@@ -48,7 +48,7 @@ public class DistrictEngListRequest
      * Creates a new instance.
      */
     public DistrictEngListRequest() {
-        super();
+        super(DistrictEngListResponse.class);
         setUriConsumer(URI_CONSUMER);
     }
 

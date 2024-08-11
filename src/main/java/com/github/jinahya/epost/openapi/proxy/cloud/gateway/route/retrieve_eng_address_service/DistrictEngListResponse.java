@@ -3,7 +3,7 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedResponseType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -27,7 +27,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class DistrictEngListResponse
-        extends AbstractResponseType<DistrictEngListResponse> {
+        extends AbstractPairedResponseType<DistrictEngListResponse, DistrictEngListRequest> {
 
     @Serial
     private static final long serialVersionUID = -7654933306929922530L;
@@ -48,6 +48,13 @@ public class DistrictEngListResponse
         @Serial
         private static final long serialVersionUID = -3888280332264139184L;
 
+        // -----------------------------------------------------------------------------------------------------------------
+        public static DistrictEngList of(final String districtEngName) {
+            final var instance = new DistrictEngList();
+            instance.setDistrictEngName(districtEngName);
+            return instance;
+        }
+
         // -------------------------------------------------------------------------------------------------------------
         @JsonIgnore
         @EqualsAndHashCode.Exclude
@@ -62,6 +69,9 @@ public class DistrictEngListResponse
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+    public DistrictEngListResponse() {
+        super(DistrictEngListRequest.class);
+    }
 
     // ---------------------------------------------------------------------------------------------- super.cmmMsgHeader
 

@@ -7,7 +7,6 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
-import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.web.server.ServerWebExchange;
@@ -24,7 +23,9 @@ public class Road
         extends RepresentationModel<Road> {
 
     static String getHref(final Road road) {
-        return City.getHref(road.getCity()) + '/' + road.wrapped.getRoadEngName();
+        return City.getHref(road.getCity())
+                + '/' + _RetrieveEngAddressServiceApiConstants.REL_ROADS
+                + '/' + road.wrapped.getRoadEngName();
     }
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS

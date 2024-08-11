@@ -15,6 +15,8 @@ public class _RetrieveEngAddressServiceApiConstants {
 
     static final String REL_LANDS = "lands";
 
+    static final String REL_DISTRICTS = "districts";
+
     static final String REL_ADDRESSES = "addresses";
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -45,7 +47,9 @@ public class _RetrieveEngAddressServiceApiConstants {
     static final String REQUEST_URI_LANDS = REQUEST_URI_CITIES + "/{" + PATH_NAME_CITY_NAME + "}/" + REL_LANDS;
 
     // -----------------------------------------------------------------------------------------------------------------
-    static final String PATH_NAME_LAND_NAME = "landName";
+    public static final String PATH_NAME_DISTRICT_NAME = "districtName";
+
+    public static final String PATH_NAME_LAND_NAME = "landName";
 
     static final String REQUEST_URI_LAND_ADDRESSES =
             REQUEST_URI_LANDS + "/{" + PATH_NAME_LAND_NAME + "}/" + REL_ADDRESSES;

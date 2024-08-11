@@ -5,9 +5,9 @@ spring:
   cloud:
     gateway:
       default-filters:
-      - _AddRequestParameterIfNotPresent=ServiceKey, ${epost.openapi.proxy.service-key}
-#      - AddResponseHeader=Vary, Content-Type
-      - AddResponseHeader=Vary, Accept
+        - _AddRequestParameterIfNotPresent=ServiceKey, ${epost.openapi.proxy.service-key}
+        #      - AddResponseHeader=Vary, Content-Type
+        - AddResponseHeader=Vary, Accept
       routes:
         # ----------------------------------------------------------------------------------- download_area_code_service
         - id: download_area_code_service # https://www.data.go.kr/data/15000302/openapi.do
@@ -30,39 +30,60 @@ spring:
         - id: retrieve_eng_address_service_api_states
           uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getStateList
           predicates:
-          - Method=GET
-          - Path=/api/retrieveEngAddressService/states
+            - Method=GET
+            - Path=/api/retrieveEngAddressService/states
           filters:
-          - States
+            - States
         - id: retrieve_eng_address_service_api_cities
           uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getCityList
           predicates:
-          - Method=GET
-          - Path=/api/retrieveEngAddressService/states/{stateName}/cities
+            - Method=GET
+            - Path=/api/retrieveEngAddressService/states/{stateName}/cities
           filters:
-          - AddRequestParameter=stateEngName, {stateName}
-          - Cities
+            - AddRequestParameter=stateEngName, {stateName}
+            - Cities
         - id: retrieve_eng_address_service_api_roads
           uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getRoadFirstNameList
           predicates:
-          - Method=GET
-          - Path=/api/retrieveEngAddressService/states/{stateName}/cities/{cityName}/roads
+            - Method=GET
+            - Path=/api/retrieveEngAddressService/states/{stateName}/cities/{cityName}/roads
           filters:
-          - AddRequestParameter=stateEngName, {stateName}
-          - AddRequestParameter=cityEngName, {cityName}
-          - Roads
+            - AddRequestParameter=stateEngName, {stateName}
+            - AddRequestParameter=cityEngName, {cityName}
+            - Roads
         - id: retrieve_eng_address_service_api_road_addresses
           uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getRoadAddressSearch
           predicates:
-          - Method=GET
-          - Path=/api/retrieveEngAddressService/states/{stateName}/cities/{cityName}/roads/{roadName}/addresses
+            - Method=GET
+            - Path=/api/retrieveEngAddressService/states/{stateName}/cities/{cityName}/roads/{roadName}/addresses
           filters:
-          - AddRequestParameter=stateEngName, {stateName}
-          - AddRequestParameter=cityEngName, {cityName}
-          - AddRequestParameter=roadEngName, {roadName}
-          - AddRequestParameter=countPerPage, 32 # DO NOT MODIFY!!!
-          - AddRequestParameter=currentPage, 1
-          - RoadAddresses
+            - AddRequestParameter=stateEngName, {stateName}
+            - AddRequestParameter=cityEngName, {cityName}
+            - AddRequestParameter=roadEngName, {roadName}
+            - AddRequestParameter=countPerPage, 32 # DO NOT MODIFY!!!
+            - AddRequestParameter=currentPage, 1
+            - RoadAddresses
+        - id: retrieve_eng_address_service_api_districts
+          uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getDistrictFirstNameList
+          predicates:
+            - Method=GET
+            - Path=/api/retrieveEngAddressService/states/{stateName}/cities/{cityName}/districts
+          filters:
+            - AddRequestParameter=stateEngName, {stateName}
+            - AddRequestParameter=cityEngName, {cityName}
+            - Districts
+        - id: retrieve_eng_address_service_api_district_addresses
+          uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getLandAddressSearch
+          predicates:
+            - Method=GET
+            - Path=/api/retrieveEngAddressService/states/{stateName}/cities/{cityName}/districts/{districtName}/addresses
+          filters:
+            - AddRequestParameter=stateEngName, {stateName}
+            - AddRequestParameter=cityEngName, {cityName}
+            - AddRequestParameter=districtEngName, {districtName}
+            - AddRequestParameter=countPerPage, 32 # DO NOT MODIFY!!!
+            - AddRequestParameter=currentPage, 1
+            - DistrictAddresses
         # -------------------------------------------------------------------------------- retrieve_longitudinal_service
         - id: retrieve_longitudinal_service
           uri: http://openapi.epost.go.kr

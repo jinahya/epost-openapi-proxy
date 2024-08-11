@@ -2,7 +2,8 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.CityEngListResponse;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.DistrictEngListResponse;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
@@ -18,62 +19,62 @@ import java.util.Objects;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class City
-        extends RepresentationModel<City> {
+public class District
+        extends RepresentationModel<District> {
 
-    static String getHref(final City city) {
-        return State.getHref(city.getState())
-                + '/' + _RetrieveEngAddressServiceApiConstants.REL_CITIES
-                + '/' + city.getWrapped().getCityEngName();
+    static String getHref(final District district) {
+        return City.getHref(district.getCity())
+                + '/' + _RetrieveEngAddressServiceApiConstants.REL_DISTRICTS
+                + '/' + district.wrapped.getDistrictEngName();
     }
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
-    static City of(final State state, final CityEngListResponse.CityEngList wrapped) {
-        Objects.requireNonNull(state, "state is null");
+    public static District of(final City city, final DistrictEngListResponse.DistrictEngList wrapped) {
+        Objects.requireNonNull(city, "city is null");
         Objects.requireNonNull(wrapped, "wrapped is null");
-        final var instance = new City();
-        instance.setState(state);
-        instance.setWrapped(wrapped);
+        final var instance = new District();
+        instance.city = city;
+        instance.wrapped = wrapped;
         return instance;
     }
 
-    static City from(final ServerWebExchange exchange, final CityEngListResponse.CityEngList wrapped) {
-        final var state = State.from(exchange);
-        return City.of(state, wrapped);
+    static District from(final ServerWebExchange exchange, final DistrictEngListResponse.DistrictEngList wrapped) {
+        final var city = City.from(exchange);
+        return of(city, wrapped);
     }
 
-    static String cityName(final ServerWebExchange exchange) {
+    static String districtName(final ServerWebExchange exchange) {
         Objects.requireNonNull(exchange, "exchange is null");
         final Map<String, String> variables = exchange.getAttribute(
                 ServerWebExchangeUtils.URI_TEMPLATE_VARIABLES_ATTRIBUTE
         );
         assert variables != null;
-        return variables.get(_RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME);
+        return variables.get(_RetrieveEngAddressServiceApiConstants.PATH_NAME_DISTRICT_NAME);
     }
 
-    static City from(final ServerWebExchange exchange) {
-        final var wrapped = CityEngListResponse.CityEngList.of(cityName(exchange));
+    static District from(final ServerWebExchange exchange) {
+        final var wrapped = DistrictEngListResponse.DistrictEngList.of(districtName(exchange));
         return from(exchange, wrapped);
     }
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
     // ----------------------------------------------------------------------------------------------------- super.links
-    public City addLinks() {
+    public District addLinks() {
 //        add(Link.of(getHref(this)).withRel(IanaLinkRelations.SELF));
-        add(Link.of(getHref(this) + '/' + _RetrieveEngAddressServiceApiConstants.REL_ROADS).withRel(
-                _RetrieveEngAddressServiceApiConstants.REL_ROADS));
-        add(Link.of(getHref(this) + '/' + _RetrieveEngAddressServiceApiConstants.REL_LANDS).withRel(
-                _RetrieveEngAddressServiceApiConstants.REL_LANDS));
+        add(Link.of(getHref(this) + '/' + _RetrieveEngAddressServiceApiConstants.REL_ADDRESSES).withRel(
+                _RetrieveEngAddressServiceApiConstants.REL_ADDRESSES));
         return this;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     @JsonIgnore
+    @Valid
     @NotNull
-    private State state;
+    private City city;
 
     @JsonUnwrapped
+    @Valid
     @NotNull
-    private CityEngListResponse.CityEngList wrapped;
+    private DistrictEngListResponse.DistrictEngList wrapped;
 }
