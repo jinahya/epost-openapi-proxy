@@ -117,12 +117,13 @@
     <dependency>
       <groupId>com.github.ben-manes.caffeine</groupId>
       <artifactId>caffeine</artifactId>
-      <scope>test</scope>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>com.sun.xml.bind</groupId>
       <artifactId>jaxb-impl</artifactId>
-      <scope>test</scope>
+<!--      <scope>test</scope>-->
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <!-- https://github.com/netty/netty/issues/12582 -->
@@ -170,12 +171,14 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
-      <scope>compile</scope>
+<!--      <scope>compile</scope>-->
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-cache</artifactId>
-      <scope>compile</scope>
+<!--      <scope>compile</scope>-->
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>

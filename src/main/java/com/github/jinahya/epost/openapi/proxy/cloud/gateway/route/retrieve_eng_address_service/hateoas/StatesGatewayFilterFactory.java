@@ -8,13 +8,10 @@ import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_a
 import com.github.jinahya.epost.openapi.proxy.http.codec.json._Jackson2JsonEncoder;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.io.buffer.DataBuffer;
-import org.springframework.hateoas.server.EntityLinks;
-import org.springframework.hateoas.server.LinkBuilderFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.xml.Jaxb2XmlDecoder;
@@ -37,13 +34,12 @@ class StatesGatewayFilterFactory
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    StatesGatewayFilterFactory(final Jackson2ObjectMapperBuilder objectMapperBuilder, final EntityLinks entityLinks) {
+    StatesGatewayFilterFactory(final Jackson2ObjectMapperBuilder objectMapperBuilder) {
         super(Config.class);
         this.objectMapperBuilder = Objects.requireNonNull(objectMapperBuilder, "objectMapperBuilder is null");
         objectMapper = this.objectMapperBuilder
                 .featuresToDisable(SerializationFeature.INDENT_OUTPUT)
                 .build();
-        this.entityLinks = Objects.requireNonNull(entityLinks, "entityLinks is null");
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -52,7 +48,7 @@ class StatesGatewayFilterFactory
     @Override
     public GatewayFilter apply(final Config config) {
         return (e, c) -> {
-            final var responseDecorator = new ServerHttpResponseDecorator(e.getResponse()) {
+            final var decorator = new ServerHttpResponseDecorator(e.getResponse()) {
                 @Override
                 public Mono<Void> writeWith(final Publisher<? extends DataBuffer> body) {
                     return super.writeWith(
@@ -65,14 +61,20 @@ class StatesGatewayFilterFactory
                                     .flatMap(selr -> Flux.fromIterable(((StateEngListResponse) selr).getStateEngList()))
                                     .map(State::of)
                                     .map(State::addLinks)
-                                    .map(sel -> new _Jackson2JsonEncoder(objectMapper).encodeValue(
-                                            sel,
+                                    .map(s -> new _Jackson2JsonEncoder(objectMapper).encodeValue(
+                                            s,
                                             getDelegate().bufferFactory(),
                                             ResolvableType.forType(State.class),
                                             null,
                                             null
                                     ))
                                     .map(db -> db.ensureWritable(1).write((byte) 0x0A))
+                                    .doOnNext(db -> {
+                                        log.debug("db: {}", db);
+                                    })
+                                    .doOnComplete(() -> {
+                                        log.debug("completed");
+                                    })
                     );
                 }
             };
@@ -82,7 +84,7 @@ class StatesGatewayFilterFactory
 //                return Mono.empty();
 //            });
             return c.filter(
-                    e.mutate().response(responseDecorator).build()
+                    e.mutate().response(decorator).build()
             );
         };
     }
@@ -91,9 +93,4 @@ class StatesGatewayFilterFactory
     private final Jackson2ObjectMapperBuilder objectMapperBuilder;
 
     private final ObjectMapper objectMapper;
-
-    private final EntityLinks entityLinks;
-
-    @Autowired
-    private LinkBuilderFactory linkBuilderFactory;
 }
