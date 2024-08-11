@@ -20,7 +20,6 @@ import org.springframework.http.codec.xml.Jaxb2XmlDecoder;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.server.reactive.ServerHttpResponseDecorator;
 import org.springframework.stereotype.Component;
-import org.springframework.util.MimeType;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
@@ -89,10 +88,12 @@ class RoadAddressesGatewayFilterFactory
                     // 오류신고 및 문의를 넣어놓긴 했는데....
                     // 이따구로 만든 외주사가 그 의미를 파악이나 할 수 있을런지 잘 모르겠다.
                     final var totalPage = new AtomicInteger();
-                    final var firstPage = new Jaxb2XmlDecoder(
-                            MimeType.valueOf(MediaType.APPLICATION_XML_VALUE))
-                            .decode(Flux.from(body),
-                                    ResolvableType.forType(RoadAddressEngSearchListResponse.class), null, null)
+                    final var firstPage = new Jaxb2XmlDecoder().decode(
+                                    Flux.from(body),
+                                    ResolvableType.forType(RoadAddressEngSearchListResponse.class),
+                                    null,
+                                    null
+                            )
                             .map(v -> (RoadAddressEngSearchListResponse) v)
                             .switchOnFirst((s, f) -> {
                                 final var cmmMsgHeader = s.get().getCmmMsgHeader();
@@ -133,12 +134,11 @@ class RoadAddressesGatewayFilterFactory
                     );
                 }
             };
-            e.getResponse().getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_NDJSON_VALUE);
-//            response.beforeCommit(() -> {
-////                        response.getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_NDJSON_VALUE);
-//                decorator.getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_NDJSON_VALUE);
-//                return Mono.empty();
-//            });
+//            e.getResponse().getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_NDJSON_VALUE);
+            response.beforeCommit(() -> {
+                response.getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_NDJSON_VALUE);
+                return Mono.empty();
+            });
             return c.filter(
                     e.mutate().response(decorator).build()
             );

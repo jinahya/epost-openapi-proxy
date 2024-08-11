@@ -20,7 +20,6 @@ import org.springframework.http.codec.xml.Jaxb2XmlDecoder;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.server.reactive.ServerHttpResponseDecorator;
 import org.springframework.stereotype.Component;
-import org.springframework.util.MimeType;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -55,41 +54,34 @@ class CitiesGatewayFilterFactory
     // https://velog.io/@ljft183/SpringCloudGateway3
     @Override
     public GatewayFilter apply(final Config config) {
-        return (exchange, chain) -> {
-            final var responseDecorator = new ServerHttpResponseDecorator(exchange.getResponse()) {
+        return (e, c) -> {
+            final var decorator = new ServerHttpResponseDecorator(e.getResponse()) {
                 @Override
                 public Mono<Void> writeWith(final Publisher<? extends DataBuffer> body) {
                     return super.writeWith(
-                            new Jaxb2XmlDecoder(MimeType.valueOf(MediaType.APPLICATION_XML_VALUE))
-                                    .decode(
+                            new Jaxb2XmlDecoder().decode(
                                             Flux.from(body),
                                             ResolvableType.forType(CityEngListResponse.class),
                                             null,
                                             null
                                     )
-                                    .doOnNext(celr -> {
-                                        log.debug("decoded: {}", celr);
-                                    })
                                     .flatMap(celr -> Flux.fromIterable(((CityEngListResponse) celr).getCityEngList()))
-                                    .map(cel -> City.from(exchange, cel))
+                                    .map(cel -> City.from(e, cel))
                                     .map(City::addLinks)
-                                    .map(sel -> {
-                                        return new _Jackson2JsonEncoder(objectMapper)
-                                                .encodeValue(
-                                                        sel,
-                                                        getDelegate().bufferFactory(),
-                                                        ResolvableType.forType(State.class),
-                                                        null,
-                                                        null
-                                                );
-                                    })
+                                    .map(sel -> new _Jackson2JsonEncoder(objectMapper).encodeValue(
+                                            sel,
+                                            getDelegate().bufferFactory(),
+                                            ResolvableType.forType(State.class),
+                                            null,
+                                            null
+                                    ))
                                     .map(db -> db.ensureWritable(1).write((byte) 0x0A))
                     );
                 }
             };
-            exchange.getResponse().getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_NDJSON_VALUE);
-            return chain.filter(
-                    exchange.mutate().response(responseDecorator).build()
+            e.getResponse().getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_NDJSON_VALUE);
+            return c.filter(
+                    e.mutate().response(decorator).build()
             );
         };
     }

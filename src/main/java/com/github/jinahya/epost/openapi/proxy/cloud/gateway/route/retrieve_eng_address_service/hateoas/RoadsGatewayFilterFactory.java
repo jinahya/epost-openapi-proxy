@@ -80,12 +80,10 @@ class RoadsGatewayFilterFactory
     // https://velog.io/@ljft183/SpringCloudGateway3
     @Override
     public GatewayFilter apply(final Config config) {
-        log.debug(">>>>>>>>>>>>>>>>>>>>>>>> config: {}", config);
-        return (exchange, chain) -> {
-            log.debug("exchange.request.uri: {}", exchange.getRequest().getURI());
+        return (e, c) -> {
             final URL requestUrl;
             try {
-                requestUrl = exchange.getRequest().getURI().toURL();
+                requestUrl = e.getRequest().getURI().toURL();
             } catch (final MalformedURLException murle) {
                 throw new RuntimeException(murle);
             }
@@ -95,7 +93,7 @@ class RoadsGatewayFilterFactory
             final var webClient = WebClient.builder()
                     .baseUrl(baseUrl.toString())
                     .build();
-            final var responseDecorator = new ServerHttpResponseDecorator(exchange.getResponse()) {
+            final var responseDecorator = new ServerHttpResponseDecorator(e.getResponse()) {
                 @Override
                 public Mono<Void> writeWith(final Publisher<? extends DataBuffer> body) {
                     return super.writeWith(
@@ -107,14 +105,14 @@ class RoadsGatewayFilterFactory
 //                                            null
 //                                    )
 //                                    .flatMap(r -> ((RoadEngFirstNameListResponse) r).retrieveRoadEngList(
-//                                            exchange.getRequest().getQueryParams().getFirst(
+//                                            e.getRequest().getQueryParams().getFirst(
 //                                                    _RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NAME),
-//                                            exchange.getRequest().getQueryParams().getFirst(
+//                                            e.getRequest().getQueryParams().getFirst(
 //                                                    _RetrieveEngAddressServiceConstants.PARAM_CITY_ENG_NAME),
 //                                            webClient))
-//                                    .map(rel -> Road.from(exchange, rel))
+//                                    .map(rel -> Road.from(e, rel))
 //                                    .map(Road::addLinks)
-                            decode(exchange, body, webClient)
+                            decode(e, body, webClient)
                                     .map(r -> new _Jackson2JsonEncoder(objectMapper).encodeValue(
                                             r,
                                             getDelegate().bufferFactory(),
@@ -126,9 +124,9 @@ class RoadsGatewayFilterFactory
                     );
                 }
             };
-            exchange.getResponse().getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_NDJSON_VALUE);
-            return chain.filter(
-                    exchange.mutate().response(responseDecorator).build()
+            e.getResponse().getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_NDJSON_VALUE);
+            return c.filter(
+                    e.mutate().response(responseDecorator).build()
             );
         };
     }

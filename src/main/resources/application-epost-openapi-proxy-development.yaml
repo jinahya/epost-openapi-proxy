@@ -6,7 +6,8 @@ spring:
     gateway:
       default-filters:
       - _AddRequestParameterIfNotPresent=ServiceKey, ${epost.openapi.proxy.service-key}
-      - AddResponseHeader=Vary, Content-Type
+#      - AddResponseHeader=Vary, Content-Type
+      - AddResponseHeader=Vary, Accept
       routes:
         # ----------------------------------------------------------------------------------- download_area_code_service
         - id: download_area_code_service # https://www.data.go.kr/data/15000302/openapi.do
@@ -14,27 +15,18 @@ spring:
           predicates:
             - Method=GET
             - Path=/postal/downloadAreaCodeService/downloadAreaCodeService/{operation}
-          filters:
-#            - _AddRequestParameterIfNotPresent=ServiceKey, ${epost.openapi.proxy.service-key}
-#            - AddResponseHeader=Vary, Accept
         # ------------------------------------------------------------------------------- retrieve_deliv_area_cd_service
         - id: retrieve_deliv_area_cd_service # https://www.data.go.kr/data/15000302/openapi.do
           uri: http://openapi.epost.go.kr
           predicates:
             - Method=GET
             - Path=/postal/retrieveDelivAreaCdService/retrieveDelivAreaCdService/{operation}
-          filters:
-            - _AddRequestParameterIfNotPresent=ServiceKey, ${epost.openapi.proxy.service-key}
-            - AddResponseHeader=Vary, Accept
         # --------------------------------------------------------------------------------- retrieve_eng_address_service
         - id: retrieve_eng_address_service
           uri: http://openapi.epost.go.kr
           predicates:
             - Method=GET
             - Path=/postal/retrieveEngAddressService/retrieveEngAddressService/{operation}
-          filters:
-            - _AddRequestParameter=ServiceKey, ${epost.openapi.proxy.service-key}
-            - AddResponseHeader=Vary, Accept
         - id: retrieve_eng_address_service_api_states
           uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getStateList
           predicates:
@@ -77,35 +69,23 @@ spring:
           predicates:
             - Method=GET
             - Path=/trace/retrieveLongitudinalService/retrieveLongitudinalService/{operation}
-          filters:
-            - _AddRequestParameter=ServiceKey, ${epost.openapi.proxy.service-key}
-            - AddResponseHeader=Vary, Accept
         # ------------------------------------------------------------------- retrieve_lot_number_adress_area_cd_service
         - id: retrieve_lot_number_adress_area_cd_service # https://www.data.go.kr/iim/api/selectAPIAcountView.do
           uri: http://openapi.epost.go.kr
           predicates:
             - Method=GET
             - Path=/postal/retrieveLotNumberAdressAreaCdService/retrieveLotNumberAdressAreaCdService/{operation}
-          filters:
-            - _AddRequestParameterIfNotPresent=ServiceKey, ${epost.openapi.proxy.service-key}
-            - AddResponseHeader=Vary, Accept
         # --------------------------------------------------------------- retrieve_new_adress_area_cd_search_all_service
         - id: retrieve_new_adress_area_cd_search_all_service
           uri: http://openapi.epost.go.kr
           predicates:
             - Method=GET
             - Path=/postal/retrieveNewAdressAreaCdSearchAllService/retrieveNewAdressAreaCdSearchAllService/{operation}
-          filters:
-            - _AddRequestParameter=ServiceKey, ${epost.openapi.proxy.service-key}
-            - AddResponseHeader=Vary, Accept
         # -------------------------------------------------------------------------- retrieve_new_adress_area_cd_service
         - id: retrieve_new_adress_area_cd_service
           uri: http://openapi.epost.go.kr
           predicates:
             - Method=GET
             - Path=/postal/retrieveNewAdressAreaCdService/retrieveNewAdressAreaCdService/{operation}
-          filters:
-            - _AddRequestParameter=ServiceKey, ${epost.openapi.proxy.service-key}
-            - AddResponseHeader=Vary, Accept
   main:
     web-application-type: reactive

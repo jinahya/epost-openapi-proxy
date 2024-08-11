@@ -4,21 +4,24 @@ epost:
     proxy:
       service-key: QO8Jo5UWN4rASy9NIoiUXwQBSbOmphw6UT41sDCNzo8bBQDmJuseGioU3KK94sgHrXmliI5SGphq1akyyWJ5Qg==
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include:
-          - gateway
-  endpoint:
-    gateway:
-      enabled: true
-    health:
-      show-details: always
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include:
+#          - gateway
+#  endpoint:
+#    gateway:
+#      enabled: true
+#    health:
+#      show-details: always
 
 #springdoc:
 #  show-actuator: true
 
+# https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/global-filters.html#local-cache-response-global-filter
+# https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/gatewayfilter-factories/local-cache-response-filter.html
+# https://cloud.spring.io/spring-cloud-gateway/reference/html/appendix.html#common-application-properties
 spring:
   application:
     name: epost-openapi-proxy
@@ -26,11 +29,12 @@ spring:
     gateway:
       filter:
         local-response-cache:
-          size: 128MB
+          enabled: true
+          size: 32MB
           time-to-live: 8m
       global-filter:
         local-response-cache:
-          enabled: false
+          enabled: true
       httpclient:
         # https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/http-timeouts-configuration.html
         connect-timeout: 1024  # connect-timeout must be specified in milliseconds.
