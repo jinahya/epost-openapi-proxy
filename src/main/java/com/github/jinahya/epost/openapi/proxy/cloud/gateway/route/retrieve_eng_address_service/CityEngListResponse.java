@@ -3,7 +3,7 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedResponseType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -24,7 +24,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class CityEngListResponse
-        extends AbstractResponseType<CityEngListResponse> {
+        extends AbstractPairedResponseType<CityEngListResponse, CityEngListRequest> {
 
     @Serial
     private static final long serialVersionUID = 2105048637913742678L;
@@ -46,7 +46,7 @@ public class CityEngListResponse
         @Serial
         private static final long serialVersionUID = -4416152072794741619L;
 
-        // -----------------------------------------------------------------------------------------------------------------
+        // -------------------------------------------------------------------------------------------------------------
         public static CityEngList of(final String cityEngName) {
             final var instance = new CityEngList();
             instance.setCityEngName(cityEngName);
@@ -67,6 +67,9 @@ public class CityEngListResponse
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+    public CityEngListResponse() {
+        super(CityEngListRequest.class);
+    }
 
     // ---------------------------------------------------------------------------------------------- super.cmmMsgHeader
 

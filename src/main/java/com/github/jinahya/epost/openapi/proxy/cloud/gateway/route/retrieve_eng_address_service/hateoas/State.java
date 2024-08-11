@@ -22,7 +22,7 @@ public class State
         extends RepresentationModel<State> {
 
     static String getHref(final State state) {
-        return _Constants.REQUEST_URI_STATES + '/' + state.getWrapped().getStateEngName();
+        return _RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES + '/' + state.getWrapped().getStateEngName();
     }
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
@@ -39,7 +39,7 @@ public class State
                 ServerWebExchangeUtils.URI_TEMPLATE_VARIABLES_ATTRIBUTE
         );
         assert variables != null;
-        return variables.get(_Constants.PATH_NAME_STATE_NAME);
+        return variables.get(_RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME);
     }
 
     static State from(final ServerWebExchange exchange) {
@@ -51,8 +51,9 @@ public class State
 
     // ----------------------------------------------------------------------------------------------------- super.links
     public State addLinks() {
-        add(Link.of(getHref(this)).withRel(IanaLinkRelations.SELF));
-        add(Link.of(getHref(this) + '/' + _Constants.REL_CITIES).withRel(_Constants.REL_CITIES));
+//        add(Link.of(getHref(this)).withRel(IanaLinkRelations.SELF));
+        add(Link.of(getHref(this) + '/' + _RetrieveEngAddressServiceApiConstants.REL_CITIES).withRel(
+                _RetrieveEngAddressServiceApiConstants.REL_CITIES));
         return this;
     }
 

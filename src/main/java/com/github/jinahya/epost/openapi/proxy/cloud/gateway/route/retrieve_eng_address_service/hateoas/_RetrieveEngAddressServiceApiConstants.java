@@ -2,7 +2,7 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service._RetrieveEngAddressServiceConstants;
 
-class _Constants {
+public class _RetrieveEngAddressServiceApiConstants {
 
     // -----------------------------------------------------------------------------------------------------------------
     static final String REL_STATE = "state";
@@ -18,23 +18,28 @@ class _Constants {
     static final String REL_ADDRESSES = "addresses";
 
     // -----------------------------------------------------------------------------------------------------------------
-    static final String REQUEST_URI = "/api/" + _RetrieveEngAddressServiceConstants.SERVICE_ID;
-
-    static final String REQUEST_URI_STATES = REQUEST_URI + '/' + REL_STATES;
-
-    static final String PATH_NAME_STATE_NAME = "stateName";
+    public static final String REQUEST_URI = "/api/" + _RetrieveEngAddressServiceConstants.SERVICE_ID;
 
     // -----------------------------------------------------------------------------------------------------------------
-    static final String REQUEST_URI_CITIES = REQUEST_URI_STATES + "/{" + PATH_NAME_STATE_NAME + "}/" + REL_CITIES;
+    public static final String PATH_STATES = REL_STATES;
 
-    static final String PATH_NAME_CITY_NAME = "cityName";
+    public static final String REQUEST_URI_STATES = REQUEST_URI + '/' + PATH_STATES;
 
-    static final String REQUEST_URI_ROADS = REQUEST_URI_CITIES + "/{" + PATH_NAME_CITY_NAME + "}/" + REL_ROADS;
+    public static final String PATH_NAME_STATE_NAME = "stateName";
 
     // -----------------------------------------------------------------------------------------------------------------
-    static final String PATH_NAME_ROAD_NAME = "roadName";
+    public static final String REQUEST_URI_CITIES =
+            REQUEST_URI_STATES + "/{" + PATH_NAME_STATE_NAME + "}/" + REL_CITIES;
 
-    static final String REQUEST_URI_ROAD_ADDRESSES =
+    public static final String PATH_NAME_CITY_NAME = "cityName";
+
+    public static final String REQUEST_URI_ROADS =
+            REQUEST_URI_CITIES + "/{" + PATH_NAME_CITY_NAME + "}/" + REL_ROADS;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    public static final String PATH_NAME_ROAD_NAME = "roadName";
+
+    public static final String REQUEST_URI_ROAD_ADDRESSES =
             REQUEST_URI_ROADS + "/{" + PATH_NAME_ROAD_NAME + "}/" + REL_ADDRESSES;
 
     static final String REQUEST_URI_LANDS = REQUEST_URI_CITIES + "/{" + PATH_NAME_CITY_NAME + "}/" + REL_LANDS;
@@ -46,7 +51,7 @@ class _Constants {
             REQUEST_URI_LANDS + "/{" + PATH_NAME_LAND_NAME + "}/" + REL_ADDRESSES;
 
     // -----------------------------------------------------------------------------------------------------------------
-    private _Constants() {
+    private _RetrieveEngAddressServiceApiConstants() {
         throw new AssertionError("instantiation is not allowed");
     }
 }

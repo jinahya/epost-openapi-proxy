@@ -8,10 +8,14 @@ public final class _RetrieveEngAddressServiceConstants {
     public static final String SERVICE_ID = "retrieveEngAddressService";
 
     // -----------------------------------------------------------------------------------------------------------------
-    private static final String REQUEST_URI = "/postal/" + SERVICE_ID + '/' + SERVICE_ID;
+    public static final String REQUEST_URI = "/postal/" + SERVICE_ID + '/' + SERVICE_ID;
 
-    public static final String REQUEST_URI_GET_STATE_LIST = REQUEST_URI + "/getStateList";
+    // -----------------------------------------------------------------------------------------------------------------
+    public static final String PATH_GET_STATE_LIST = "getStateList";
 
+    public static final String REQUEST_URI_GET_STATE_LIST = REQUEST_URI + '/' + PATH_GET_STATE_LIST;
+
+    // -----------------------------------------------------------------------------------------------------------------
     public static final String REQUEST_URI_GET_CITY_LIST = REQUEST_URI + "/getCityList";
 
     public static final String REQUEST_URI_GET_ROAD_FIRST_NAME_LIST = REQUEST_URI + "/getRoadFirstNameList";

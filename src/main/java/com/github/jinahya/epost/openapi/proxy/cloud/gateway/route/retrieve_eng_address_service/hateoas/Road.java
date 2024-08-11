@@ -48,7 +48,7 @@ public class Road
                 ServerWebExchangeUtils.URI_TEMPLATE_VARIABLES_ATTRIBUTE
         );
         assert variables != null;
-        return variables.get(_Constants.PATH_NAME_ROAD_NAME);
+        return variables.get(_RetrieveEngAddressServiceApiConstants.PATH_NAME_ROAD_NAME);
     }
 
     static Road from(final ServerWebExchange exchange) {
@@ -60,8 +60,9 @@ public class Road
 
     // ----------------------------------------------------------------------------------------------------- super.links
     public Road addLinks() {
-        add(Link.of(getHref(this)).withRel(IanaLinkRelations.SELF));
-        add(Link.of(getHref(this) + '/' + _Constants.REL_ADDRESSES).withRel(_Constants.REL_ADDRESSES));
+//        add(Link.of(getHref(this)).withRel(IanaLinkRelations.SELF));
+        add(Link.of(getHref(this) + '/' + _RetrieveEngAddressServiceApiConstants.REL_ADDRESSES).withRel(
+                _RetrieveEngAddressServiceApiConstants.REL_ADDRESSES));
         return this;
     }
 

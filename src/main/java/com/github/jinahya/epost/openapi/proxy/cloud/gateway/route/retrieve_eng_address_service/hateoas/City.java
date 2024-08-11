@@ -6,6 +6,7 @@ import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_a
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
+import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.web.server.ServerWebExchange;
@@ -23,7 +24,7 @@ public class City
 
     static String getHref(final City city) {
         return State.getHref(city.getState())
-                + '/' + _Constants.REL_CITIES
+                + '/' + _RetrieveEngAddressServiceApiConstants.REL_CITIES
                 + '/' + city.getWrapped().getCityEngName();
     }
 
@@ -48,7 +49,7 @@ public class City
                 ServerWebExchangeUtils.URI_TEMPLATE_VARIABLES_ATTRIBUTE
         );
         assert variables != null;
-        return variables.get(_Constants.PATH_NAME_CITY_NAME);
+        return variables.get(_RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME);
     }
 
     static City from(final ServerWebExchange exchange) {
@@ -60,9 +61,11 @@ public class City
 
     // ----------------------------------------------------------------------------------------------------- super.links
     public City addLinks() {
-        add(Link.of(getHref(this)).withRel(_Constants.REL_CITIES));
-        add(Link.of(getHref(this) + '/' + _Constants.REL_ROADS).withRel(_Constants.REL_ROADS));
-        add(Link.of(getHref(this) + '/' + _Constants.REL_LANDS).withRel(_Constants.REL_LANDS));
+//        add(Link.of(getHref(this)).withRel(IanaLinkRelations.SELF));
+        add(Link.of(getHref(this) + '/' + _RetrieveEngAddressServiceApiConstants.REL_ROADS).withRel(
+                _RetrieveEngAddressServiceApiConstants.REL_ROADS));
+        add(Link.of(getHref(this) + '/' + _RetrieveEngAddressServiceApiConstants.REL_LANDS).withRel(
+                _RetrieveEngAddressServiceApiConstants.REL_LANDS));
         return this;
     }
 

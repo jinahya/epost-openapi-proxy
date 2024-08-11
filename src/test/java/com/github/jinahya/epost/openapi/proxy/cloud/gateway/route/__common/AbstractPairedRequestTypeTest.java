@@ -14,7 +14,6 @@ public abstract class AbstractPairedRequestTypeTest<
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-
     @Override
     protected SingleTypeEqualsVerifierApi<TYPE> __equals(final SingleTypeEqualsVerifierApi<TYPE> verifierApi) {
         return super.__equals(verifierApi)

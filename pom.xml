@@ -43,7 +43,7 @@
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
     <maven.compiler.release>${maven.compiler.target}</maven.compiler.release>
-    <maven.compiler.testSource>21</maven.compiler.testSource>
+    <maven.compiler.testSource>${maven.compiler.source}</maven.compiler.testSource>
     <maven.compiler.testTarget>${maven.compiler.testSource}</maven.compiler.testTarget>
     <maven.compiler.testRelease>${maven.compiler.testTarget}</maven.compiler.testRelease>
     <sonar.organization>jinahya-github</sonar.organization>
@@ -51,14 +51,15 @@
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     <version.maven-failsafe>${version.maven-surefire}</version.maven-failsafe>
     <version.maven-surefire>3.3.1</version.maven-surefire>
-    <version.org.junit>5.10.3</version.org.junit>
-    <version.org.junit.jupiter>${version.org.junit}</version.org.junit.jupiter>
-    <version.org.junit.platform>1.9.1</version.org.junit.platform>
+    <!-- https://search.maven.org/artifact/org.junit/junit-bom -->
+    <!--    <version.org.junit>5.10.3</version.org.junit>-->
+    <!--    <version.org.junit.jupiter>${version.org.junit}</version.org.junit.jupiter>-->
     <version.org.mockito>5.12.0</version.org.mockito>
     <!-- https://docs.spring.io/spring-boot/appendix/dependency-versions/coordinates.html -->
     <version.org.springframework>6.1.11</version.org.springframework>
     <version.org.springframework.boot>3.3.2</version.org.springframework.boot>
     <!-- https://spring.io/projects/spring-cloud -->
+    <!-- https://github.com/spring-cloud/spring-cloud-release/wiki -->
     <!-- https://github.com/spring-cloud/spring-cloud-release/wiki/Spring-Cloud-2023.0-Release-Notes -->
     <version.org.springframework.cloud>2023.0.3</version.org.springframework.cloud>
   </properties>
@@ -68,17 +69,18 @@
       <dependency>
         <groupId>jakarta.platform</groupId>
         <artifactId>jakarta.jakartaee-bom</artifactId>
+        <!-- https://search.maven.org/artifact/jakarta.platform/jakarta.jakartaee-bom -->
         <version>11.0.0-M4</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <dependency>
-        <groupId>org.junit</groupId>
-        <artifactId>junit-bom</artifactId>
-        <version>${version.org.junit.jupiter}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
+<!--      <dependency>-->
+<!--        <groupId>org.springdoc</groupId>-->
+<!--        <artifactId>springdoc-openapi</artifactId>-->
+<!--        <version>2.6.0</version>-->
+<!--        <type>pom</type>-->
+<!--        <scope>import</scope>-->
+<!--      </dependency>-->
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-framework-bom</artifactId>
@@ -104,6 +106,7 @@
         <!-- https://search.maven.org/artifact/org.springframework.boot/spring-boot-dependencies/3.3.2/pom -->
         <groupId>org.springframework.data</groupId>
         <artifactId>spring-data-bom</artifactId>
+        <!-- https://search.maven.org/artifact/org.springframework.data/spring-data-bom -->
         <version>2024.0.2</version>
         <type>pom</type>
         <scope>import</scope>
@@ -158,14 +161,26 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+      <!-- https://search.maven.org/artifact/org.springdoc/springdoc-openapi-starter-webflux-ui -->
+      <version>2.6.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-cache</artifactId>
-      <scope>provided</scope>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-hateoas</artifactId>
-      <scope>provided</scope>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -175,13 +190,7 @@
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-gateway</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.data</groupId>
-
-      <artifactId>spring-data-commons</artifactId>
-      <scope>provided</scope>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>io.projectreactor</groupId>

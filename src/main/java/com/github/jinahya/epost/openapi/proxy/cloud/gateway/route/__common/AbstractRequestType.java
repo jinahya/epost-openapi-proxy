@@ -1,6 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.xml.bind.annotation.XmlTransient;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -126,6 +127,7 @@ public abstract class AbstractRequestType<SELF extends AbstractRequestType<SELF>
     }
 
     // -----------------------------------------------------------------------------------------------------------------
+    @Schema(hidden = true)
     private String serviceKey;
 
     // -----------------------------------------------------------------------------------------------------------------
