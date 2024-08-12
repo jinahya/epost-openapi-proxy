@@ -39,20 +39,8 @@ class GetAreaCodeInfo_SpringBootIT
     @ParameterizedTest
     void __(final AreaCodeInfoRequest request) {
         final var response = exchange(request);
-        log.debug("file: {}", response.getFile());
         assertValid(response);
         assertSucceeded(response);
-        if (true) { // takes too long!
-            final var flags = new HashMap<String, Boolean>();
-            WebClientUtils.download(
-                    response.getFile(),
-                    (n, m) -> {
-                        if (flags.compute(n, (k, v) -> v == null)) {
-                            log.debug("n: {}, m: {}", n, m);
-                        }
-                    }
-            ).block();
-        }
     }
 
     @Disabled("takes too long")
