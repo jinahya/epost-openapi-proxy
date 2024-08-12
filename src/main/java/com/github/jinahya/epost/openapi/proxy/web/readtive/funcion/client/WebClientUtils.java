@@ -30,11 +30,13 @@ public final class WebClientUtils {
 
     private static final int CONNECT_TIMEOUT_MILLIS = Math.toIntExact(TimeUnit.SECONDS.toMillis(4L));
 
+    // -----------------------------------------------------------------------------------------------------------------
     private static final long WRITE_TIMEOUT_TIMEOUT = 4L;
 
     private static final TimeUnit WRITE_TIMEOUT_UNIT = TimeUnit.SECONDS;
 
-    private static final long READ_TIMEOUT_TIMEOUT = 4L;
+    // -----------------------------------------------------------------------------------------------------------------
+    private static final long READ_TIMEOUT_TIMEOUT = 8L;
 
     private static final TimeUnit READ_TIMEOUT_UNIT = TimeUnit.SECONDS;
 
@@ -44,8 +46,8 @@ public final class WebClientUtils {
         final var httpClient = HttpClient.create()
                 .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, CONNECT_TIMEOUT_MILLIS)
                 .doOnConnected(c -> {
-                    c.addHandlerFirst(new WriteTimeoutHandler(WRITE_TIMEOUT_TIMEOUT, WRITE_TIMEOUT_UNIT));
-                    c.addHandlerFirst(new ReadTimeoutHandler(READ_TIMEOUT_TIMEOUT, READ_TIMEOUT_UNIT));
+//                    c.addHandlerFirst(new WriteTimeoutHandler(WRITE_TIMEOUT_TIMEOUT, WRITE_TIMEOUT_UNIT));
+//                    c.addHandlerFirst(new ReadTimeoutHandler(READ_TIMEOUT_TIMEOUT, READ_TIMEOUT_UNIT));
                 })
                 .followRedirect(true);
         final var clientConnector = new ReactorClientHttpConnector(httpClient);
@@ -94,13 +96,16 @@ public final class WebClientUtils {
     public static Mono<Void> download(final String baseUrl,
                                       final @NonNull BiConsumer<? super String, ? super Map<String, String>> consumer) {
         Objects.requireNonNull(consumer, "consumer is null");
-        return download(baseUrl, p -> {
-            try (var stream = new FileInputStream(p.toFile())) {
-                AreaCodeInfoUtils.extract(stream, consumer);
-            } catch (final IOException ioe) {
-                throw new RuntimeException(ioe);
-            }
-        });
+        return download(
+                baseUrl,
+                p -> {
+                    try (var stream = new FileInputStream(p.toFile())) {
+                        AreaCodeInfoUtils.extract(stream, consumer);
+                    } catch (final IOException ioe) {
+                        throw new RuntimeException(ioe);
+                    }
+                }
+        );
     }
 
     // -----------------------------------------------------------------------------------------------------------------

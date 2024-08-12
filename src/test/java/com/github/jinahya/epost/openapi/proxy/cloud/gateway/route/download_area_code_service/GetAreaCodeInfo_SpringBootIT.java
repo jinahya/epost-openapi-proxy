@@ -55,9 +55,13 @@ class GetAreaCodeInfo_SpringBootIT
         }
     }
 
+    @Disabled("takes too long")
     @Test
     void __() {
         Flux.fromStream(getRequestStream())
+                .doOnNext(r -> {
+                    log.debug("request: {}", r);
+                })
                 .parallel()
                 .runOn(Schedulers.boundedElastic())
                 .map(this::exchange)
@@ -65,7 +69,13 @@ class GetAreaCodeInfo_SpringBootIT
                     assertValid(r);
                     assertSucceeded(r);
                 })
+                .doOnNext(r -> {
+                    log.debug("response: {}", r);
+                })
                 .map(AreaCodeInfoResponse::getFile)
+                .doOnNext(f -> {
+                    log.debug("file: {}", f);
+                })
                 .flatMap(f -> {
                     final var flags = new HashMap<String, Boolean>();
                     return WebClientUtils.download(
