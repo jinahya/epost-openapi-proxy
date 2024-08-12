@@ -84,7 +84,8 @@ public abstract class _SpringBootIT {
         final var responseClass = (Class<U>)
                 ResolvableType.forType(requestClass)
                         .as(AbstractPairedRequestType.class)
-                        .getGeneric(1).resolve();
+                        .getGeneric(1)
+                        .resolve();
         return exchange(request, responseClass);
     }
 
