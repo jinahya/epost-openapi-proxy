@@ -1,6 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area_code_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedRequestTypeTest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractPairedRequestTypeTest;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 
 class AreaCodeInfoRequestTest

@@ -1,9 +1,9 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_service;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedRequestType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractRequestType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common._Constants;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractPairedRequestType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractRequestType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common._Constants;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;

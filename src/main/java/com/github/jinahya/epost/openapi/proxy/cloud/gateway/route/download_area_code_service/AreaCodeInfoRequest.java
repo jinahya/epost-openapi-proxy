@@ -1,7 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area_code_service;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedRequestType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractPairedRequestType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.xml.bind.annotation.XmlEnum;
 import jakarta.xml.bind.annotation.XmlEnumValue;

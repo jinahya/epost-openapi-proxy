@@ -2,8 +2,8 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_lot_
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedResponseType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseElementAddressType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractPairedResponseType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractResponseElementAddressType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.xml.bind.annotation.XmlAccessType;

@@ -1,7 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedRequestType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractRequestType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractPairedRequestType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractRequestType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.EqualsAndHashCode;

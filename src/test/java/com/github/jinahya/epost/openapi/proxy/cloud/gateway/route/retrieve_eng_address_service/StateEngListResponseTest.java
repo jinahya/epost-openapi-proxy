@@ -1,6 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.*;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.*;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;

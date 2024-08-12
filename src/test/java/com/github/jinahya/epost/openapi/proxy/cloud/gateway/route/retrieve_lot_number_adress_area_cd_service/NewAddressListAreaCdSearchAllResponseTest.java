@@ -1,7 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_lot_number_adress_area_cd_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedResponseTypeTest;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseElementAddressTypeTest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractPairedResponseTypeTest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractResponseElementAddressTypeTest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_lot_number_adress_area_cd_service.NewAddressListAreaCdSearchAllResponse.NewAddressListAreaCdSearchAll;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 import org.junit.jupiter.api.Nested;
