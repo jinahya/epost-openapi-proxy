@@ -40,11 +40,11 @@ public class RoadAddressEngSearchListRequest
      * @param serviceKey       a value for {@link #getServiceKey() serviceKey} property.
      * @param stateEngName     a value for {@link #getStateEngName() sateEngName} property.
      * @param cityEngName      a value for {@link #getCityEngName() cityEngName} property.
-     * @param roadEngFirstName
-     * @param roadEngName
-     * @param keyword
+     * @param roadEngFirstName .
+     * @param roadEngName      .
+     * @param keyword          .
      * @param countPerPage     a value for {@link #getCountPerPage() countPerPage} property.
-     * @param currentPage
+     * @param currentPage      a value for {@link #getCurrentPage() currentPage} property.
      * @return a new instance.
      */
     public static RoadAddressEngSearchListRequest of(final @Nullable String serviceKey, final String stateEngName,
@@ -113,7 +113,7 @@ public class RoadAddressEngSearchListRequest
     private String cityEngName;
 
     @Size(max = 1)
-    @NotBlank
+//    @NotBlank
     private String roadEngFirstName;
 
     @NotBlank

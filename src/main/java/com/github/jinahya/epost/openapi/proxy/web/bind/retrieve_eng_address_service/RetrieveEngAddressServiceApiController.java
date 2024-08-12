@@ -3,7 +3,6 @@ package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_ser
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.hateoas.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.http.MediaType;
@@ -40,7 +39,6 @@ class RetrieveEngAddressServiceApiController {
             }
     )
     Flux<City> readCities(
-            @NotBlank
             @PathVariable(name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName) {
         throw new UnsupportedOperationException("");
     }
@@ -53,9 +51,7 @@ class RetrieveEngAddressServiceApiController {
             }
     )
     Flux<Road> readRoads(
-            @NotBlank
             @PathVariable(_RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
-            @NotBlank
             @PathVariable(name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName) {
         throw new UnsupportedOperationException("");
     }
@@ -68,12 +64,37 @@ class RetrieveEngAddressServiceApiController {
             }
     )
     Flux<RoadAddress> readRoadAddresses(
-            @NotBlank
             @PathVariable(_RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
-            @NotBlank
             @PathVariable(name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName,
-            @NotBlank
             @PathVariable(name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_ROAD_NAME) final String roadName) {
+        throw new UnsupportedOperationException("");
+    }
+
+    // ------------------------------------------------------------- /.../states/{stateName}/cities/{cityName}/districts
+    @GetMapping(
+            path = _RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICTS,
+            produces = {
+                    MediaType.APPLICATION_NDJSON_VALUE
+            }
+    )
+    Flux<District> readDistricts(
+            @PathVariable(_RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
+            @PathVariable(name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName) {
+        throw new UnsupportedOperationException("");
+    }
+
+    // ------------------------------------ /.../states/{stateName}/cities/{cityName}/districts/{districtName}/addresses
+    @GetMapping(
+            path = _RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICTS_ADDRESSES,
+            produces = {
+                    MediaType.APPLICATION_NDJSON_VALUE
+            }
+    )
+    Flux<DistrictAddress> readDistrictAddresses(
+            @PathVariable(_RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
+            @PathVariable(name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName,
+            @PathVariable(
+                    name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_DISTRICT_NAME) final String districtName) {
         throw new UnsupportedOperationException("");
     }
 }

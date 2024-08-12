@@ -1,6 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractRequestTypeTest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedRequestTypeTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,7 @@ import java.util.HashSet;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class NewAddressListAreaCdRequestTest
-        extends AbstractRequestTypeTest<NewAddressListAreaCdRequest> {
+        extends AbstractPairedRequestTypeTest<NewAddressListAreaCdRequest, NewAddressListAreaCdResponse> {
 
     // -----------------------------------------------------------------------------------------------------------------
     @Nested

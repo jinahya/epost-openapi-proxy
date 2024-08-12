@@ -32,4 +32,46 @@ class RetrieveEngAddressServiceProxyController {
     Mono<CityEngListResponse> getCityList(final @ParameterObject CityEngListRequest request) {
         throw new UnsupportedOperationException("");
     }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    @GetMapping(path = _RetrieveEngAddressServiceConstants.REQUEST_URI_GET_ROAD_FIRST_NAME_LIST,
+                produces = {
+                        MediaType.APPLICATION_XML_VALUE,
+                        MediaType.APPLICATION_JSON_VALUE
+                })
+    Mono<RoadEngFirstNameListResponse> getRoadFirstNameList(
+            final @ParameterObject RoadEngFirstNameListRequest request) {
+        throw new UnsupportedOperationException("");
+    }
+
+    @GetMapping(path = _RetrieveEngAddressServiceConstants.REQUEST_URI_GET_ROAD_ADDRESS_SEARCH,
+                produces = {
+                        MediaType.APPLICATION_XML_VALUE,
+                        MediaType.APPLICATION_JSON_VALUE
+                })
+    Mono<RoadAddressEngSearchListResponse> getRoadAddressSearch(
+            final @ParameterObject RoadAddressEngSearchListRequest request) {
+        throw new UnsupportedOperationException("");
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    @GetMapping(path = _RetrieveEngAddressServiceConstants.REQUEST_URI_GET_DISTRICT_FIRST_NAME_LIST,
+                produces = {
+                        MediaType.APPLICATION_XML_VALUE,
+                        MediaType.APPLICATION_JSON_VALUE
+                })
+    Mono<DistrictEngFirstNameListResponse> getDistrictFirstNameList(
+            final @ParameterObject DistrictEngFirstNameListRequest request) {
+        throw new UnsupportedOperationException("");
+    }
+
+    @GetMapping(path = _RetrieveEngAddressServiceConstants.REQUEST_URI_GET_LAND_ADDRESS_SEARCH,
+                produces = {
+                        MediaType.APPLICATION_XML_VALUE,
+                        MediaType.APPLICATION_JSON_VALUE
+                })
+    Mono<LandAddressEngSearchListResponse> getLandAddressSearch(
+            final @ParameterObject LandAddressEngSearchListRequest request) {
+        throw new UnsupportedOperationException("");
+    }
 }

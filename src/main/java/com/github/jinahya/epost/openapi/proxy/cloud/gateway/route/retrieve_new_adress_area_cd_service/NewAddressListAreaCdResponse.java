@@ -2,8 +2,9 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedResponseType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractType;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -26,7 +27,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class NewAddressListAreaCdResponse
-        extends AbstractResponseType<NewAddressListAreaCdResponse> {
+        extends AbstractPairedResponseType<NewAddressListAreaCdResponse, NewAddressListAreaCdRequest> {
 
     @Serial
     private static final long serialVersionUID = 774107822436988264L;
@@ -79,6 +80,9 @@ public class NewAddressListAreaCdResponse
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+    public NewAddressListAreaCdResponse() {
+        super(NewAddressListAreaCdRequest.class);
+    }
 
     // ---------------------------------------------------------------------------------------------- super.cmmMsgHeader
 

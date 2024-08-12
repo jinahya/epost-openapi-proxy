@@ -16,6 +16,11 @@ public final class _Constants {
     public static final String REQUEST_PARAM_CURRENT_PAGE = "currentPage";
 
     // -----------------------------------------------------------------------------------------------------------------
+    public static final String PARAMETER_DESCRIPTION_COUNT_PER_PAGE = "페이지당 출력 개수";
+
+    public static final String PARAMETER_DESCRIPTION_CURRENT_PAGE = "출력될 페이지 번호";
+
+    // -----------------------------------------------------------------------------------------------------------------
     private _Constants() {
         throw new AssertionError("instantiation is not allowed");
     }

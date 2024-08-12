@@ -1,5 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.hateoas;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractType;
 import jakarta.validation.constraints.NotNull;
@@ -23,5 +24,5 @@ public abstract class AbstractWrappingModel<
     // -----------------------------------------------------------------------------------------------------------------
     @JsonUnwrapped
     @NotNull
-    private WRAPPED wrapped;
+    protected WRAPPED wrapped;
 }

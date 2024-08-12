@@ -1,6 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractResponseTypeTest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedResponseTypeTest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractTypeTest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractTypeUtils;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_service.NewAddressListAreaCdResponse.NewAddressListAreaCd;
@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 @Slf4j
 class NewAddressListAreaCdResponseTest
-        extends AbstractResponseTypeTest<NewAddressListAreaCdResponse> {
+        extends AbstractPairedResponseTypeTest<NewAddressListAreaCdResponse, NewAddressListAreaCdRequest> {
 
     // -----------------------------------------------------------------------------------------------------------------
     @Nested

@@ -13,8 +13,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 @DisplayName("/getNewAddressListAreaCd")
 @Slf4j
 class GetNewAddressListAreaCd_SpringBootIT
@@ -49,21 +47,21 @@ class GetNewAddressListAreaCd_SpringBootIT
                 Stream.of(
                         NewAddressListAreaCdRequest.of(
                                 null,
-                                NewAddressListAreaCdRequest.SearchSe.DONG.text(),
+                                NewAddressListAreaCdRequest.SearchSe.DONG,
                                 "주월동 408-1",
                                 2,
                                 1
                         ),
                         NewAddressListAreaCdRequest.of(
                                 null,
-                                NewAddressListAreaCdRequest.SearchSe.ROAD.text(),
+                                NewAddressListAreaCdRequest.SearchSe.ROAD,
                                 "세종로 17",
                                 2,
                                 1
                         ),
                         NewAddressListAreaCdRequest.of(
                                 null,
-                                NewAddressListAreaCdRequest.SearchSe.POST.text(),
+                                NewAddressListAreaCdRequest.SearchSe.POST,
                                 "61725",
                                 2,
                                 1
@@ -78,13 +76,9 @@ class GetNewAddressListAreaCd_SpringBootIT
     })
     @ParameterizedTest
     void __(final NewAddressListAreaCdRequest request) {
-        final var response = exchange(webTestClient(), request);
+        final var response = exchange(request);
         assertValid(response);
-        assertThat(response.getCmmMsgHeader()).isNotNull().satisfies(h -> {
-            assertThat(h.isSucceeded()).isTrue();
-            log.debug("responseTime: {}", h.getResponseTime());
-            log.debug("responseTimeAsLocalDateTime: {}", h.getResponseTimeAsLocalDateTime());
-        });
+        assertSucceeded(response);
         response.getNewAddressListAreaCdList().forEach(e -> {
             log.debug("newAddressListAreaCd: {}", e);
         });

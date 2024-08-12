@@ -1,8 +1,8 @@
-package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.hateoas;
+package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_search_all_service.hateoas;
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service._RetrieveEngAddressServiceConstants;
 
-public class _RetrieveEngAddressServiceApiConstants {
+public class _RetrieveNewAdressAreaCdSearchAllServiceApiConstants {
 
     // -----------------------------------------------------------------------------------------------------------------
     static final String REL_STATE = "state";
@@ -61,7 +61,7 @@ public class _RetrieveEngAddressServiceApiConstants {
             REQUEST_URI_LANDS + "/{" + PATH_NAME_LAND_NAME + "}/" + REL_ADDRESSES;
 
     // -----------------------------------------------------------------------------------------------------------------
-    private _RetrieveEngAddressServiceApiConstants() {
+    private _RetrieveNewAdressAreaCdSearchAllServiceApiConstants() {
         throw new AssertionError("instantiation is not allowed");
     }
 }

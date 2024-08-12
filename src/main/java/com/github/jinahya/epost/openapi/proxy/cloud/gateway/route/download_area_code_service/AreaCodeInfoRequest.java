@@ -1,8 +1,10 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area_code_service;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.__common.AbstractPairedRequestType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.xml.bind.annotation.XmlEnum;
+import jakarta.xml.bind.annotation.XmlEnumValue;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +12,7 @@ import lombok.ToString;
 import org.springframework.web.util.UriBuilder;
 
 import java.io.Serial;
+import java.util.Objects;
 import java.util.function.BiConsumer;
 
 @Setter
@@ -27,71 +30,72 @@ public class AreaCodeInfoRequest
     /**
      * 우편번호 전체.
      */
-    public static final int DWLD_SE_1 = 1;
+    public static final String DWLD_SE_1 = "1";
 
     /**
      * 우편번호 변경분.
      */
-    public static final int DWLD_SE_2 = 2;
+    public static final String DWLD_SE_2 = "2";
 
     /**
      * 범위 주소.
      */
-    public static final int DWLD_SE_3 = 3;
+    public static final String DWLD_SE_3 = "3";
 
     /**
      * 사서함 주소.
      */
-    public static final int DWLD_SE_4 = 4;
+    public static final String DWLD_SE_4 = "4";
 
-    @XmlEnum(Integer.class)
+    @XmlEnum(String.class)
     public enum DwldSe {
 
         /**
          * 우편번호 전체.
          */
-        _1,
+        @XmlEnumValue(DWLD_SE_1)
+        _1(DWLD_SE_1),
 
         /**
          * 우편번호 변경분.
          */
-        _2,
+        @XmlEnumValue(DWLD_SE_2)
+        _2(DWLD_SE_2),
 
         /**
          * 범위 주소.
          */
-        _3,
+        @XmlEnumValue(DWLD_SE_3)
+        _3(DWLD_SE_3),
 
         /**
          * 사서함 주소.
          */
-        _4;
+        @XmlEnumValue(DWLD_SE_4)
+        _4(DWLD_SE_4);
 
-        public static DwldSe valueOf(final int value) {
-            for (final DwldSe v : values()) {
-                if (v.getValue() == value) {
-                    return v;
+        // -----------------------------------------------------------------------------------------------------------------
+        public static DwldSe valueOfText(final String text) {
+            Objects.requireNonNull(text, "text is null");
+            for (final DwldSe value : values()) {
+                if (value.text.equals(text)) {
+                    return value;
                 }
             }
-            throw new IllegalArgumentException("no value for " + value);
+            throw new IllegalArgumentException("no text for '" + text + "'");
         }
 
-        DwldSe(final Integer value) {
-            this.value = value;
+        // -----------------------------------------------------------------------------------------------------------------
+        DwldSe(final String text) {
+            this.text = Objects.requireNonNull(text, "text is null");
         }
 
-        DwldSe() {
-            this(null);
+        @JsonValue
+        public String text() {
+            return text;
         }
 
-        public int getValue() {
-            if (value == null) {
-                return ordinal() + 1;
-            }
-            return value;
-        }
-
-        private final Integer value;
+        private final String text;
     }
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
@@ -128,5 +132,6 @@ public class AreaCodeInfoRequest
 
     // -----------------------------------------------------------------------------------------------------------------
     @NotNull
+    // TODO: Use the enum!
     private Integer dwldSe;
 }

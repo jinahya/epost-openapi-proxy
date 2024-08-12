@@ -108,6 +108,17 @@ spring:
           predicates:
             - Method=GET
             - Path=/postal/retrieveNewAdressAreaCdSearchAllService/retrieveNewAdressAreaCdSearchAllService/{operation}
+        - id: retrieve_new_adress_area_cd_search_all_service_api
+          uri: forward:/postal/retrieveNewAdressAreaCdSearchAllService/retrieveNewAdressAreaCdSearchAllService/getNewAddressListAreaCdSearchAll
+          predicates:
+            - Method=GET
+            - Path=/api/retrieveNewAdressAreaCdSearchAllService/addresses/{srchwrd}
+          filters:
+            - AddRequestParameter=srchwrd, {srchwrd}
+            - AddRequestParameter=countPerPage, 32 # DO NOT MODIFY!!!
+            - AddRequestParameter=currentPage, 1
+            - SetRequestHeader=Cache-Control, no-cache
+            - RetrieveNewAdressAreaCdSearchAllService
         # -------------------------------------------------------------------------- retrieve_new_adress_area_cd_service
         - id: retrieve_new_adress_area_cd_service
           uri: http://openapi.epost.go.kr
