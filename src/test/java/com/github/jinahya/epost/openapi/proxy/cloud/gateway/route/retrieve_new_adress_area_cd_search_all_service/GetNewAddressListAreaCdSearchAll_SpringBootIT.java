@@ -1,6 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_search_all_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._SpringBootIT;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._RouteSpringBootIT;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractRequestTypeTestUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 @DisplayName("/getNewAddressListAreaCdSearchAll")
 @Slf4j
 class GetNewAddressListAreaCdSearchAll_SpringBootIT
-        extends _SpringBootIT {
+        extends _RouteSpringBootIT {
 
     // -----------------------------------------------------------------------------------------------------------------
     private static Stream<NewAddressListAreaCdSearchAllRequest> getRequestStream() {

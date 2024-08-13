@@ -36,7 +36,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 )
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Slf4j
-public abstract class _SpringBootIT {
+public abstract class _RouteSpringBootIT {
 
     @PostConstruct
     private void doOnPostConstruct() {

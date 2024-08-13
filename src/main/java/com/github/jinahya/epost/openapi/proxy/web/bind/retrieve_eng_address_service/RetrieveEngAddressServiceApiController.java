@@ -87,7 +87,7 @@ class RetrieveEngAddressServiceApiController {
 
     // ------------------------------------ /.../states/{stateName}/cities/{cityName}/districts/{districtName}/addresses
     @GetMapping(
-            path = _RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICTS_ADDRESSES,
+            path = _RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICT_ADDRESSES,
             produces = {
                     MediaType.APPLICATION_NDJSON_VALUE
             }

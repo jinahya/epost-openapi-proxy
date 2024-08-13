@@ -70,7 +70,6 @@ public class District
     // -----------------------------------------------------------------------------------------------------------------
     @JsonIgnore
     @Valid
-    @NotNull
     private City city;
 
     @JsonUnwrapped

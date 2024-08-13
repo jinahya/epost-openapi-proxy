@@ -1,6 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._SpringBootIT;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._RouteSpringBootIT;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractRequestTypeTestUtils;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractResponseType;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 @DisplayName("/getNewAddressListAreaCd")
 @Slf4j
 class GetNewAddressListAreaCd_SpringBootIT
-        extends _SpringBootIT {
+        extends _RouteSpringBootIT {
 
     static NewAddressListAreaCdResponse exchange(final WebTestClient client,
                                                  final NewAddressListAreaCdRequest request) {

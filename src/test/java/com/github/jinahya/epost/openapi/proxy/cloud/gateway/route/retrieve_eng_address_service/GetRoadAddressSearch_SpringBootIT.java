@@ -1,6 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._SpringBootIT;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._RouteSpringBootIT;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractRequestTypeTestUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 @DisplayName("/getRoadAddressSearch")
 @Slf4j
 class GetRoadAddressSearch_SpringBootIT
-        extends _SpringBootIT {
+        extends _RouteSpringBootIT {
 
     // -----------------------------------------------------------------------------------------------------------------
     static Stream<RoadAddressEngSearchListRequest> getRequestStream() {

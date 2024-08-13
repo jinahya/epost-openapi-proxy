@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.RoadAddressEngSearchListResponse;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
@@ -38,7 +37,6 @@ public class RoadAddress
     // -----------------------------------------------------------------------------------------------------------------
     @JsonIgnore
     @Valid
-    @NotNull
     private Road road;
 
     // -----------------------------------------------------------------------------------------------------------------

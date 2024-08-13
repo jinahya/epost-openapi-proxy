@@ -70,7 +70,6 @@ public class Road
     // -----------------------------------------------------------------------------------------------------------------
     @JsonIgnore
     @Valid
-    @NotNull
     private City city;
 
     @JsonUnwrapped

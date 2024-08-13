@@ -1,6 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area_code_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._SpringBootIT;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._RouteSpringBootIT;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractRequestTypeTestUtils;
 import com.github.jinahya.epost.openapi.proxy.web.reactive.funcion.client.WebClientUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 @DisplayName("/getAreaCodeInfo")
 @Slf4j
 class GetAreaCodeInfo_SpringBootIT
-        extends _SpringBootIT {
+        extends _RouteSpringBootIT {
 
     // -----------------------------------------------------------------------------------------------------------------
     private static Stream<AreaCodeInfoRequest> getRequestStream() {

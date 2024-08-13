@@ -52,7 +52,7 @@ public class _RetrieveEngAddressServiceApiConstants {
 
     public static final String PATH_NAME_DISTRICT_NAME = "districtName";
 
-    public static final String REQUEST_URI_DISTRICTS_ADDRESSES =
+    public static final String REQUEST_URI_DISTRICT_ADDRESSES =
             REQUEST_URI_DISTRICTS + "/{" + PATH_NAME_DISTRICT_NAME + "}/" + REL_ADDRESSES;
 
     public static final String PATH_NAME_LAND_NAME = "landName";

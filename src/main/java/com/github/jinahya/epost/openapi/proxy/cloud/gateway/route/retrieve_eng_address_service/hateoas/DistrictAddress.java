@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.LandAddressEngSearchListResponse;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
@@ -37,7 +36,6 @@ public class DistrictAddress
     // -----------------------------------------------------------------------------------------------------------------
     @JsonIgnore
     @Valid
-    @NotNull
     private District district;
 
     // -----------------------------------------------------------------------------------------------------------------
