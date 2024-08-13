@@ -63,7 +63,7 @@ class RetrieveEngAddressServiceApiStatesGatewayFilterFactory
                                             )
                                             .flatMap(selr -> Flux.fromIterable(
                                                     ((StateEngListResponse) selr).getStateEngList()))
-                                            .map(State::of)
+                                            .map(State::stateOf)
                                             .map(State::addLinks)
                                             .map(s -> new _Jackson2JsonEncoder(objectMapper).encodeValue(
                                                     s,

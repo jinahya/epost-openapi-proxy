@@ -28,7 +28,7 @@ public class State
     }
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
-    static State of(final StateEngListResponse.StateEngList wrapped) {
+    public static State stateOf(final StateEngListResponse.StateEngList wrapped) {
         Objects.requireNonNull(wrapped, "wrapped is null");
         final var instance = new State();
         instance.setWrapped(wrapped);
@@ -44,9 +44,9 @@ public class State
         return variables.get(_RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME);
     }
 
-    static State from(final ServerWebExchange exchange) {
+    static State stateFrom(final ServerWebExchange exchange) {
         final var wrapped = StateEngListResponse.StateEngList.of(stateName(exchange));
-        return of(wrapped);
+        return stateOf(wrapped);
     }
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS

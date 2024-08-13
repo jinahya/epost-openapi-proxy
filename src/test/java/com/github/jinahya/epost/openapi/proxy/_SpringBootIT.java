@@ -15,6 +15,7 @@ import org.springframework.boot.autoconfigure.validation.ValidationAutoConfigura
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.ResolvableType;
+import org.springframework.hateoas.config.HypermediaWebTestClientConfigurer;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -45,7 +46,8 @@ public abstract class _SpringBootIT {
         // https://stackoverflow.com/a/49496309/330457
         webTestClient = webTestClient.mutate()
                 .responseTimeout(Duration.ofSeconds(16L))
-                .build();
+                .build()
+        ;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -128,6 +130,9 @@ public abstract class _SpringBootIT {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
+    @Autowired
+    private HypermediaWebTestClientConfigurer hypermediaWebTestClientConfigurer;
+
     @Autowired
     @Accessors(fluent = true)
     @Setter(AccessLevel.NONE)

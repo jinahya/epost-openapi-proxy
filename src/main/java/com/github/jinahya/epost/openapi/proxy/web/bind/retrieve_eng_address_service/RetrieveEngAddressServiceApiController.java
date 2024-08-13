@@ -1,24 +1,37 @@
 package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service;
 
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.StateEngListRequest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.hateoas.*;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.web.reactive.context.ReactiveWebServerInitializedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
 @Hidden
 @Tag(name = _Constants.TAG)
 @Validated
 @RestController
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
+@Slf4j
 class RetrieveEngAddressServiceApiController {
+
+    @EventListener
+    void onApplicationEvent(final ReactiveWebServerInitializedEvent event) {
+        webClient = WebClient.builder()
+                .baseUrl("http://localhost:" + event.getWebServer().getPort())
+                .build();
+    }
 
     // ----------------------------------------------------------------------------------------------------- /.../states
     @Operation(summary = "Reads all states.")
@@ -29,7 +42,10 @@ class RetrieveEngAddressServiceApiController {
             }
     )
     Flux<State> readStates() {
-        throw new UnsupportedOperationException("");
+        return new StateEngListRequest()
+                .exchange(webClient)
+                .flatMapMany(r -> Flux.fromIterable(r.getStateEngList()))
+                .map(State::stateOf);
     }
 
     // ---------------------------------------------------------------------------------- /.../states/{stateName}/cities
@@ -99,4 +115,7 @@ class RetrieveEngAddressServiceApiController {
                     name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_DISTRICT_NAME) final String districtName) {
         throw new UnsupportedOperationException("");
     }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    private WebClient webClient;
 }
