@@ -1,10 +1,9 @@
-package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_search_all_service.hateoas;
+package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.hateoas;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.LandAddressEngSearchListRequest;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.LandAddressEngSearchListResponse;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.hateoas.DistrictAddress;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.RoadAddressEngSearchListRequest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.RoadAddressEngSearchListResponse;
 import com.github.jinahya.epost.openapi.proxy.http.codec.json._Jackson2JsonEncoder;
 import jakarta.annotation.PostConstruct;
 import lombok.*;
@@ -32,23 +31,24 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
 @Slf4j
-class RetrieveNewAdressAreaCdSearchAllServiceGatewayFilterFactory
-        extends AbstractGatewayFilterFactory<RetrieveNewAdressAreaCdSearchAllServiceGatewayFilterFactory.Config> {
+class RetrieveEngAddressServiceApiRoadAddressesGatewayFilterFactory
+        extends AbstractGatewayFilterFactory<RetrieveEngAddressServiceApiRoadAddressesGatewayFilterFactory.Config> {
 
     private static final int COUNT_PER_PAGE = 32; // yaml
 
     // -----------------------------------------------------------------------------------------------------------------
     @Setter
     @Getter
-    @EqualsAndHashCode
+    @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
     @NoArgsConstructor(access = AccessLevel.PACKAGE)
-    static class Config {
+    static class Config
+            extends RetrieveEngAddressServiceApiCitiesGatewayFilterFactory.Config {
 
     }
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
-    RetrieveNewAdressAreaCdSearchAllServiceGatewayFilterFactory() {
+    RetrieveEngAddressServiceApiRoadAddressesGatewayFilterFactory() {
         super(Config.class);
     }
 
@@ -90,25 +90,25 @@ class RetrieveNewAdressAreaCdSearchAllServiceGatewayFilterFactory
                     final var totalPage = new AtomicInteger();
                     final var firstPage = new Jaxb2XmlDecoder().decode(
                                     Flux.from(body),
-                                    ResolvableType.forType(LandAddressEngSearchListResponse.class),
+                                    ResolvableType.forType(RoadAddressEngSearchListResponse.class),
                                     null,
                                     null
                             )
-                            .map(v -> (LandAddressEngSearchListResponse) v)
+                            .map(v -> (RoadAddressEngSearchListResponse) v)
                             .switchOnFirst((s, f) -> {
                                 final var cmmMsgHeader = s.get().getCmmMsgHeader();
                                 totalPage.set(cmmMsgHeader.getTotalPage());
                                 return f;
                             });
-                    final var stateName = "";
-                    final var cityName = "";
-                    final var districtName = "";
-                    final var restPages = Mono.just(LandAddressEngSearchListRequest.of(
+                    final var stateName = State.stateName(e);
+                    final var cityName = City.cityName(e);
+                    final var roadName = Road.roadName(e);
+                    final var restPages = Mono.just(RoadAddressEngSearchListRequest.of(
                                     null,
                                     stateName,
                                     cityName,
                                     null,
-                                    districtName,
+                                    roadName,
                                     null,
                                     COUNT_PER_PAGE,
                                     2 // the second page
@@ -118,14 +118,14 @@ class RetrieveNewAdressAreaCdSearchAllServiceGatewayFilterFactory
                             .flatMapSequential(r -> r.exchange(webClient), 1);
                     return super.writeWith(
                             Flux.concat(firstPage, restPages)
-                                    .flatMap(r -> Flux.fromIterable(r.getLandAddressEngSearchList())
-                                            .map(DistrictAddress::from)
-                                            .map(DistrictAddress::addLinks)
+                                    .flatMap(r -> Flux.fromIterable(r.getRoadAddressEngSearchList())
+                                            .map(RoadAddress::from)
+                                            .map(RoadAddress::addLinks)
                                     )
                                     .map(ra -> new _Jackson2JsonEncoder(objectMapper).encodeValue(
                                                          ra,
                                                          getDelegate().bufferFactory(),
-                                                         ResolvableType.forType(DistrictAddress.class),
+                                                         ResolvableType.forType(RoadAddress.class),
                                                          null,
                                                          null
                                                  )
@@ -134,11 +134,11 @@ class RetrieveNewAdressAreaCdSearchAllServiceGatewayFilterFactory
                     );
                 }
             };
-            e.getResponse().getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_NDJSON_VALUE);
-//            response.beforeCommit(() -> {
-//                response.getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_NDJSON_VALUE);
-//                return Mono.empty();
-//            });
+//            e.getResponse().getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_NDJSON_VALUE);
+            response.beforeCommit(() -> {
+                response.getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_NDJSON_VALUE);
+                return Mono.empty();
+            });
             return c.filter(
                     e.mutate().response(decorator).build()
             );

@@ -27,8 +27,8 @@ import java.util.Objects;
 
 @Component
 @Slf4j
-class CitiesGatewayFilterFactory
-        extends AbstractGatewayFilterFactory<CitiesGatewayFilterFactory.Config> {
+class RetrieveEngAddressServiceApiCitiesGatewayFilterFactory
+        extends AbstractGatewayFilterFactory<RetrieveEngAddressServiceApiCitiesGatewayFilterFactory.Config> {
 
     // -----------------------------------------------------------------------------------------------------------------
     @Setter
@@ -36,12 +36,12 @@ class CitiesGatewayFilterFactory
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
     static class Config
-            extends StatesGatewayFilterFactory.Config {
+            extends RetrieveEngAddressServiceApiStatesGatewayFilterFactory.Config {
 
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    CitiesGatewayFilterFactory(final Jackson2ObjectMapperBuilder objectMapperBuilder) {
+    RetrieveEngAddressServiceApiCitiesGatewayFilterFactory(final Jackson2ObjectMapperBuilder objectMapperBuilder) {
         super(Config.class);
         this.objectMapperBuilder = Objects.requireNonNull(objectMapperBuilder, "objectMapperBuilder is null");
         objectMapper = this.objectMapperBuilder

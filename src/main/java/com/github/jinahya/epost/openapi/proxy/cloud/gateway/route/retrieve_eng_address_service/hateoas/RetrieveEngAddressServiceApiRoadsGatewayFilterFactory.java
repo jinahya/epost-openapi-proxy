@@ -4,7 +4,7 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.DistrictEngFirstNameListResponse;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.RoadEngFirstNameListResponse;
 import com.github.jinahya.epost.openapi.proxy.http.codec.json._Jackson2JsonEncoder;
 import jakarta.annotation.PostConstruct;
 import lombok.*;
@@ -32,8 +32,8 @@ import java.net.URL;
 
 @Component
 @Slf4j
-class DistrictsGatewayFilterFactory
-        extends AbstractGatewayFilterFactory<DistrictsGatewayFilterFactory.Config> {
+class RetrieveEngAddressServiceApiRoadsGatewayFilterFactory
+        extends AbstractGatewayFilterFactory<RetrieveEngAddressServiceApiRoadsGatewayFilterFactory.Config> {
 
     // -----------------------------------------------------------------------------------------------------------------
     @Setter
@@ -42,29 +42,29 @@ class DistrictsGatewayFilterFactory
     @ToString(callSuper = true)
     @NoArgsConstructor(access = AccessLevel.PACKAGE)
     static class Config
-            extends CitiesGatewayFilterFactory.Config {
+            extends RetrieveEngAddressServiceApiCitiesGatewayFilterFactory.Config {
 
         private String name;
     }
 
-    static Flux<District> decode(final ServerWebExchange exchange, final Publisher<? extends DataBuffer> body,
-                                 final WebClient webClient) {
+    static Flux<Road> decode(final ServerWebExchange exchange, final Publisher<? extends DataBuffer> body,
+                             final WebClient webClient) {
         final var stateName = State.stateName(exchange);
         final var cityName = City.cityName(exchange);
         return new Jaxb2XmlDecoder().decode(
                         Flux.from(body),
-                        ResolvableType.forType(DistrictEngFirstNameListResponse.class),
+                        ResolvableType.forType(RoadEngFirstNameListResponse.class),
                         null,
                         null
                 )
-                .map(DistrictEngFirstNameListResponse.class::cast)
-                .flatMap(refnlr -> refnlr.retrieveDistrictEngList(stateName, cityName, webClient))
-                .map(rel -> District.from(exchange, rel))
-                .map(District::addLinks);
+                .map(RoadEngFirstNameListResponse.class::cast)
+                .flatMap(refnlr -> refnlr.retrieveRoadEngList(stateName, cityName, webClient))
+                .map(rel -> Road.from(exchange, rel))
+                .map(Road::addLinks);
     }
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
-    DistrictsGatewayFilterFactory() {
+    RetrieveEngAddressServiceApiRoadsGatewayFilterFactory() {
         super(Config.class);
     }
 
@@ -97,11 +97,26 @@ class DistrictsGatewayFilterFactory
                 @Override
                 public Mono<Void> writeWith(final Publisher<? extends DataBuffer> body) {
                     return super.writeWith(
+//                            new Jaxb2XmlDecoder(MimeType.valueOf(MediaType.APPLICATION_XML_VALUE))
+//                                    .decode(
+//                                            Flux.from(body),
+//                                            ResolvableType.forType(RoadEngFirstNameListResponse.class),
+//                                            null,
+//                                            null
+//                                    )
+//                                    .flatMap(r -> ((RoadEngFirstNameListResponse) r).retrieveRoadEngList(
+//                                            e.getRequest().getQueryParams().getFirst(
+//                                                    _RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NAME),
+//                                            e.getRequest().getQueryParams().getFirst(
+//                                                    _RetrieveEngAddressServiceConstants.PARAM_CITY_ENG_NAME),
+//                                            webClient))
+//                                    .map(rel -> Road.from(e, rel))
+//                                    .map(Road::addLinks)
                             decode(e, body, webClient)
                                     .map(r -> new _Jackson2JsonEncoder(objectMapper).encodeValue(
                                             r,
                                             getDelegate().bufferFactory(),
-                                            ResolvableType.forType(District.class),
+                                            ResolvableType.forType(Road.class),
                                             null,
                                             null
                                     ))

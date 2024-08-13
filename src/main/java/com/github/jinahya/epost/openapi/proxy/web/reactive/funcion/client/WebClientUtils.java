@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.web.readtive.funcion.client;
+package com.github.jinahya.epost.openapi.proxy.web.reactive.funcion.client;
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area_code_service.AreaCodeInfoUtils;
 import io.micrometer.common.lang.NonNull;

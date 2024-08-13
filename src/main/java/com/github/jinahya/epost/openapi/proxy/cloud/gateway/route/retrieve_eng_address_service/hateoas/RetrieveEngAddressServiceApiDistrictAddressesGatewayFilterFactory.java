@@ -31,8 +31,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
 @Slf4j
-class DistrictAddressesGatewayFilterFactory
-        extends AbstractGatewayFilterFactory<DistrictAddressesGatewayFilterFactory.Config> {
+class RetrieveEngAddressServiceApiDistrictAddressesGatewayFilterFactory
+        extends AbstractGatewayFilterFactory<RetrieveEngAddressServiceApiDistrictAddressesGatewayFilterFactory.Config> {
 
     private static final int COUNT_PER_PAGE = 32; // yaml
 
@@ -43,12 +43,12 @@ class DistrictAddressesGatewayFilterFactory
     @ToString(callSuper = true)
     @NoArgsConstructor(access = AccessLevel.PACKAGE)
     static class Config
-            extends CitiesGatewayFilterFactory.Config {
+            extends RetrieveEngAddressServiceApiCitiesGatewayFilterFactory.Config {
 
     }
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
-    DistrictAddressesGatewayFilterFactory() {
+    RetrieveEngAddressServiceApiDistrictAddressesGatewayFilterFactory() {
         super(Config.class);
     }
 

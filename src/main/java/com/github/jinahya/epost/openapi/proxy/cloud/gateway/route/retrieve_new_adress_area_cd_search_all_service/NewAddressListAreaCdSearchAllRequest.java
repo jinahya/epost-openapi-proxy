@@ -24,18 +24,6 @@ public class NewAddressListAreaCdSearchAllRequest
     @Serial
     private static final long serialVersionUID = -7468923602062739458L;
 
-    // -----------------------------------------------------------------------------------------------------------------
-    public static final String QUERY_PARAM_NAME_SERVICE_KEY = "serviceKey";
-
-    // -----------------------------------------------------------------------------------------------------------------
-    public static final String QUERY_PARAM_NAME_SRCHWRD = "srchwrd";
-
-    // -----------------------------------------------------------------------------------------------------------------
-    public static final String QUERY_PARAM_NAME_COUNT_PER_PAGE = "countPerPage";
-
-    // -----------------------------------------------------------------------------------------------------------------
-    public static final String QUERY_PARAM_NAME_CURRENT_PAGE = "currentPage";
-
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
     public static NewAddressListAreaCdSearchAllRequest of(final String serviceKey, final String srchwrd,
                                                           final Integer countPerPage, final Integer currentPage) {

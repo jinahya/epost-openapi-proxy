@@ -27,8 +27,8 @@ import java.util.Objects;
 
 @Component
 @Slf4j
-class StatesGatewayFilterFactory
-        extends AbstractGatewayFilterFactory<StatesGatewayFilterFactory.Config> {
+class RetrieveEngAddressServiceApiStatesGatewayFilterFactory
+        extends AbstractGatewayFilterFactory<RetrieveEngAddressServiceApiStatesGatewayFilterFactory.Config> {
 
     // -----------------------------------------------------------------------------------------------------------------
     static class Config {
@@ -36,7 +36,7 @@ class StatesGatewayFilterFactory
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    StatesGatewayFilterFactory(final Jackson2ObjectMapperBuilder objectMapperBuilder) {
+    RetrieveEngAddressServiceApiStatesGatewayFilterFactory(final Jackson2ObjectMapperBuilder objectMapperBuilder) {
         super(Config.class);
         this.objectMapperBuilder = Objects.requireNonNull(objectMapperBuilder, "objectMapperBuilder is null");
         objectMapper = this.objectMapperBuilder
