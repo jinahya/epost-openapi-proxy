@@ -1,14 +1,13 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.hateoas;
 
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.hateoas.AbstractWrappingModel;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.StateEngListResponse;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.hateoas.Link;
-import org.springframework.hateoas.RepresentationModel;
 import org.springframework.web.server.ServerWebExchange;
 
+import java.io.Serial;
 import java.util.Map;
 import java.util.Objects;
 
@@ -18,8 +17,12 @@ import java.util.Objects;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class State
-        extends RepresentationModel<State> {
+        extends AbstractWrappingModel<State, StateEngListResponse.StateEngList> {
 
+    @Serial
+    private static final long serialVersionUID = -8409236918457140462L;
+
+    // -----------------------------------------------------------------------------------------------------------------
     static String getHref(final State state) {
         return _RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES + '/' + state.getWrapped().getStateEngName();
     }
@@ -56,8 +59,5 @@ public class State
         return this;
     }
 
-    // -----------------------------------------------------------------------------------------------------------------
-    @JsonUnwrapped
-    @NotNull
-    private StateEngListResponse.StateEngList wrapped;
+    // --------------------------------------------------------------------------------------------------- super.wrapped
 }

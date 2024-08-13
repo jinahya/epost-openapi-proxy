@@ -2,6 +2,7 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.hateo
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractType;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -22,6 +23,7 @@ public abstract class AbstractWrappingModel<
 
     // -----------------------------------------------------------------------------------------------------------------
     @JsonUnwrapped
+    @Valid
     @NotNull
     protected WRAPPED wrapped;
 }

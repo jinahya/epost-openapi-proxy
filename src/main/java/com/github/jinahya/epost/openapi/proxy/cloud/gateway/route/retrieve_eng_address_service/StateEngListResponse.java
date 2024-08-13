@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractPairedResponseType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractResponseElementType;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -53,10 +54,11 @@ public class StateEngListResponse
             return instance;
         }
 
-        // -----------------------------------------------------------------------------------------------------------------
+        // -------------------------------------------------------------------------------------------------------------
+        @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
         @NotBlank
-        @JsonProperty
-        @XmlElement
+        @JsonProperty(required = true)
+        @XmlElement(required = true)
         private String stateEngName;
     }
 

@@ -17,4 +17,6 @@ public abstract class AbstractModel<SELF extends AbstractModel<SELF>>
 
     @Serial
     private static final long serialVersionUID = 1775734949340833035L;
+
+    // ----------------------------------------------------------------------------------------------------- super.links
 }
