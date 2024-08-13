@@ -1,6 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service;
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.hateoas.*;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AccessLevel;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
+@Hidden
 @Tag(name = _Constants.TAG)
 @Validated
 @RestController
