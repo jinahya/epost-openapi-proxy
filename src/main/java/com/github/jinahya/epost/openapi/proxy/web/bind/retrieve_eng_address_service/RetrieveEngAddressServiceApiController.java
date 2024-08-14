@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.reactive.context.ReactiveWebServerInitializedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,7 @@ import reactor.core.publisher.Flux;
 @Tag(name = _Constants.TAG)
 @Validated
 @RestController
+@EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL)
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 @Slf4j
 class RetrieveEngAddressServiceApiController {
@@ -42,10 +44,12 @@ class RetrieveEngAddressServiceApiController {
             }
     )
     Flux<State> readStates() {
-        return new StateEngListRequest()
-                .exchange(webClient)
-                .flatMapMany(r -> Flux.fromIterable(r.getStateEngList()))
-                .map(State::stateOf);
+//        return new StateEngListRequest()
+//                .exchange(webClient)
+//                .flatMapMany(r -> Flux.fromIterable(r.getStateEngList()))
+//                .map(State::stateOf)
+//                ;
+        throw new UnsupportedOperationException("");
     }
 
     // ---------------------------------------------------------------------------------- /.../states/{stateName}/cities
