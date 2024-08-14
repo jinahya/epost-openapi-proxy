@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.reactive.context.ReactiveWebServerInitializedEvent;
 import org.springframework.boot.web.server.WebServer;
-import org.springframework.context.annotation.Scope;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.ResolvableType;
 import org.springframework.http.HttpHeaders;
@@ -23,10 +22,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-//@EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL, stacks = WebStack.WEBFLUX)
-//@Import({JacksonAutoConfiguration.class})
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Scope("application")
 @Slf4j
 public abstract class _ApiController {
 
@@ -39,21 +34,18 @@ public abstract class _ApiController {
         objectMapper = objectMapperBuilder
                 .featuresToDisable(SerializationFeature.INDENT_OUTPUT)
                 .build();
-        log.debug("this: {}", this);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
 
     @EventListener
     void onApplicationEvent(final ReactiveWebServerInitializedEvent event) {
-        log.debug("event: {}", event);
         webServer = event.getWebServer();
-        log.debug("webServer: {}", webServer);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    protected <T> Mono<Void> writeNdjsonResponseWith(final ServerHttpResponse response, Flux<T> flux, final Class<T> type) {
-        log.debug("webServer: {}", webServer);
+    protected <T> Mono<Void> writeNdjsonResponseWith(final ServerHttpResponse response, Flux<T> flux,
+                                                     final Class<T> type) {
         response.beforeCommit(() -> Mono.fromRunnable(() -> {
             response.getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_NDJSON_VALUE);
         }));
@@ -70,28 +62,10 @@ public abstract class _ApiController {
         );
     }
 
-//    // --------------------------------------------------------------------------------------------- objectMapperBuilder
-//    private Jackson2ObjectMapperBuilder objectMapperBuilder() {
-//        if (objectMapperBuilder == null) {
-//            objectMapperBuilder = new Jackson2ObjectMapperBuilder()
-//                    .featuresToDisable(SerializationFeature.INDENT_OUTPUT);
-//        }
-//        return objectMapperBuilder;
-//    }
-//
-//    // ------------------------------------------------------------------------------------------------------- objectMapper
-//    protected ObjectMapper objectMapper() {
-//        if (objectMapper == null) {
-//            objectMapper = objectMapperBuilder().build();
-//        }
-//        return objectMapper;
-//    }
-
     // ------------------------------------------------------------------------------------------------------- webClient
     protected WebClient webClient() {
         if (webClient == null) {
             webClient = WebClient.builder()
-//                    .baseUrl("http://localhost:" + webServerPort)
                     .baseUrl("http://localhost:" + webServer.getPort())
                     .build();
         }
@@ -99,7 +73,6 @@ public abstract class _ApiController {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-
     @Autowired
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.NONE)

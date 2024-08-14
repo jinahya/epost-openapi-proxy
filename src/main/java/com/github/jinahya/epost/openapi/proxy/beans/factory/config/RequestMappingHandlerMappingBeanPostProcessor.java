@@ -8,7 +8,7 @@ import org.springframework.cloud.gateway.handler.RoutePredicateHandlerMapping;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.result.method.annotation.RequestMappingHandlerMapping;
 
-//@Component
+@Component
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 // https://stackoverflow.com/a/73439944/330457
 class RequestMappingHandlerMappingBeanPostProcessor
