@@ -1,8 +1,15 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
 public interface PaginatedRequest<T extends AbstractRequestType<T> & PaginatedRequest<T>> {
 
+    int MIN_CURRENT_PAGE = 1;
+
     // ---------------------------------------------------------------------------------------------------- countPerPage
+    @Positive
+    @NotNull
     default Integer getCountPerPage() {
         return PaginatedRequestHelper.getCountPerPage(this);
     }
@@ -18,6 +25,8 @@ public interface PaginatedRequest<T extends AbstractRequestType<T> & PaginatedRe
     }
 
     // ----------------------------------------------------------------------------------------------------- currentPage
+    @Positive
+    @NotNull
     default Integer getCurrentPage() {
         return PaginatedRequestHelper.getCurrentPage(this);
     }

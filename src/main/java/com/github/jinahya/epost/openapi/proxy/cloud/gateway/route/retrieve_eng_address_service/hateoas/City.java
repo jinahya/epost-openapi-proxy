@@ -39,7 +39,7 @@ public class City
     }
 
     static City from(final ServerWebExchange exchange, final CityEngListResponse.CityEngList wrapped) {
-        final var state = State.stateFrom(exchange);
+        final var state = State.fromExchange(exchange);
         return City.of(state, wrapped);
     }
 

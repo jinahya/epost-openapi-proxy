@@ -15,8 +15,9 @@ epost:
 #    health:
 #      show-details: always
 
-#springdoc:
-#  show-actuator: true
+springdoc:
+  enable-hateoas: false
+  show-actuator: true
 
 # https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/global-filters.html#local-cache-response-global-filter
 # https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/gatewayfilter-factories/local-cache-response-filter.html

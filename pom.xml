@@ -173,7 +173,7 @@
       <groupId>org.springdoc</groupId>
       <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
       <!-- https://search.maven.org/artifact/org.springdoc/springdoc-openapi-starter-webflux-ui -->
-<!--      <scope>runtime</scope>-->
+      <!--      <scope>runtime</scope>-->
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -188,16 +188,22 @@
       <!--      <scope>compile</scope>-->
       <scope>runtime</scope>
     </dependency>
+    <!--    <dependency>-->
+    <!--      <groupId>org.springframework.boot</groupId>-->
+    <!--      <artifactId>spring-boot-starter-hateoas</artifactId>-->
+    <!--      <scope>compile</scope>-->
+    <!--      <exclusions>-->
+    <!--        <exclusion>-->
+    <!--          <groupId>org.springframework.boot</groupId>-->
+    <!--          <artifactId>spring-boot-starter-web</artifactId>-->
+    <!--        </exclusion>-->
+    <!--      </exclusions>-->
+    <!--    </dependency>-->
 <!--    <dependency>-->
 <!--      <groupId>org.springframework.boot</groupId>-->
-<!--      <artifactId>spring-boot-starter-hateoas</artifactId>-->
-<!--      <scope>compile</scope>-->
-<!--      <exclusions>-->
-<!--        <exclusion>-->
-<!--          <groupId>org.springframework.boot</groupId>-->
-<!--          <artifactId>spring-boot-starter-web</artifactId>-->
-<!--        </exclusion>-->
-<!--      </exclusions>-->
+<!--      <artifactId>spring-boot-starter-json</artifactId>-->
+<!--      &lt;!&ndash;      <scope>compile</scope>&ndash;&gt;-->
+<!--      <scope>runtime</scope>-->
 <!--    </dependency>-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
