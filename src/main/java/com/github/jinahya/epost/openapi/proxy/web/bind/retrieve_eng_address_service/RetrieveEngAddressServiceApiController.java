@@ -104,7 +104,7 @@ class RetrieveEngAddressServiceApiController
                         1
                 ))
                 .expand(r -> Mono.just(r.forNextPage()))
-                .flatMapSequential(r -> r.exchange(webClient()))
+                .flatMapSequential(r -> r.exchange(webClient()), 5, 1)
                 .switchOnFirst((s, f) -> {
                     final var cmmMsgHeader = s.get().getCmmMsgHeader();
                     total.set(cmmMsgHeader.getTotalCount());
