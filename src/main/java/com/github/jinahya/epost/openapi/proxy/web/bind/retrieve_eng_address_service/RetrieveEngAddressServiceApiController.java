@@ -39,6 +39,7 @@ class RetrieveEngAddressServiceApiController {
 
     private static final ResolvableType RESOLVABLE_TYPE_FOR_STATE = ResolvableType.forType(State.class);
 
+    // -----------------------------------------------------------------------------------------------------------------
     @EventListener
     void onApplicationEvent(final ReactiveWebServerInitializedEvent event) {
         objectMapper = this.objectMapperBuilder
