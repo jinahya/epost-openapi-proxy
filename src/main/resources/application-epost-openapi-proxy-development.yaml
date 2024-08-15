@@ -67,29 +67,29 @@ spring:
 #            - AddRequestParameter=currentPage, 1
 #            - SetRequestHeader=Cache-Control, no-cache
 #            - RetrieveEngAddressServiceApiRoadAddresses
-        - id: retrieve_eng_address_service_api_districts
-          uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getDistrictFirstNameList
-          predicates:
-            - Method=GET
-            - Path=/api/retrieveEngAddressService/states/{stateName}/cities/{cityName}/districts
-          filters:
-            - AddRequestParameter=stateEngName, {stateName}
-            - AddRequestParameter=cityEngName, {cityName}
-            - SetRequestHeader=Cache-Control, no-cache
-            - RetrieveEngAddressServiceApiDistricts
-        - id: retrieve_eng_address_service_api_district_addresses
-          uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getLandAddressSearch
-          predicates:
-            - Method=GET
-            - Path=/api/retrieveEngAddressService/states/{stateName}/cities/{cityName}/districts/{districtName}/addresses
-          filters:
-            - AddRequestParameter=stateEngName, {stateName}
-            - AddRequestParameter=cityEngName, {cityName}
-            - AddRequestParameter=districtEngName, {districtName}
-            - AddRequestParameter=countPerPage, 32 # DO NOT MODIFY!!!
-            - AddRequestParameter=currentPage, 1
-            - SetRequestHeader=Cache-Control, no-cache
-            - RetrieveEngAddressServiceApiDistrictAddresses
+#        - id: retrieve_eng_address_service_api_districts
+#          uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getDistrictFirstNameList
+#          predicates:
+#            - Method=GET
+#            - Path=/api/retrieveEngAddressService/states/{stateName}/cities/{cityName}/districts
+#          filters:
+#            - AddRequestParameter=stateEngName, {stateName}
+#            - AddRequestParameter=cityEngName, {cityName}
+#            - SetRequestHeader=Cache-Control, no-cache
+#            - RetrieveEngAddressServiceApiDistricts
+#        - id: retrieve_eng_address_service_api_district_addresses
+#          uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getLandAddressSearch
+#          predicates:
+#            - Method=GET
+#            - Path=/api/retrieveEngAddressService/states/{stateName}/cities/{cityName}/districts/{districtName}/addresses
+#          filters:
+#            - AddRequestParameter=stateEngName, {stateName}
+#            - AddRequestParameter=cityEngName, {cityName}
+#            - AddRequestParameter=districtEngName, {districtName}
+#            - AddRequestParameter=countPerPage, 32 # DO NOT MODIFY!!!
+#            - AddRequestParameter=currentPage, 1
+#            - SetRequestHeader=Cache-Control, no-cache
+#            - RetrieveEngAddressServiceApiDistrictAddresses
         # -------------------------------------------------------------------------------- retrieve_longitudinal_service
         - id: retrieve_longitudinal_service
           uri: http://openapi.epost.go.kr

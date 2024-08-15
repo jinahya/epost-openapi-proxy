@@ -1,6 +1,5 @@
 package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.hateoas.*;
 import com.github.jinahya.epost.openapi.proxy.web.bind._WebBindSpringBootIT;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,7 +10,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RetrieveEngAddressServiceApiController_SpringBootIT
+class _RetrieveEngAddressServiceApiController_SpringBootIT
         extends _WebBindSpringBootIT {
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -41,6 +40,20 @@ class RetrieveEngAddressServiceApiController_SpringBootIT
                 .getResponseBody();
     }
 
+    static List<City> readCities(final WebTestClient client, final String stateName) {
+        return client
+                .get()
+                .uri(b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITIES)
+                        .build(stateName)
+                )
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_NDJSON)
+                .expectBodyList(City.class)
+                .returnResult()
+                .getResponseBody();
+    }
+
     static List<Road> readRoads(final WebTestClient client, final State state, final City city) {
         return client
                 .get()
@@ -48,6 +61,20 @@ class RetrieveEngAddressServiceApiController_SpringBootIT
                         state.getWrapped().getStateEngName(),
                         city.getWrapped().getCityEngName()
                 ))
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_NDJSON)
+                .expectBodyList(Road.class)
+                .returnResult()
+                .getResponseBody();
+    }
+
+    static List<Road> readRoads(final WebTestClient client, final String stateName, final String cityName) {
+        return client
+                .get()
+                .uri(b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROADS)
+                        .build(stateName, cityName)
+                )
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader().contentType(MediaType.APPLICATION_NDJSON)
@@ -133,8 +160,9 @@ class RetrieveEngAddressServiceApiController_SpringBootIT
     @Test
     void readRoads__() {
         final var state = readStates(webTestClient()).getFirst();
-        final var city = readCities(webTestClient(), state).getFirst();
-        final var roads = readRoads(webTestClient(), state, city);
+        final var city = readCities(webTestClient(), state.getWrapped().getStateEngName()).getFirst();
+        final var roads = readRoads(webTestClient(), state.getWrapped().getStateEngName(),
+                                    city.getWrapped().getCityEngName());
         assertThat(roads)
                 .isNotEmpty()
                 .doesNotContainNull()

@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.LandAddressEngSearchListRequest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.LandAddressEngSearchListResponse;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.hateoas.DistrictAddress;
 import com.github.jinahya.epost.openapi.proxy.http.codec.json._Jackson2JsonEncoder;
+import com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service.DistrictAddress;
 import jakarta.annotation.PostConstruct;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -119,7 +119,7 @@ class RetrieveNewAdressAreaCdSearchAllServiceApiGatewayFilterFactory
                     return super.writeWith(
                             Flux.concat(firstPage, restPages)
                                     .flatMap(r -> Flux.fromIterable(r.getLandAddressEngSearchList())
-                                            .map(DistrictAddress::from)
+                                            .map(w -> DistrictAddress.instanceOf(stateName, cityName, districtName, w))
                                             .map(DistrictAddress::addLinks)
                                     )
                                     .map(ra -> new _Jackson2JsonEncoder(objectMapper).encodeValue(

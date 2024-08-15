@@ -1,13 +1,12 @@
-package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.hateoas;
+package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.RoadAddressEngSearchListResponse;
-import jakarta.validation.Valid;
+import com.github.jinahya.epost.openapi.proxy.web.bind.AbstractWrappingModel;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
-import org.springframework.hateoas.RepresentationModel;
 
+import java.io.Serial;
 import java.util.Objects;
 
 @Setter
@@ -16,10 +15,13 @@ import java.util.Objects;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class RoadAddress
-        extends RepresentationModel<RoadAddress> {
+        extends AbstractWrappingModel<RoadAddress, RoadAddressEngSearchListResponse.RoadAddressEngSearchList> {
+
+    @Serial
+    private static final long serialVersionUID = -5101898500073554823L;
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
-    public static RoadAddress from(
+    public static RoadAddress instanceOf(
             final RoadAddressEngSearchListResponse.RoadAddressEngSearchList roadAddressEngSearchList) {
         Objects.requireNonNull(roadAddressEngSearchList, "roadAddressEngSearchList is null");
         final var instance = new RoadAddress();
@@ -36,11 +38,14 @@ public class RoadAddress
 
     // -----------------------------------------------------------------------------------------------------------------
     @JsonIgnore
-    @Valid
-    private Road road;
+//    @NotBlank
+    private String stateName;
 
-    // -----------------------------------------------------------------------------------------------------------------
-    @JsonUnwrapped
-    @JsonProperty
-    private RoadAddressEngSearchListResponse.RoadAddressEngSearchList wrapped;
+    @JsonIgnore
+//    @NotBlank
+    private String cityName;
+
+    @JsonIgnore
+//    @NotBlank
+    private String districtName;
 }

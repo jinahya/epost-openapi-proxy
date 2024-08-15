@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.hateoas;
+package com.github.jinahya.epost.openapi.proxy.web.bind;
 
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;

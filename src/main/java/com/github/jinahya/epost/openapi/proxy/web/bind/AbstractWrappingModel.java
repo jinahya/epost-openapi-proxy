@@ -1,6 +1,6 @@
-package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.hateoas;
+package com.github.jinahya.epost.openapi.proxy.web.bind;
 
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -22,7 +22,8 @@ public abstract class AbstractWrappingModel<
     private static final long serialVersionUID = 2185796969322484068L;
 
     // -----------------------------------------------------------------------------------------------------------------
-    @JsonUnwrapped
+//    @JsonUnwrapped
+    @JsonProperty
     @Valid
     @NotNull
     protected WRAPPED wrapped;
