@@ -4,11 +4,14 @@ import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_a
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.StateEngListRequest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.hateoas.*;
 import com.github.jinahya.epost.openapi.proxy.web.bind._ApiController;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,9 +21,9 @@ import reactor.core.publisher.Mono;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.LongAdder;
 
-//@Hidden
-//@Tag(name = _Constants.TAG)
-//@Validated
+@Hidden
+@Tag(name = _Constants.TAG)
+@Validated
 @RestController
 @Slf4j
 class RetrieveEngAddressServiceApiController
@@ -39,9 +42,6 @@ class RetrieveEngAddressServiceApiController
             }
     )
     Mono<Void> readStates(final ServerHttpResponse response) {
-        response.beforeCommit(() -> Mono.fromRunnable(() -> {
-            response.getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_NDJSON_VALUE);
-        }));
         return writeNdjsonResponseWith(
                 response,
                 new StateEngListRequest()

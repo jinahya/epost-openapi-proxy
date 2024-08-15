@@ -22,9 +22,19 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 @Slf4j
 public abstract class _ApiController {
 
+    private static final Map<Class<?>, ResolvableType> RESOLVABLE_TYPES = new ConcurrentHashMap<>();
+
+    private static ResolvableType getResolvableTypeOf(final Class<?> type) {
+        return RESOLVABLE_TYPES.computeIfAbsent(type, ResolvableType::forClass);
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
     protected _ApiController() {
         super();
     }
@@ -41,6 +51,7 @@ public abstract class _ApiController {
     @EventListener
     void onApplicationEvent(final ReactiveWebServerInitializedEvent event) {
         webServer = event.getWebServer();
+        log.debug("webServer: {}", webClient);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -54,7 +65,7 @@ public abstract class _ApiController {
                 flux.map(s -> encoder.encodeValue(
                                 s,
                                 response.bufferFactory(),
-                                ResolvableType.forType(type),
+                                getResolvableTypeOf(type),
                                 null,
                                 null
                         ))
@@ -64,6 +75,7 @@ public abstract class _ApiController {
 
     // ------------------------------------------------------------------------------------------------------- webClient
     protected WebClient webClient() {
+        assert webServer != null;
         if (webClient == null) {
             webClient = WebClient.builder()
                     .baseUrl("http://localhost:" + webServer.getPort())
