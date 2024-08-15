@@ -42,7 +42,7 @@ public final class WebClientUtils {
     public static WebClient.ResponseSpec retrieve(final String baseUrl) {
         Objects.requireNonNull(baseUrl, "baseUrl is null");
         final var httpClient = HttpClient.create()
-                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, CONNECT_TIMEOUT_MILLIS)
+//                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, CONNECT_TIMEOUT_MILLIS)
                 .doOnConnected(c -> {
 //                    c.addHandlerFirst(new WriteTimeoutHandler(WRITE_TIMEOUT_TIMEOUT, WRITE_TIMEOUT_UNIT));
 //                    c.addHandlerFirst(new ReadTimeoutHandler(READ_TIMEOUT_TIMEOUT, READ_TIMEOUT_UNIT));

@@ -22,6 +22,12 @@ import java.util.Objects;
 public class Road
         extends RepresentationModel<Road> {
 
+    static String getHref(final String stateName, final String cityName, final String roadName) {
+        return City.getHref(stateName, cityName)
+                + '/' + _RetrieveEngAddressServiceApiConstants.REL_ROADS
+                + '/' + roadName;
+    }
+
     static String getHref(final Road road) {
         return City.getHref(road.getCity())
                 + '/' + _RetrieveEngAddressServiceApiConstants.REL_ROADS
@@ -29,7 +35,17 @@ public class Road
     }
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
-    public static Road of(final City city, final RoadEngListResponse.RoadEngList wrapped) {
+    public static Road roadOf(final String stateName, final String cityName,
+                              final RoadEngListResponse.RoadEngList wrapped) {
+        Objects.requireNonNull(wrapped, "wrapped is null");
+        final var instance = new Road();
+        instance.stateName = stateName;
+        instance.cityName = cityName;
+        instance.wrapped = wrapped;
+        return instance;
+    }
+
+    public static Road roadOf(final City city, final RoadEngListResponse.RoadEngList wrapped) {
         Objects.requireNonNull(city, "city is null");
         Objects.requireNonNull(wrapped, "wrapped is null");
         final var instance = new Road();
@@ -40,7 +56,7 @@ public class Road
 
     static Road from(final ServerWebExchange exchange, final RoadEngListResponse.RoadEngList wrapped) {
         final var city = City.from(exchange);
-        return of(city, wrapped);
+        return roadOf(city, wrapped);
     }
 
     static String roadName(final ServerWebExchange exchange) {
@@ -62,8 +78,15 @@ public class Road
     // ----------------------------------------------------------------------------------------------------- super.links
     public Road addLinks() {
 //        add(Link.of(getHref(this)).withRel(IanaLinkRelations.SELF));
-        add(Link.of(getHref(this) + '/' + _RetrieveEngAddressServiceApiConstants.REL_ADDRESSES).withRel(
-                _RetrieveEngAddressServiceApiConstants.REL_ADDRESSES));
+//        add(Link.of(City.getHref(stateName, cityName) + '/' + _RetrieveEngAddressServiceApiConstants.REL_ADDRESSES)
+//                    .withRel(
+//                            _RetrieveEngAddressServiceApiConstants.REL_ADDRESSES));
+        add(Link.of(
+                            getHref(stateName, cityName, wrapped.getRoadEngName())
+                                    + '/' + _RetrieveEngAddressServiceApiConstants.REL_ADDRESSES
+                    )
+                    .withRel(_RetrieveEngAddressServiceApiConstants.REL_ADDRESSES)
+        );
         return this;
     }
 
@@ -71,6 +94,12 @@ public class Road
     @JsonIgnore
     @Valid
     private City city;
+
+    @JsonIgnore
+    private String stateName;
+
+    @JsonIgnore
+    private String cityName;
 
     @JsonUnwrapped
     @Valid

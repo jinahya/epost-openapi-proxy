@@ -35,25 +35,25 @@ spring:
 #          filters:
 #            - SetRequestHeader=Cache-Control, no-cache
 #            - RetrieveEngAddressServiceApiStates
-        - id: retrieve_eng_address_service_api_cities
-          uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getCityList
-          predicates:
-            - Method=GET
-            - Path=/api/retrieveEngAddressService/states/{stateName}/cities
-          filters:
-            - AddRequestParameter=stateEngName, {stateName}
-            - SetRequestHeader=Cache-Control, no-cache
-            - RetrieveEngAddressServiceApiCities
-        - id: retrieve_eng_address_service_api_roads
-          uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getRoadFirstNameList
-          predicates:
-            - Method=GET
-            - Path=/api/retrieveEngAddressService/states/{stateName}/cities/{cityName}/roads
-          filters:
-            - AddRequestParameter=stateEngName, {stateName}
-            - AddRequestParameter=cityEngName, {cityName}
-            - SetRequestHeader=Cache-Control, no-cache
-            - RetrieveEngAddressServiceApiRoads
+#        - id: retrieve_eng_address_service_api_cities
+#          uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getCityList
+#          predicates:
+#            - Method=GET
+#            - Path=/api/retrieveEngAddressService/states/{stateName}/cities
+#          filters:
+#            - AddRequestParameter=stateEngName, {stateName}
+#            - SetRequestHeader=Cache-Control, no-cache
+#            - RetrieveEngAddressServiceApiCities
+#        - id: retrieve_eng_address_service_api_roads
+#          uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getRoadFirstNameList
+#          predicates:
+#            - Method=GET
+#            - Path=/api/retrieveEngAddressService/states/{stateName}/cities/{cityName}/roads
+#          filters:
+#            - AddRequestParameter=stateEngName, {stateName}
+#            - AddRequestParameter=cityEngName, {cityName}
+#            - SetRequestHeader=Cache-Control, no-cache
+#            - RetrieveEngAddressServiceApiRoads
 #        - id: retrieve_eng_address_service_api_road_addresses
 #          uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getRoadAddressSearch
 #          predicates:

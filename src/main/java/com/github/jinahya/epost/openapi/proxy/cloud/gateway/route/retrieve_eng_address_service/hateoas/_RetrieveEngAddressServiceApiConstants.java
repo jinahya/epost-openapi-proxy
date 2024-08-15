@@ -29,9 +29,15 @@ public class _RetrieveEngAddressServiceApiConstants {
 
     public static final String PATH_NAME_STATE_NAME = "stateName";
 
+    public static final String PATH_VALUE_STATE_NAME = ".+";
+
+    public static final String PATH_TEMPLATE_STATE_NAME =
+            '{' + PATH_NAME_STATE_NAME + ':' + PATH_VALUE_STATE_NAME + '}';
+
     // -----------------------------------------------------------------------------------------------------------------
     public static final String REQUEST_URI_CITIES =
-            REQUEST_URI_STATES + "/{" + PATH_NAME_STATE_NAME + "}/" + REL_CITIES;
+//            REQUEST_URI_STATES + "/{" + PATH_NAME_STATE_NAME + "}/" + REL_CITIES;
+            REQUEST_URI_STATES + '/' + PATH_TEMPLATE_STATE_NAME + '/' + REL_CITIES;
 
     public static final String PATH_NAME_CITY_NAME = "cityName";
 

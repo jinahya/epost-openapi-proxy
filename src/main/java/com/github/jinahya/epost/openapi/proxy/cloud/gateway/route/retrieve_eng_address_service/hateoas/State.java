@@ -23,6 +23,10 @@ public class State
     private static final long serialVersionUID = -8409236918457140462L;
 
     // -----------------------------------------------------------------------------------------------------------------
+    static String getHref(final String stateName) {
+        return _RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES + '/' + stateName;
+    }
+
     static String getHref(final State state) {
         return _RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES + '/' + state.getWrapped().getStateEngName();
     }

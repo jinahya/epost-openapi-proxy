@@ -69,7 +69,8 @@ public abstract class AbstractRequestType<SELF extends AbstractRequestType<SELF>
                 .headers(headersConsumer)
                 .exchangeToMono(r -> r.bodyToMono(responseType).map(AbstractResponseType::get))
                 .handle((r, s) -> {
-                    if (!r.getCmmMsgHeader().isSucceeded()) {
+                    final var cmmMsgHeader = r.getCmmMsgHeader();
+                    if (cmmMsgHeader == null || !cmmMsgHeader.isSucceeded()) {
                         s.error(new RuntimeException("unsuccessful result: " + r));
                     } else {
                         s.next(r);

@@ -3,7 +3,6 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.CityEngListResponse;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
@@ -22,25 +21,30 @@ import java.util.Objects;
 public class City
         extends RepresentationModel<City> {
 
+    static String getHref(final String stateName, final String cityName) {
+        return State.getHref(stateName)
+                + '/' + _RetrieveEngAddressServiceApiConstants.REL_CITIES
+                + '/' + cityName;
+    }
+
     static String getHref(final City city) {
-        return State.getHref(city.getState())
+        return State.getHref(city.stateName)
                 + '/' + _RetrieveEngAddressServiceApiConstants.REL_CITIES
                 + '/' + city.getWrapped().getCityEngName();
     }
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
-    static City of(final State state, final CityEngListResponse.CityEngList wrapped) {
-        Objects.requireNonNull(state, "state is null");
+    public static City cityOf(final String stateName, final CityEngListResponse.CityEngList wrapped) {
         Objects.requireNonNull(wrapped, "wrapped is null");
         final var instance = new City();
-        instance.setState(state);
+        instance.setStateName(stateName);
         instance.setWrapped(wrapped);
         return instance;
     }
 
     static City from(final ServerWebExchange exchange, final CityEngListResponse.CityEngList wrapped) {
         final var state = State.fromExchange(exchange);
-        return City.of(state, wrapped);
+        return City.cityOf(state.getWrapped().getStateEngName(), wrapped);
     }
 
     static String cityName(final ServerWebExchange exchange) {
@@ -71,8 +75,7 @@ public class City
 
     // -----------------------------------------------------------------------------------------------------------------
     @JsonIgnore
-    @Valid
-    private State state;
+    private String stateName;
 
     @JsonUnwrapped
     @NotNull

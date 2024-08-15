@@ -1,14 +1,13 @@
 package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.RoadAddressEngSearchListRequest;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.StateEngListRequest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.*;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.hateoas.*;
 import com.github.jinahya.epost.openapi.proxy.web.bind._ApiController;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.NotBlank;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.validation.annotation.Validated;
@@ -29,6 +28,7 @@ import java.util.concurrent.atomic.LongAdder;
 class RetrieveEngAddressServiceApiController
         extends _ApiController {
 
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
     RetrieveEngAddressServiceApiController() {
         super();
     }
@@ -61,9 +61,19 @@ class RetrieveEngAddressServiceApiController
                     MediaType.APPLICATION_NDJSON_VALUE
             }
     )
-    Flux<City> readCities(
-            @PathVariable(name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName) {
-        throw new UnsupportedOperationException("");
+    Mono<Void> readCities(
+            @NotBlank
+            @PathVariable(name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
+            final ServerHttpResponse response) {
+        return writeNdjsonResponseWith(
+                response,
+                CityEngListRequest.of(null, stateName)
+                        .exchange(webClient())
+                        .flatMapMany(r -> Flux.fromIterable(r.getCityEngList()))
+                        .map(cel -> City.cityOf(null, cel))
+                        .map(City::addLinks),
+                City.class
+        );
     }
 
     // ----------------------------------------------------------------- /.../states/{stateName}/cities/{cityName}/roads
@@ -73,10 +83,24 @@ class RetrieveEngAddressServiceApiController
                     MediaType.APPLICATION_NDJSON_VALUE
             }
     )
-    Flux<Road> readRoads(
+    Mono<Void> readRoads(
+            @NotBlank
             @PathVariable(_RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
-            @PathVariable(name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName) {
-        throw new UnsupportedOperationException("");
+            @NotBlank
+            @PathVariable(name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName,
+            final ServerHttpResponse response) {
+        return writeNdjsonResponseWith(
+                response,
+                RoadEngFirstNameListRequest.of(null, stateName, cityName)
+                        .exchange(webClient())
+                        .flatMapMany(refnlr -> Flux.fromIterable(refnlr.getRoadEngFirstNameList()))
+                        .map(refnl -> RoadEngListRequest.of(null, stateName, cityName, refnl.getRoadEngFirstName()))
+                        .flatMapSequential(relr -> relr.exchange(webClient()), 5)
+                        .flatMap(relr -> Flux.fromIterable(relr.getRoadEngList()))
+                        .map(rel -> Road.roadOf(stateName, cityName, rel))
+                        .map(Road::addLinks),
+                Road.class
+        );
     }
 
     // -------------------------------------------- /.../states/{stateName}/cities/{cityName}/roads/{roadName}/addresses
@@ -91,8 +115,8 @@ class RetrieveEngAddressServiceApiController
             @PathVariable(name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName,
             @PathVariable(name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_ROAD_NAME) final String roadName,
             final ServerHttpResponse response) {
-        final var count = new LongAdder();
         final var total = new AtomicInteger();
+        final var count = new LongAdder();
         final var data = Mono.just(RoadAddressEngSearchListRequest.of(
                         null,
                         stateName,
