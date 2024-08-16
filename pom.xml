@@ -52,10 +52,6 @@
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     <version.maven-failsafe>${version.maven-surefire}</version.maven-failsafe>
     <version.maven-surefire>3.3.1</version.maven-surefire>
-    <!-- https://search.maven.org/artifact/org.junit/junit-bom -->
-    <!--    <version.org.junit>5.10.3</version.org.junit>-->
-    <!--    <version.org.junit.jupiter>${version.org.junit}</version.org.junit.jupiter>-->
-    <version.org.mockito>5.12.0</version.org.mockito>
     <!-- https://docs.spring.io/spring-boot/appendix/dependency-versions/coordinates.html -->
     <version.org.springframework>6.1.11</version.org.springframework>
     <version.org.springframework.boot>3.3.2</version.org.springframework.boot>
