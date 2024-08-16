@@ -80,6 +80,20 @@ public abstract class AbstractRequestType<SELF extends AbstractRequestType<SELF>
     }
 
     // ------------------------------------------------------------------------------------------------------ serviceKey
+    public String getServiceKey() {
+        return serviceKey;
+    }
+
+    public void setServiceKey(String serviceKey) {
+        this.serviceKey = serviceKey;
+    }
+
+    /**
+     * Replaces current value of {@code serviceKey} property with specified value, and returns this object.
+     *
+     * @param serviceKey new value for the {@code serviceKey} proeprty.
+     * @return this object.
+     */
     @SuppressWarnings({"unchecked"})
     public SELF serviceKey(final String serviceKey) {
         setServiceKey(serviceKey);

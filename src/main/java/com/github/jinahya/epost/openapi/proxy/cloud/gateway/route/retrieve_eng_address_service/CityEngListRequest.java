@@ -56,6 +56,18 @@ public class CityEngListRequest
     }
 
     // ---------------------------------------------------------------------------------------------------- stateEngName
+    public String getStateEngName() {
+        return stateEngName;
+    }
+
+    public void setStateEngName(final String stateEngName) {
+        this.stateEngName = stateEngName;
+    }
+
+    public CityEngListRequest stateEngName(final String stateEngName) {
+        setStateEngName(stateEngName);
+        return this;
+    }
 
     // -----------------------------------------------------------------------------------------------------------------
     @NotBlank
