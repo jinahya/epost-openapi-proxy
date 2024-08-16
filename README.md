@@ -2,6 +2,7 @@
 
 [![Java CI with Gradle](https://github.com/jinahya/epost-openapi-proxy/actions/workflows/gradle.yml/badge.svg)](https://github.com/jinahya/epost-openapi-proxy/actions/workflows/gradle.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jinahya_epost-openapi-proxy&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=jinahya_epost-openapi-proxy)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jinahya_epost-openapi-proxy&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=jinahya_epost-openapi-proxy)
 
 ## Abstract
 
@@ -11,13 +12,14 @@ using [Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway).
 
 ### Routes
 
-| api                              | service              | route.id                                         | notes |
-|----------------------------------|----------------------|--------------------------------------------------|-------|
-| [과학기술정보통신부 우정사업본부_우편번호 다운로드 서비스] | 우편번호 DB 다운로드 서비스     | `download_area_code_service`                     |       |      
-| [과학기술정보통신부 우정사업본부_영문우편번호조회서비스]   | 영문 우편번호 조회 서비스       | `retrieve_eng_address_service`                   |       |      
-| [과학기술정보통신부 우정사업본부_지번주소조회 서비스]    | 지번주소 5자리 우편번호 조회 서비스 | `retrieve_lot_number_adress_area_cd_service`     |       |      
-| [과학기술정보통신부 우정사업본부_우편번호 정보조회]     | 통합검색 5자리 우편번호 조회서비스  | `retrieve_new_adress_area_cd_search_all_service` |       |      
-| [과학기술정보통신부 우정사업본부_도로명주소조회서비스]    | 새주소 5자리 우편번호 조회서비스   | `retrieve_new_adress_area_cd_service`            |       |     
+| api                               | service              | route.id                                         | notes |
+|-----------------------------------|----------------------|--------------------------------------------------|-------|
+| [과학기술정보통신부 우정사업본부_우편번호 다운로드 서비스]  | 우편번호 DB 다운로드 서비스     | `download_area_code_service`                     |       |      
+| [과학기술정보통신부 우정사업본부_집배구 구분코드 조회서비스] | 집배구 구분코드 조회서비스       | `retrieve_deliv_area_cd_service`                 |       |      
+| [과학기술정보통신부 우정사업본부_영문우편번호조회서비스]    | 영문 우편번호 조회 서비스       | `retrieve_eng_address_service`                   |       |      
+| [과학기술정보통신부 우정사업본부_지번주소조회 서비스]     | 지번주소 5자리 우편번호 조회 서비스 | `retrieve_lot_number_adress_area_cd_service`     |       |      
+| [과학기술정보통신부 우정사업본부_우편번호 정보조회]      | 통합검색 5자리 우편번호 조회서비스  | `retrieve_new_adress_area_cd_search_all_service` |       |      
+| [과학기술정보통신부 우정사업본부_도로명주소조회서비스]     | 새주소 5자리 우편번호 조회서비스   | `retrieve_new_adress_area_cd_service`            |       |     
 
 ## How to build
 
@@ -33,20 +35,18 @@ epost:
       service-key: ......................==
 ```
 
+## How to use / extend
 
-## How to use/extend
+### Component-scanning
 
-### Add `@SpringBootApplication` class
-
-Add your own `@SprinbBootApplication` class uses `com.github.jinahya.openapi.proxy.NoOp.class` for component scanning.
+Add [`com.github.jinahya.openapi.proxy.NoOp.class`](src/main/java/com/github/jinahya/epost/openapi/proxy/_NoOp) to the
+component-scanning path.
 
 e.g.
 
 https://github.com/jinahya/epost-openapi-proxy/blob/75b114f36b20a12d1ba93ead76818959c11f5735/src/test/java/com/mycompany/Application.java#L1-L17
 
-### Add `application.(properties|yaml)` file
-
-Add your own `application.(properties|yaml)` file.
+### Application properties
 
 See [application.yaml](src/test/resources/application.yaml), [application-development.yaml](src/test/resources/application-development.yaml),
 and [application-production.yaml](src/test/resources/application-production.yaml).
@@ -109,13 +109,26 @@ epost:
   openapi:
     proxy:
       routes:
-        retrieve_new_adress_area_cd_search_all_service:
+        _retrieve_new_adress_area_cd_search_all_service:
           connect-timeout: 1024  # connect-timeout must be specified in milliseconds.
           response-timeout: 4096 # response-timeout must be specified in milliseconds.
 
 ```
 
 #### Caching
+
+Enable caching by setting `spring.cloud.gateway.filter.local-response-cache.enabled` property with `true`.
+
+e.g.
+
+```yaml
+spring:
+  cloud:
+    gateway:
+      filter:
+        local-response-cache:
+          enabled: true
+```
 
 The [LocalResponseCache GatewayFilter Factory](https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/gatewayfilter-factories/local-cache-response-filter.html)
 is already configured.
@@ -132,23 +145,8 @@ epost:
   openapi:
     proxy:
       routes:
-        retrieve_new_adress_area_cd_search_all_service:
+        _retrieve_new_adress_area_cd_search_all_service:
           cache: 10m,128MB
-```
-
-##### Disabling caching
-
-Disable by overriding `spring.cloud.gateway.filter.local-response-cache.enabled` property.
-
-e.g.
-
-```yaml
-spring:
-  cloud:
-    gateway:
-      filter:
-        local-response-cache:
-          enabled: false
 ```
 
 ## Links
@@ -174,3 +172,5 @@ spring:
 [과학기술정보통신부 우정사업본부_우편번호 정보조회]: https://www.data.go.kr/data/15056971/openapi.do
 
 [과학기술정보통신부 우정사업본부_도로명주소조회서비스]: https://www.data.go.kr/data/15000124/openapi.do
+
+[과학기술정보통신부 우정사업본부_집배구 구분코드 조회서비스]: https://www.data.go.kr/data/15057018/openapi.do

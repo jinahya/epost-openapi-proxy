@@ -1,12 +1,44 @@
+epost:
+  openapi:
+    proxy:
+      service-key: QO8Jo5UWN4rASy9NIoiUXwQBSbOmphw6UT41sDCNzo8bBQDmJuseGioU3KK94sgHrXmliI5SGphq1akyyWJ5Qg==
+
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include:
+#          - gateway
+#  endpoint:
+#    gateway:
+#      enabled: true
+#    health:
+#      show-details: always
+
+springdoc:
+  enable-hateoas: false
+  show-actuator: true
+
+# https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/global-filters.html#local-cache-response-global-filter
+# https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/gatewayfilter-factories/local-cache-response-filter.html
+# https://cloud.spring.io/spring-cloud-gateway/reference/html/appendix.html#common-application-properties
 spring:
   application:
     name: epost-openapi-proxy
   cloud:
     gateway:
+      filter:
+        local-response-cache:
+          enabled: true
+          size: 128MB
+          time-to-live: 8m
+      global-filter:
+        local-response-cache:
+          enabled: true
       httpclient:
         # https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/http-timeouts-configuration.html
         connect-timeout: 1024  # connect-timeout must be specified in milliseconds.
-        response-timeout: PT4S # response-timeout must be specified as a java.time.Duration
+        response-timeout: PT8S # response-timeout must be specified as a java.time.Duration
         wiretap: true
       httpserver:
         wiretap: true
@@ -18,22 +50,6 @@ spring:
       production:
         - dev
         - prod
-
-epost:
-  openapi:
-    proxy:
-      service-key: QO8Jo5UWN4rASy9NIoiUXwQBSbOmphw6UT41sDCNzo8bBQDmJuseGioU3KK94sgHrXmliI5SGphq1akyyWJ5Qg==
-      #      service-key: IfJN7A3cBBPttYf/FcFWC8pNDT3mi3SRSsDJmyAXQAUOlqvkQhP4ggZkHzhacIhEEJzcswWo8fraVeUBAOxQng==
-      #      service-key: IfJN7A3cBBPttYf%2FFcFWC8pNDT3mi3SRSsDJmyAXQAUOlqvkQhP4ggZkHzhacIhEEJzcswWo8fraVeUBAOxQng%3D%3D
-      routes:
-        _retrieve_new_adress_area_cd_search_all_service:
-          cache: 10m,128MB
-          connect-timeout: 1024
-          response-timeout: 2048
-        _retrieve_new_adress_area_cd_service:
-          cache: 10m,128MB
-          connect-timeout: 1024
-          response-timeout: 2048
 
 ---
 

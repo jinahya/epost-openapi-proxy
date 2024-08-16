@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DelivAreaCdResponse>
+  <cmmMsgHeader>
+    <requestMsgId></requestMsgId>
+    <responseMsgId></responseMsgId>
+    <responseTime>20240731:121300242</responseTime>
+    <successYN>Y</successYN>
+    <returnCode>00</returnCode>
+    <errMsg></errMsg>
+  </cmmMsgHeader>
+  <delivAreaCdList>
+    <arrCnpoNm>광주M</arrCnpoNm>
+    <delivPoNm>나주</delivPoNm>
+    <delivAreaCd>광15290507</delivAreaCd>
+    <courseNo>054</courseNo>
+  </delivAreaCdList>
+</DelivAreaCdResponse>

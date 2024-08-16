@@ -4,89 +4,126 @@ dummy-uri: https://example.com:443
 spring:
   cloud:
     gateway:
-      #      default-filters:
-      #        - _AddRequestParameter=ServiceKey, ${epost.openapi.proxy.service-key}
-      filter:
-        local-response-cache:
-          enabled: true
+      default-filters:
+        - _AddRequestParameterIfNotPresent=ServiceKey, ${epost.openapi.proxy.service-key}
+        - AddResponseHeader=Vary, Accept
       routes:
-        - id: _download_area_code_service # https://www.data.go.kr/data/15000302/openapi.do
+        # ----------------------------------------------------------------------------------- download_area_code_service
+        - id: download_area_code_service # https://www.data.go.kr/data/15000302/openapi.do
           uri: http://openapi.epost.go.kr
           predicates:
             - Method=GET
             - Path=/postal/downloadAreaCodeService/downloadAreaCodeService/{operation}
-          filters:
-            - AddResponseHeader=Vary, Accept
-            - LocalResponseCache=${epost.openapi.proxy.routes._download_area_code_service.cache:10m,128MB}
-          metadata:
-            connect-timeout: ${epost.openapi.proxy.routes._retrieve_new_adress_area_cd_search_all_service.connect-timeout:1024}   # connect-timeout must be specified in milliseconds.
-            response-timeout: ${epost.openapi.proxy.routes._retrieve_new_adress_area_cd_search_all_service.response-timeout:4096} # response-timeout must be specified in milliseconds.
-        # -------------------------------------------------------------------------------- _retrieve_eng_address_service
-        - id: _retrieve_eng_address_service
+        # ------------------------------------------------------------------------------- retrieve_deliv_area_cd_service
+        - id: retrieve_deliv_area_cd_service # https://www.data.go.kr/data/15000302/openapi.do
+          uri: http://openapi.epost.go.kr
+          predicates:
+            - Method=GET
+            - Path=/postal/retrieveDelivAreaCdService/retrieveDelivAreaCdService/{operation}
+        # --------------------------------------------------------------------------------- retrieve_eng_address_service
+        - id: retrieve_eng_address_service
           uri: http://openapi.epost.go.kr
           predicates:
             - Method=GET
             - Path=/postal/retrieveEngAddressService/retrieveEngAddressService/{operation}
           filters:
-            - _AddRequestParameter=ServiceKey, ${epost.openapi.proxy.service-key}
-            - AddResponseHeader=Vary, Accept
-            - LocalResponseCache=${epost.openapi.proxy.routes._retrieve_eng_address_service.cache.time:10m},${epost.openapi.proxy.routes._retrieve_eng_address_service.cache.size:128MB}
-          metadata:
-            connect-timeout: ${epost.openapi.proxy.routes._retrieve_eng_address_service.connect-timeout:1024}
-            response-timeout: ${epost.openapi.proxy.routes._retrieve_eng_address_service.response-timeout:4096}
-        # ------------------------------------------------------------------------------- _retrieve_longitudinal_service
-        - id: _retrieve_longitudinal_service
+        #        - id: retrieve_eng_address_service_api_states
+        #          uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getStateList
+        #          predicates:
+        #            - Method=GET
+        #            - Path=/api/retrieveEngAddressService/states
+        #          filters:
+        #            - SetRequestHeader=Cache-Control, no-cache
+        #            - RetrieveEngAddressServiceApiStates
+        #        - id: retrieve_eng_address_service_api_cities
+        #          uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getCityList
+        #          predicates:
+        #            - Method=GET
+        #            - Path=/api/retrieveEngAddressService/states/{stateName}/cities
+        #          filters:
+        #            - AddRequestParameter=stateEngName, {stateName}
+        #            - SetRequestHeader=Cache-Control, no-cache
+        #            - RetrieveEngAddressServiceApiCities
+        #        - id: retrieve_eng_address_service_api_roads
+        #          uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getRoadFirstNameList
+        #          predicates:
+        #            - Method=GET
+        #            - Path=/api/retrieveEngAddressService/states/{stateName}/cities/{cityName}/roads
+        #          filters:
+        #            - AddRequestParameter=stateEngName, {stateName}
+        #            - AddRequestParameter=cityEngName, {cityName}
+        #            - SetRequestHeader=Cache-Control, no-cache
+        #            - RetrieveEngAddressServiceApiRoads
+        #        - id: retrieve_eng_address_service_api_road_addresses
+        #          uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getRoadAddressSearch
+        #          predicates:
+        #            - Method=GET
+        #            - Path=/api/retrieveEngAddressService/states/{stateName}/cities/{cityName}/roads/{roadName}/addresses
+        #          filters:
+        #            - AddRequestParameter=stateEngName, {stateName}
+        #            - AddRequestParameter=cityEngName, {cityName}
+        #            - AddRequestParameter=roadEngName, {roadName}
+        #            - AddRequestParameter=countPerPage, 32 # DO NOT MODIFY!!!
+        #            - AddRequestParameter=currentPage, 1
+        #            - SetRequestHeader=Cache-Control, no-cache
+        #            - RetrieveEngAddressServiceApiRoadAddresses
+        #        - id: retrieve_eng_address_service_api_districts
+        #          uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getDistrictFirstNameList
+        #          predicates:
+        #            - Method=GET
+        #            - Path=/api/retrieveEngAddressService/states/{stateName}/cities/{cityName}/districts
+        #          filters:
+        #            - AddRequestParameter=stateEngName, {stateName}
+        #            - AddRequestParameter=cityEngName, {cityName}
+        #            - SetRequestHeader=Cache-Control, no-cache
+        #            - RetrieveEngAddressServiceApiDistricts
+        #        - id: retrieve_eng_address_service_api_district_addresses
+        #          uri: forward:/postal/retrieveEngAddressService/retrieveEngAddressService/getLandAddressSearch
+        #          predicates:
+        #            - Method=GET
+        #            - Path=/api/retrieveEngAddressService/states/{stateName}/cities/{cityName}/districts/{districtName}/addresses
+        #          filters:
+        #            - AddRequestParameter=stateEngName, {stateName}
+        #            - AddRequestParameter=cityEngName, {cityName}
+        #            - AddRequestParameter=districtEngName, {districtName}
+        #            - AddRequestParameter=countPerPage, 32 # DO NOT MODIFY!!!
+        #            - AddRequestParameter=currentPage, 1
+        #            - SetRequestHeader=Cache-Control, no-cache
+        #            - RetrieveEngAddressServiceApiDistrictAddresses
+        # -------------------------------------------------------------------------------- retrieve_longitudinal_service
+        - id: retrieve_longitudinal_service
           uri: http://openapi.epost.go.kr
           predicates:
             - Method=GET
             - Path=/trace/retrieveLongitudinalService/retrieveLongitudinalService/{operation}
-          filters:
-            - _AddRequestParameter=ServiceKey, ${epost.openapi.proxy.service-key}
-            - AddResponseHeader=Vary, Accept
-            - LocalResponseCache=${epost.openapi.proxy.routes._retrieve_longitudinal_service.cache.time:10m},${epost.openapi.proxy.routes._retrieve_longitudinal_service.cache.size:128MB}
-          metadata:
-            connect-timeout: ${epost.openapi.proxy.routes._retrieve_longitudinal_service.connect-timeout:1024}
-            response-timeout: ${epost.openapi.proxy.routes._retrieve_longitudinal_service.response-timeout:4096}
-        # ------------------------------------------------------------------ _retrieve_lot_number_adress_area_cd_service
-        - id: _retrieve_lot_number_adress_area_cd_service # https://www.data.go.kr/iim/api/selectAPIAcountView.do
+        # ------------------------------------------------------------------- retrieve_lot_number_adress_area_cd_service
+        - id: retrieve_lot_number_adress_area_cd_service # https://www.data.go.kr/iim/api/selectAPIAcountView.do
           uri: http://openapi.epost.go.kr
           predicates:
             - Method=GET
             - Path=/postal/retrieveLotNumberAdressAreaCdService/retrieveLotNumberAdressAreaCdService/{operation}
-          filters:
-            - AddResponseHeader=Vary, Accept
-            - LocalResponseCache=${epost.openapi.proxy.routes._retrieve_lot_number_adress_area_cd_service.cache.time:10m},${epost.openapi.proxy.routes._retrieve_lot_number_adress_area_cd_service.cache.size:128MB}
-          metadata:
-            connect-timeout: ${epost.openapi.proxy.routes._retrieve_new_adress_area_cd_search_all_service.connect-timeout:1024}  # connect-timeout must be specified in milliseconds.
-            response-timeout: ${epost.openapi.proxy.routes._retrieve_new_adress_area_cd_search_all_service.response-timeout:4096} # response-timeout must be specified in milliseconds.
-        - id: _retrieve_new_adress_area_cd_search_all_service
+        # --------------------------------------------------------------- retrieve_new_adress_area_cd_search_all_service
+        - id: retrieve_new_adress_area_cd_search_all_service
           uri: http://openapi.epost.go.kr
           predicates:
             - Method=GET
             - Path=/postal/retrieveNewAdressAreaCdSearchAllService/retrieveNewAdressAreaCdSearchAllService/{operation}
+        - id: retrieve_new_adress_area_cd_search_all_service_api
+          uri: forward:/postal/retrieveNewAdressAreaCdSearchAllService/retrieveNewAdressAreaCdSearchAllService/getNewAddressListAreaCdSearchAll
+          predicates:
+            - Method=GET
+            - Path=/api/retrieveNewAdressAreaCdSearchAllService/addresses/{srchwrd}
           filters:
-            - AddResponseHeader=Vary, Accept
-            - LocalResponseCache=${epost.openapi.proxy.routes._retrieve_new_adress_area_cd_search_all_service.cache:10m,128MB}
-          metadata:
-            connect-timeout: ${epost.openapi.proxy.routes._retrieve_new_adress_area_cd_search_all_service.connect-timeout:1024}  # connect-timeout must be specified in milliseconds.
-            response-timeout: ${epost.openapi.proxy.routes._retrieve_new_adress_area_cd_search_all_service.response-timeout:4096} # response-timeout must be specified in milliseconds.
-        - id: _retrieve_new_adress_area_cd_service
+            - AddRequestParameter=srchwrd, {srchwrd}
+            - AddRequestParameter=countPerPage, 32 # DO NOT MODIFY!!!
+            - AddRequestParameter=currentPage, 1
+            - SetRequestHeader=Cache-Control, no-cache
+            - RetrieveNewAdressAreaCdSearchAllServiceApi
+        # -------------------------------------------------------------------------- retrieve_new_adress_area_cd_service
+        - id: retrieve_new_adress_area_cd_service
           uri: http://openapi.epost.go.kr
           predicates:
             - Method=GET
             - Path=/postal/retrieveNewAdressAreaCdService/retrieveNewAdressAreaCdService/{operation}
-          filters:
-            - _AddRequestParameter=ServiceKey, ${epost.openapi.proxy.service-key}
-            - AddResponseHeader=Vary, Accept
-            #            - LocalResponseCache=${epost.openapi.proxy.routes.retrieve_new_adress_area_cd_service.cache:10m,128MB}
-            - LocalResponseCache=${epost.openapi.proxy._routes.retrieve_new_adress_area_cd_service.cache:10m,128MB}
-          metadata:
-            # https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/http-timeouts-configuration.html
-            connect-timeout: ${epost.openapi.proxy.routes._retrieve_new_adress_area_cd_service.connect-timeout:1024}  # connect-timeout must be specified in milliseconds.
-            response-timeout: ${epost.openapi.proxy.routes._retrieve_new_adress_area_cd_service.response-timeout:4096} # response-timeout must be specified in milliseconds.
-  #  jackson:
-  #    deserialization:
-  #      unwrap-root-value: true
-
   main:
     web-application-type: reactive
