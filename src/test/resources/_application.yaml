@@ -1,3 +1,11 @@
+
+
+epost:
+  openapi:
+    proxy:
+      service-key: <your-encoded-service-key>
+
+
 spring:
   application:
     name: epost-openapi-proxy
@@ -6,7 +14,7 @@ spring:
       httpclient:
         # https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/http-timeouts-configuration.html
         connect-timeout: 1024  # connect-timeout must be specified in milliseconds.
-        response-timeout: PT4S # response-timeout must be specified as a java.time.Duration
+        response-timeout: PT8S # response-timeout must be specified as a java.time.Duration
         wiretap: true
       httpserver:
         wiretap: true
@@ -18,11 +26,6 @@ spring:
       production:
         - dev
         - prod
-
-epost:
-  openapi:
-    proxy:
-      service-key: <your-encoded-service-key>
 
 ---
 
