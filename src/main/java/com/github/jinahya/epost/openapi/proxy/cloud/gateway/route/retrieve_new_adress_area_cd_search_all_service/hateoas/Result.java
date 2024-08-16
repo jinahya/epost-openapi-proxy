@@ -1,7 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_search_all_service.hateoas;
 
-import com.github.jinahya.epost.openapi.proxy.web.bind.AbstractWrappingModel;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_search_all_service.NewAddressListAreaCdSearchAllResponse;
+import com.github.jinahya.epost.openapi.proxy.web.bind.AbstractWrappingModel;
 import lombok.*;
 
 import java.io.Serial;

@@ -1,6 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.StateEngListResponse;
 import com.github.jinahya.epost.openapi.proxy.web.bind.AbstractWrappingModel;
 import lombok.*;
@@ -9,7 +9,6 @@ import org.springframework.hateoas.Link;
 
 import java.io.Serial;
 import java.util.Objects;
-import java.util.Optional;
 
 @Setter
 @Getter
@@ -24,7 +23,7 @@ public class State
 
     // -----------------------------------------------------------------------------------------------------------------
     static String getHref(final String stateName) {
-        return _RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES + '/' + stateName;
+        return __RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES + '/' + stateName;
     }
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
@@ -44,17 +43,15 @@ public class State
                         .withRel(IanaLinkRelations.SELF)
         );
         add(
-                Link.of(getHref(wrapped.getStateEngName()) + '/' + _RetrieveEngAddressServiceApiConstants.REL_CITIES)
-                        .withRel(_RetrieveEngAddressServiceApiConstants.REL_CITIES)
+                Link.of(getHref(wrapped.getStateEngName()) + '/' + __RetrieveEngAddressServiceApiConstants.REL_CITIES)
+                        .withRel(__RetrieveEngAddressServiceApiConstants.REL_CITIES)
         );
         return this;
     }
 
     // --------------------------------------------------------------------------------------------------- super.wrapped
-    @JsonProperty(required = true)
-    public String getName() {
-        return Optional.ofNullable(getWrapped())
-                .map(StateEngListResponse.StateEngList::getStateEngName)
-                .orElse(null);
+    @JsonIgnore
+    String name() {
+        return Objects.requireNonNull(getWrapped(), "getWrapped() is null").getStateEngName();
     }
 }

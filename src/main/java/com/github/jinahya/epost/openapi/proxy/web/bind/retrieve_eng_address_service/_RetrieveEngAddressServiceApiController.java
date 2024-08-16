@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpResponse;
@@ -22,17 +24,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.LongAdder;
 
 @Hidden
-@Tag(name = _RetrieveEngAddressServiceApiConstants.TAG)
+@Tag(name = __RetrieveEngAddressServiceApiConstants.TAG)
 @Validated
 @RestController
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Slf4j
 class _RetrieveEngAddressServiceApiController
         extends _ApiController {
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
-    _RetrieveEngAddressServiceApiController() {
-        super();
-    }
 
     // ----------------------------------------------------------------------------------------------------- /.../states
     private Flux<State> getStatesPublisher() {
@@ -45,7 +45,7 @@ class _RetrieveEngAddressServiceApiController
 
     @Operation(summary = "Reads all states.")
     @GetMapping(
-            path = _RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES,
+            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES,
             produces = {
                     MediaType.APPLICATION_NDJSON_VALUE
             }
@@ -60,13 +60,13 @@ class _RetrieveEngAddressServiceApiController
 
     @Operation(summary = "Reads a state.")
     @GetMapping(
-            path = _RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATE,
+            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATE,
             produces = {
                     MediaType.APPLICATION_NDJSON_VALUE
             }
     )
     Mono<Void> readState(
-            @PathVariable(_RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
+            @PathVariable(__RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
             final ServerHttpResponse response) {
         return writeNdjsonResponseWith(
                 response,
@@ -80,20 +80,20 @@ class _RetrieveEngAddressServiceApiController
         return CityEngListRequest.of(null, stateName)
                 .exchange(webClient())
                 .flatMapMany(r -> Flux.fromIterable(r.getCityEngList()))
-                .map(cel -> City.instanceOf(null, cel))
+                .map(cel -> City.newInstance(stateName, cel))
                 .map(City::addLinks);
     }
 
     @Operation(summary = "Reads all cities.", description = "Reads all cities in specified state.")
     @GetMapping(
-            path = _RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITIES,
+            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITIES,
             produces = {
                     MediaType.APPLICATION_NDJSON_VALUE
             }
     )
     Mono<Void> readCities(
             @NotBlank
-            @PathVariable(name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
+            @PathVariable(name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
             final ServerHttpResponse response) {
         return writeNdjsonResponseWith(
                 response,
@@ -107,7 +107,7 @@ class _RetrieveEngAddressServiceApiController
             description = "Reads a specific city in specified state."
     )
     @GetMapping(
-            path = _RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITY,
+            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITY,
             produces = {
                     MediaType.APPLICATION_NDJSON_VALUE
             }
@@ -115,10 +115,10 @@ class _RetrieveEngAddressServiceApiController
     Mono<Void> readCity(
             @Parameter(description = "the name of the state")
             @NotBlank
-            @PathVariable(name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
+            @PathVariable(name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
             @Parameter(description = "the name of the city")
             @NotBlank
-            @PathVariable(name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName,
+            @PathVariable(name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName,
             final ServerHttpResponse response) {
         return writeNdjsonResponseWith(
                 response,
@@ -135,21 +135,21 @@ class _RetrieveEngAddressServiceApiController
                 .map(refnl -> RoadEngListRequest.of(null, stateName, cityName, refnl.getRoadEngFirstName()))
                 .flatMapSequential(relr -> relr.exchange(webClient()), 5)
                 .flatMap(relr -> Flux.fromIterable(relr.getRoadEngList()))
-                .map(rel -> Road.instanceOf(stateName, cityName, rel))
+                .map(rel -> Road.newInstance(stateName, cityName, rel))
                 .map(Road::addLinks);
     }
 
     @GetMapping(
-            path = _RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROADS,
+            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROADS,
             produces = {
                     MediaType.APPLICATION_NDJSON_VALUE
             }
     )
     Mono<Void> readRoads(
             @NotBlank
-            @PathVariable(_RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
+            @PathVariable(__RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
             @NotBlank
-            @PathVariable(name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName,
+            @PathVariable(name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName,
             final ServerHttpResponse response) {
         return writeNdjsonResponseWith(
                 response,
@@ -159,18 +159,18 @@ class _RetrieveEngAddressServiceApiController
     }
 
     @GetMapping(
-            path = _RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD,
+            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD,
             produces = {
                     MediaType.APPLICATION_NDJSON_VALUE
             }
     )
     Mono<Void> readRoad(
             @NotBlank
-            @PathVariable(_RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
+            @PathVariable(__RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
             @NotBlank
-            @PathVariable(name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName,
+            @PathVariable(name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName,
             @NotBlank
-            @PathVariable(name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_ROAD_NAME) final String roadName,
+            @PathVariable(name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_ROAD_NAME) final String roadName,
             final ServerHttpResponse response) {
         return writeNdjsonResponseWith(
                 response,
@@ -182,15 +182,15 @@ class _RetrieveEngAddressServiceApiController
 
     // -------------------------------------------- /.../states/{stateName}/cities/{cityName}/roads/{roadName}/addresses
     @GetMapping(
-            path = _RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD_ADDRESSES,
+            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD_ADDRESSES,
             produces = {
                     MediaType.APPLICATION_NDJSON_VALUE
             }
     )
     Mono<Void> readRoadAddresses(
-            @PathVariable(_RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
-            @PathVariable(name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName,
-            @PathVariable(name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_ROAD_NAME) final String roadName,
+            @PathVariable(__RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
+            @PathVariable(name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName,
+            @PathVariable(name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_ROAD_NAME) final String roadName,
             final ServerHttpResponse response) {
         final var total = new AtomicInteger();
         final var count = new LongAdder();
@@ -215,7 +215,7 @@ class _RetrieveEngAddressServiceApiController
                     final var list = r.getRoadAddressEngSearchList();
                     count.add(list.size());
                     return Flux.fromIterable(list)
-                            .map(RoadAddress::instanceOf)
+                            .map(e -> RoadAddress.newInstance(stateName, cityName, roadName, e))
                             .map(RoadAddress::addLinks);
                 })
                 .takeWhile(e -> count.sum() < total.longValue());
@@ -230,21 +230,21 @@ class _RetrieveEngAddressServiceApiController
                 .map(refnl -> DistrictEngListRequest.of(null, stateName, cityName, refnl.getDistrictEngFirstName()))
                 .flatMapSequential(delr -> delr.exchange(webClient()), 5)
                 .flatMap(relr -> Flux.fromIterable(relr.getDistrictEngList()))
-                .map(rel -> District.districtOf(stateName, cityName, rel))
+                .map(rel -> District.newInstance(stateName, cityName, rel))
                 .map(District::addLinks);
     }
 
     @GetMapping(
-            path = _RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICTS,
+            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICTS,
             produces = {
                     MediaType.APPLICATION_NDJSON_VALUE
             }
     )
     Mono<Void> readDistricts(
             @NotBlank
-            @PathVariable(_RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
+            @PathVariable(__RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
             @NotBlank
-            @PathVariable(name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName,
+            @PathVariable(name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName,
             final ServerHttpResponse response) {
         return writeNdjsonResponseWith(
                 response,
@@ -254,19 +254,19 @@ class _RetrieveEngAddressServiceApiController
     }
 
     @GetMapping(
-            path = _RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICT,
+            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICT,
             produces = {
                     MediaType.APPLICATION_NDJSON_VALUE
             }
     )
     Mono<Void> readDistricts(
             @NotBlank
-            @PathVariable(_RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
+            @PathVariable(__RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
             @NotBlank
-            @PathVariable(name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName,
+            @PathVariable(name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName,
             @NotBlank
             @PathVariable(
-                    name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_DISTRICT_NAME) final String districtName,
+                    name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_DISTRICT_NAME) final String districtName,
             final ServerHttpResponse response) {
         return writeNdjsonResponseWith(
                 response,
@@ -277,20 +277,21 @@ class _RetrieveEngAddressServiceApiController
     }
 
     // ------------------------------------ /.../states/{stateName}/cities/{cityName}/districts/{districtName}/addresses
+    @Operation(summary = "Reads district addresses.", description = "Reads all addresses in specified district.")
     @GetMapping(
-            path = _RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICT_ADDRESSES,
+            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICT_ADDRESSES,
             produces = {
                     MediaType.APPLICATION_NDJSON_VALUE
             }
     )
     Mono<Void> readDistrictAddresses(
             @NotBlank
-            @PathVariable(_RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
+            @PathVariable(__RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
             @NotBlank
-            @PathVariable(name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName,
+            @PathVariable(name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName,
             @NotBlank
             @PathVariable(
-                    name = _RetrieveEngAddressServiceApiConstants.PATH_NAME_DISTRICT_NAME) final String districtName,
+                    name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_DISTRICT_NAME) final String districtName,
             final ServerHttpResponse response) {
         final var total = new AtomicInteger();
         final var count = new LongAdder();
@@ -307,19 +308,93 @@ class _RetrieveEngAddressServiceApiController
                 .expand(r -> Mono.just(r.forNextPage()))
                 .flatMapSequential(r -> r.exchange(webClient()), 5, 1)
                 .switchOnFirst((s, f) -> {
-                    final var cmmMsgHeader = s.get().getCmmMsgHeader();
-                    total.set(cmmMsgHeader.getTotalCount());
+                    if (s.hasValue()) {
+                        final var cmmMsgHeader = s.get().getCmmMsgHeader();
+                        total.set(cmmMsgHeader.getTotalCount());
+                    }
                     return f;
                 })
                 .flatMap(r -> {
-                             final var list = r.getLandAddressEngSearchList();
-                             count.add(list.size());
-                             return Flux.fromIterable(list)
-                                     .map(laesl -> DistrictAddress.instanceOf(stateName, cityName, districtName, laesl))
-                                     .map(DistrictAddress::addLinks);
-                         }
-                )
+                    final var list = r.getLandAddressEngSearchList();
+                    count.add(list.size());
+                    return Flux.fromIterable(list)
+                            .map(e -> DistrictAddress.newInstance(stateName, cityName, districtName, e))
+                            .map(DistrictAddress::addLinks);
+                })
                 .takeWhile(e -> count.sum() < total.longValue());
         return writeNdjsonResponseWith(response, data, DistrictAddress.class);
+    }
+
+    // =================================================================================================================
+
+    // ----------------------------------------------------------------------------------------------------- /.../cities
+    @Operation(summary = "Reads all cities.", description = "Reads all cities regardless states.")
+    @GetMapping(
+            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI
+                    + '/' + __RetrieveEngAddressServiceApiConstants.REL_CITIES,
+            produces = {
+                    MediaType.APPLICATION_NDJSON_VALUE
+            }
+    )
+    Mono<Void> readAllCities(final ServerHttpResponse response) {
+        return writeNdjsonResponseWith(
+                response,
+                getStatesPublisher()
+                        .flatMapSequential(
+                                s -> getCitiesPublisher(s.name()),
+                                4
+                        ),
+                City.class
+        );
+    }
+
+    // ------------------------------------------------------------------------------------------------------ /.../roads
+    @Operation(summary = "Reads all roads.", description = "Reads all cities regardless cities.")
+    @GetMapping(
+            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI
+                    + '/' + __RetrieveEngAddressServiceApiConstants.REL_ROADS,
+            produces = {
+                    MediaType.APPLICATION_NDJSON_VALUE
+            }
+    )
+    Mono<Void> readAllRoads(final ServerHttpResponse response) {
+        return writeNdjsonResponseWith(
+                response,
+                getStatesPublisher()
+                        .flatMapSequential(
+                                s -> getCitiesPublisher(s.name())
+                                        .flatMapSequential(
+                                                c -> getRoadPublisher(s.name(), c.name()),
+                                                8
+                                        ),
+                                4
+                        ),
+                Road.class
+        );
+    }
+
+    // -------------------------------------------------------------------------------------------------- /.../districts
+    @Operation(summary = "Reads all districts.", description = "Reads all districts regardless cities.")
+    @GetMapping(
+            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI
+                    + '/' + __RetrieveEngAddressServiceApiConstants.REL_DISTRICTS,
+            produces = {
+                    MediaType.APPLICATION_NDJSON_VALUE
+            }
+    )
+    Mono<Void> readAllDistricts(final ServerHttpResponse response) {
+        return writeNdjsonResponseWith(
+                response,
+                getStatesPublisher()
+                        .flatMapSequential(
+                                s -> getCitiesPublisher(s.name())
+                                        .flatMapSequential(
+                                                c -> getDistrictPublisher(s.name(), c.name()),
+                                                8
+                                        ),
+                                4
+                        ),
+                District.class
+        );
     }
 }

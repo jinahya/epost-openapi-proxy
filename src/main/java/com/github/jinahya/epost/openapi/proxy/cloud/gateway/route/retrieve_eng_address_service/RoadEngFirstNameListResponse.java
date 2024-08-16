@@ -18,8 +18,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Flux;
 
 import java.io.Serial;
 import java.util.List;
@@ -89,16 +87,4 @@ public class RoadEngFirstNameListResponse
     @JsonProperty(NAME_ROAD_ENG_FIRST_NAME_LIST)
     @XmlElement(name = NAME_ROAD_ENG_FIRST_NAME_LIST)
     private List<@Valid @NotNull RoadEngFirstNameList> roadEngFirstNameList;
-
-    // -----------------------------------------------------------------------------------------------------------------
-    public Flux<RoadEngListResponse.RoadEngList> retrieveRoadEngList(final String stateName, final String cityName,
-                                                                     final WebClient webClient) {
-        if (roadEngFirstNameList == null) {
-            throw new IllegalStateException("roadEngFirstNameList is currently not set");
-        }
-        return Flux.fromIterable(roadEngFirstNameList)
-                .map(refn -> RoadEngListRequest.of(null, stateName, cityName, refn.getRoadEngFirstName()))
-                .concatMap(relr -> relr.exchange(webClient))
-                .flatMap(relr -> Flux.fromIterable(relr.getRoadEngList()));
-    }
 }

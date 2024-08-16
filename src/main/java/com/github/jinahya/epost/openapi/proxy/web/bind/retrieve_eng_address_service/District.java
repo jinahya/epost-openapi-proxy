@@ -1,6 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.DistrictEngListResponse;
 import com.github.jinahya.epost.openapi.proxy.web.bind.AbstractWrappingModel;
 import lombok.*;
@@ -8,6 +8,8 @@ import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.hateoas.Link;
 
 import java.io.Serial;
+import java.util.Objects;
+import java.util.Optional;
 
 @Setter
 @Getter
@@ -23,17 +25,17 @@ public class District
     // -----------------------------------------------------------------------------------------------------------------
     static String getHref(final String stateName, final String cityName, final String districtName) {
         return City.getHref(stateName, cityName)
-                + '/' + _RetrieveEngAddressServiceApiConstants.REL_DISTRICTS
+                + '/' + __RetrieveEngAddressServiceApiConstants.REL_DISTRICTS
                 + '/' + districtName;
     }
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
-    public static District districtOf(final String stateName, final String cityName,
-                                      final DistrictEngListResponse.DistrictEngList wrapped) {
+    public static District newInstance(final String stateName, final String cityName,
+                                       final DistrictEngListResponse.DistrictEngList wrapped) {
         final var instance = new District();
-        instance.stateName = stateName;
-        instance.cityName = cityName;
-        instance.wrapped = wrapped;
+        instance.stateName = Objects.requireNonNull(stateName, "stateName is null");
+        instance.cityName = Objects.requireNonNull(cityName, "cityName is null");
+        instance.wrapped = Objects.requireNonNull(wrapped, "wrapped is null");
         return instance;
     }
 
@@ -47,16 +49,24 @@ public class District
         );
         add(
                 Link.of(getHref(stateName, cityName, wrapped.getDistrictEngName())
-                                + '/' + _RetrieveEngAddressServiceApiConstants.REL_ADDRESSES)
-                        .withRel(_RetrieveEngAddressServiceApiConstants.REL_ADDRESSES)
+                                + '/' + __RetrieveEngAddressServiceApiConstants.REL_ADDRESSES)
+                        .withRel(__RetrieveEngAddressServiceApiConstants.REL_ADDRESSES)
         );
         return this;
     }
 
+    // --------------------------------------------------------------------------------------------------- super.wrapped
+    @JsonProperty(required = true)
+    public String getName() {
+        return Optional.ofNullable(getWrapped())
+                .map(DistrictEngListResponse.DistrictEngList::getDistrictEngName)
+                .orElse(null);
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
-    @JsonIgnore
+    @JsonProperty(required = true)
     private String stateName;
 
-    @JsonIgnore
+    @JsonProperty(required = true)
     private String cityName;
 }

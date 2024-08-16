@@ -67,6 +67,10 @@ public class CityEngListResponse
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+
+    /**
+     * Creates a new instance.
+     */
     public CityEngListResponse() {
         super(CityEngListRequest.class);
     }

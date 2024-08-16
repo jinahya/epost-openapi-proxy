@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.util.List;
+import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,121 +16,105 @@ class _RetrieveEngAddressServiceApiController_SpringBootIT
 
     // -----------------------------------------------------------------------------------------------------------------
     static List<State> readStates(final WebTestClient client) {
-        return client
-                .get()
-                .uri(b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES).build())
-                .exchange()
-                .expectStatus().isOk()
-                .expectHeader().contentType(MediaType.APPLICATION_NDJSON)
-                .expectBodyList(State.class)
-                .returnResult()
-                .getResponseBody();
+        return Objects.requireNonNull(
+                client
+                        .get()
+                        .uri(b -> b.path(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES).build())
+                        .exchange()
+                        .expectStatus().isOk()
+                        .expectHeader().contentType(MediaType.APPLICATION_NDJSON)
+                        .expectBodyList(State.class)
+                        .returnResult()
+                        .getResponseBody()
+        );
     }
 
     static List<City> readCities(final WebTestClient client, final State state) {
-        return client
-                .get()
-                .uri(b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITIES).build(
-                        state.getWrapped().getStateEngName()
-                ))
-                .exchange()
-                .expectStatus().isOk()
-                .expectHeader().contentType(MediaType.APPLICATION_NDJSON)
-                .expectBodyList(City.class)
-                .returnResult()
-                .getResponseBody();
-    }
-
-    static List<City> readCities(final WebTestClient client, final String stateName) {
-        return client
-                .get()
-                .uri(b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITIES)
-                        .build(stateName)
-                )
-                .exchange()
-                .expectStatus().isOk()
-                .expectHeader().contentType(MediaType.APPLICATION_NDJSON)
-                .expectBodyList(City.class)
-                .returnResult()
-                .getResponseBody();
+        return Objects.requireNonNull(
+                client
+                        .get()
+                        .uri(b -> b.path(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITIES).build(
+                                state.getWrapped().getStateEngName()
+                        ))
+                        .exchange()
+                        .expectStatus().isOk()
+                        .expectHeader().contentType(MediaType.APPLICATION_NDJSON)
+                        .expectBodyList(City.class)
+                        .returnResult()
+                        .getResponseBody()
+        );
     }
 
     static List<Road> readRoads(final WebTestClient client, final State state, final City city) {
-        return client
-                .get()
-                .uri(b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROADS).build(
-                        state.getWrapped().getStateEngName(),
-                        city.getWrapped().getCityEngName()
-                ))
-                .exchange()
-                .expectStatus().isOk()
-                .expectHeader().contentType(MediaType.APPLICATION_NDJSON)
-                .expectBodyList(Road.class)
-                .returnResult()
-                .getResponseBody();
-    }
-
-    static List<Road> readRoads(final WebTestClient client, final String stateName, final String cityName) {
-        return client
-                .get()
-                .uri(b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROADS)
-                        .build(stateName, cityName)
-                )
-                .exchange()
-                .expectStatus().isOk()
-                .expectHeader().contentType(MediaType.APPLICATION_NDJSON)
-                .expectBodyList(Road.class)
-                .returnResult()
-                .getResponseBody();
+        return Objects.requireNonNull(
+                client
+                        .get()
+                        .uri(b -> b.path(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROADS).build(
+                                state.getWrapped().getStateEngName(),
+                                city.getWrapped().getCityEngName()
+                        ))
+                        .exchange()
+                        .expectStatus().isOk()
+                        .expectHeader().contentType(MediaType.APPLICATION_NDJSON)
+                        .expectBodyList(Road.class)
+                        .returnResult()
+                        .getResponseBody()
+        );
     }
 
     static List<RoadAddress> readRoadAddresses(final WebTestClient client, final State state, final City city,
                                                final Road road) {
-        return client
-                .get()
-                .uri(b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD_ADDRESSES).build(
-                        state.getWrapped().getStateEngName(),
-                        city.getWrapped().getCityEngName(),
-                        road.getWrapped().getRoadEngName()
-                ))
-                .exchange()
-                .expectStatus().isOk()
-                .expectHeader().contentType(MediaType.APPLICATION_NDJSON)
-                .expectBodyList(RoadAddress.class)
-                .returnResult()
-                .getResponseBody();
+        return Objects.requireNonNull(
+                client
+                        .get()
+                        .uri(b -> b.path(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD_ADDRESSES).build(
+                                state.getWrapped().getStateEngName(),
+                                city.getWrapped().getCityEngName(),
+                                road.getWrapped().getRoadEngName()
+                        ))
+                        .exchange()
+                        .expectStatus().isOk()
+                        .expectHeader().contentType(MediaType.APPLICATION_NDJSON)
+                        .expectBodyList(RoadAddress.class)
+                        .returnResult()
+                        .getResponseBody()
+        );
     }
 
     static List<District> readDistricts(final WebTestClient client, final State state, final City city) {
-        return client
-                .get()
-                .uri(b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICTS).build(
-                        state.getWrapped().getStateEngName(),
-                        city.getWrapped().getCityEngName()
-                ))
-                .exchange()
-                .expectStatus().isOk()
-                .expectHeader().contentType(MediaType.APPLICATION_NDJSON)
-                .expectBodyList(District.class)
-                .returnResult()
-                .getResponseBody();
+        return Objects.requireNonNull(
+                client
+                        .get()
+                        .uri(b -> b.path(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICTS).build(
+                                state.getWrapped().getStateEngName(),
+                                city.getWrapped().getCityEngName()
+                        ))
+                        .exchange()
+                        .expectStatus().isOk()
+                        .expectHeader().contentType(MediaType.APPLICATION_NDJSON)
+                        .expectBodyList(District.class)
+                        .returnResult()
+                        .getResponseBody()
+        );
     }
 
     static List<DistrictAddress> readDistrictAddresses(final WebTestClient client, final State state, final City city,
                                                        final District district) {
-        return client
-                .get()
-                .uri(b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICT_ADDRESSES).build(
-                        state.getWrapped().getStateEngName(),
-                        city.getWrapped().getCityEngName(),
-                        district.getWrapped().getDistrictEngName()
-                ))
-                .exchange()
-                .expectStatus().isOk()
-                .expectHeader().contentType(MediaType.APPLICATION_NDJSON)
-                .expectBodyList(DistrictAddress.class)
-                .returnResult()
-                .getResponseBody();
+        return Objects.requireNonNull(
+                client
+                        .get()
+                        .uri(b -> b.path(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICT_ADDRESSES).build(
+                                state.getWrapped().getStateEngName(),
+                                city.getWrapped().getCityEngName(),
+                                district.getWrapped().getDistrictEngName()
+                        ))
+                        .exchange()
+                        .expectStatus().isOk()
+                        .expectHeader().contentType(MediaType.APPLICATION_NDJSON)
+                        .expectBodyList(DistrictAddress.class)
+                        .returnResult()
+                        .getResponseBody()
+        );
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -160,9 +145,8 @@ class _RetrieveEngAddressServiceApiController_SpringBootIT
     @Test
     void readRoads__() {
         final var state = readStates(webTestClient()).getFirst();
-        final var city = readCities(webTestClient(), state.getWrapped().getStateEngName()).getFirst();
-        final var roads = readRoads(webTestClient(), state.getWrapped().getStateEngName(),
-                                    city.getWrapped().getCityEngName());
+        final var city = readCities(webTestClient(), state).getFirst();
+        final var roads = readRoads(webTestClient(), state, city);
         assertThat(roads)
                 .isNotEmpty()
                 .doesNotContainNull()

@@ -69,6 +69,9 @@ public class RoadAddressEngSearchListResponse
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
+    /**
+     * Creates a new instance.
+     */
     public RoadAddressEngSearchListResponse() {
         super(RoadAddressEngSearchListRequest.class);
     }

@@ -2,7 +2,6 @@ package com.github.jinahya.epost.openapi.proxy.web.reactive.funcion.client;
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area_code_service.AreaCodeInfoUtils;
 import io.micrometer.common.lang.NonNull;
-import io.netty.channel.ChannelOption;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;

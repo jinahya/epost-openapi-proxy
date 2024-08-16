@@ -22,7 +22,6 @@ public abstract class AbstractWrappingModel<
     private static final long serialVersionUID = 2185796969322484068L;
 
     // -----------------------------------------------------------------------------------------------------------------
-//    @JsonUnwrapped
     @JsonProperty
     @Valid
     @NotNull

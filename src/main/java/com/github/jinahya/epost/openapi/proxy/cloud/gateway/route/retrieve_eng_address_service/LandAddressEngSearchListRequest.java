@@ -64,7 +64,10 @@ public class LandAddressEngSearchListRequest
 
     public LandAddressEngSearchListRequest() {
         super(LandAddressEngSearchListResponse.class);
-        setUriConsumer(URI_CONSUMER);
+        setUriConsumer(
+                URI_CONSUMER,
+                true
+        );
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -75,7 +78,7 @@ public class LandAddressEngSearchListRequest
     private String cityEngName;
 
     @Size(max = 1)
-    @NotBlank
+//    @NotBlank
     private String districtEngFirstName;
 
     @NotBlank

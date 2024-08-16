@@ -1,5 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.CityEngListResponse;
 import com.github.jinahya.epost.openapi.proxy.web.bind.AbstractWrappingModel;
@@ -10,7 +11,6 @@ import org.springframework.hateoas.Link;
 
 import java.io.Serial;
 import java.util.Objects;
-import java.util.Optional;
 
 @Setter
 @Getter
@@ -26,13 +26,12 @@ public class City
     // -----------------------------------------------------------------------------------------------------------------
     static String getHref(final String stateName, final String cityName) {
         return State.getHref(stateName)
-                + '/' + _RetrieveEngAddressServiceApiConstants.REL_CITIES
+                + '/' + __RetrieveEngAddressServiceApiConstants.REL_CITIES
                 + '/' + cityName;
     }
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
-    public static City instanceOf(final String stateName, final CityEngListResponse.CityEngList wrapped) {
-        Objects.requireNonNull(wrapped, "wrapped is null");
+    public static City newInstance(final String stateName, final CityEngListResponse.CityEngList wrapped) {
         final var instance = new City();
         instance.setStateName(stateName);
         instance.setWrapped(wrapped);
@@ -44,32 +43,34 @@ public class City
     // ----------------------------------------------------------------------------------------------------- super.links
     public City addLinks() {
         add(
+                Link.of(State.getHref(stateName))
+                        .withRel(__RetrieveEngAddressServiceApiConstants.REL_STATE)
+        );
+        add(
                 Link.of(getHref(stateName, wrapped.getCityEngName()))
                         .withRel(IanaLinkRelations.SELF)
         );
         add(
                 Link.of(getHref(stateName, wrapped.getCityEngName())
-                                + '/' + _RetrieveEngAddressServiceApiConstants.REL_ROADS)
-                        .withRel(_RetrieveEngAddressServiceApiConstants.REL_ROADS)
+                                + '/' + __RetrieveEngAddressServiceApiConstants.REL_ROADS)
+                        .withRel(__RetrieveEngAddressServiceApiConstants.REL_ROADS)
         );
         add(
                 Link.of(getHref(stateName, wrapped.getCityEngName())
-                                + '/' + _RetrieveEngAddressServiceApiConstants.REL_LANDS)
-                        .withRel(_RetrieveEngAddressServiceApiConstants.REL_LANDS)
+                                + '/' + __RetrieveEngAddressServiceApiConstants.REL_LANDS)
+                        .withRel(__RetrieveEngAddressServiceApiConstants.REL_LANDS)
         );
         return this;
     }
 
     // --------------------------------------------------------------------------------------------------- super.wrapped
-    @JsonProperty(required = true)
-    public String getName() {
-        return Optional.ofNullable(getWrapped())
-                .map(CityEngListResponse.CityEngList::getCityEngName)
-                .orElse(null);
+    @JsonIgnore
+    String name() {
+        return Objects.requireNonNull(getWrapped(), "getWrapped() is null").getCityEngName();
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    @JsonProperty(required = true)
+    @JsonProperty
     @NotBlank
     private String stateName;
 }

@@ -14,12 +14,12 @@ public interface PaginatedRequest<T extends AbstractRequestType<T> & PaginatedRe
         return PaginatedRequestHelper.getCountPerPage(this);
     }
 
-    default void setCountPerPage(Integer countPerPage) {
+    default void setCountPerPage(final Integer countPerPage) {
         PaginatedRequestHelper.setCountPerPage(this, countPerPage);
     }
 
     @SuppressWarnings({"unchecked"})
-    default T countPerPage(Integer countPerPage) {
+    default T countPerPage(final Integer countPerPage) {
         setCountPerPage(countPerPage);
         return (T) this;
     }

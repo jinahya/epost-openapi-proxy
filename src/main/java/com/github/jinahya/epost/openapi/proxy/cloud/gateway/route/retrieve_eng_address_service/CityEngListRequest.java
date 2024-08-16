@@ -9,7 +9,6 @@ import lombok.ToString;
 import org.springframework.web.util.UriBuilder;
 
 import java.io.Serial;
-import java.util.Objects;
 import java.util.function.BiConsumer;
 
 @Setter
@@ -30,23 +29,6 @@ public class CityEngListRequest
         return instance;
     }
 
-    public static CityEngListRequest from(final StateEngListRequest stateEngListRequest,
-                                          final StateEngListResponse.StateEngList stateEngList) {
-        Objects.requireNonNull(stateEngListRequest, "stateEngListRequest is null");
-        Objects.requireNonNull(stateEngList, "stateEngList is null");
-        final CityEngListRequest instance = new CityEngListRequest();
-        instance.setServiceKey(stateEngListRequest.getServiceKey());
-        instance.setStateEngName(stateEngList.getStateEngName());
-        return instance;
-    }
-
-    static CityEngListRequest from(final StateEngListResponse.StateEngList stateEngList) {
-        return from(
-                stateEngList.getParent().getRequestInstance(),
-                stateEngList
-        );
-    }
-
     // -----------------------------------------------------------------------------------------------------------------
     private static final BiConsumer<? super CityEngListRequest, ? super UriBuilder> URI_CONSUMER = (s, b) -> {
         b.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_CITY_LIST)
@@ -56,6 +38,9 @@ public class CityEngListRequest
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
+    /**
+     * Creates a new instance.
+     */
     public CityEngListRequest() {
         super(CityEngListResponse.class);
         setUriConsumer(
@@ -65,10 +50,6 @@ public class CityEngListRequest
     }
 
     // ---------------------------------------------------------------------------------------------------- stateEngName
-    public CityEngListRequest stateEngName(final String stateEngName) {
-        setStateEngName(stateEngName);
-        return this;
-    }
 
     // -----------------------------------------------------------------------------------------------------------------
     @NotBlank

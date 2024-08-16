@@ -119,7 +119,7 @@ class RetrieveNewAdressAreaCdSearchAllServiceApiGatewayFilterFactory
                     return super.writeWith(
                             Flux.concat(firstPage, restPages)
                                     .flatMap(r -> Flux.fromIterable(r.getLandAddressEngSearchList())
-                                            .map(w -> DistrictAddress.instanceOf(stateName, cityName, districtName, w))
+                                            .map(w -> DistrictAddress.newInstance(stateName, cityName, districtName, w))
                                             .map(DistrictAddress::addLinks)
                                     )
                                     .map(ra -> new _Jackson2JsonEncoder(objectMapper).encodeValue(

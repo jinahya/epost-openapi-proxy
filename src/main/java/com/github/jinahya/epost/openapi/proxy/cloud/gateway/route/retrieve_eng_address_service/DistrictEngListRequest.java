@@ -22,7 +22,7 @@ public class DistrictEngListRequest
     @Serial
     private static final long serialVersionUID = -6793297919987439959L;
 
-    // --------------------------------------------------------------------------------------------------- STATIC_FACTORY_METHODS
+    // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
     public static DistrictEngListRequest of(final String serviceKey, final String stateEngName,
                                             final String cityEngName, final String districtEngFirstName) {
         final DistrictEngListRequest instance = new DistrictEngListRequest();
@@ -49,7 +49,10 @@ public class DistrictEngListRequest
      */
     public DistrictEngListRequest() {
         super(DistrictEngListResponse.class);
-        setUriConsumer(URI_CONSUMER);
+        setUriConsumer(
+                URI_CONSUMER,
+                true
+        );
     }
 
     // -----------------------------------------------------------------------------------------------------------------
