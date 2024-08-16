@@ -1,0 +1,3242 @@
+{
+	"info": {
+		"_postman_id": "28bf066e-8eab-45c1-8b07-80860c9ed7af",
+		"name": "openapi.epost.go.kr",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "884518",
+		"_collection_link": "https://grey-satellite-6785.postman.co/workspace/Team-Workspace~7a330974-17ce-4f23-8981-8fad2d23dc61/collection/884518-28bf066e-8eab-45c1-8b07-80860c9ed7af?action=share&source=collection_link&creator=884518"
+	},
+	"item": [
+		{
+			"name": "trace",
+			"item": [
+				{
+					"name": "국내우편물 배송조회 서비스",
+					"item": [
+						{
+							"name": "건별 국내등기 종적조회",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base-url}}/trace/retrieveLongitudinalService/retrieveLongitudinalService/getLongitudinalDomesticList?serviceKey={{service-key}}&rgist=4092007735160",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"trace",
+										"retrieveLongitudinalService",
+										"retrieveLongitudinalService",
+										"getLongitudinalDomesticList"
+									],
+									"query": [
+										{
+											"key": "ServiceKey",
+											"value": "{{service-key}}",
+											"disabled": true
+										},
+										{
+											"key": "serviceKey",
+											"value": "{{service-key}}"
+										},
+										{
+											"key": "rgist",
+											"value": "4092007735160"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "postal",
+			"item": [
+				{
+					"name": "우편번호 DB 다운로드 서비스",
+					"item": [
+						{
+							"name": "우편번호 DB 다운로드 서비스",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base-url}}/postal/downloadAreaCodeService/downloadAreaCodeService/getAreaCodeInfo?serviceKey={{service-key}}&dwldSe=1",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"postal",
+										"downloadAreaCodeService",
+										"downloadAreaCodeService",
+										"getAreaCodeInfo"
+									],
+									"query": [
+										{
+											"key": "ServiceKey",
+											"value": "{{service-key}}",
+											"disabled": true
+										},
+										{
+											"key": "serviceKey",
+											"value": "{{service-key}}"
+										},
+										{
+											"key": "dwldSe",
+											"value": "1"
+										},
+										{
+											"key": "dwldSe",
+											"value": "2",
+											"disabled": true
+										},
+										{
+											"key": "dwldSe",
+											"value": "3",
+											"disabled": true
+										},
+										{
+											"key": "dwldSe",
+											"value": "4",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "> 1 우편번호 전체 DB 다운",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Cache-Control",
+										"value": "no-cache",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{base-url}}/postal/downloadAreaCodeService/downloadAreaCodeService/getAreaCodeInfo?dwldSe=1",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"postal",
+										"downloadAreaCodeService",
+										"downloadAreaCodeService",
+										"getAreaCodeInfo"
+									],
+									"query": [
+										{
+											"key": "ServiceKey",
+											"value": "{{service-key}}",
+											"disabled": true
+										},
+										{
+											"key": "serviceKey",
+											"value": "{{service-key}}",
+											"disabled": true
+										},
+										{
+											"key": "dwldSe",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "> 2 우편번호 변경분 DB 다운",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base-url}}/postal/downloadAreaCodeService/downloadAreaCodeService/getAreaCodeInfo?serviceKey={{service-key}}&dwldSe=2",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"postal",
+										"downloadAreaCodeService",
+										"downloadAreaCodeService",
+										"getAreaCodeInfo"
+									],
+									"query": [
+										{
+											"key": "ServiceKey",
+											"value": "{{service-key}}",
+											"disabled": true
+										},
+										{
+											"key": "serviceKey",
+											"value": "{{service-key}}"
+										},
+										{
+											"key": "dwldSe",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "> 3 범위 주소 DB",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base-url}}/postal/downloadAreaCodeService/downloadAreaCodeService/getAreaCodeInfo?serviceKey={{service-key}}&dwldSe=3",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"postal",
+										"downloadAreaCodeService",
+										"downloadAreaCodeService",
+										"getAreaCodeInfo"
+									],
+									"query": [
+										{
+											"key": "ServiceKey",
+											"value": "{{service-key}}",
+											"disabled": true
+										},
+										{
+											"key": "serviceKey",
+											"value": "{{service-key}}"
+										},
+										{
+											"key": "dwldSe",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "> 4 사서함 주소 DB",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base-url}}/postal/downloadAreaCodeService/downloadAreaCodeService/getAreaCodeInfo?serviceKey={{service-key}}&dwldSe=4",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"postal",
+										"downloadAreaCodeService",
+										"downloadAreaCodeService",
+										"getAreaCodeInfo"
+									],
+									"query": [
+										{
+											"key": "ServiceKey",
+											"value": "{{service-key}}",
+											"disabled": true
+										},
+										{
+											"key": "serviceKey",
+											"value": "{{service-key}}"
+										},
+										{
+											"key": "dwldSe",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "집배구 구분코드 조회서비스",
+					"item": [
+						{
+							"name": "getDelivAreaCd",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{base-url}}/postal/retrieveDelivAreaCdService/retrieveDelivAreaCdService/getDelivAreaCd?serviceKey={{service-key}}&zip=58217&addr=전라남도 나주시 정보화길 1&mailDivCd=1",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"postal",
+										"retrieveDelivAreaCdService",
+										"retrieveDelivAreaCdService",
+										"getDelivAreaCd"
+									],
+									"query": [
+										{
+											"key": "ServiceKey",
+											"value": "{{service-key}}",
+											"disabled": true
+										},
+										{
+											"key": "serviceKey",
+											"value": "{{service-key}}"
+										},
+										{
+											"key": "zip",
+											"value": "58217"
+										},
+										{
+											"key": "addr",
+											"value": "전라남도 나주시 정보화길 1"
+										},
+										{
+											"key": "mailDivCd",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "> getDelivAreaCd 1",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base-url}}/postal/retrieveDelivAreaCdService/retrieveDelivAreaCdService/getDelivAreaCd?serviceKey={{service-key}}&zip=58217&addr=전라남도 나주시 정보화길 1&mailDivCd=1",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"postal",
+										"retrieveDelivAreaCdService",
+										"retrieveDelivAreaCdService",
+										"getDelivAreaCd"
+									],
+									"query": [
+										{
+											"key": "ServiceKey",
+											"value": "{{service-key}}",
+											"disabled": true
+										},
+										{
+											"key": "serviceKey",
+											"value": "{{service-key}}"
+										},
+										{
+											"key": "zip",
+											"value": "58217"
+										},
+										{
+											"key": "addr",
+											"value": "전라남도 나주시 정보화길 1"
+										},
+										{
+											"key": "mailDivCd",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "> getDelivAreaCd 2",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base-url}}/postal/retrieveDelivAreaCdService/retrieveDelivAreaCdService/getDelivAreaCd?serviceKey={{service-key}}&zip=58217&addr=전라남도 나주시 정보화길 1&mailDivCd=2",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"postal",
+										"retrieveDelivAreaCdService",
+										"retrieveDelivAreaCdService",
+										"getDelivAreaCd"
+									],
+									"query": [
+										{
+											"key": "ServiceKey",
+											"value": "{{service-key}}",
+											"disabled": true
+										},
+										{
+											"key": "serviceKey",
+											"value": "{{service-key}}"
+										},
+										{
+											"key": "zip",
+											"value": "58217"
+										},
+										{
+											"key": "addr",
+											"value": "전라남도 나주시 정보화길 1"
+										},
+										{
+											"key": "mailDivCd",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "[과학기술정보통신부 우정사업본부_집배구 구분코드 조회서비스](https://www.data.go.kr/data/15057018/openapi.do)"
+				},
+				{
+					"name": "영문 우편번호 조회 서비스",
+					"item": [
+						{
+							"name": "api",
+							"item": [
+								{
+									"name": "ad hoc",
+									"item": [
+										{
+											"name": "all cities",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", () => {",
+															"    pm.expect(pm.response.code).to.eql(200);",
+															"});",
+															"",
+															"pm.test(\"Content-Type header is present\", () => {",
+															"  pm.response.to.have.header(\"Content-Type\");",
+															"});",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/x-ndjson",
+														"type": "text",
+														"disabled": true
+													},
+													{
+														"key": "Cache-Control",
+														"value": "no-cache",
+														"type": "text",
+														"disabled": true
+													}
+												],
+												"url": {
+													"raw": "{{base-url}}/api/retrieveEngAddressService/cities",
+													"host": [
+														"{{base-url}}"
+													],
+													"path": [
+														"api",
+														"retrieveEngAddressService",
+														"cities"
+													],
+													"query": [
+														{
+															"key": "ServiceKey",
+															"value": "{{service-key}}",
+															"disabled": true
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "all roads",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", () => {",
+															"    pm.expect(pm.response.code).to.eql(200);",
+															"});",
+															"",
+															"pm.test(\"Content-Type header is present\", () => {",
+															"  pm.response.to.have.header(\"Content-Type\");",
+															"});",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/x-ndjson",
+														"type": "text",
+														"disabled": true
+													},
+													{
+														"key": "Cache-Control",
+														"value": "no-cache",
+														"type": "text",
+														"disabled": true
+													}
+												],
+												"url": {
+													"raw": "{{base-url}}/api/retrieveEngAddressService/roads",
+													"host": [
+														"{{base-url}}"
+													],
+													"path": [
+														"api",
+														"retrieveEngAddressService",
+														"roads"
+													],
+													"query": [
+														{
+															"key": "ServiceKey",
+															"value": "{{service-key}}",
+															"disabled": true
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "all districts",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", () => {",
+															"    pm.expect(pm.response.code).to.eql(200);",
+															"});",
+															"",
+															"pm.test(\"Content-Type header is present\", () => {",
+															"  pm.response.to.have.header(\"Content-Type\");",
+															"});",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/x-ndjson",
+														"type": "text",
+														"disabled": true
+													},
+													{
+														"key": "Cache-Control",
+														"value": "no-cache",
+														"type": "text",
+														"disabled": true
+													}
+												],
+												"url": {
+													"raw": "{{base-url}}/api/retrieveEngAddressService/districts",
+													"host": [
+														"{{base-url}}"
+													],
+													"path": [
+														"api",
+														"retrieveEngAddressService",
+														"districts"
+													],
+													"query": [
+														{
+															"key": "ServiceKey",
+															"value": "{{service-key}}",
+															"disabled": true
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "states",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", () => {",
+													"    pm.expect(pm.response.code).to.eql(200);",
+													"});",
+													"",
+													"pm.test(\"Content-Type header is present\", () => {",
+													"  pm.response.to.have.header(\"Content-Type\");",
+													"});",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/x-ndjson",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "Cache-Control",
+												"value": "no-cache",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{base-url}}/api/retrieveEngAddressService/states",
+											"host": [
+												"{{base-url}}"
+											],
+											"path": [
+												"api",
+												"retrieveEngAddressService",
+												"states"
+											],
+											"query": [
+												{
+													"key": "ServiceKey",
+													"value": "{{service-key}}",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "state",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", () => {",
+													"    pm.expect(pm.response.code).to.eql(200);",
+													"});",
+													"",
+													"pm.test(\"Content-Type header is present\", () => {",
+													"  pm.response.to.have.header(\"Content-Type\");",
+													"});",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/x-ndjson",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "Cache-Control",
+												"value": "no-cache",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{base-url}}/api/retrieveEngAddressService/states/:stateName",
+											"host": [
+												"{{base-url}}"
+											],
+											"path": [
+												"api",
+												"retrieveEngAddressService",
+												"states",
+												":stateName"
+											],
+											"query": [
+												{
+													"key": "ServiceKey",
+													"value": "{{service-key}}",
+													"disabled": true
+												}
+											],
+											"variable": [
+												{
+													"key": "stateName",
+													"value": "Jeollanam-do"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "cities",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", () => {",
+													"    pm.expect(pm.response.code).to.eql(200);",
+													"});",
+													"",
+													"pm.test(\"Content-Type header is present\", () => {",
+													"  pm.response.to.have.header(\"Content-Type\");",
+													"});",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/x-ndjson",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "Cache-Control",
+												"value": "no-cache",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{base-url}}/api/retrieveEngAddressService/states/:stateName/cities",
+											"host": [
+												"{{base-url}}"
+											],
+											"path": [
+												"api",
+												"retrieveEngAddressService",
+												"states",
+												":stateName",
+												"cities"
+											],
+											"query": [
+												{
+													"key": "ServiceKey",
+													"value": "{{service-key}}",
+													"disabled": true
+												}
+											],
+											"variable": [
+												{
+													"key": "stateName",
+													"value": "Jeollanam-do"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "> Seoul",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", () => {",
+													"    pm.expect(pm.response.code).to.eql(200);",
+													"});",
+													"",
+													"pm.test(\"Content-Type header is present\", () => {",
+													"  pm.response.to.have.header(\"Content-Type\");",
+													"});",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/x-ndjson",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "Cache-Control",
+												"value": "no-cache",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{base-url}}/api/retrieveEngAddressService/states/:stateName/cities",
+											"host": [
+												"{{base-url}}"
+											],
+											"path": [
+												"api",
+												"retrieveEngAddressService",
+												"states",
+												":stateName",
+												"cities"
+											],
+											"query": [
+												{
+													"key": "ServiceKey",
+													"value": "{{service-key}}",
+													"disabled": true
+												}
+											],
+											"variable": [
+												{
+													"key": "stateName",
+													"value": "Seoul"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "city",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", () => {",
+													"    pm.expect(pm.response.code).to.eql(200);",
+													"});",
+													"",
+													"pm.test(\"Content-Type header is present\", () => {",
+													"  pm.response.to.have.header(\"Content-Type\");",
+													"});",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/x-ndjson",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "Cache-Control",
+												"value": "no-cache",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{base-url}}/api/retrieveEngAddressService/states/:stateName/cities/:cityName",
+											"host": [
+												"{{base-url}}"
+											],
+											"path": [
+												"api",
+												"retrieveEngAddressService",
+												"states",
+												":stateName",
+												"cities",
+												":cityName"
+											],
+											"query": [
+												{
+													"key": "ServiceKey",
+													"value": "{{service-key}}",
+													"disabled": true
+												}
+											],
+											"variable": [
+												{
+													"key": "stateName",
+													"value": "Jeollanam-do"
+												},
+												{
+													"key": "cityName",
+													"value": "Naju-si"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "roads",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", () => {",
+													"    pm.expect(pm.response.code).to.eql(200);",
+													"});",
+													"",
+													"pm.test(\"Content-Type header is present\", () => {",
+													"  pm.response.to.have.header(\"Content-Type\");",
+													"});",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/x-ndjson",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "Cache-Control",
+												"value": "no-cache",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{base-url}}/api/retrieveEngAddressService/states/:stateName/cities/:cityName/roads",
+											"host": [
+												"{{base-url}}"
+											],
+											"path": [
+												"api",
+												"retrieveEngAddressService",
+												"states",
+												":stateName",
+												"cities",
+												":cityName",
+												"roads"
+											],
+											"query": [
+												{
+													"key": "ServiceKey",
+													"value": "{{service-key}}",
+													"disabled": true
+												}
+											],
+											"variable": [
+												{
+													"key": "stateName",
+													"value": "Jeollanam-do"
+												},
+												{
+													"key": "cityName",
+													"value": "Naju-si"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "> Seoul / Dobong-gu",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", () => {",
+													"    pm.expect(pm.response.code).to.eql(200);",
+													"});",
+													"",
+													"pm.test(\"Content-Type header is present\", () => {",
+													"  pm.response.to.have.header(\"Content-Type\");",
+													"});",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/x-ndjson",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "Cache-Control",
+												"value": "no-cache",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{base-url}}/api/retrieveEngAddressService/states/:stateName/cities/:cityName/roads",
+											"host": [
+												"{{base-url}}"
+											],
+											"path": [
+												"api",
+												"retrieveEngAddressService",
+												"states",
+												":stateName",
+												"cities",
+												":cityName",
+												"roads"
+											],
+											"query": [
+												{
+													"key": "ServiceKey",
+													"value": "{{service-key}}",
+													"disabled": true
+												}
+											],
+											"variable": [
+												{
+													"key": "stateName",
+													"value": "Seoul"
+												},
+												{
+													"key": "cityName",
+													"value": "Dobong-gu"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "road",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", () => {",
+													"    pm.expect(pm.response.code).to.eql(200);",
+													"});",
+													"",
+													"pm.test(\"Content-Type header is present\", () => {",
+													"  pm.response.to.have.header(\"Content-Type\");",
+													"});",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/x-ndjson",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "Cache-Control",
+												"value": "no-cache",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{base-url}}/api/retrieveEngAddressService/states/:stateName/cities/:cityName/roads/:roadName",
+											"host": [
+												"{{base-url}}"
+											],
+											"path": [
+												"api",
+												"retrieveEngAddressService",
+												"states",
+												":stateName",
+												"cities",
+												":cityName",
+												"roads",
+												":roadName"
+											],
+											"query": [
+												{
+													"key": "ServiceKey",
+													"value": "{{service-key}}",
+													"disabled": true
+												}
+											],
+											"variable": [
+												{
+													"key": "stateName",
+													"value": "Jeollanam-do"
+												},
+												{
+													"key": "cityName",
+													"value": "Naju-si"
+												},
+												{
+													"key": "roadName",
+													"value": "Daeho-gil"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "roadAddresses",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", () => {",
+													"    pm.expect(pm.response.code).to.eql(200);",
+													"});",
+													"",
+													"pm.test(\"Content-Type header is present\", () => {",
+													"  pm.response.to.have.header(\"Content-Type\");",
+													"});",
+													"",
+													"const contentType = pm.response.headers.one('Content-Type').value;",
+													"console.log('Content-Type: ' + contentType + (typeof contentType));",
+													"",
+													"if (contentType.includes('application/xml')) {",
+													"    const parseString = require('xml2js').parseString;",
+													"    parseString(pm.response.text(), function(e, r) {        console.log('r: ' + r);",
+													"        for (var property in r) {",
+													"            console.log(property + ': ' + r[property]);",
+													"        }",
+													"        pm.expect(r['StateEngListResponse']['cmmMsgHeader'][0]['successYN'][0]).to.eql('Y');",
+													"        pm.environment.set('stateEngName', r['StateEngListResponse']['stateEngList'][0]['stateEngName'][0]);",
+													"    });",
+													"}",
+													"",
+													"if (contentType.includes('application/json')) {",
+													"    const responseJson = pm.response.json();",
+													"    pm.expect(responseJson.StateEngListResponse.cmmMsgHeader.successYN).to.eql('Y');",
+													"    pm.expect(responseJson.StateEngListResponse.stateEngList).to.not.empty;",
+													"    const stateEngName = responseJson.StateEngListResponse.stateEngList[0].stateEngName;",
+													"    pm.environment.set('stateEngName', stateEngName);",
+													"}",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/x-ndjson",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "Cache-Control",
+												"value": "no-cache",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{base-url}}/api/retrieveEngAddressService/states/:stateName/cities/:cityName/roads/:roadName/addresses",
+											"host": [
+												"{{base-url}}"
+											],
+											"path": [
+												"api",
+												"retrieveEngAddressService",
+												"states",
+												":stateName",
+												"cities",
+												":cityName",
+												"roads",
+												":roadName",
+												"addresses"
+											],
+											"query": [
+												{
+													"key": "ServiceKey",
+													"value": "{{service-key}}",
+													"disabled": true
+												}
+											],
+											"variable": [
+												{
+													"key": "stateName",
+													"value": "Jeollanam-do"
+												},
+												{
+													"key": "cityName",
+													"value": "Naju-si"
+												},
+												{
+													"key": "roadName",
+													"value": "Daeho-gil"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "districts",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", () => {",
+													"    pm.expect(pm.response.code).to.eql(200);",
+													"});",
+													"",
+													"pm.test(\"Content-Type header is present\", () => {",
+													"  pm.response.to.have.header(\"Content-Type\");",
+													"});",
+													"",
+													"const contentType = pm.response.headers.one('Content-Type').value;",
+													"console.log('Content-Type: ' + contentType + (typeof contentType));",
+													"",
+													"if (contentType.includes('application/xml')) {",
+													"    const parseString = require('xml2js').parseString;",
+													"    parseString(pm.response.text(), function(e, r) {        console.log('r: ' + r);",
+													"        for (var property in r) {",
+													"            console.log(property + ': ' + r[property]);",
+													"        }",
+													"        pm.expect(r['StateEngListResponse']['cmmMsgHeader'][0]['successYN'][0]).to.eql('Y');",
+													"        pm.environment.set('stateEngName', r['StateEngListResponse']['stateEngList'][0]['stateEngName'][0]);",
+													"    });",
+													"}",
+													"",
+													"if (contentType.includes('application/json')) {",
+													"    const responseJson = pm.response.json();",
+													"    pm.expect(responseJson.StateEngListResponse.cmmMsgHeader.successYN).to.eql('Y');",
+													"    pm.expect(responseJson.StateEngListResponse.stateEngList).to.not.empty;",
+													"    const stateEngName = responseJson.StateEngListResponse.stateEngList[0].stateEngName;",
+													"    pm.environment.set('stateEngName', stateEngName);",
+													"}",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/x-ndjson",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "Cache-Control",
+												"value": "no-cache",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{base-url}}/api/retrieveEngAddressService/states/:stateName/cities/:cityName/districts",
+											"host": [
+												"{{base-url}}"
+											],
+											"path": [
+												"api",
+												"retrieveEngAddressService",
+												"states",
+												":stateName",
+												"cities",
+												":cityName",
+												"districts"
+											],
+											"query": [
+												{
+													"key": "ServiceKey",
+													"value": "{{service-key}}",
+													"disabled": true
+												}
+											],
+											"variable": [
+												{
+													"key": "stateName",
+													"value": "Jeollanam-do"
+												},
+												{
+													"key": "cityName",
+													"value": "Naju-si"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "> district",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", () => {",
+													"    pm.expect(pm.response.code).to.eql(200);",
+													"});",
+													"",
+													"pm.test(\"Content-Type header is present\", () => {",
+													"  pm.response.to.have.header(\"Content-Type\");",
+													"});",
+													"",
+													"const contentType = pm.response.headers.one('Content-Type').value;",
+													"console.log('Content-Type: ' + contentType + (typeof contentType));",
+													"",
+													"if (contentType.includes('application/xml')) {",
+													"    const parseString = require('xml2js').parseString;",
+													"    parseString(pm.response.text(), function(e, r) {        console.log('r: ' + r);",
+													"        for (var property in r) {",
+													"            console.log(property + ': ' + r[property]);",
+													"        }",
+													"        pm.expect(r['StateEngListResponse']['cmmMsgHeader'][0]['successYN'][0]).to.eql('Y');",
+													"        pm.environment.set('stateEngName', r['StateEngListResponse']['stateEngList'][0]['stateEngName'][0]);",
+													"    });",
+													"}",
+													"",
+													"if (contentType.includes('application/json')) {",
+													"    const responseJson = pm.response.json();",
+													"    pm.expect(responseJson.StateEngListResponse.cmmMsgHeader.successYN).to.eql('Y');",
+													"    pm.expect(responseJson.StateEngListResponse.stateEngList).to.not.empty;",
+													"    const stateEngName = responseJson.StateEngListResponse.stateEngList[0].stateEngName;",
+													"    pm.environment.set('stateEngName', stateEngName);",
+													"}",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/x-ndjson",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "Cache-Control",
+												"value": "no-cache",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{base-url}}/api/retrieveEngAddressService/states/:stateName/cities/:cityName/districts/:districtName",
+											"host": [
+												"{{base-url}}"
+											],
+											"path": [
+												"api",
+												"retrieveEngAddressService",
+												"states",
+												":stateName",
+												"cities",
+												":cityName",
+												"districts",
+												":districtName"
+											],
+											"query": [
+												{
+													"key": "ServiceKey",
+													"value": "{{service-key}}",
+													"disabled": true
+												}
+											],
+											"variable": [
+												{
+													"key": "stateName",
+													"value": "Jeollanam-do"
+												},
+												{
+													"key": "cityName",
+													"value": "Naju-si"
+												},
+												{
+													"key": "districtName",
+													"value": "Daeho-dong"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "districtAddresses",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", () => {",
+													"    pm.expect(pm.response.code).to.eql(200);",
+													"});",
+													"",
+													"pm.test(\"Content-Type header is present\", () => {",
+													"  pm.response.to.have.header(\"Content-Type\");",
+													"});",
+													"",
+													"const contentType = pm.response.headers.one('Content-Type').value;",
+													"console.log('Content-Type: ' + contentType + (typeof contentType));",
+													"",
+													"if (contentType.includes('application/xml')) {",
+													"    const parseString = require('xml2js').parseString;",
+													"    parseString(pm.response.text(), function(e, r) {        console.log('r: ' + r);",
+													"        for (var property in r) {",
+													"            console.log(property + ': ' + r[property]);",
+													"        }",
+													"        pm.expect(r['StateEngListResponse']['cmmMsgHeader'][0]['successYN'][0]).to.eql('Y');",
+													"        pm.environment.set('stateEngName', r['StateEngListResponse']['stateEngList'][0]['stateEngName'][0]);",
+													"    });",
+													"}",
+													"",
+													"if (contentType.includes('application/json')) {",
+													"    const responseJson = pm.response.json();",
+													"    pm.expect(responseJson.StateEngListResponse.cmmMsgHeader.successYN).to.eql('Y');",
+													"    pm.expect(responseJson.StateEngListResponse.stateEngList).to.not.empty;",
+													"    const stateEngName = responseJson.StateEngListResponse.stateEngList[0].stateEngName;",
+													"    pm.environment.set('stateEngName', stateEngName);",
+													"}",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/x-ndjson",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "Cache-Control",
+												"value": "no-cache",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{base-url}}/api/retrieveEngAddressService/states/:stateName/cities/:cityName/districts/:districtName/addresses",
+											"host": [
+												"{{base-url}}"
+											],
+											"path": [
+												"api",
+												"retrieveEngAddressService",
+												"states",
+												":stateName",
+												"cities",
+												":cityName",
+												"districts",
+												":districtName",
+												"addresses"
+											],
+											"query": [
+												{
+													"key": "ServiceKey",
+													"value": "{{service-key}}",
+													"disabled": true
+												}
+											],
+											"variable": [
+												{
+													"key": "stateName",
+													"value": "Jeollanam-do"
+												},
+												{
+													"key": "cityName",
+													"value": "Naju-si"
+												},
+												{
+													"key": "districtName",
+													"value": "Daeho-dong"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "광역시/도 조회",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {",
+											"    pm.expect(pm.response.code).to.eql(200);",
+											"});",
+											"",
+											"pm.test(\"Content-Type header is present\", () => {",
+											"  pm.response.to.have.header(\"Content-Type\");",
+											"});",
+											"",
+											"const contentType = pm.response.headers.one('Content-Type').value;",
+											"console.log('Content-Type: ' + contentType + (typeof contentType));",
+											"",
+											"if (contentType.includes('application/xml')) {",
+											"    const parseString = require('xml2js').parseString;",
+											"    parseString(pm.response.text(), function(e, r) {        console.log('r: ' + r);",
+											"        for (var property in r) {",
+											"            console.log(property + ': ' + r[property]);",
+											"        }",
+											"        pm.expect(r['StateEngListResponse']['cmmMsgHeader'][0]['successYN'][0]).to.eql('Y');",
+											"        pm.environment.set('stateEngName', r['StateEngListResponse']['stateEngList'][0]['stateEngName'][0]);",
+											"    });",
+											"}",
+											"",
+											"if (contentType.includes('application/json')) {",
+											"    const responseJson = pm.response.json();",
+											"    pm.expect(responseJson.StateEngListResponse.cmmMsgHeader.successYN).to.eql('Y');",
+											"    pm.expect(responseJson.StateEngListResponse.stateEngList).to.not.empty;",
+											"    const stateEngName = responseJson.StateEngListResponse.stateEngList[0].stateEngName;",
+											"    pm.environment.set('stateEngName', stateEngName);",
+											"}",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Cache-Control",
+										"value": "no-cache",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{base-url}}/postal/retrieveEngAddressService/retrieveEngAddressService/getStateList",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"postal",
+										"retrieveEngAddressService",
+										"retrieveEngAddressService",
+										"getStateList"
+									],
+									"query": [
+										{
+											"key": "ServiceKey",
+											"value": "{{service-key}}",
+											"disabled": true
+										},
+										{
+											"key": "serviceKey",
+											"value": "{{service-key}}",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "시/군/구 조회",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base-url}}/postal/retrieveEngAddressService/retrieveEngAddressService/getCityList?serviceKey={{service-key}}&stateEngName=Jeollanam-do",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"postal",
+										"retrieveEngAddressService",
+										"retrieveEngAddressService",
+										"getCityList"
+									],
+									"query": [
+										{
+											"key": "ServiceKey",
+											"value": "{{service-key}}",
+											"disabled": true
+										},
+										{
+											"key": "serviceKey",
+											"value": "{{service-key}}"
+										},
+										{
+											"key": "stateEngNm",
+											"value": "Jeollanam-do",
+											"disabled": true
+										},
+										{
+											"key": "stateEngName",
+											"value": "Jeollanam-do"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "도로명 첫자 조회",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Cache-Control",
+										"value": "no-cache",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{base-url}}/postal/retrieveEngAddressService/retrieveEngAddressService/getRoadFirstNameList?serviceKey={{service-key}}&stateEngName=Jeollanam-do&cityEngName=Naju-si",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"postal",
+										"retrieveEngAddressService",
+										"retrieveEngAddressService",
+										"getRoadFirstNameList"
+									],
+									"query": [
+										{
+											"key": "ServiceKey",
+											"value": "{{service-key}}",
+											"disabled": true
+										},
+										{
+											"key": "serviceKey",
+											"value": "{{service-key}}"
+										},
+										{
+											"key": "stateEngName",
+											"value": "Jeollanam-do"
+										},
+										{
+											"key": "cityEngName",
+											"value": "Naju-si"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "> 도로명목록 조회",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base-url}}/postal/retrieveEngAddressService/retrieveEngAddressService/getRoadNameList?serviceKey={{service-key}}&stateEngName=Jeollanam-do&cityEngName=Naju-si&roadEngFirstName=D",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"postal",
+										"retrieveEngAddressService",
+										"retrieveEngAddressService",
+										"getRoadNameList"
+									],
+									"query": [
+										{
+											"key": "ServiceKey",
+											"value": "{{service-key}}",
+											"disabled": true
+										},
+										{
+											"key": "serviceKey",
+											"value": "{{service-key}}"
+										},
+										{
+											"key": "stateEngName",
+											"value": "Jeollanam-do"
+										},
+										{
+											"key": "cityEngName",
+											"value": "Naju-si"
+										},
+										{
+											"key": "roadEngFirstName",
+											"value": "D"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": ">> 도로명주소 검색",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{base-url}}/postal/retrieveEngAddressService/retrieveEngAddressService/getRoadAddressSearch?serviceKey={{service-key}}&stateEngName=Jeollanam-do&cityEngName=Naju-si&roadEngName=Daeho-gil&countPerPage=32&currentPage=2",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"postal",
+										"retrieveEngAddressService",
+										"retrieveEngAddressService",
+										"getRoadAddressSearch"
+									],
+									"query": [
+										{
+											"key": "ServiceKey",
+											"value": "{{service-key}}",
+											"disabled": true
+										},
+										{
+											"key": "serviceKey",
+											"value": "{{service-key}}"
+										},
+										{
+											"key": "stateEngName",
+											"value": "Jeollanam-do"
+										},
+										{
+											"key": "cityEngName",
+											"value": "Naju-si"
+										},
+										{
+											"key": "roadEngFirstName",
+											"value": "D",
+											"disabled": true
+										},
+										{
+											"key": "roadEngName",
+											"value": "Daeho-gil"
+										},
+										{
+											"key": "keyword",
+											"value": "45-40",
+											"disabled": true
+										},
+										{
+											"key": "countPerPage",
+											"value": "32"
+										},
+										{
+											"key": "currentPage",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "읍/면/동 첫자 조회",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{base-url}}/postal/retrieveEngAddressService/retrieveEngAddressService/getDistrictFirstNameList?serviceKey={{service-key}}&stateEngName=Jeollanam-do&cityEngName=Naju-si",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"postal",
+										"retrieveEngAddressService",
+										"retrieveEngAddressService",
+										"getDistrictFirstNameList"
+									],
+									"query": [
+										{
+											"key": "ServiceKey",
+											"value": "{{service-key}}",
+											"disabled": true
+										},
+										{
+											"key": "serviceKey",
+											"value": "{{service-key}}"
+										},
+										{
+											"key": "stateEngName",
+											"value": "Jeollanam-do"
+										},
+										{
+											"key": "cityEngName",
+											"value": "Naju-si"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "> 읍/면/동목록 조회",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base-url}}/postal/retrieveEngAddressService/retrieveEngAddressService/getDistrictNameList?serviceKey={{service-key}}&stateEngName=Jeollanam-do&cityEngName=Naju-si&districtEngFirstName=D",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"postal",
+										"retrieveEngAddressService",
+										"retrieveEngAddressService",
+										"getDistrictNameList"
+									],
+									"query": [
+										{
+											"key": "ServiceKey",
+											"value": "{{service-key}}",
+											"disabled": true
+										},
+										{
+											"key": "serviceKey",
+											"value": "{{service-key}}"
+										},
+										{
+											"key": "stateEngName",
+											"value": "Jeollanam-do"
+										},
+										{
+											"key": "cityEngName",
+											"value": "Naju-si"
+										},
+										{
+											"key": "districtEngFirstName",
+											"value": "D"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": ">> 지번주소 검색",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base-url}}/postal/retrieveEngAddressService/retrieveEngAddressService/getLandAddressSearch?serviceKey={{service-key}}&stateEngName=Jeollanam-do&cityEngName=Naju-si&districtEngFirstName=D&districtEngName=Daeho-dong&countPerPage=2&currentPage=1",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"postal",
+										"retrieveEngAddressService",
+										"retrieveEngAddressService",
+										"getLandAddressSearch"
+									],
+									"query": [
+										{
+											"key": "ServiceKey",
+											"value": "{{service-key}}",
+											"disabled": true
+										},
+										{
+											"key": "serviceKey",
+											"value": "{{service-key}}"
+										},
+										{
+											"key": "stateEngName",
+											"value": "Jeollanam-do"
+										},
+										{
+											"key": "cityEngName",
+											"value": "Naju-si"
+										},
+										{
+											"key": "districtEngFirstName",
+											"value": "D"
+										},
+										{
+											"key": "districtEngName",
+											"value": "Daeho-dong"
+										},
+										{
+											"key": "keyword",
+											"value": "43-4",
+											"description": "optional",
+											"disabled": true
+										},
+										{
+											"key": "countPerPage",
+											"value": "2"
+										},
+										{
+											"key": "currentPage",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "통합검색 5자리 우편번호 조회서비스",
+					"item": [
+						{
+							"name": "통합검색 5자리 우편번호 조회서비스",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{base-url}}/postal/retrieveNewAdressAreaCdSearchAllService/retrieveNewAdressAreaCdSearchAllService/getNewAddressListAreaCdSearchAll?serviceKey={{service-key}}&srchwrd=세종로 17&currentPage=1&countPerPage=2",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"postal",
+										"retrieveNewAdressAreaCdSearchAllService",
+										"retrieveNewAdressAreaCdSearchAllService",
+										"getNewAddressListAreaCdSearchAll"
+									],
+									"query": [
+										{
+											"key": "serviceKey",
+											"value": "{{service-key}}"
+										},
+										{
+											"key": "srchwrd",
+											"value": "세종로 17"
+										},
+										{
+											"key": "srchwrd",
+											"value": "주월동 408-1",
+											"disabled": true
+										},
+										{
+											"key": "srchwrd",
+											"value": "61725",
+											"disabled": true
+										},
+										{
+											"key": "currentPage",
+											"value": "1",
+											"description": "0 doesn't work"
+										},
+										{
+											"key": "countPerPage",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "> 세종로",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{base-url}}/postal/retrieveNewAdressAreaCdSearchAllService/retrieveNewAdressAreaCdSearchAllService/getNewAddressListAreaCdSearchAll?srchwrd=세종로 17&currentPage=32&countPerPage=1",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"postal",
+										"retrieveNewAdressAreaCdSearchAllService",
+										"retrieveNewAdressAreaCdSearchAllService",
+										"getNewAddressListAreaCdSearchAll"
+									],
+									"query": [
+										{
+											"key": "serviceKey",
+											"value": "{{service-key}}",
+											"disabled": true
+										},
+										{
+											"key": "srchwrd",
+											"value": "세종로 17"
+										},
+										{
+											"key": "currentPage",
+											"value": "32",
+											"description": "0 doesn't work"
+										},
+										{
+											"key": "countPerPage",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "> 주월동 408-1",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{base-url}}/postal/retrieveNewAdressAreaCdSearchAllService/retrieveNewAdressAreaCdSearchAllService/getNewAddressListAreaCdSearchAll?serviceKey={{service-key}}&srchwrd=주월동 408-1&currentPage=1&countPerPage=2",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"postal",
+										"retrieveNewAdressAreaCdSearchAllService",
+										"retrieveNewAdressAreaCdSearchAllService",
+										"getNewAddressListAreaCdSearchAll"
+									],
+									"query": [
+										{
+											"key": "serviceKey",
+											"value": "{{service-key}}"
+										},
+										{
+											"key": "srchwrd",
+											"value": "주월동 408-1"
+										},
+										{
+											"key": "currentPage",
+											"value": "1",
+											"description": "0 doesn't work"
+										},
+										{
+											"key": "countPerPage",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "> 61725",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{base-url}}/postal/retrieveNewAdressAreaCdSearchAllService/retrieveNewAdressAreaCdSearchAllService/getNewAddressListAreaCdSearchAll?srchwrd=61725&currentPage=1&countPerPage=2",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"postal",
+										"retrieveNewAdressAreaCdSearchAllService",
+										"retrieveNewAdressAreaCdSearchAllService",
+										"getNewAddressListAreaCdSearchAll"
+									],
+									"query": [
+										{
+											"key": "serviceKey",
+											"value": "{{service-key}}",
+											"disabled": true
+										},
+										{
+											"key": "srchwrd",
+											"value": "61725"
+										},
+										{
+											"key": "currentPage",
+											"value": "1",
+											"description": "0 doesn't work"
+										},
+										{
+											"key": "countPerPage",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "``` markdown\n[과학기술정보통신부 우정사업본부_우편번호 정보조회]\n[과학기술정보통신부 우정사업본부_우편번호 정보조회]: https://www.data.go.kr/data/15056971/openapi.do\n\n ```"
+				},
+				{
+					"name": "새주소 5자리 우편번호 조회서비스",
+					"item": [
+						{
+							"name": "새주소 5자리 우편번호 조회서비스",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{base-url}}/postal/retrieveNewAdressAreaCdService/retrieveNewAdressAreaCdService/getNewAddressListAreaCd?serviceKey={{service-key}}&searchSe=road&srchwrd=세종로 17&countPerPage=3&currentPage=1",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"postal",
+										"retrieveNewAdressAreaCdService",
+										"retrieveNewAdressAreaCdService",
+										"getNewAddressListAreaCd"
+									],
+									"query": [
+										{
+											"key": "serviceKey",
+											"value": "{{service-key}}"
+										},
+										{
+											"key": "searchSe",
+											"value": "dong",
+											"disabled": true
+										},
+										{
+											"key": "srchwrd",
+											"value": "주월동 408-1",
+											"disabled": true
+										},
+										{
+											"key": "searchSe",
+											"value": "road",
+											"description": "default"
+										},
+										{
+											"key": "srchwrd",
+											"value": "세종로 17"
+										},
+										{
+											"key": "srchwrd",
+											"value": "경강로",
+											"disabled": true
+										},
+										{
+											"key": "searchSe",
+											"value": "post",
+											"disabled": true
+										},
+										{
+											"key": "srchwrd",
+											"value": "61725",
+											"disabled": true
+										},
+										{
+											"key": "countPerPage",
+											"value": "3"
+										},
+										{
+											"key": "currentPage",
+											"value": "1",
+											"description": "0 doesn't work"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "> dong 주월동 408-1",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Cache-Control",
+										"value": "no-cache",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{base-url}}/postal/retrieveNewAdressAreaCdService/retrieveNewAdressAreaCdService/getNewAddressListAreaCd?serviceKey={{service-key}}&searchSe=dong&srchwrd=주월동 408-1&countPerPage=3&currentPage=1",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"postal",
+										"retrieveNewAdressAreaCdService",
+										"retrieveNewAdressAreaCdService",
+										"getNewAddressListAreaCd"
+									],
+									"query": [
+										{
+											"key": "serviceKey",
+											"value": "{{service-key}}"
+										},
+										{
+											"key": "searchSe",
+											"value": "dong"
+										},
+										{
+											"key": "srchwrd",
+											"value": "주월동 408-1"
+										},
+										{
+											"key": "countPerPage",
+											"value": "3"
+										},
+										{
+											"key": "currentPage",
+											"value": "1",
+											"description": "0 doesn't work"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "> road 세종로 17",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{base-url}}/postal/retrieveNewAdressAreaCdService/retrieveNewAdressAreaCdService/getNewAddressListAreaCd?searchSe=road&srchwrd=세종로 17&countPerPage=2&currentPage=1",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"postal",
+										"retrieveNewAdressAreaCdService",
+										"retrieveNewAdressAreaCdService",
+										"getNewAddressListAreaCd"
+									],
+									"query": [
+										{
+											"key": "serviceKey",
+											"value": "{{service-key}}",
+											"disabled": true
+										},
+										{
+											"key": "searchSe",
+											"value": "road",
+											"description": "default"
+										},
+										{
+											"key": "srchwrd",
+											"value": "세종로 17"
+										},
+										{
+											"key": "countPerPage",
+											"value": "2"
+										},
+										{
+											"key": "currentPage",
+											"value": "1",
+											"description": "0 doesn't work"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "> post 61725",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{base-url}}/postal/retrieveNewAdressAreaCdService/retrieveNewAdressAreaCdService/getNewAddressListAreaCd?serviceKey={{service-key}}&searchSe=post&srchwrd=61725&countPerPage=3&currentPage=1",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"postal",
+										"retrieveNewAdressAreaCdService",
+										"retrieveNewAdressAreaCdService",
+										"getNewAddressListAreaCd"
+									],
+									"query": [
+										{
+											"key": "serviceKey",
+											"value": "{{service-key}}"
+										},
+										{
+											"key": "searchSe",
+											"value": "post"
+										},
+										{
+											"key": "srchwrd",
+											"value": "61725"
+										},
+										{
+											"key": "countPerPage",
+											"value": "3"
+										},
+										{
+											"key": "currentPage",
+											"value": "1",
+											"description": "0 doesn't work"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "지번주소 5자리 우편번호 조회 서비스",
+					"item": [
+						{
+							"name": "상세검색",
+							"item": [
+								{
+									"name": "상세검색",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/xml",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{base-url}}/postal/retrieveLotNumberAdressAreaCdService/retrieveLotNumberAdressAreaCdService/getDetailListAreaCd?ServiceKey={{service-key}}&searchSe=dong&srchwrd=빛가람동&countPerPage=2&currentPage=1",
+											"host": [
+												"{{base-url}}"
+											],
+											"path": [
+												"postal",
+												"retrieveLotNumberAdressAreaCdService",
+												"retrieveLotNumberAdressAreaCdService",
+												"getDetailListAreaCd"
+											],
+											"query": [
+												{
+													"key": "serviceKey",
+													"value": "{{service-key}}",
+													"disabled": true
+												},
+												{
+													"key": "ServiceKey",
+													"value": "{{service-key}}"
+												},
+												{
+													"key": "searchSe",
+													"value": "dong"
+												},
+												{
+													"key": "srchwrd",
+													"value": "빛가람동"
+												},
+												{
+													"key": "countPerPage",
+													"value": "2"
+												},
+												{
+													"key": "currentPage",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "dong / 빛가람동",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/xml",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{base-url}}/postal/retrieveLotNumberAdressAreaCdService/retrieveLotNumberAdressAreaCdService/getDetailListAreaCd?serviceKey={{service-key}}&searchSe=dong&srchwrd=빛가람동&countPerPage=2&currentPage=0",
+											"host": [
+												"{{base-url}}"
+											],
+											"path": [
+												"postal",
+												"retrieveLotNumberAdressAreaCdService",
+												"retrieveLotNumberAdressAreaCdService",
+												"getDetailListAreaCd"
+											],
+											"query": [
+												{
+													"key": "ServiceKey",
+													"value": "{{service-key}}",
+													"disabled": true
+												},
+												{
+													"key": "serviceKey",
+													"value": "{{service-key}}"
+												},
+												{
+													"key": "searchSe",
+													"value": "dong"
+												},
+												{
+													"key": "srchwrd",
+													"value": "빛가람동"
+												},
+												{
+													"key": "countPerPage",
+													"value": "2"
+												},
+												{
+													"key": "currentPage",
+													"value": "0"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "복합검색",
+							"item": [
+								{
+									"name": "복합검색",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/xml",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{base-url}}/postal/retrieveLotNumberAdressAreaCdService/retrieveLotNumberAdressAreaCdService/getComplexListAreaCd?serviceKey={{service-key}}&areaNm=빛가람동&searchSe=and&srchwrd=영무&countPerPage=2&currentPage=1",
+											"host": [
+												"{{base-url}}"
+											],
+											"path": [
+												"postal",
+												"retrieveLotNumberAdressAreaCdService",
+												"retrieveLotNumberAdressAreaCdService",
+												"getComplexListAreaCd"
+											],
+											"query": [
+												{
+													"key": "ServiceKey",
+													"value": "{{service-key}}",
+													"disabled": true
+												},
+												{
+													"key": "serviceKey",
+													"value": "{{service-key}}"
+												},
+												{
+													"key": "areaNm",
+													"value": "빛가람동"
+												},
+												{
+													"key": "searchSe",
+													"value": "and"
+												},
+												{
+													"key": "srchwrd",
+													"value": "영무"
+												},
+												{
+													"key": "countPerPage",
+													"value": "2"
+												},
+												{
+													"key": "currentPage",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "빛가람동 and 영무",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/xml",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{base-url}}/postal/retrieveLotNumberAdressAreaCdService/retrieveLotNumberAdressAreaCdService/getComplexListAreaCd?serviceKey={{service-key}}&areaNm=빛가람동&searchSe=and&srchwrd=영무&countPerPage=2&currentPage=1",
+											"host": [
+												"{{base-url}}"
+											],
+											"path": [
+												"postal",
+												"retrieveLotNumberAdressAreaCdService",
+												"retrieveLotNumberAdressAreaCdService",
+												"getComplexListAreaCd"
+											],
+											"query": [
+												{
+													"key": "ServiceKey",
+													"value": "{{service-key}}",
+													"disabled": true
+												},
+												{
+													"key": "serviceKey",
+													"value": "{{service-key}}"
+												},
+												{
+													"key": "areaNm",
+													"value": "빛가람동"
+												},
+												{
+													"key": "searchSe",
+													"value": "and"
+												},
+												{
+													"key": "srchwrd",
+													"value": "영무"
+												},
+												{
+													"key": "countPerPage",
+													"value": "2"
+												},
+												{
+													"key": "currentPage",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "지번 조회",
+							"item": [
+								{
+									"name": "지번 조회",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/xml",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{base-url}}/postal/retrieveLotNumberAdressAreaCdService/retrieveLotNumberAdressAreaCdService/getLotNumberListAreaCd?serviceKey={{service-key}}&brtcCd=전남&signguCd=나주시&emdCd=빛가람동&countPerPage=2&currentPage=1",
+											"host": [
+												"{{base-url}}"
+											],
+											"path": [
+												"postal",
+												"retrieveLotNumberAdressAreaCdService",
+												"retrieveLotNumberAdressAreaCdService",
+												"getLotNumberListAreaCd"
+											],
+											"query": [
+												{
+													"key": "ServiceKey",
+													"value": "{{service-key}}",
+													"disabled": true
+												},
+												{
+													"key": "serviceKey",
+													"value": "{{service-key}}"
+												},
+												{
+													"key": "brtcCd",
+													"value": "전남"
+												},
+												{
+													"key": "signguCd",
+													"value": "나주시"
+												},
+												{
+													"key": "emdCd",
+													"value": "빛가람동"
+												},
+												{
+													"key": "countPerPage",
+													"value": "2"
+												},
+												{
+													"key": "currentPage",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "전남 나주시 빛가람동",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/xml",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{base-url}}/postal/retrieveLotNumberAdressAreaCdService/retrieveLotNumberAdressAreaCdService/getLotNumberListAreaCd?serviceKey={{service-key}}&brtcCd=전남&signguCd=나주시&emdCd=빛가람동&countPerPage=2&currentPage=1",
+											"host": [
+												"{{base-url}}"
+											],
+											"path": [
+												"postal",
+												"retrieveLotNumberAdressAreaCdService",
+												"retrieveLotNumberAdressAreaCdService",
+												"getLotNumberListAreaCd"
+											],
+											"query": [
+												{
+													"key": "ServiceKey",
+													"value": "{{service-key}}",
+													"disabled": true
+												},
+												{
+													"key": "serviceKey",
+													"value": "{{service-key}}"
+												},
+												{
+													"key": "brtcCd",
+													"value": "전남"
+												},
+												{
+													"key": "signguCd",
+													"value": "나주시"
+												},
+												{
+													"key": "emdCd",
+													"value": "빛가람동"
+												},
+												{
+													"key": "countPerPage",
+													"value": "2"
+												},
+												{
+													"key": "currentPage",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "광역시/도",
+							"item": [
+								{
+									"name": "> 광역시/도",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/xml",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{base-url}}/postal/retrieveLotNumberAdressAreaCdService/retrieveLotNumberAdressAreaCdService/getBorodCityList?serviceKey={{service-key}}",
+											"host": [
+												"{{base-url}}"
+											],
+											"path": [
+												"postal",
+												"retrieveLotNumberAdressAreaCdService",
+												"retrieveLotNumberAdressAreaCdService",
+												"getBorodCityList"
+											],
+											"query": [
+												{
+													"key": "ServiceKey",
+													"value": "인증키",
+													"disabled": true
+												},
+												{
+													"key": "serviceKey",
+													"value": "{{service-key}}"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "시/군/구",
+							"item": [
+								{
+									"name": "시/군/구",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/xml",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{base-url}}/postal/retrieveLotNumberAdressAreaCdService/retrieveLotNumberAdressAreaCdService/getSiGunGuList?serviceKey={{service-key}}&brtcCd=서울",
+											"host": [
+												"{{base-url}}"
+											],
+											"path": [
+												"postal",
+												"retrieveLotNumberAdressAreaCdService",
+												"retrieveLotNumberAdressAreaCdService",
+												"getSiGunGuList"
+											],
+											"query": [
+												{
+													"key": "ServiceKey",
+													"value": "{{service-key}}",
+													"disabled": true
+												},
+												{
+													"key": "serviceKey",
+													"value": "{{service-key}}"
+												},
+												{
+													"key": "brtcCd",
+													"value": "서울"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "> 서울",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/xml",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{base-url}}/postal/retrieveLotNumberAdressAreaCdService/retrieveLotNumberAdressAreaCdService/getSiGunGuList?serviceKey={{service-key}}&brtcCd=서울",
+											"host": [
+												"{{base-url}}"
+											],
+											"path": [
+												"postal",
+												"retrieveLotNumberAdressAreaCdService",
+												"retrieveLotNumberAdressAreaCdService",
+												"getSiGunGuList"
+											],
+											"query": [
+												{
+													"key": "ServiceKey",
+													"value": "{{service-key}}",
+													"disabled": true
+												},
+												{
+													"key": "serviceKey",
+													"value": "{{service-key}}"
+												},
+												{
+													"key": "brtcCd",
+													"value": "서울"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "읍/면/동 조회",
+							"item": [
+								{
+									"name": "읍/면/동",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/xml",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{base-url}}/postal/retrieveLotNumberAdressAreaCdService/retrieveLotNumberAdressAreaCdService/getEupMyunDongList?serviceKey={{service-key}}&brtcCd=경기&signguCd=이천",
+											"host": [
+												"{{base-url}}"
+											],
+											"path": [
+												"postal",
+												"retrieveLotNumberAdressAreaCdService",
+												"retrieveLotNumberAdressAreaCdService",
+												"getEupMyunDongList"
+											],
+											"query": [
+												{
+													"key": "ServiceKey",
+													"value": "{{service-key}}",
+													"disabled": true
+												},
+												{
+													"key": "serviceKey",
+													"value": "{{service-key}}"
+												},
+												{
+													"key": "brtcCd",
+													"value": "경기"
+												},
+												{
+													"key": "signguCd",
+													"value": "이천"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "> 경기 이천",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/xml",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{base-url}}/postal/retrieveLotNumberAdressAreaCdService/retrieveLotNumberAdressAreaCdService/getEupMyunDongList?serviceKey={{service-key}}&brtcCd=경기&signguCd=이천",
+											"host": [
+												"{{base-url}}"
+											],
+											"path": [
+												"postal",
+												"retrieveLotNumberAdressAreaCdService",
+												"retrieveLotNumberAdressAreaCdService",
+												"getEupMyunDongList"
+											],
+											"query": [
+												{
+													"key": "ServiceKey",
+													"value": "{{service-key}}",
+													"disabled": true
+												},
+												{
+													"key": "serviceKey",
+													"value": "{{service-key}}"
+												},
+												{
+													"key": "brtcCd",
+													"value": "경기"
+												},
+												{
+													"key": "signguCd",
+													"value": "이천"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}
