@@ -11,6 +11,12 @@ import org.springframework.web.util.UriBuilder;
 import java.io.Serial;
 import java.util.function.BiConsumer;
 
+/**
+ * A class for binding request to the {@value _RetrieveEngAddressServiceConstants#REQUEST_URI_GET_CITY_LIST} operation.
+ *
+ * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
+ * @see CityEngListResponse
+ */
 @Setter
 @Getter
 @EqualsAndHashCode(callSuper = true)

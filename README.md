@@ -14,12 +14,12 @@ using [Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway).
 
 | api                               | service              | route.id                                         | notes |
 |-----------------------------------|----------------------|--------------------------------------------------|-------|
-| [과학기술정보통신부 우정사업본부_우편번호 다운로드 서비스]  | 우편번호 DB 다운로드 서비스     | `download_area_code_service`                     |       |      
-| [과학기술정보통신부 우정사업본부_집배구 구분코드 조회서비스] | 집배구 구분코드 조회서비스       | `retrieve_deliv_area_cd_service`                 |       |      
-| [과학기술정보통신부 우정사업본부_영문우편번호조회서비스]    | 영문 우편번호 조회 서비스       | `retrieve_eng_address_service`                   |       |      
-| [과학기술정보통신부 우정사업본부_지번주소조회 서비스]     | 지번주소 5자리 우편번호 조회 서비스 | `retrieve_lot_number_adress_area_cd_service`     |       |      
-| [과학기술정보통신부 우정사업본부_우편번호 정보조회]      | 통합검색 5자리 우편번호 조회서비스  | `retrieve_new_adress_area_cd_search_all_service` |       |      
-| [과학기술정보통신부 우정사업본부_도로명주소조회서비스]     | 새주소 5자리 우편번호 조회서비스   | `retrieve_new_adress_area_cd_service`            |       |     
+| [우편번호 다운로드 서비스]                   | 우편번호 DB 다운로드 서비스     | `download_area_code_service`                     |       |      
+| [집배구 구분코드 조회서비스] | 집배구 구분코드 조회서비스       | `retrieve_deliv_area_cd_service`                 |       |      
+| [영문우편번호조회서비스]    | 영문 우편번호 조회 서비스       | `retrieve_eng_address_service`                   |       |      
+| [지번주소조회 서비스]     | 지번주소 5자리 우편번호 조회 서비스 | `retrieve_lot_number_adress_area_cd_service`     |       |      
+| [우편번호 정보조회]      | 통합검색 5자리 우편번호 조회서비스  | `retrieve_new_adress_area_cd_search_all_service` |       |      
+| [도로명주소조회서비스]     | 새주소 5자리 우편번호 조회서비스   | `retrieve_new_adress_area_cd_service`            |       |     
 
 ## How to build
 
@@ -163,14 +163,14 @@ epost:
 * [#3466 AddRequestParameter double encodes parameter value](https://github.com/spring-cloud/spring-cloud-gateway/issues/3466)
 * [#3474 Forwarding route produces error at the first request](https://github.com/spring-cloud/spring-cloud-gateway/issues/3474)
 
-[과학기술정보통신부 우정사업본부_우편번호 다운로드 서비스]: https://www.data.go.kr/data/15000302/openapi.do
+[우편번호 다운로드 서비스]: https://www.data.go.kr/data/15000302/openapi.do
 
-[과학기술정보통신부 우정사업본부_영문우편번호조회서비스]: https://www.data.go.kr/data/15059038/openapi.do
+[영문우편번호조회서비스]: https://www.data.go.kr/data/15059038/openapi.do
 
-[과학기술정보통신부 우정사업본부_지번주소조회 서비스]: https://www.data.go.kr/data/15000268/openapi.do
+[지번주소조회 서비스]: https://www.data.go.kr/data/15000268/openapi.do
 
-[과학기술정보통신부 우정사업본부_우편번호 정보조회]: https://www.data.go.kr/data/15056971/openapi.do
+[우편번호 정보조회]: https://www.data.go.kr/data/15056971/openapi.do
 
-[과학기술정보통신부 우정사업본부_도로명주소조회서비스]: https://www.data.go.kr/data/15000124/openapi.do
+[도로명주소조회서비스]: https://www.data.go.kr/data/15000124/openapi.do
 
-[과학기술정보통신부 우정사업본부_집배구 구분코드 조회서비스]: https://www.data.go.kr/data/15057018/openapi.do
+[집배구 구분코드 조회서비스]: https://www.data.go.kr/data/15057018/openapi.do

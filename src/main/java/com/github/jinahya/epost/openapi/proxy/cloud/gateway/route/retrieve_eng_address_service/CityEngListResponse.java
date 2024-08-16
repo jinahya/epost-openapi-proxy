@@ -17,6 +17,13 @@ import lombok.*;
 import java.io.Serial;
 import java.util.List;
 
+/**
+ * A class for binding response from the {@value _RetrieveEngAddressServiceConstants#REQUEST_URI_GET_CITY_LIST}
+ * operation.
+ *
+ * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
+ * @see CityEngListRequest
+ */
 @XmlRootElement(name = CityEngListResponse.ROOT_NAME)
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
