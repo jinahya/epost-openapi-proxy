@@ -127,3 +127,6 @@ spring:
             - Path=/postal/retrieveNewAdressAreaCdService/retrieveNewAdressAreaCdService/{operation}
   main:
     web-application-type: reactive
+
+springdoc:
+  enable-hateoas: false
