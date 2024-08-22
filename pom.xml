@@ -505,7 +505,7 @@
     <profile>
       <id>github-action</id>
       <properties>
-        <surefire.excludes>ApplicationTest</surefire.excludes>
+        <surefire.excludes>ApplicationTests</surefire.excludes>
       </properties>
       <build>
         <plugins>
