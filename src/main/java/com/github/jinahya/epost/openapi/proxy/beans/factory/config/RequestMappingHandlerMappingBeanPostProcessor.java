@@ -22,5 +22,6 @@ class RequestMappingHandlerMappingBeanPostProcessor
         return bean;
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
     private final RoutePredicateHandlerMapping routePredicateHandlerMapping;
 }
