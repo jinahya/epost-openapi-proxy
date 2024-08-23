@@ -34,6 +34,8 @@ epost:
       service-key: ......................==
 ```
 
+mvn -Pfailsafe -Depost.openapi.proxy.service-key='...==' clean verify
+
 ## How to use / extend
 
 ### Component-scanning

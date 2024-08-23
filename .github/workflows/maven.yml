@@ -47,8 +47,8 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SERVICE_KEY: ${{secrets.SERVICE_KEY }}
 #      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=jinahya_epost-openapi-proxy
-      run: mvn -B -Pgithub-action test org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=jinahya_epost-openapi-proxy
-#      run: mvn -B -Pfailsafe verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=jinahya_epost-openapi-proxy
+#      run: mvn -B -Pgithub-action test org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=jinahya_epost-openapi-proxy
+      run: mvn -B -Pfailsafe verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=jinahya_epost-openapi-proxy
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
 #    - name: Update dependency graph
