@@ -38,8 +38,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Slf4j
 public abstract class _RouteSpringBootIT {
 
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+    protected _RouteSpringBootIT() {
+        super();
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
     @PostConstruct
     private void doOnPostConstruct() {
+        log.debug("SERVICE_KEY: {}", System.getProperty("SERVICE_KEY"));
     }
 
     // -----------------------------------------------------------------------------------------------------------------
