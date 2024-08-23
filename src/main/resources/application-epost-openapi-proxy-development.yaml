@@ -130,3 +130,4 @@ spring:
 
 springdoc:
   enable-hateoas: false
+  show-actuator: true
