@@ -17,12 +17,15 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.json.Jackson2JsonEncoder;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.net.MalformedURLException;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -36,6 +39,27 @@ public abstract class _ApiController {
 
     private static ResolvableType getResolvableTypeOf(final Class<?> type) {
         return RESOLVABLE_TYPES.computeIfAbsent(type, ResolvableType::forClass);
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    protected static String baseUrl(final ServerHttpRequest request) {
+        Objects.requireNonNull(request, "request is null");
+        try {
+            final var url = request.getURI().toURL();
+            return url.getProtocol() + "://" + url.getAuthority();
+        } catch (final MalformedURLException murle) {
+            throw new RuntimeException("failed to get url from " + request, murle);
+        }
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    protected static String getAuthorityFrom(final ServerHttpRequest request) {
+        Objects.requireNonNull(request, "request is null");
+        try {
+            return request.getURI().toURL().getAuthority();
+        } catch (final MalformedURLException murle) {
+            throw new RuntimeException("failed to get authority from " + request, murle);
+        }
     }
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS

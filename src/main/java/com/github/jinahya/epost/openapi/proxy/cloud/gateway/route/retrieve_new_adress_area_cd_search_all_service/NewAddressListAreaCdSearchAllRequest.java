@@ -1,6 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_search_all_service;
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractPairedRequestType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.PaginatedRequest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common._Constants;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -9,6 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.lang.Nullable;
 import org.springframework.web.util.UriBuilder;
 
 import java.io.Serial;
@@ -19,13 +21,14 @@ import java.util.function.BiConsumer;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class NewAddressListAreaCdSearchAllRequest
-        extends AbstractPairedRequestType<NewAddressListAreaCdSearchAllRequest, NewAddressListAreaCdSearchAllResponse> {
+        extends AbstractPairedRequestType<NewAddressListAreaCdSearchAllRequest, NewAddressListAreaCdSearchAllResponse>
+        implements PaginatedRequest<NewAddressListAreaCdSearchAllRequest> {
 
     @Serial
     private static final long serialVersionUID = -7468923602062739458L;
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
-    public static NewAddressListAreaCdSearchAllRequest of(final String serviceKey, final String srchwrd,
+    public static NewAddressListAreaCdSearchAllRequest of(@Nullable final String serviceKey, final String srchwrd,
                                                           final Integer countPerPage, final Integer currentPage) {
         final var instance = of(NewAddressListAreaCdSearchAllRequest::new, serviceKey);
         instance.setSrchwrd(srchwrd);
@@ -37,9 +40,9 @@ public class NewAddressListAreaCdSearchAllRequest
     // -----------------------------------------------------------------------------------------------------------------
     private static final BiConsumer<? super NewAddressListAreaCdSearchAllRequest, ? super UriBuilder> URI_CONSUMER =
             (s, b) -> {
-                b.path(_RetrieveNewAddressAreaCdSearchAllServiceConstants.
+                b.path(_RetrieveNewAdressAreaCdSearchAllServiceConstants.
                                REQUEST_URI_GET_NEW_ADDRESS_LIST_AREA_CD_SEARCH_ALL)
-                        .queryParam(_RetrieveNewAddressAreaCdSearchAllServiceConstants.REQUEST_PARAM_SRCHWRD,
+                        .queryParam(_RetrieveNewAdressAreaCdSearchAllServiceConstants.REQUEST_PARAM_SRCHWRD,
                                     s.getSrchwrd())
                         .queryParam(_Constants.REQUEST_PARAM_COUNT_PER_PAGE, s.getCountPerPage())
                         .queryParam(_Constants.REQUEST_PARAM_CURRENT_PAGE, s.getCurrentPage())

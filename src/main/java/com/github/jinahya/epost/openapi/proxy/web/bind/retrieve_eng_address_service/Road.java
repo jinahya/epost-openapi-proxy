@@ -1,6 +1,5 @@
 package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.RoadEngListResponse;
 import com.github.jinahya.epost.openapi.proxy.web.bind.AbstractWrappingModel;
@@ -11,6 +10,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.hateoas.Link;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 
 import java.io.Serial;
 import java.util.Objects;
@@ -26,8 +26,9 @@ public class Road
     private static final long serialVersionUID = -6556075429906227124L;
 
     // -----------------------------------------------------------------------------------------------------------------
-    static String getHref(final String stateName, final String cityName, final String roadName) {
-        return City.getHref(stateName, cityName)
+    static String getHref(final ServerHttpRequest request, final String stateName, final String cityName,
+                          final String roadName) {
+        return City.getHref(request, stateName, cityName)
                 + '/' + __RetrieveEngAddressServiceApiConstants.REL_ROADS
                 + '/' + roadName;
     }
@@ -53,13 +54,13 @@ public class Road
     }
 
     // ----------------------------------------------------------------------------------------------------- super.links
-    public Road addLinks() {
+    public Road addLinks(final ServerHttpRequest request) {
         add(
-                Link.of(getHref(stateName, cityName, wrapped.getRoadEngName()))
+                Link.of(getHref(request, stateName, cityName, wrapped.getRoadEngName()))
                         .withRel(IanaLinkRelations.SELF)
         );
         add(
-                Link.of(getHref(stateName, cityName, wrapped.getRoadEngName())
+                Link.of(getHref(request, stateName, cityName, wrapped.getRoadEngName())
                                 + '/' + __RetrieveEngAddressServiceApiConstants.REL_ADDRESSES)
                         .withRel(__RetrieveEngAddressServiceApiConstants.REL_ADDRESSES)
         );
@@ -67,10 +68,6 @@ public class Road
     }
 
     // --------------------------------------------------------------------------------------------------- super.wrapped
-    @JsonIgnore
-    String name() {
-        return Objects.requireNonNull(getWrapped(), "getWrapped() is null").getRoadEngName();
-    }
 
     // -----------------------------------------------------------------------------------------------------------------
     @JsonProperty(required = true)

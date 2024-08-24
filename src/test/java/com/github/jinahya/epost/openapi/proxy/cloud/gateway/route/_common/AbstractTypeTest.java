@@ -137,7 +137,7 @@ public abstract class AbstractTypeTest<TYPE extends AbstractType<TYPE>> {
 
     protected SingleTypeEqualsVerifierApi<TYPE> __equals(final SingleTypeEqualsVerifierApi<TYPE> verifierApi) {
         return verifierApi
-                .withResetCaches()
+//                .withResetCaches()
                 .withIgnoredFields(
                         "unknownAttributes",
                         "unknownElements",

@@ -4,12 +4,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.DistrictEngListResponse;
 import com.github.jinahya.epost.openapi.proxy.web.bind.AbstractWrappingModel;
 import lombok.*;
-import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.hateoas.Link;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 
 import java.io.Serial;
 import java.util.Objects;
-import java.util.Optional;
 
 @Setter
 @Getter
@@ -23,8 +22,9 @@ public class District
     private static final long serialVersionUID = -623112560952700313L;
 
     // -----------------------------------------------------------------------------------------------------------------
-    static String getHref(final String stateName, final String cityName, final String districtName) {
-        return City.getHref(stateName, cityName)
+    static String getHref(final ServerHttpRequest request, final String stateName, final String cityName,
+                          final String districtName) {
+        return City.getHref(request, stateName, cityName)
                 + '/' + __RetrieveEngAddressServiceApiConstants.REL_DISTRICTS
                 + '/' + districtName;
     }
@@ -42,13 +42,13 @@ public class District
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
     // ----------------------------------------------------------------------------------------------------- super.links
-    public District addLinks() {
+    public District addLinks(final ServerHttpRequest request) {
         add(
-                Link.of(getHref(stateName, cityName, wrapped.getDistrictEngName()))
-                        .withRel(IanaLinkRelations.SELF)
+                Link.of(getHref(request, stateName, cityName, wrapped.getDistrictEngName()))
+                        .withSelfRel()
         );
         add(
-                Link.of(getHref(stateName, cityName, wrapped.getDistrictEngName())
+                Link.of(getHref(request, stateName, cityName, wrapped.getDistrictEngName())
                                 + '/' + __RetrieveEngAddressServiceApiConstants.REL_ADDRESSES)
                         .withRel(__RetrieveEngAddressServiceApiConstants.REL_ADDRESSES)
         );
@@ -56,12 +56,6 @@ public class District
     }
 
     // --------------------------------------------------------------------------------------------------- super.wrapped
-    @JsonProperty(required = true)
-    public String getName() {
-        return Optional.ofNullable(getWrapped())
-                .map(DistrictEngListResponse.DistrictEngList::getDistrictEngName)
-                .orElse(null);
-    }
 
     // -----------------------------------------------------------------------------------------------------------------
     @JsonProperty(required = true)

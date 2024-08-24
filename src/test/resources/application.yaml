@@ -48,6 +48,9 @@ spring:
         - dev
         - prod
 
+springdoc:
+  show-actuator: true
+
 ---
 
 spring:

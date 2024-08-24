@@ -46,7 +46,6 @@ public abstract class _RouteSpringBootIT {
     // -----------------------------------------------------------------------------------------------------------------
     @PostConstruct
     private void doOnPostConstruct() {
-        log.debug("SERVICE_KEY: {}", System.getProperty("SERVICE_KEY"));
     }
 
     // -----------------------------------------------------------------------------------------------------------------

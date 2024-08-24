@@ -12,6 +12,14 @@ import reactor.core.publisher.Mono;
 import java.io.Serial;
 import java.util.Objects;
 
+/**
+ * An abstract request class paired to a specific type of {@link AbstractPairedResponseType} class.
+ *
+ * @param <SELF>     self type parameter
+ * @param <RESPONSE> the type of paired {@link AbstractPairedResponseType}.
+ * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
+ * @see AbstractPairedResponseType
+ */
 @Setter
 @Getter
 @EqualsAndHashCode(callSuper = true)

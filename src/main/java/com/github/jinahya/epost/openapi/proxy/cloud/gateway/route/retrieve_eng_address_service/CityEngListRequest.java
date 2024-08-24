@@ -2,10 +2,12 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractPairedRequestType;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Null;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.lang.Nullable;
 import org.springframework.web.util.UriBuilder;
 
 import java.io.Serial;
@@ -28,7 +30,7 @@ public class CityEngListRequest
     private static final long serialVersionUID = 2981550532310902459L;
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
-    public static CityEngListRequest of(final String serviceKey, final String stateEngName) {
+    public static CityEngListRequest of(@Nullable final String serviceKey, final String stateEngName) {
         final CityEngListRequest instance = new CityEngListRequest();
         instance.setServiceKey(serviceKey);
         instance.setStateEngName(stateEngName);

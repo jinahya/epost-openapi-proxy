@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.lang.Nullable;
 import org.springframework.web.util.UriBuilder;
 
 import java.io.Serial;
@@ -23,7 +24,7 @@ public class DistrictEngFirstNameListRequest
     private static final long serialVersionUID = -6632649622472952951L;
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
-    public static DistrictEngFirstNameListRequest of(final String serviceKey, final String stateEngName,
+    public static DistrictEngFirstNameListRequest of(@Nullable final String serviceKey, final String stateEngName,
                                                      final String cityEngName) {
         final var instance = AbstractRequestType.of(DistrictEngFirstNameListRequest::new, serviceKey);
         instance.setStateEngName(stateEngName);

@@ -56,6 +56,10 @@ public class NewAddressListAreaCdSearchAllResponse
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+
+    /**
+     * Creates a new instance.
+     */
     public NewAddressListAreaCdSearchAllResponse() {
         super(NewAddressListAreaCdSearchAllRequest.class);
     }
