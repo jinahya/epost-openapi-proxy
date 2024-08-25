@@ -1,8 +1,8 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractPairedResponseTypeTest;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractTypeTest;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractTypeUtils;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractPairedResponseTypeTest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractTypeTest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractTypeUtils;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_service.NewAddressListAreaCdResponse.NewAddressListAreaCd;
 import lombok.extern.slf4j.Slf4j;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;

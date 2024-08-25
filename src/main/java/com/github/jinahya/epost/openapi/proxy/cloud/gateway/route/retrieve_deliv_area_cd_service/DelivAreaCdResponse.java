@@ -3,8 +3,8 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_deli
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractPairedResponseType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractPairedResponseType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

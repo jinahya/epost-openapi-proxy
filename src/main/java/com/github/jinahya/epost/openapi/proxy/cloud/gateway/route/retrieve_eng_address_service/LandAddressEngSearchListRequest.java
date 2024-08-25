@@ -1,8 +1,8 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractPairedRequestType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.PaginatedRequest;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common._Constants;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractPairedRequestType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.PaginatedRequest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._RouteConstants;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -57,8 +57,8 @@ public class LandAddressEngSearchListRequest
                 .queryParam(_RetrieveEngAddressServiceConstants.PARAM_DISTRICT_ENG_NAME, s.districtEngName)
                 .queryParamIfPresent(_RetrieveEngAddressServiceConstants.PARAM_KEYWORD,
                                      Optional.ofNullable(s.keyword))
-                .queryParam(_Constants.REQUEST_PARAM_COUNT_PER_PAGE, s.countPerPage)
-                .queryParam(_Constants.REQUEST_PARAM_CURRENT_PAGE, s.currentPage);
+                .queryParam(_RouteConstants.REQUEST_PARAM_COUNT_PER_PAGE, s.countPerPage)
+                .queryParam(_RouteConstants.REQUEST_PARAM_CURRENT_PAGE, s.currentPage);
     };
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS

@@ -1,10 +1,10 @@
 package com.github.jinahya.epost.openapi.proxy;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractPairedRequestType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractPairedResponseType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractRequestType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractResponseType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common._Constants;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractPairedRequestType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractPairedResponseType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractRequestType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractResponseType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._RouteConstants;
 import com.mycompany.Application;
 import jakarta.annotation.PostConstruct;
 import jakarta.validation.Validator;
@@ -153,5 +153,5 @@ public abstract class _SpringBootIT {
     @Accessors(fluent = true)
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.PROTECTED)
-    private final WebClient webClient = WebClient.builder().baseUrl(_Constants.BASE_URL_DEVELOPMENT).build();
+    private final WebClient webClient = WebClient.builder().baseUrl(_RouteConstants.BASE_URL_DEVELOPMENT).build();
 }

@@ -1,9 +1,9 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_service;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractPairedRequestType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractRequestType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common._Constants;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractPairedRequestType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractRequestType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._RouteConstants;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -102,8 +102,8 @@ public class NewAddressListAreaCdRequest
         b.path(_RetrieveNewAdressAreaCdServiceConstants.REQUEST_URI_GET_NEW_ADDRESS_LIST_AREA_CD)
                 .queryParam(_RetrieveNewAdressAreaCdServiceConstants.PARAM_SEARCH_SE, s.getSearchSe().text())
                 .queryParam(_RetrieveNewAdressAreaCdServiceConstants.PARAM_SRCHWRD, s.getSrchwrd())
-                .queryParam(_Constants.REQUEST_PARAM_COUNT_PER_PAGE, s.getCountPerPage())
-                .queryParam(_Constants.REQUEST_PARAM_CURRENT_PAGE, s.getCurrentPage())
+                .queryParam(_RouteConstants.REQUEST_PARAM_COUNT_PER_PAGE, s.getCountPerPage())
+                .queryParam(_RouteConstants.REQUEST_PARAM_CURRENT_PAGE, s.getCurrentPage())
         ;
     };
 
@@ -130,12 +130,12 @@ public class NewAddressListAreaCdRequest
     private String srchwrd;
 
     // -----------------------------------------------------------------------------------------------------------------
-    @Parameter(description = _Constants.PARAMETER_DESCRIPTION_COUNT_PER_PAGE, required = true)
+    @Parameter(description = _RouteConstants.PARAMETER_DESCRIPTION_COUNT_PER_PAGE, required = true)
     @Positive
     @NotNull
     private Integer countPerPage;
 
-    @Parameter(description = _Constants.PARAMETER_DESCRIPTION_CURRENT_PAGE, required = true)
+    @Parameter(description = _RouteConstants.PARAMETER_DESCRIPTION_CURRENT_PAGE, required = true)
     @Positive
     @NotNull
     private Integer currentPage;

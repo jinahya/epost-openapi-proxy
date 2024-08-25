@@ -1,8 +1,8 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_deliv_area_cd_service;
 
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractRequestTypeTestUtils;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractResponseType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._RouteSpringBootIT;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractRequestTypeTestUtils;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractResponseType;
 import jakarta.validation.Validator;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;

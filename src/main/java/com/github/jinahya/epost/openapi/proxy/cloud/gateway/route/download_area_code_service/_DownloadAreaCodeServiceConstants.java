@@ -1,6 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area_code_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common._Constants;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._RouteConstants;
 
 public final class _DownloadAreaCodeServiceConstants {
 
@@ -8,7 +8,7 @@ public final class _DownloadAreaCodeServiceConstants {
 
     // -----------------------------------------------------------------------------------------------------------------
     public static final String REQUEST_URI =
-            _Constants.REQUEST_URI_POSTAL
+            _RouteConstants.REQUEST_URI_POSTAL
                     + '/' + SERVICE_NAME
                     + '/' + SERVICE_NAME;
 

@@ -1,6 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.web.bind;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractResponseType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractResponseType;
 import com.mycompany.Application;
 import jakarta.annotation.PostConstruct;
 import jakarta.validation.Validator;

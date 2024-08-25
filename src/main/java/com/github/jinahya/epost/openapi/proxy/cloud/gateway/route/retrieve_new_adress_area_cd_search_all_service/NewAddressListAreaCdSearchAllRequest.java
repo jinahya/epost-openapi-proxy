@@ -1,8 +1,8 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_search_all_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractPairedRequestType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.PaginatedRequest;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common._Constants;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractPairedRequestType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.PaginatedRequest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._RouteConstants;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -44,8 +44,8 @@ public class NewAddressListAreaCdSearchAllRequest
                                REQUEST_URI_GET_NEW_ADDRESS_LIST_AREA_CD_SEARCH_ALL)
                         .queryParam(_RetrieveNewAdressAreaCdSearchAllServiceConstants.REQUEST_PARAM_SRCHWRD,
                                     s.getSrchwrd())
-                        .queryParam(_Constants.REQUEST_PARAM_COUNT_PER_PAGE, s.getCountPerPage())
-                        .queryParam(_Constants.REQUEST_PARAM_CURRENT_PAGE, s.getCurrentPage())
+                        .queryParam(_RouteConstants.REQUEST_PARAM_COUNT_PER_PAGE, s.getCountPerPage())
+                        .queryParam(_RouteConstants.REQUEST_PARAM_CURRENT_PAGE, s.getCurrentPage())
                 ;
             };
 

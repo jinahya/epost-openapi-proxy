@@ -1,7 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.web.bind;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;

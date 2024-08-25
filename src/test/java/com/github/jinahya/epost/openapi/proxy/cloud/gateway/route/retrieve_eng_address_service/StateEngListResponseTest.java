@@ -1,10 +1,10 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractPairedResponseTypeTest;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractResponseElementTypeTest;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractResponseType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractResponseTypeTestUtils;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractTypeUtils;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractPairedResponseTypeTest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractResponseElementTypeTest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractResponseType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractResponseTypeTestUtils;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractTypeUtils;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
