@@ -3,7 +3,17 @@ package com.mycompany;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.hateoas.config.EnableHypermediaSupport;
+import org.springframework.hateoas.support.WebStack;
 
+@EnableHypermediaSupport(
+        type = {
+                EnableHypermediaSupport.HypermediaType.HAL
+        },
+        stacks = {
+                WebStack.WEBFLUX
+        }
+)
 @ComponentScan(
         basePackageClasses = {
                 com.mycompany.Application.class,

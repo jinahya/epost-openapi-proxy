@@ -4,7 +4,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serial;
 
@@ -20,6 +25,12 @@ public abstract class AbstractWrappingModel<
 
     @Serial
     private static final long serialVersionUID = 2185796969322484068L;
+
+    // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
+
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+
+    // ----------------------------------------------------------------------------------------------------- super.links
 
     // -----------------------------------------------------------------------------------------------------------------
     @JsonProperty

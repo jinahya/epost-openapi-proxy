@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.reactor.util.context;
+package com.github.jinahya.epost.openapi.proxy.util;
 
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import reactor.core.publisher.Mono;
@@ -6,20 +6,45 @@ import reactor.util.context.Context;
 
 import java.net.MalformedURLException;
 
+/**
+ * A utility class for {@link Context}.
+ *
+ * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
+ */
 // https://github.com/reactor/reactor-core/issues/2572
 // https://www.pkslow.com/docs/en/spring-webflux-get-request/#webfilter-fetch-and-save
 // https://gist.github.com/Elyorbe/c7cc5f28d0fced86dbd054dce0a9e206
-public final class ContextUtils {
+public final class ReactorContextUtils {
 
     // -----------------------------------------------------------------------------------------------------------------
     private static final Class<ServerHttpRequest> KEY_REQUEST = ServerHttpRequest.class;
 
+    /**
+     * Puts specified request to specified context.
+     *
+     * @param context the context.
+     * @param request the request to put.
+     * @return a new context to which the {@code request} put.
+     * @see Context#put(Object, Object)
+     * @see #getRequest()
+     */
     public static Context putRequest(final Context context, final ServerHttpRequest request) {
         return context.put(KEY_REQUEST, request);
     }
 
+    /**
+     * Returns the {@code request} added via {@link #putRequest(Context, ServerHttpRequest)}.
+     *
+     * @return the {@code request} added via {@link #putRequest(Context, ServerHttpRequest)}
+     * @see Context#get(Object)
+     * @see #putRequest(Context, ServerHttpRequest)
+     */
     public static Mono<ServerHttpRequest> getRequest() {
-        return Mono.deferContextual(c -> Mono.just(c.get(KEY_REQUEST)));
+        return Mono.deferContextual(
+                c -> Mono.just(
+                        c.get(KEY_REQUEST) // throws if key not found!
+                )
+        );
     }
 
     public static Mono<String> getRequestBaseUrl() {
@@ -35,7 +60,7 @@ public final class ContextUtils {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    private ContextUtils() {
+    private ReactorContextUtils() {
         throw new AssertionError("instantiation is not allowed");
     }
 }

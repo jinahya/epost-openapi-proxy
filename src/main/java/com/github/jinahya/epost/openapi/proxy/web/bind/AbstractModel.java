@@ -1,6 +1,11 @@
 package com.github.jinahya.epost.openapi.proxy.web.bind;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.http.server.reactive.ServerHttpRequest;

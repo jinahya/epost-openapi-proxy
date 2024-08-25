@@ -13,17 +13,23 @@ import org.springframework.boot.web.reactive.context.ReactiveWebServerInitialize
 import org.springframework.boot.web.server.WebServer;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.ResolvableType;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.config.HypermediaMappingInformation;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.json.Jackson2JsonEncoder;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.util.MimeType;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.net.MalformedURLException;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -69,7 +75,14 @@ public abstract class _ApiController {
     private void doOnPostConstruct() {
         objectMapper = objectMapperBuilder
                 .featuresToDisable(SerializationFeature.INDENT_OUTPUT)
-                .build();
+//                .modulesToInstall(Jackson2HalModule.class)
+                .build()
+//                .registerModule(new Jackson2HalModule())
+        ;
+        hypermediaTypes.forEach(hypermediaType -> {
+            objectMapper = hypermediaType.configureObjectMapper(objectMapper);
+            MimeType[] mimeTypes = hypermediaType.getMediaTypes().toArray(new MimeType[0]);
+        });
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -82,7 +95,6 @@ public abstract class _ApiController {
     protected <T> Mono<Void> writeNdjsonResponseWith(final ServerHttpResponse response, Flux<T> flux,
                                                      final Class<T> type) {
         response.beforeCommit(() -> Mono.fromRunnable(() -> {
-//            response.getHeaders().remove(HttpHeaders.CONTENT_TYPE);
             response.getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_NDJSON_VALUE);
         }));
         final var encoder = new Jackson2JsonEncoder(objectMapper);
@@ -95,6 +107,59 @@ public abstract class _ApiController {
                                 null
                         ))
                         .map(db -> db.ensureWritable(1).write((byte) 0x0A))
+        );
+    }
+
+    protected <T> Mono<Void> writeHalJsonResponseWith(final ServerHttpResponse response, Mono<T> mono,
+                                                      final Class<T> type) {
+        response.beforeCommit(() -> Mono.fromRunnable(() -> {
+            response.getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE);
+        }));
+        final var encoder = new Jackson2JsonEncoder(objectMapper);
+        return response.writeWith(
+                mono.map(s -> encoder.encodeValue(
+                        s,
+                        response.bufferFactory(),
+                        getResolvableTypeOf(type),
+                        null,
+                        null
+                ))
+        );
+    }
+
+    protected <T> Mono<Void> writeHalJsonResponseWith(final ServerHttpResponse response, T item,
+                                                      final Class<T> type) {
+        response.beforeCommit(() -> Mono.fromRunnable(() -> {
+            response.getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE);
+        }));
+        final var encoder = new Jackson2JsonEncoder(objectMapper);
+        final DataBuffer buffer = encoder.encodeValue(
+                item,
+                response.bufferFactory(),
+                getResolvableTypeOf(type),
+                null,
+                null
+        );
+        return response.writeWith(
+                Mono.just(buffer)
+        );
+    }
+
+    protected <T> Mono<Void> writeHalJsonResponseWith(final ServerHttpResponse response, EntityModel<T> item,
+                                                      final Class<T> type) {
+        response.beforeCommit(() -> Mono.fromRunnable(() -> {
+            response.getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE);
+        }));
+        final var encoder = new Jackson2JsonEncoder(objectMapper);
+        final DataBuffer buffer = encoder.encodeValue(
+                item,
+                response.bufferFactory(),
+                getResolvableTypeOf(type),
+                null,
+                null
+        );
+        return response.writeWith(
+                Mono.just(buffer)
         );
     }
 
@@ -127,4 +192,8 @@ public abstract class _ApiController {
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.NONE)
     WebClient webClient;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    @Autowired
+    private List<HypermediaMappingInformation> hypermediaTypes;
 }

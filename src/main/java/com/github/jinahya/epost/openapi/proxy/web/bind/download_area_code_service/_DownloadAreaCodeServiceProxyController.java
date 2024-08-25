@@ -12,17 +12,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
-@Tag(name = _Constants.TAG)
+@Tag(name = __DownloadAreaCodeServiceApiConstants.TAG)
 @RestController
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
-class DownloadAreaCodeServiceProxyController {
+class _DownloadAreaCodeServiceProxyController {
 
-    @GetMapping(path = _DownloadAreaCodeServiceConstants.REQUEST_URI_GET_AREA_CODE_INFO,
-                produces = {
-                        MediaType.APPLICATION_XML_VALUE,
-                        MediaType.APPLICATION_JSON_VALUE
-                })
-    Mono<AreaCodeInfoResponse> read(final @ParameterObject AreaCodeInfoRequest request) {
+    @GetMapping(
+            path = _DownloadAreaCodeServiceConstants.REQUEST_URI_GET_AREA_CODE_INFO,
+            produces = {
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_JSON_VALUE
+            }
+    )
+    Mono<AreaCodeInfoResponse> getAreaCodeInfo(@ParameterObject final AreaCodeInfoRequest request) {
         throw new UnsupportedOperationException("");
     }
 }

@@ -3,11 +3,15 @@ package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_ser
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.LandAddressEngSearchListResponse;
 import com.github.jinahya.epost.openapi.proxy.web.bind.AbstractWrappingModel;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serial;
 import java.util.Objects;
-import java.util.Optional;
 
 @Setter
 @Getter
@@ -35,17 +39,8 @@ public class DistrictAddress
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
     // ----------------------------------------------------------------------------------------------------- super.links
-    public DistrictAddress addLinks() {
-        return this;
-    }
 
     // --------------------------------------------------------------------------------------------------- super.wrapped
-    @JsonProperty
-    public String getAddress() {
-        return Optional.ofNullable(getWrapped())
-                .map(LandAddressEngSearchListResponse.LandAddressEngSearchList::getEngAddress)
-                .orElse(null);
-    }
 
     // -----------------------------------------------------------------------------------------------------------------
     @JsonProperty

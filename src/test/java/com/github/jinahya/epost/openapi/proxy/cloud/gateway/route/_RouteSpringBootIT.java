@@ -1,6 +1,10 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.*;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractPairedRequestType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractPairedResponseType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractRequestType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractResponseType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common._Constants;
 import com.mycompany.Application;
 import jakarta.annotation.PostConstruct;
 import jakarta.validation.Validator;

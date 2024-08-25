@@ -2,7 +2,6 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractPairedRequestType;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Null;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,7 +1,7 @@
 epost:
   openapi:
     proxy:
-#      service-key: QO8Jo5UWN4rASy9NIoiUXwQBSbOmphw6UT41sDCNzo8bBQDmJuseGioU3KK94sgHrXmliI5SGphq1akyyWJ5Qg==
+      #      service-key: QO8Jo5UWN4rASy9NIoiUXwQBSbOmphw6UT41sDCNzo8bBQDmJuseGioU3KK94sgHrXmliI5SGphq1akyyWJ5Qg==
       service-key: ${SERVICE_KEY}
 
 #management:

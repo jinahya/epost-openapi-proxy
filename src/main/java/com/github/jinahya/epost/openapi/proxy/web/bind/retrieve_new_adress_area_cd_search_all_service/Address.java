@@ -2,7 +2,12 @@ package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_new_adress_area
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_search_all_service.NewAddressListAreaCdSearchAllResponse;
 import com.github.jinahya.epost.openapi.proxy.web.bind.AbstractWrappingModel;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serial;
 import java.util.Objects;
@@ -16,7 +21,7 @@ public class Address
         extends AbstractWrappingModel<Address, NewAddressListAreaCdSearchAllResponse.NewAddressListAreaCdSearchAll> {
 
     @Serial
-    private static final long serialVersionUID = -8964407039642096158L;
+    private static final long serialVersionUID = -4131507370713536523L;
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
     public static Address newInstance(
@@ -30,9 +35,6 @@ public class Address
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
     // ----------------------------------------------------------------------------------------------------- super.links
-    public Address addLinks() {
-        return this;
-    }
 
     // --------------------------------------------------------------------------------------------------- super.wrapped
 }

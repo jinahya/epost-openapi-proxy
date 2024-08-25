@@ -8,20 +8,19 @@ import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_a
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.RoadEngFirstNameListRequest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.RoadEngListRequest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.StateEngListRequest;
-import com.github.jinahya.epost.openapi.proxy.reactor.util.context.ContextUtils;
+import com.github.jinahya.epost.openapi.proxy.util.ReactorContextUtils;
 import com.github.jinahya.epost.openapi.proxy.web.bind._ApiController;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,7 +30,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.Objects;
+import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.atomic.LongAdder;
 
@@ -39,20 +38,30 @@ import java.util.concurrent.atomic.LongAdder;
 @Tag(name = __RetrieveEngAddressServiceApiConstants.TAG)
 @Validated
 @RestController
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+//@NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Slf4j
 class _RetrieveEngAddressServiceApiController
         extends _ApiController {
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+    _RetrieveEngAddressServiceApiController() {
+        super();
+        stateModelAssembler = new RepresentationModelAssemblerSupport<State, State>(
+                _RetrieveEngAddressServiceApiController.class, State.class) {
+            @Override
+            public State toModel(final State entity) {
+                return entity;
+            }
+        };
+    }
 
     // ----------------------------------------------------------------------------------------------------- /.../states
     private Flux<State> getStatesPublisher() {
         return new StateEngListRequest()
                 .exchange(webClient())
                 .flatMapMany(r -> Flux.fromIterable(r.getStateEngList()))
-                .map(State::instanceOf)
-                .flatMap(s -> ContextUtils.getRequestBaseUrl()
+                .map(State::newInstance)
+                .flatMap(s -> ReactorContextUtils.getRequestBaseUrl()
                         .map(UriComponentsBuilder::fromHttpUrl)
                         .map(b -> b.path(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES))
                         .map(b -> b.pathSegment(s.name()))
@@ -73,65 +82,119 @@ class _RetrieveEngAddressServiceApiController
                 ;
     }
 
+    //    @Operation(summary = "Reads all states.")
+//    @GetMapping(
+//            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES,
+//            produces = {
+//                    MediaType.APPLICATION_NDJSON_VALUE,
+//                    MediaTypes.HAL_JSON_VALUE
+//            }
+//    )
+//    Mono<Void> readStates(final ServerHttpRequest exchange, final ServerHttpResponse response) {
+//        final var authority = getAuthorityFrom(exchange);
+//        log.debug("authority: {}", authority);
+//        return writeNdjsonResponseWith(
+//                response,
+//                getStatesPublisher(),
+//                State.class
+//        );
+//    }
     @Operation(summary = "Reads all states.")
     @GetMapping(
             path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES,
             produces = {
-                    MediaType.APPLICATION_NDJSON_VALUE
+                    MediaType.APPLICATION_NDJSON_VALUE,
+                    MediaTypes.HAL_JSON_VALUE
             }
     )
-    Mono<Void> readStates(final ServerHttpRequest request, final ServerHttpResponse response) {
-        final var authority = getAuthorityFrom(request);
-        log.debug("authority: {}", authority);
-        return writeNdjsonResponseWith(
-                response,
-                getStatesPublisher(),
-                State.class
-        );
+    Flux<State> readStates(final ServerWebExchange exchange) {
+        return getStatesPublisher();
     }
+
+//    @Operation(summary = "Reads a state.")
+//    @GetMapping(
+//            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATE,
+//            produces = {
+//                    MediaTypes.HAL_JSON_VALUE
+//            }
+//    )
+//    Mono<Void> readState(
+//            @PathVariable(__RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
+//            final ServerWebExchange exchange) {
+//        return getStatesPublisher().filter(s -> s.name().equals(stateName)).single()
+//                .onErrorResume(
+//                        NoSuchElementException.class,
+//                        t -> {
+//                            exchange.getResponse().setStatusCode(HttpStatus.NOT_FOUND);
+//                            return Mono.empty();
+//                        }
+//                )
+//                .flatMap(s -> {
+//                    return writeHalJsonResponseWith(
+//                            exchange.getResponse(),
+//                            s,
+//                            State.class
+//                    );
+//                });
+//    }
 
     @Operation(summary = "Reads a state.")
     @GetMapping(
             path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATE,
             produces = {
-                    MediaType.APPLICATION_NDJSON_VALUE
+                    MediaTypes.HAL_JSON_VALUE
             }
     )
-    Mono<Void> readState(
+    Mono<State> readState(
             @PathVariable(__RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
             final ServerWebExchange exchange) {
-        return writeNdjsonResponseWith(
-                exchange.getResponse(),
-                getStatesPublisher().filter(s -> s.name().equals(stateName)).take(1L),
-                State.class
-        );
+        return getStatesPublisher()
+                .filter(s -> s.name().equals(stateName))
+                .single()
+                .onErrorResume(
+                        NoSuchElementException.class,
+                        t -> {
+                            exchange.getResponse().setStatusCode(HttpStatus.NOT_FOUND);
+                            return Mono.empty();
+                        }
+                );
     }
 
     // ---------------------------------------------------------------------------------- /.../states/{stateName}/cities
-    private Flux<City> getCitiesPublisher(final ServerHttpRequest request, final String stateName) {
+    private Flux<City> getCitiesPublisher(final String stateName) {
         return CityEngListRequest.of(null, stateName)
                 .exchange(webClient())
                 .flatMapMany(r -> Flux.fromIterable(r.getCityEngList()))
                 .map(cel -> City.newInstance(stateName, cel))
-                .flatMap(c -> ContextUtils.getRequestBaseUrl()
+                .flatMap(c -> ReactorContextUtils.getRequestBaseUrl()
+                        .map(UriComponentsBuilder::fromHttpUrl)
+                        .map(b -> b.path(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATE))
+                        .map(b -> {
+                            c.add(
+                                    Link.of(b.cloneBuilder().build(c.getStateName()).toString())
+                                            .withRel(__RetrieveEngAddressServiceApiConstants.REL_STATE)
+                            );
+                            return c;
+                        }))
+                .flatMap(c -> ReactorContextUtils.getRequestBaseUrl()
                         .map(UriComponentsBuilder::fromHttpUrl)
                         .map(b -> b.path(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITY))
                         .map(b -> {
                             c.add(
-                                    Link.of(b.cloneBuilder().build(stateName, c.name()).toString())
+                                    Link.of(b.cloneBuilder().build(c.getStateName(), c.name()).toString())
                                             .withSelfRel()
                             );
                             c.add(
                                     Link.of(b.cloneBuilder()
                                                     .pathSegment(__RetrieveEngAddressServiceApiConstants.REL_ROADS)
-                                                    .build(stateName, c.name())
+                                                    .build(c.getStateName(), c.name())
                                                     .toString())
                                             .withRel(__RetrieveEngAddressServiceApiConstants.REL_ROADS)
                             );
                             c.add(
                                     Link.of(b.cloneBuilder()
                                                     .pathSegment(__RetrieveEngAddressServiceApiConstants.REL_LANDS)
-                                                    .build(stateName, c.name())
+                                                    .build(c.getStateName(), c.name())
                                                     .toString())
                                             .withRel(__RetrieveEngAddressServiceApiConstants.REL_LANDS)
                             );
@@ -140,23 +203,63 @@ class _RetrieveEngAddressServiceApiController
                 ;
     }
 
+//    @Operation(summary = "Reads all cities.", description = "Reads all cities in specified state.")
+//    @GetMapping(
+//            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITIES,
+//            produces = {
+//                    MediaType.APPLICATION_NDJSON_VALUE
+//            }
+//    )
+//    Mono<Void> readCities(
+//            @NotBlank
+//            @PathVariable(name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
+//            final ServerWebExchange exchange) {
+//        return writeNdjsonResponseWith(
+//                exchange.getResponse(),
+//                getCitiesPublisher(stateName),
+//                City.class
+//        );
+//    }
+
     @Operation(summary = "Reads all cities.", description = "Reads all cities in specified state.")
     @GetMapping(
             path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITIES,
             produces = {
-                    MediaType.APPLICATION_NDJSON_VALUE
+                    MediaType.APPLICATION_NDJSON_VALUE,
+                    MediaTypes.HAL_JSON_VALUE
             }
     )
-    Mono<Void> readCities(
+    Flux<City> readCities(
             @NotBlank
             @PathVariable(name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
             final ServerWebExchange exchange) {
-        return writeNdjsonResponseWith(
-                exchange.getResponse(),
-                getCitiesPublisher(exchange.getRequest(), stateName),
-                City.class
-        );
+        return getCitiesPublisher(stateName);
     }
+
+//    @Operation(
+//            summary = "Reads a city.",
+//            description = "Reads a specific city in specified state."
+//    )
+//    @GetMapping(
+//            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITY,
+//            produces = {
+//                    MediaType.APPLICATION_NDJSON_VALUE
+//            }
+//    )
+//    Mono<Void> readCity(
+//            @Parameter(description = "the name of the state")
+//            @NotBlank
+//            @PathVariable(name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
+//            @Parameter(description = "the name of the city")
+//            @NotBlank
+//            @PathVariable(name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName,
+//            final ServerWebExchange exchange) {
+//        return writeNdjsonResponseWith(
+//                exchange.getResponse(),
+//                getCitiesPublisher(stateName).filter(c -> c.name().equals(cityName)),
+//                City.class
+//        );
+//    }
 
     @Operation(
             summary = "Reads a city.",
@@ -165,10 +268,10 @@ class _RetrieveEngAddressServiceApiController
     @GetMapping(
             path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITY,
             produces = {
-                    MediaType.APPLICATION_NDJSON_VALUE
+                    MediaTypes.HAL_JSON_VALUE
             }
     )
-    Mono<Void> readCity(
+    Mono<City> readCity(
             @Parameter(description = "the name of the state")
             @NotBlank
             @PathVariable(name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
@@ -176,52 +279,78 @@ class _RetrieveEngAddressServiceApiController
             @NotBlank
             @PathVariable(name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName,
             final ServerWebExchange exchange) {
-        return writeNdjsonResponseWith(
-                exchange.getResponse(),
-                getCitiesPublisher(exchange.getRequest(), stateName)
-                        .filter(c -> Objects.equals(c.getWrapped().getCityEngName(), cityName)),
-                City.class
-        );
+        return getCitiesPublisher(stateName)
+                .filter(c -> c.name().equals(cityName))
+                .single()
+                .onErrorResume(
+                        NoSuchElementException.class,
+                        t -> {
+                            exchange.getResponse().setStatusCode(HttpStatus.NOT_FOUND);
+                            return Mono.empty();
+                        }
+                );
     }
 
     // ----------------------------------------------------------------- /.../states/{stateName}/cities/{cityName}/roads
-    Flux<Road> getRoadPublisher(final ServerHttpRequest request, final String stateName, final String cityName) {
+    private Flux<Road> getRoadPublisher(final String stateName, final String cityName) {
+        final var builder = ReactorContextUtils.getRequestBaseUrl().map(UriComponentsBuilder::fromHttpUrl);
         return RoadEngFirstNameListRequest.of(null, stateName, cityName)
                 .exchange(webClient())
-                .flatMapMany(refnlr -> Flux.fromIterable(refnlr.getRoadEngFirstNameList()))
-                .map(refnl -> RoadEngListRequest.of(null, stateName, cityName, refnl.getRoadEngFirstName()))
-                .flatMapSequential(relr -> relr.exchange(webClient()), 5)
-                .flatMap(relr -> Flux.fromIterable(relr.getRoadEngList()))
-                .map(rel -> Road.newInstance(stateName, cityName, rel))
-                .map(e -> e.addLinks(request));
+                .flatMapMany(r -> Flux.fromIterable(r.getRoadEngFirstNameList()))
+                .map(e -> RoadEngListRequest.of(null, stateName, cityName, e.getRoadEngFirstName()))
+                .flatMapSequential(r -> r.exchange(webClient()), 5)
+                .flatMap(r -> Flux.fromIterable(r.getRoadEngList()))
+                .map(e -> Road.newInstance(stateName, cityName, e))
+                .flatMap(r -> builder.map(UriComponentsBuilder::cloneBuilder)
+                        .map(b -> b.path(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITY))
+                        .map(b -> {
+                            r.add(
+                                    Link.of(b.build(r.getStateName(), r.getCityName()).toString())
+                                            .withRel(__RetrieveEngAddressServiceApiConstants.REL_CITY)
+                            );
+                            return r;
+                        }))
+                .flatMap(r -> builder.map(UriComponentsBuilder::cloneBuilder)
+                        .map(b -> b.path(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD))
+                        .map(b -> {
+                            r.add(
+                                    Link.of(b.build(r.getStateName(), r.getCityName(), r.name()).toString())
+                                            .withSelfRel()
+                            );
+                            r.add(
+                                    Link.of(b.pathSegment(__RetrieveEngAddressServiceApiConstants.REL_ADDRESSES)
+                                                    .build(r.getStateName(), r.getCityName(), r.name())
+                                                    .toString())
+                                            .withRel(__RetrieveEngAddressServiceApiConstants.REL_ADDRESSES)
+                            );
+                            return r;
+                        }))
+                ;
     }
 
     @GetMapping(
             path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROADS,
             produces = {
-                    MediaType.APPLICATION_NDJSON_VALUE
+                    MediaType.APPLICATION_NDJSON_VALUE,
+                    MediaTypes.HAL_JSON_VALUE
             }
     )
-    Mono<Void> readRoads(
+    Flux<Road> readRoads(
             @NotBlank
             @PathVariable(__RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
             @NotBlank
             @PathVariable(name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName,
             final ServerWebExchange exchange) {
-        return writeNdjsonResponseWith(
-                exchange.getResponse(),
-                getRoadPublisher(exchange.getRequest(), stateName, cityName),
-                Road.class
-        );
+        return getRoadPublisher(stateName, cityName);
     }
 
     @GetMapping(
             path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD,
             produces = {
-                    MediaType.APPLICATION_NDJSON_VALUE
+                    MediaTypes.HAL_JSON_VALUE
             }
     )
-    Mono<Void> readRoad(
+    Mono<Road> readRoad(
             @NotBlank
             @PathVariable(__RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
             @NotBlank
@@ -229,29 +358,25 @@ class _RetrieveEngAddressServiceApiController
             @NotBlank
             @PathVariable(name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_ROAD_NAME) final String roadName,
             final ServerWebExchange exchange) {
-        return writeNdjsonResponseWith(
-                exchange.getResponse(),
-                getRoadPublisher(exchange.getRequest(), stateName, cityName)
-                        .filter(r -> Objects.equals(r.getWrapped().getRoadEngName(), roadName)),
-                Road.class
-        );
+        return getRoadPublisher(stateName, cityName)
+                .filter(r -> r.name().equals(roadName))
+                .single()
+                .onErrorResume(
+                        NoSuchElementException.class,
+                        t -> {
+                            exchange.getResponse().setStatusCode(HttpStatus.NOT_FOUND);
+                            return Mono.empty();
+                        }
+                );
     }
 
     // -------------------------------------------- /.../states/{stateName}/cities/{cityName}/roads/{roadName}/addresses
-    @GetMapping(
-            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD_ADDRESSES,
-            produces = {
-                    MediaType.APPLICATION_NDJSON_VALUE
-            }
-    )
-    Mono<Void> readRoadAddresses(
-            @PathVariable(__RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
-            @PathVariable(name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName,
-            @PathVariable(name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_ROAD_NAME) final String roadName,
-            final ServerHttpResponse response) {
+    private Flux<RoadAddress> getRoadAddressPublisher(final String stateName, final String cityName,
+                                                      final String roadName) {
+        final var builder = ReactorContextUtils.getRequestBaseUrl().map(UriComponentsBuilder::fromHttpUrl);
         final var total = new AtomicReference<Integer>();
         final var count = new LongAdder();
-        final var data = Mono.just(RoadAddressEngSearchListRequest.of(
+        return Mono.just(RoadAddressEngSearchListRequest.of(
                         null,
                         stateName,
                         cityName,
@@ -272,12 +397,8 @@ class _RetrieveEngAddressServiceApiController
                     total.compareAndSet(null, cmmMsgHeader.getTotalCount());
                     return f;
                 })
-                .flatMap(r -> {
-                    final var list = r.getRoadAddressEngSearchList();
-                    return Flux.fromIterable(list)
-                            .map(e -> RoadAddress.newInstance(stateName, cityName, roadName, e))
-                            .map(RoadAddress::addLinks);
-                })
+                .flatMap(r -> Flux.fromIterable(r.getRoadAddressEngSearchList())
+                        .map(e -> RoadAddress.newInstance(stateName, cityName, roadName, e)))
                 .<RoadAddress>handle((e, s) -> {
                     count.increment();
                     final var t = total.get();
@@ -287,13 +408,37 @@ class _RetrieveEngAddressServiceApiController
                     } else {
                         s.complete();
                     }
-                });
-        return writeNdjsonResponseWith(response, data, RoadAddress.class);
+                })
+                .flatMap(a -> builder.map(UriComponentsBuilder::cloneBuilder)
+                        .map(b -> b.path(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD))
+                        .map(b -> {
+                            a.add(
+                                    Link.of(b.build(a.getStateName(), a.getCityName(), a.getRoadName()).toString())
+                                            .withRel(__RetrieveEngAddressServiceApiConstants.REL_ROAD)
+                            );
+                            return a;
+                        }))
+                ;
+    }
+
+    @GetMapping(
+            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD_ADDRESSES,
+            produces = {
+                    MediaType.APPLICATION_NDJSON_VALUE,
+                    MediaTypes.HAL_JSON_VALUE
+            }
+    )
+    Flux<RoadAddress> readRoadAddresses(
+            @PathVariable(__RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
+            @PathVariable(__RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName,
+            @PathVariable(__RetrieveEngAddressServiceApiConstants.PATH_NAME_ROAD_NAME) final String roadName,
+            final ServerWebExchange exchange) {
+        return getRoadAddressPublisher(stateName, cityName, roadName);
     }
 
     // ------------------------------------------------------------- /.../states/{stateName}/cities/{cityName}/districts
-    private Flux<District> getDistrictPublisher(final ServerHttpRequest request, final String stateName,
-                                                final String cityName) {
+    private Flux<District> getDistrictPublisher(final String stateName, final String cityName) {
+        final var builder = ReactorContextUtils.getRequestBaseUrl().map(UriComponentsBuilder::fromHttpUrl);
         return DistrictEngFirstNameListRequest.of(null, stateName, cityName)
                 .exchange(webClient())
                 .flatMapMany(r -> Flux.fromIterable(r.getDistrictEngFirstNameList()))
@@ -301,35 +446,56 @@ class _RetrieveEngAddressServiceApiController
                 .flatMapSequential(r -> r.exchange(webClient()), 5)
                 .flatMap(r -> Flux.fromIterable(r.getDistrictEngList()))
                 .map(e -> District.newInstance(stateName, cityName, e))
-                .map(e -> e.addLinks(request));
+                .flatMap(d -> builder.map(UriComponentsBuilder::cloneBuilder)
+                        .map(b -> b.path(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITY))
+                        .map(b -> {
+                            d.add(
+                                    Link.of(b.build(d.getStateName(), d.getCityName()).toString())
+                                            .withRel(__RetrieveEngAddressServiceApiConstants.REL_CITY)
+                            );
+                            return d;
+                        }))
+                .flatMap(d -> builder.map(UriComponentsBuilder::cloneBuilder)
+                        .map(b -> b.path(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICT))
+                        .map(b -> {
+                            d.add(
+                                    Link.of(b.build(d.getStateName(), d.getCityName(), d.name()).toString())
+                                            .withSelfRel()
+                            );
+                            d.add(
+                                    Link.of(b.pathSegment(__RetrieveEngAddressServiceApiConstants.REL_ADDRESSES)
+                                                    .build(d.getStateName(), d.getCityName(), d.name())
+                                                    .toString())
+                                            .withRel(__RetrieveEngAddressServiceApiConstants.REL_ADDRESSES)
+                            );
+                            return d;
+                        }))
+                ;
     }
 
     @GetMapping(
             path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICTS,
             produces = {
-                    MediaType.APPLICATION_NDJSON_VALUE
+                    MediaType.APPLICATION_NDJSON_VALUE,
+                    MediaTypes.HAL_JSON_VALUE
             }
     )
-    Mono<Void> readDistricts(
+    Flux<District> readDistricts(
             @NotBlank
             @PathVariable(__RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
             @NotBlank
             @PathVariable(name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName,
             final ServerWebExchange exchange) {
-        return writeNdjsonResponseWith(
-                exchange.getResponse(),
-                getDistrictPublisher(exchange.getRequest(), stateName, cityName),
-                District.class
-        );
+        return getDistrictPublisher(stateName, cityName);
     }
 
     @GetMapping(
             path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICT,
             produces = {
-                    MediaType.APPLICATION_NDJSON_VALUE
+                    MediaTypes.HAL_JSON_VALUE
             }
     )
-    Mono<Void> readDistricts(
+    Mono<District> readDistrict(
             @NotBlank
             @PathVariable(__RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
             @NotBlank
@@ -338,34 +504,25 @@ class _RetrieveEngAddressServiceApiController
             @PathVariable(
                     name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_DISTRICT_NAME) final String districtName,
             final ServerWebExchange exchange) {
-        return writeNdjsonResponseWith(
-                exchange.getResponse(),
-                getDistrictPublisher(exchange.getRequest(), stateName, cityName)
-                        .filter(d -> Objects.equals(d.getWrapped().getDistrictEngName(), districtName)),
-                District.class
-        );
+        return getDistrictPublisher(stateName, cityName)
+                .filter(d -> d.name().equals(districtName))
+                .single()
+                .onErrorResume(
+                        NoSuchElementException.class,
+                        t -> {
+                            exchange.getResponse().setStatusCode(HttpStatus.NOT_FOUND);
+                            return Mono.empty();
+                        }
+                );
     }
 
     // ------------------------------------ /.../states/{stateName}/cities/{cityName}/districts/{districtName}/addresses
-    @Operation(summary = "Reads district addresses.", description = "Reads all addresses in specified district.")
-    @GetMapping(
-            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICT_ADDRESSES,
-            produces = {
-                    MediaType.APPLICATION_NDJSON_VALUE
-            }
-    )
-    Mono<Void> readDistrictAddresses(
-            @NotBlank
-            @PathVariable(__RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
-            @NotBlank
-            @PathVariable(name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName,
-            @NotBlank
-            @PathVariable(
-                    name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_DISTRICT_NAME) final String districtName,
-            final ServerHttpResponse response) {
+    private Flux<DistrictAddress> getDistrictAddressPublisher(final String stateName, final String cityName,
+                                                              final String districtName) {
+        final var builder = ReactorContextUtils.getRequestBaseUrl().map(UriComponentsBuilder::fromHttpUrl);
         final var total = new AtomicReference<Integer>();
         final var count = new LongAdder();
-        final var data = Mono.just(LandAddressEngSearchListRequest.of(
+        return Mono.just(LandAddressEngSearchListRequest.of(
                         null,
                         stateName,
                         cityName,
@@ -384,12 +541,8 @@ class _RetrieveEngAddressServiceApiController
                     }
                     return f;
                 })
-                .flatMap(r -> {
-                    final var list = r.getLandAddressEngSearchList();
-                    return Flux.fromIterable(list)
-                            .map(e -> DistrictAddress.newInstance(stateName, cityName, districtName, e))
-                            .map(DistrictAddress::addLinks);
-                })
+                .flatMap(r -> Flux.fromIterable(r.getLandAddressEngSearchList())
+                        .map(e -> DistrictAddress.newInstance(stateName, cityName, districtName, e)))
                 .<DistrictAddress>handle((e, s) -> {
                     count.increment();
                     final var t = total.get();
@@ -399,8 +552,37 @@ class _RetrieveEngAddressServiceApiController
                     } else {
                         s.complete();
                     }
-                });
-        return writeNdjsonResponseWith(response, data, DistrictAddress.class);
+                })
+                .flatMap(a -> builder.map(UriComponentsBuilder::cloneBuilder)
+                        .map(b -> b.path(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICT))
+                        .map(b -> {
+                            a.add(
+                                    Link.of(b.build(a.getStateName(), a.getCityName(), a.getDistrictName()).toString())
+                                            .withRel(__RetrieveEngAddressServiceApiConstants.REL_DISTRICT)
+                            );
+                            return a;
+                        }))
+                ;
+    }
+
+    @Operation(summary = "Reads district addresses.", description = "Reads all addresses in specified district.")
+    @GetMapping(
+            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICT_ADDRESSES,
+            produces = {
+                    MediaType.APPLICATION_NDJSON_VALUE,
+                    MediaTypes.HAL_JSON_VALUE
+            }
+    )
+    Flux<DistrictAddress> readDistrictAddresses(
+            @NotBlank
+            @PathVariable(__RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
+            @NotBlank
+            @PathVariable(name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME) final String cityName,
+            @NotBlank
+            @PathVariable(
+                    name = __RetrieveEngAddressServiceApiConstants.PATH_NAME_DISTRICT_NAME) final String districtName,
+            final ServerWebExchange exchange) {
+        return getDistrictAddressPublisher(stateName, cityName, districtName);
     }
 
     // =================================================================================================================
@@ -420,7 +602,7 @@ class _RetrieveEngAddressServiceApiController
                 exchange.getResponse(),
                 getStatesPublisher()
                         .flatMapSequential(
-                                s -> getCitiesPublisher(exchange.getRequest(), s.name()),
+                                s -> getCitiesPublisher(s.name()),
                                 4
                         ),
                 City.class
@@ -442,9 +624,9 @@ class _RetrieveEngAddressServiceApiController
                 exchange.getResponse(),
                 getStatesPublisher()
                         .flatMapSequential(
-                                s -> getCitiesPublisher(exchange.getRequest(), s.name())
+                                s -> getCitiesPublisher(s.name())
                                         .flatMapSequential(
-                                                c -> getRoadPublisher(exchange.getRequest(), s.name(), c.name()),
+                                                c -> getRoadPublisher(s.name(), c.name()),
                                                 8
                                         ),
                                 4
@@ -468,9 +650,9 @@ class _RetrieveEngAddressServiceApiController
                 exchange.getResponse(),
                 getStatesPublisher()
                         .flatMapSequential(
-                                s -> getCitiesPublisher(exchange.getRequest(), s.name())
+                                s -> getCitiesPublisher(s.name())
                                         .flatMapSequential(
-                                                c -> getDistrictPublisher(exchange.getRequest(), s.name(), c.name()),
+                                                c -> getDistrictPublisher(s.name(), c.name()),
                                                 8
                                         ),
                                 4
@@ -478,4 +660,7 @@ class _RetrieveEngAddressServiceApiController
                 District.class
         );
     }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    private final RepresentationModelAssemblerSupport<State, State> stateModelAssembler;
 }

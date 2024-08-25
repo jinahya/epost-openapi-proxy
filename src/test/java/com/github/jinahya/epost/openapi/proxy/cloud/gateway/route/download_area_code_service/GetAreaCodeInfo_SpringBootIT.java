@@ -2,7 +2,7 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._RouteSpringBootIT;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractRequestTypeTestUtils;
-import com.github.jinahya.epost.openapi.proxy.web.reactive.funcion.client.WebClientUtils;
+import com.github.jinahya.epost.openapi.proxy.util.WebClientUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -12,6 +12,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import reactor.core.publisher.Flux;
 import reactor.core.scheduler.Schedulers;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -68,9 +70,18 @@ class GetAreaCodeInfo_SpringBootIT
                     final var flags = new HashMap<String, Boolean>();
                     return WebClientUtils.download(
                             f,
-                            (n, m) -> {
-                                if (flags.compute(n, (k, v) -> v == null)) {
-                                    log.debug("n: {}, m: {}", n, m);
+                            p -> {
+                                try (var stream = new FileInputStream(p.toFile())) {
+                                    AreaCodeInfoUtils.extract(
+                                            stream,
+                                            (n, m) -> {
+                                                if (flags.compute(n, (k, v) -> v == null)) {
+                                                    log.debug("n: {}, m: {}", n, m);
+                                                }
+                                            }
+                                    );
+                                } catch (final IOException ioe) {
+                                    throw new RuntimeException(ioe);
                                 }
                             }
                     );

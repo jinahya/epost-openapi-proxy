@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.hateoas.config.HypermediaWebTestClientConfigurer;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -24,7 +23,14 @@ import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@EnableHypermediaSupport(type = {EnableHypermediaSupport.HypermediaType.HAL})
+//@EnableHypermediaSupport(
+//        type = {
+//                EnableHypermediaSupport.HypermediaType.HAL
+//        },
+//        stacks = {
+//                WebStack.WEBFLUX
+//        }
+//)
 @Import(
         value = {
                 ValidationAutoConfiguration.class

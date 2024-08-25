@@ -3,7 +3,6 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractPairedRequestType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.PaginatedRequest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common._Constants;
-import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -12,6 +11,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.lang.Nullable;
 import org.springframework.web.util.UriBuilder;
 
 import java.io.Serial;
@@ -31,7 +31,8 @@ public class LandAddressEngSearchListRequest
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
     public static LandAddressEngSearchListRequest of(final @Nullable String serviceKey, final String stateEngName,
-                                                     final String cityEngName, final String districtEngFirstName,
+                                                     final String cityEngName,
+                                                     @Nullable final String districtEngFirstName,
                                                      final String districtEngName, final @Nullable String keyword,
                                                      final Integer countPerPage, final Integer currentPage) {
         final LandAddressEngSearchListRequest instance = new LandAddressEngSearchListRequest();

@@ -65,8 +65,7 @@ class _RetrieveNewAdressAreaCdSearchAllServiceApiController
                 .flatMap(r -> {
                     final var list = r.getNewAddressListAreaCdSearchAll();
                     return Flux.fromIterable(list)
-                            .map(Address::newInstance)
-                            .map(Address::addLinks);
+                            .map(Address::newInstance);
                 })
                 .<Address>handle((e, s) -> {
                     count.increment();
