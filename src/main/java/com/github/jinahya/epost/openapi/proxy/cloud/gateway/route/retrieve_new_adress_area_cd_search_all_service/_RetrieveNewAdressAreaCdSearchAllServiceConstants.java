@@ -1,6 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_search_all_service;
 
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._RouteConstants;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common._Constants;
 
 public final class _RetrieveNewAdressAreaCdSearchAllServiceConstants {
 
@@ -20,7 +20,7 @@ public final class _RetrieveNewAdressAreaCdSearchAllServiceConstants {
      * The result URI for {@value #OPERATION_GET_NEW_ADDRESS_LIST_AREA_CD_SEARCH_ALL} operation. The value is {@value}.
      */
     public static final String REQUEST_URI_GET_NEW_ADDRESS_LIST_AREA_CD_SEARCH_ALL =
-            _RouteConstants.REQUEST_URI_POSTAL
+            _Constants.REQUEST_URI_POSTAL
                     + '/' + SERVICE_NAME
                     + '/' + SERVICE_NAME
                     + '/' + OPERATION_GET_NEW_ADDRESS_LIST_AREA_CD_SEARCH_ALL;

@@ -7,6 +7,11 @@ public final class _Constants {
 
     public static final String BASE_URL_PRODUCTION = BASE_URL_DEVELOPMENT;
 
+    /**
+     * The request URI of {@value}.
+     */
+    public static final String REQUEST_URI_POSTAL = "/postal";
+
     // -----------------------------------------------------------------------------------------------------------------
     public static final String PARAM_SERVICE_KEY = "serviceKey";
 
