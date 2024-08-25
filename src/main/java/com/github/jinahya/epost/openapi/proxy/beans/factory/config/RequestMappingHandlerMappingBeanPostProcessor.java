@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.stereotype;
+package com.github.jinahya.epost.openapi.proxy.beans.factory.config;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

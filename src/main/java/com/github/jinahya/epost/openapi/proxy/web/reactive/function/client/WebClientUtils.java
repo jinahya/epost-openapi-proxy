@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.util;
+package com.github.jinahya.epost.openapi.proxy.web.reactive.function.client;
 
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferUtils;

@@ -2,7 +2,7 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._RouteSpringBootIT;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._common.AbstractRequestTypeTestUtils;
-import com.github.jinahya.epost.openapi.proxy.util.WebClientUtils;
+import com.github.jinahya.epost.openapi.proxy.web.reactive.function.client.WebClientUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
