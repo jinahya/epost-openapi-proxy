@@ -18,7 +18,6 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.MediaTypes;
-import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -46,13 +45,6 @@ class _RetrieveEngAddressServiceApiController
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
     _RetrieveEngAddressServiceApiController() {
         super();
-        stateModelAssembler = new RepresentationModelAssemblerSupport<State, State>(
-                _RetrieveEngAddressServiceApiController.class, State.class) {
-            @Override
-            public State toModel(final State entity) {
-                return entity;
-            }
-        };
     }
 
     // ----------------------------------------------------------------------------------------------------- /.../states
@@ -82,23 +74,6 @@ class _RetrieveEngAddressServiceApiController
                 ;
     }
 
-    //    @Operation(summary = "Reads all states.")
-//    @GetMapping(
-//            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES,
-//            produces = {
-//                    MediaType.APPLICATION_NDJSON_VALUE,
-//                    MediaTypes.HAL_JSON_VALUE
-//            }
-//    )
-//    Mono<Void> readStates(final ServerHttpRequest exchange, final ServerHttpResponse response) {
-//        final var authority = getAuthorityFrom(exchange);
-//        log.debug("authority: {}", authority);
-//        return writeNdjsonResponseWith(
-//                response,
-//                getStatesPublisher(),
-//                State.class
-//        );
-//    }
     @Operation(summary = "Reads all states.")
     @GetMapping(
             path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES,
@@ -110,33 +85,6 @@ class _RetrieveEngAddressServiceApiController
     Flux<State> readStates(final ServerWebExchange exchange) {
         return getStatesPublisher();
     }
-
-//    @Operation(summary = "Reads a state.")
-//    @GetMapping(
-//            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATE,
-//            produces = {
-//                    MediaTypes.HAL_JSON_VALUE
-//            }
-//    )
-//    Mono<Void> readState(
-//            @PathVariable(__RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
-//            final ServerWebExchange exchange) {
-//        return getStatesPublisher().filter(s -> s.name().equals(stateName)).single()
-//                .onErrorResume(
-//                        NoSuchElementException.class,
-//                        t -> {
-//                            exchange.getResponse().setStatusCode(HttpStatus.NOT_FOUND);
-//                            return Mono.empty();
-//                        }
-//                )
-//                .flatMap(s -> {
-//                    return writeHalJsonResponseWith(
-//                            exchange.getResponse(),
-//                            s,
-//                            State.class
-//                    );
-//                });
-//    }
 
     @Operation(summary = "Reads a state.")
     @GetMapping(
@@ -660,7 +608,4 @@ class _RetrieveEngAddressServiceApiController
                 District.class
         );
     }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    private final RepresentationModelAssemblerSupport<State, State> stateModelAssembler;
 }
