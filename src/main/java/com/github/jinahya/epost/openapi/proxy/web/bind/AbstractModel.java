@@ -11,6 +11,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 @Setter
@@ -19,6 +20,9 @@ import java.util.function.Supplier;
 @ToString(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Slf4j
+@SuppressWarnings({
+        "java:S119" // <SELF ...>
+})
 public abstract class AbstractModel<SELF extends AbstractModel<SELF>>
         extends RepresentationModel<SELF>
         implements Serializable {
@@ -28,7 +32,7 @@ public abstract class AbstractModel<SELF extends AbstractModel<SELF>>
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
     protected static <T extends AbstractModel<T>> T newInstance(final Supplier<? extends T> initializer) {
-        final T instance = initializer.get();
+        final T instance = Objects.requireNonNull(initializer, "initializer is null").get();
         return instance;
     }
 
