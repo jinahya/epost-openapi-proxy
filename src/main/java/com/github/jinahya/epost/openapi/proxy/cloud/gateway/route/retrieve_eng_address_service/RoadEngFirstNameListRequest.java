@@ -33,7 +33,7 @@ public class RoadEngFirstNameListRequest
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    private static final BiConsumer<? super RoadEngFirstNameListRequest, ? super UriBuilder> URI_CONSUMER =
+    private static final BiConsumer<? super RoadEngFirstNameListRequest, ? super UriBuilder> URI_BUILDER =
             (s, b) -> {
                 b.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_ROAD_FIRST_NAME_LIST)
                         .queryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NAME, s.getStateEngName())
@@ -45,8 +45,8 @@ public class RoadEngFirstNameListRequest
 
     public RoadEngFirstNameListRequest() {
         super(RoadEngFirstNameListResponse.class);
-        setUriConsumer(
-                URI_CONSUMER,
+        setUriConfigurer(
+                URI_BUILDER,
                 true
         );
     }

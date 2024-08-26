@@ -63,10 +63,10 @@ public abstract class AbstractRequestType<SELF extends AbstractRequestType<SELF>
         return webClient
                 .method(httpMethod)
                 .uri(b -> {
-                    uriConsumer.accept(self, b);
+                    uriConfigurer.accept(self, b);
                     return b.build();
                 })
-                .headers(headersConsumer)
+                .headers(headersConfigurer)
                 .exchangeToMono(r -> r.bodyToMono(responseType).map(AbstractResponseType::get))
                 .handle((r, s) -> {
                     final var cmmMsgHeader = r.getCmmMsgHeader();
@@ -103,7 +103,7 @@ public abstract class AbstractRequestType<SELF extends AbstractRequestType<SELF>
     /**
      * Replaces current value of {@code serviceKey} property with specified value, and returns this object.
      *
-     * @param serviceKey new value for the {@code serviceKey} proeprty.
+     * @param serviceKey new value for the {@code serviceKey} property.
      * @return this object.
      * @see #setServiceKey(String)
      */
@@ -115,43 +115,43 @@ public abstract class AbstractRequestType<SELF extends AbstractRequestType<SELF>
 
     // ------------------------------------------------------------------------------------------------------ httpMethod
 
-    // ----------------------------------------------------------------------------------------------------- uriFunction
-    public BiConsumer<? super SELF, ? super UriBuilder> getUriConsumer() {
-        return uriConsumer;
+    // --------------------------------------------------------------------------------------------------- uriConfigurer
+    public BiConsumer<? super SELF, ? super UriBuilder> getUriConfigurer() {
+        return uriConfigurer;
     }
 
-    public void setUriConsumer(final BiConsumer<? super SELF, ? super UriBuilder> uriConsumer) {
-        this.uriConsumer = Objects.requireNonNull(uriConsumer, "uriConsumer is null");
+    public void setUriConfigurer(final BiConsumer<? super SELF, ? super UriBuilder> uriBuilder) {
+        this.uriConfigurer = Objects.requireNonNull(uriBuilder, "uriBuilder is null");
     }
 
-    protected void setUriConsumer(final BiConsumer<? super SELF, ? super UriBuilder> uriConsumer,
-                                  final boolean wrap) {
-        Objects.requireNonNull(uriConsumer, "uriConsumer is null");
+    protected void setUriConfigurer(final BiConsumer<? super SELF, ? super UriBuilder> uriBuilder,
+                                    final boolean wrap) {
+        Objects.requireNonNull(uriBuilder, "uriBuilder is null");
         if (!wrap) {
-            setUriConsumer(uriConsumer);
+            setUriConfigurer(uriBuilder);
             return;
         }
-        final var wrapper = getUriConsumer();
-        this.uriConsumer = (s, b) -> {
-            uriConsumer.accept(s, b);
+        final var wrapper = getUriConfigurer();
+        this.uriConfigurer = (s, b) -> {
+            uriBuilder.accept(s, b);
             wrapper.accept(s, b);
         };
     }
 
-    public UriBuilder acceptUriConsumer(final UriBuilder builder) {
+    public UriBuilder configureUri(final UriBuilder builder) {
         @SuppressWarnings({"unchecked"})
         final var self = (SELF) this;
-        getUriConsumer().accept(self, builder);
+        getUriConfigurer().accept(self, builder);
         return builder;
     }
 
-    public URI acceptUriConsumerAndBuild(final UriBuilder builder) {
-        return acceptUriConsumer(builder).build();
+    public URI buildUri(final UriBuilder builder) {
+        return configureUri(builder).build();
     }
 
-    // ------------------------------------------------------------------------------------------------- headersConsumer
-    public void acceptHeaders(final HttpHeaders headers) {
-        headersConsumer.accept(headers);
+    // ----------------------------------------------------------------------------------------------- headersConfigurer
+    public void configureHeaders(final HttpHeaders headers) {
+        headersConfigurer.accept(headers);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -167,13 +167,17 @@ public abstract class AbstractRequestType<SELF extends AbstractRequestType<SELF>
     @JsonIgnore
     @XmlTransient
     @EqualsAndHashCode.Exclude
-    private BiConsumer<? super SELF, ? super UriBuilder> uriConsumer = (s, b) -> {
-        b.queryParamIfPresent(_RouteConstants.PARAM_SERVICE_KEY, Optional.ofNullable(s.getServiceKey())).build();
+    private BiConsumer<? super SELF, ? super UriBuilder> uriConfigurer = (s, b) -> {
+        b.queryParamIfPresent(
+                        _RouteConstants.PARAM_SERVICE_KEY,
+                        Optional.ofNullable(s.getServiceKey())
+                )
+                .build();
     };
 
     @JsonIgnore
     @XmlTransient
     @EqualsAndHashCode.Exclude
-    private Consumer<HttpHeaders> headersConsumer = httpHeaders -> {
+    private Consumer<HttpHeaders> headersConfigurer = httpHeaders -> {
     };
 }

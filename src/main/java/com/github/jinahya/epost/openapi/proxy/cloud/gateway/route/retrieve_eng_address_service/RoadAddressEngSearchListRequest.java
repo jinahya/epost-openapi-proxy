@@ -82,7 +82,7 @@ public class RoadAddressEngSearchListRequest
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    private static final BiConsumer<? super RoadAddressEngSearchListRequest, ? super UriBuilder> URI_CONSUMER =
+    private static final BiConsumer<? super RoadAddressEngSearchListRequest, ? super UriBuilder> URI_BUILDER =
             (s, b) -> {
                 b.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_ROAD_ADDRESS_SEARCH)
                         .queryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NAME, s.getStateEngName())
@@ -99,8 +99,8 @@ public class RoadAddressEngSearchListRequest
 
     public RoadAddressEngSearchListRequest() {
         super(RoadAddressEngSearchListResponse.class);
-        setUriConsumer(
-                URI_CONSUMER,
+        setUriConfigurer(
+                URI_BUILDER,
                 true
         );
     }

@@ -35,7 +35,7 @@ public class DistrictEngListRequest
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    private static final BiConsumer<? super DistrictEngListRequest, ? super UriBuilder> URI_CONSUMER = (s, b) -> {
+    private static final BiConsumer<? super DistrictEngListRequest, ? super UriBuilder> URI_BUILDER = (s, b) -> {
         b.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_DISTRICT_NAME_LIST)
                 .queryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NAME, s.getStateEngName())
                 .queryParam(_RetrieveEngAddressServiceConstants.PARAM_CITY_ENG_NAME, s.getCityEngName())
@@ -50,8 +50,8 @@ public class DistrictEngListRequest
      */
     public DistrictEngListRequest() {
         super(DistrictEngListResponse.class);
-        setUriConsumer(
-                URI_CONSUMER,
+        setUriConfigurer(
+                URI_BUILDER,
                 true
         );
     }

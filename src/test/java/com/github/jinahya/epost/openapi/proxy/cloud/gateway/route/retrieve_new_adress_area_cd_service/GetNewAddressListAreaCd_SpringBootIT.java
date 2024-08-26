@@ -24,8 +24,8 @@ class GetNewAddressListAreaCd_SpringBootIT
         Objects.requireNonNull(request, "request is null");
         final var requestSpec = client
                 .method(request.getHttpMethod())
-                .uri(request::acceptUriConsumerAndBuild)
-                .headers(request::acceptHeaders);
+                .uri(request::buildUri)
+                .headers(request::configureHeaders);
         // -------------------------------------------------------------------------------------------------------- when
         final var responseSpec = requestSpec.exchange();
         // -------------------------------------------------------------------------------------------------------- then

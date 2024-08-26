@@ -79,8 +79,8 @@ public abstract class _SpringBootIT {
         Objects.requireNonNull(responseClass, "responseClass is null");
         return webTestClient()
                 .method(request.getHttpMethod())
-                .uri(request::acceptUriConsumerAndBuild)
-                .headers(request::acceptHeaders)
+                .uri(request::buildUri)
+                .headers(request::configureHeaders)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(responseClass)

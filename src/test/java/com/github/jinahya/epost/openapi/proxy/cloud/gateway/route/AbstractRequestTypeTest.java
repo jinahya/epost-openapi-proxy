@@ -22,8 +22,8 @@ public abstract class AbstractRequestTypeTest<TYPE extends AbstractRequestType<T
         return super.__equals(verifierApi)
                 .withIgnoredFields(
                         "httpMethod",
-                        "uriConsumer",
-                        "headersConsumer"
+                        "uriConfigurer",
+                        "headersConfigurer"
                 );
     }
 }

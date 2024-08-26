@@ -33,7 +33,7 @@ public class DistrictEngFirstNameListRequest
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    private static final BiConsumer<? super DistrictEngFirstNameListRequest, ? super UriBuilder> URI_CONSUMER =
+    private static final BiConsumer<? super DistrictEngFirstNameListRequest, ? super UriBuilder> URI_BUILDER =
             (s, b) -> {
                 b.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_DISTRICT_FIRST_NAME_LIST)
                         .queryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NAME, s.getStateEngName())
@@ -44,8 +44,8 @@ public class DistrictEngFirstNameListRequest
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
     public DistrictEngFirstNameListRequest() {
         super(DistrictEngFirstNameListResponse.class);
-        setUriConsumer(
-                URI_CONSUMER,
+        setUriConfigurer(
+                URI_BUILDER,
                 true
         );
     }

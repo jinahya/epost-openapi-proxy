@@ -1,6 +1,6 @@
 # epost-openapi-proxy
 
-[![Java CI with Gradle](https://github.com/jinahya/epost-openapi-proxy/actions/workflows/gradle.yml/badge.svg)](https://github.com/jinahya/epost-openapi-proxy/actions/workflows/gradle.yml)
+[![Java CI with Maven](https://github.com/jinahya/epost-openapi-proxy/actions/workflows/maven.yml/badge.svg)](https://github.com/jinahya/epost-openapi-proxy/actions/workflows/maven.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jinahya_epost-openapi-proxy&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=jinahya_epost-openapi-proxy)
 
 ## Abstract
@@ -22,132 +22,16 @@ using [Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway).
 
 ## How to build
 
-Copy `/src/test/resources/_application.yaml` into `/src/test/resources/application.yaml` and
-set `epost.openapi.proxy.service-key` property.
+### How to test
 
-e.g.
-
-```yaml
-epost:
-  openapi:
-    proxy:
-      service-key: ......................==
+```commandline
+$ mvn clean test
 ```
 
-mvn -Pfailsafe -Depost.openapi.proxy.service-key='...==' clean verify
+### How to verify
 
-## How to use / extend
-
-### Component-scanning
-
-Add [`com.github.jinahya.openapi.proxy.NoOp.class`](src/main/java/com/github/jinahya/epost/openapi/proxy/_NoOp) to the
-component-scanning path.
-
-e.g.
-
-https://github.com/jinahya/epost-openapi-proxy/blob/75b114f36b20a12d1ba93ead76818959c11f5735/src/test/java/com/mycompany/Application.java#L1-L17
-
-### Application properties
-
-See [application.yaml](src/test/resources/application.yaml), [application-development.yaml](src/test/resources/application-development.yaml),
-and [application-production.yaml](src/test/resources/application-production.yaml).
-
-#### development
-
-Import `classpath:application-epost-openapi-proxy-development.yaml`.
-
-#### production
-
-Import `classpath:application-epost-openapi-proxy-development.yaml`
-and `classpath:application-epost-openapi-proxy-production.yaml`.
-
-### Configuration
-
-You can(or should) override various configuration properties through your own `application.(properties|yaml)` file.
-
-#### Service key
-
-Set `epost.openapi.proxy.service-key` property with an url-**decoded** value.
-
-```yaml
-epost:
-  openapi:
-    proxy:
-      service-key: <url-decoded-value>
-```
-
-#### Timeouts
-
-See [Http timeouts configuration](https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/http-timeouts-configuration.html).
-
-##### Global timeouts
-
-> `connect-timeout` must be specified in milliseconds.
->
-> `response-timeout` must be specified as a java.time.Duration
-
-e.g.
-
-```yaml
-spring:
-  cloud:
-    gateway:
-      httpclient:
-        connect-timeout: 1024  # connect-timeout must be specified in milliseconds.
-        response-timeout: PT4S # response-timeout must be specified as a java.time.Duration
-```
-
-##### Per-route timeouts
-
-> connect-timeout must be specified in milliseconds.
->
-> response-timeout must be specified in milliseconds.
-
-Set with `epost.openapi.proxy.routes.<route-id>.(connect-timeout|response-timeout)`.
-
-```yaml
-epost:
-  openapi:
-    proxy:
-      routes:
-        _retrieve_new_adress_area_cd_search_all_service:
-          connect-timeout: 1024  # connect-timeout must be specified in milliseconds.
-          response-timeout: 4096 # response-timeout must be specified in milliseconds.
-
-```
-
-#### Caching
-
-Enable caching by setting `spring.cloud.gateway.filter.local-response-cache.enabled` property with `true`.
-
-e.g.
-
-```yaml
-spring:
-  cloud:
-    gateway:
-      filter:
-        local-response-cache:
-          enabled: true
-```
-
-The [LocalResponseCache GatewayFilter Factory](https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway/gatewayfilter-factories/local-cache-response-filter.html)
-is already configured.
-> It accepts the first parameter to override the time to expire a cache entry (expressed in `s` for seconds, `m` for
-> minutes, and `h` for hours) and a second parameter to set the maximum size of the cache to evict entries for this
-> route (`KB`, `MB`, or `GB`).
-
-Override preconfigured values with `epost.openapi.proxy.routes.<route-id>.cache` property.
-
-e.g.
-
-```yaml
-epost:
-  openapi:
-    proxy:
-      routes:
-        _retrieve_new_adress_area_cd_search_all_service:
-          cache: 10m,128MB
+```commandline
+$ SERVICE_KEY=<your-own-url-decoded-service-key> mvn -Pfailsafe clean verify
 ```
 
 ## Links

@@ -48,7 +48,7 @@ public class LandAddressEngSearchListRequest
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    private static final BiConsumer<? super LandAddressEngSearchListRequest, ? super UriBuilder> URI_CONSUMER = (s, b) -> {
+    private static final BiConsumer<? super LandAddressEngSearchListRequest, ? super UriBuilder> URI_BUILDER = (s, b) -> {
         b.path(_RetrieveEngAddressServiceConstants.REQUEST_URI_GET_LAND_ADDRESS_SEARCH)
                 .queryParam(_RetrieveEngAddressServiceConstants.PARAM_STATE_ENG_NAME, s.stateEngName)
                 .queryParam(_RetrieveEngAddressServiceConstants.PARAM_CITY_ENG_NAME, s.cityEngName)
@@ -65,8 +65,8 @@ public class LandAddressEngSearchListRequest
 
     public LandAddressEngSearchListRequest() {
         super(LandAddressEngSearchListResponse.class);
-        setUriConsumer(
-                URI_CONSUMER,
+        setUriConfigurer(
+                URI_BUILDER,
                 true
         );
     }

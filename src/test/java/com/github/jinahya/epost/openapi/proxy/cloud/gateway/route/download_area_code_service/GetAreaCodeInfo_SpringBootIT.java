@@ -26,7 +26,7 @@ class GetAreaCodeInfo_SpringBootIT
     private static Stream<AreaCodeInfoRequest> getRequestStream() {
         return AbstractRequestTypeTestUtils.mapMediaType(
                 Stream.of(AreaCodeInfoRequest.DwldSe.values())
-                        .map(AreaCodeInfoRequest.DwldSe::text)
+                        .map(AreaCodeInfoRequest.DwldSe::value)
                         .map(AreaCodeInfoRequest::of)
         );
     }

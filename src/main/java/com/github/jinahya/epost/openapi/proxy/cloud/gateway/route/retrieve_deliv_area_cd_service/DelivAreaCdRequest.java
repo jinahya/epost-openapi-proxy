@@ -41,7 +41,7 @@ public class DelivAreaCdRequest
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
     public DelivAreaCdRequest() {
         super(DelivAreaCdResponse.class);
-        setUriConsumer(
+        setUriConfigurer(
                 (s, b) -> {
                     b.path(_RetrieveDelivAreaCdServiceConstants.REQUEST_URI_GET_DELIV_AREA_CD)
                             .queryParam(_RetrieveDelivAreaCdServiceConstants.PARAM_NAME_ZIP, s.zip)

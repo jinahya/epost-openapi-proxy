@@ -98,7 +98,7 @@ public class NewAddressListAreaCdRequest
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    private static final BiConsumer<? super NewAddressListAreaCdRequest, ? super UriBuilder> URI_CONSUMER = (s, b) -> {
+    private static final BiConsumer<? super NewAddressListAreaCdRequest, ? super UriBuilder> URI_BUILDER = (s, b) -> {
         b.path(_RetrieveNewAdressAreaCdServiceConstants.REQUEST_URI_GET_NEW_ADDRESS_LIST_AREA_CD)
                 .queryParam(_RetrieveNewAdressAreaCdServiceConstants.PARAM_SEARCH_SE, s.getSearchSe().text())
                 .queryParam(_RetrieveNewAdressAreaCdServiceConstants.PARAM_SRCHWRD, s.getSrchwrd())
@@ -114,8 +114,8 @@ public class NewAddressListAreaCdRequest
      */
     public NewAddressListAreaCdRequest() {
         super(NewAddressListAreaCdResponse.class);
-        setUriConsumer(
-                URI_CONSUMER,
+        setUriConfigurer(
+                URI_BUILDER,
                 true
         );
     }

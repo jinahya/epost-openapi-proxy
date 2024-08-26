@@ -25,7 +25,7 @@ public class AreaCodeInfoRequest
     @Serial
     private static final long serialVersionUID = 7432210876083090440L;
 
-    // ---------------------------------------------------------------------------------------------------------- deldSe
+    // ---------------------------------------------------------------------------------------------------------- dwldSe
 
     /**
      * 우편번호 전체.
@@ -75,27 +75,27 @@ public class AreaCodeInfoRequest
         _4(DWLD_SE_4);
 
         // -----------------------------------------------------------------------------------------------------------------
-        public static DwldSe valueOfText(final String text) {
-            Objects.requireNonNull(text, "text is null");
-            for (final DwldSe value : values()) {
-                if (value.text.equals(text)) {
-                    return value;
+        public static DwldSe valueOfValue(final String value) {
+            Objects.requireNonNull(value, "value is null");
+            for (final DwldSe v : values()) {
+                if (Objects.equals(v.value(), value)) {
+                    return v;
                 }
             }
-            throw new IllegalArgumentException("no text for '" + text + "'");
+            throw new IllegalArgumentException("no value for '" + value + "'");
         }
 
         // -----------------------------------------------------------------------------------------------------------------
-        DwldSe(final String text) {
-            this.text = Objects.requireNonNull(text, "text is null");
+        DwldSe(final String value) {
+            this.value = Objects.requireNonNull(value, "value is null");
         }
 
         @JsonValue
-        public String text() {
-            return text;
+        public String value() {
+            return value;
         }
 
-        private final String text;
+        private final String value;
     }
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
@@ -105,7 +105,7 @@ public class AreaCodeInfoRequest
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    private static final BiConsumer<? super AreaCodeInfoRequest, ? super UriBuilder> URI_CONSUMER = (s, b) -> {
+    private static final BiConsumer<? super AreaCodeInfoRequest, ? super UriBuilder> URI_BUILDER = (s, b) -> {
         b.path(_DownloadAreaCodeServiceConstants.REQUEST_URI_GET_AREA_CODE_INFO)
                 .queryParam(_DownloadAreaCodeServiceConstants.PARAM_NAME_DWLDSE, s.getDwldSe())
         ;
@@ -118,8 +118,8 @@ public class AreaCodeInfoRequest
      */
     public AreaCodeInfoRequest() {
         super(AreaCodeInfoResponse.class);
-        setUriConsumer(
-                URI_CONSUMER,
+        setUriConfigurer(
+                URI_BUILDER,
                 true
         );
     }

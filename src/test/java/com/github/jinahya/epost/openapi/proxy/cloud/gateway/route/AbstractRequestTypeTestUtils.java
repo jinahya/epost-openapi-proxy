@@ -38,8 +38,8 @@ public final class AbstractRequestTypeTestUtils {
                             MediaType.APPLICATION_JSON
                     )
                     .map(mt -> {
-                        final var headersConsumer = e.getHeadersConsumer();
-                        e.setHeadersConsumer(h -> {
+                        final var headersConsumer = e.getHeadersConfigurer();
+                        e.setHeadersConfigurer(h -> {
                             headersConsumer.accept(h);
                             if (mt != null) {
                                 h.setAccept(List.of(mt));

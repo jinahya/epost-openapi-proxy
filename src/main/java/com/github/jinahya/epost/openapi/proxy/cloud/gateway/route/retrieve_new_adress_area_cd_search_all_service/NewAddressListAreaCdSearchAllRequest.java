@@ -38,7 +38,7 @@ public class NewAddressListAreaCdSearchAllRequest
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    private static final BiConsumer<? super NewAddressListAreaCdSearchAllRequest, ? super UriBuilder> URI_CONSUMER =
+    private static final BiConsumer<? super NewAddressListAreaCdSearchAllRequest, ? super UriBuilder> URI_BUILDER =
             (s, b) -> {
                 b.path(_RetrieveNewAdressAreaCdSearchAllServiceConstants.
                                REQUEST_URI_GET_NEW_ADDRESS_LIST_AREA_CD_SEARCH_ALL)
@@ -52,8 +52,8 @@ public class NewAddressListAreaCdSearchAllRequest
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
     public NewAddressListAreaCdSearchAllRequest() {
         super(NewAddressListAreaCdSearchAllResponse.class);
-        setUriConsumer(
-                URI_CONSUMER,
+        setUriConfigurer(
+                URI_BUILDER,
                 true
         );
     }
