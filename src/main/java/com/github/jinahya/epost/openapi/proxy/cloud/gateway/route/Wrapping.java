@@ -5,7 +5,7 @@ import java.util.Optional;
 // TODO: remove; unused
 public interface Wrapping<SELF extends Wrapping<SELF, WRAPPED>, WRAPPED> {
 
-    interface Self<T extends Self<T>>
+    interface SelfWrapping<T extends SelfWrapping<T>>
             extends Wrapping<T, T> {
 
         @SuppressWarnings({"unchecked"})

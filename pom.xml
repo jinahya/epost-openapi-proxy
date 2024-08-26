@@ -53,8 +53,9 @@
     <version.maven-failsafe>${version.maven-surefire}</version.maven-failsafe>
     <version.maven-surefire>3.3.1</version.maven-surefire>
     <!-- https://docs.spring.io/spring-boot/appendix/dependency-versions/coordinates.html -->
-    <version.org.springframework>6.1.11</version.org.springframework>
-    <version.org.springframework.boot>3.3.2</version.org.springframework.boot>
+    <version.org.springframework>6.1.12</version.org.springframework>
+    <!-- https://search.maven.org/search?q=g:org.springframework.boot -->
+    <version.org.springframework.boot>3.3.3</version.org.springframework.boot>
     <!-- https://spring.io/projects/spring-cloud -->
     <!-- https://github.com/spring-cloud/spring-cloud-release/wiki -->
     <!-- https://github.com/spring-cloud/spring-cloud-release/wiki/Spring-Cloud-2023.0-Release-Notes -->
@@ -105,7 +106,7 @@
         <groupId>org.springframework.data</groupId>
         <artifactId>spring-data-bom</artifactId>
         <!-- https://search.maven.org/artifact/org.springframework.data/spring-data-bom -->
-        <version>2024.0.2</version>
+        <version>2024.0.3</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -155,7 +156,7 @@
     <dependency>
       <groupId>nl.jqno.equalsverifier</groupId>
       <artifactId>equalsverifier-nodep</artifactId>
-      <version>3.16.1</version>
+      <version>3.16.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -194,12 +195,12 @@
     <!--        </exclusion>-->
     <!--      </exclusions>-->
     <!--    </dependency>-->
-<!--    <dependency>-->
-<!--      <groupId>org.springframework.boot</groupId>-->
-<!--      <artifactId>spring-boot-starter-json</artifactId>-->
-<!--      &lt;!&ndash;      <scope>compile</scope>&ndash;&gt;-->
-<!--      <scope>runtime</scope>-->
-<!--    </dependency>-->
+    <!--    <dependency>-->
+    <!--      <groupId>org.springframework.boot</groupId>-->
+    <!--      <artifactId>spring-boot-starter-json</artifactId>-->
+    <!--      &lt;!&ndash;      <scope>compile</scope>&ndash;&gt;-->
+    <!--      <scope>runtime</scope>-->
+    <!--    </dependency>-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
@@ -227,6 +228,10 @@
           <configuration>
             <!--            <doclint>all</doclint>-->
             <doclint>none</doclint>
+            <links>
+              <link>https://javadoc.io/doc/jakarta.validation/jakarta.validation-api/latest/</link>
+              <link>https://docs.spring.io/spring-framework/docs/current/javadoc-api/</link>
+            </links>
             <tags>
               <tag>
                 <name>apiNote</name>

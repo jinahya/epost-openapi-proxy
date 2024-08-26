@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.lang.Nullable;
 
 import java.io.Serial;
 
@@ -22,6 +23,14 @@ public class NewAddressListAreaCdSearchAllRequest
     private static final long serialVersionUID = -9014063080411511379L;
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
+    public NewAddressListAreaCdSearchAllRequest of(@Nullable final String serviceKey, final String srchwrd,
+                                                   final Integer countPerPage, final Integer currentPage) {
+        final var instance = of(NewAddressListAreaCdSearchAllRequest::new, serviceKey);
+        instance.setSrchwrd(srchwrd);
+        instance.setCountPerPage(countPerPage);
+        instance.setCurrentPage(currentPage);
+        return instance;
+    }
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 

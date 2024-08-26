@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Positive;
 
 public interface PaginatedRequest<T extends AbstractRequestType<T> & PaginatedRequest<T>> {
 
+    int MAX_COUNT_PER_PAGE = 50;
+
     int MIN_CURRENT_PAGE = 1;
 
     // ---------------------------------------------------------------------------------------------------- countPerPage

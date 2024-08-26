@@ -37,9 +37,9 @@ public class RoadAddressEngSearchListRequest
     /**
      * Creates a new instance with specified arguments.
      *
-     * @param serviceKey       a value for {@link #getServiceKey() serviceKey} property.
-     * @param stateEngName     a value for {@link #getStateEngName() sateEngName} property.
-     * @param cityEngName      a value for {@link #getCityEngName() cityEngName} property.
+     * @param serviceKey       a value for {@code serviceKey} property.
+     * @param stateEngName     a value for {@code sateEngName} property.
+     * @param cityEngName      a value for {@code cityEngName} property.
      * @param roadEngFirstName .
      * @param roadEngName      .
      * @param keyword          .
