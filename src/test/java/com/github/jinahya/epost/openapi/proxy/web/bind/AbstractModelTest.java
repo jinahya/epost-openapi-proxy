@@ -26,7 +26,7 @@ public abstract class AbstractModelTest<MODEL extends AbstractModel<MODEL>> {
     @DisplayName("setXxx(getXxx())")
     @Test
     void __accessors() throws IntrospectionException, InvocationTargetException, IllegalAccessException {
-        final var instance = newTypeInstance();
+        final var instance = newModelInstance();
         for (Class<?> clazz = modelClass; clazz.isAssignableFrom(AbstractModel.class); clazz = clazz.getSuperclass()) {
             final var info = Introspector.getBeanInfo(modelClass);
             for (var descriptor : info.getPropertyDescriptors()) {
@@ -51,11 +51,22 @@ public abstract class AbstractModelTest<MODEL extends AbstractModel<MODEL>> {
     }
 
     // ------------------------------------------------------------------------------------------------------- typeClass
-    protected final MODEL newTypeSpy() {
-        return Mockito.spy(newTypeInstance());
+
+    /**
+     * Creates a {@link Mockito#spy(Object) spy} of a new instance of {@link #modelClass} class.
+     *
+     * @return a {@link Mockito#spy(Object) spy} of a new instance of {@link #modelClass} class.
+     */
+    protected final MODEL newModelSpy() {
+        return Mockito.spy(newModelInstance());
     }
 
-    protected final MODEL newTypeInstance() {
+    /**
+     * Creates a new instance of {@link #modelClass} class.
+     *
+     * @return a new instance of {@link #modelClass} class.
+     */
+    protected final MODEL newModelInstance() {
         try {
             final var constructor = modelClass.getDeclaredConstructor();
             if (!constructor.canAccess(null)) {
@@ -68,5 +79,9 @@ public abstract class AbstractModelTest<MODEL extends AbstractModel<MODEL>> {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
+
+    /**
+     * The model class to test.
+     */
     protected final Class<MODEL> modelClass;
 }
