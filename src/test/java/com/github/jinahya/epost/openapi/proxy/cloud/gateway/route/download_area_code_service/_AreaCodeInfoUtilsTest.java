@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -21,6 +23,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @Slf4j
 class _AreaCodeInfoUtilsTest {
@@ -36,7 +39,8 @@ class _AreaCodeInfoUtilsTest {
 
     private static Stream<URL> getResourceUrlStream() {
         return getResNameStream()
-                .map(_AreaCodeInfoUtilsTest.class::getResource);
+                .map(_AreaCodeInfoUtilsTest.class::getResource)
+                .filter(Objects::nonNull);
     }
 
     private static Stream<File> getResourceFileStream() {
@@ -51,7 +55,7 @@ class _AreaCodeInfoUtilsTest {
                 .map(File::new);
     }
 
-    private static Stream<String> getNames(final ZipFile zipFile) {
+    private static List<String> getEntryNameList(final ZipFile zipFile) {
         return StreamSupport.stream(
                         Spliterators.spliteratorUnknownSize(
                                 zipFile.entries().asIterator(),
@@ -61,21 +65,21 @@ class _AreaCodeInfoUtilsTest {
                 )
                 .filter(e -> !e.isDirectory())
                 .map(ZipEntry::getName)
-                .filter(n -> n.endsWith(".txt"));
+                .filter(n -> n.endsWith(".txt"))
+                .toList();
     }
 
-    private static Stream<Arguments> getResourceFileAndNameArgumentsStream() {
+    private static Stream<Arguments> getResourceFileAndEntryNameArgumentsStream() {
         return getResourceFileStream()
                 .flatMap(f -> {
                     try (var zipFile = new ZipFile(f, AreaCodeInfoUtils.CHARSET)) {
-                        return getNames(zipFile)
-                                .toList().stream() // <<<<<<<<<<<<<< !!!
-                                .map(n -> Arguments.of(Named.of(f.getName(), f), n));
+                        return getEntryNameList(zipFile)
+                                .stream()
+                                .map(n -> arguments(Named.of(f.getName(), f), n));
                     } catch (final IOException ioe) {
                         throw new RuntimeException(ioe);
                     }
-                })
-                ;
+                });
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -118,7 +122,7 @@ class _AreaCodeInfoUtilsTest {
 
     @DisplayName("extract(file, name, consumer)")
     @MethodSource({
-            "getResourceFileAndNameArgumentsStream"
+            "getResourceFileAndEntryNameArgumentsStream"
     })
     @ParameterizedTest
     void extract__(final File file, final String name) throws IOException {

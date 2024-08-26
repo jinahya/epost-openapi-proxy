@@ -22,6 +22,11 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
+/**
+ * A utility class for extracting downloaded db files.
+ *
+ * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
+ */
 public final class AreaCodeInfoUtils {
 
     static final Charset CHARSET = Charset.forName("EUC-KR");
@@ -59,14 +64,14 @@ public final class AreaCodeInfoUtils {
     }
 
     /**
-     * Extracts specified DB file stream, and accepts entry names of {@code *.txt} and rows to specified consumer.
+     * Extracts specified db file stream, and accepts entry names of {@code *.txt} and rows to specified consumer.
      *
-     * @param stream   the DB file stream to extract.
+     * @param stream   the db file stream to extract.
      * @param consumer the consumer.
      * @throws IOException if an I/O error occurs.
      */
-    public static void extract(final @NonNull InputStream stream,
-                               final @NonNull BiConsumer<? super String, ? super Map<String, String>> consumer)
+    public static void extract(final InputStream stream,
+                               final BiConsumer<? super String, ? super Map<String, String>> consumer)
             throws IOException {
         Objects.requireNonNull(stream, "stream is null");
         Objects.requireNonNull(consumer, "consumer is null");
@@ -81,26 +86,41 @@ public final class AreaCodeInfoUtils {
         }
     }
 
+    /**
+     * Extracts a specific entry of specified zip file, and accepts each sub-entry to specified consumer.
+     *
+     * @param file     the zip file to extract.
+     * @param name     the entry name to extract.
+     * @param consumer the consumer accepts sub-entries.
+     * @throws IOException if an I/O error occurs.
+     * @see #extract(File, Predicate, BiConsumer)
+     */
     public static void extract(final File file, final String name, final Consumer<? super Map<String, String>> consumer)
             throws IOException {
         if (!Objects.requireNonNull(file, "file is null").isFile()) {
             throw new IllegalArgumentException("file is not a regular file: " + file);
         }
         Objects.requireNonNull(name, "name is null");
-        Objects.requireNonNull(consumer, "consumer is null");
         try (var zipFile = new ZipFile(file, CHARSET)) {
             final var entry = zipFile.getEntry(name);
             if (entry == null) {
                 throw new IllegalArgumentException("no entry for '" + name + "'");
             }
             try (final var stream = zipFile.getInputStream(entry)) {
-                extract(
-                        stream, consumer
-                );
+                extract(stream, consumer);
             }
         }
     }
 
+    /**
+     * Extracts all entries of specified zip file, and accepts each sub-entry to specified consumer.
+     *
+     * @param file      the zip file to extract.
+     * @param predicate the predicate for filtering entries.
+     * @param consumer  the consumer accepts sub-entries.
+     * @throws IOException if an I/O error occurs.
+     * @see #extract(File, String, Consumer)
+     */
     @SuppressWarnings({
             "java:S112" // new RuntimeException
     })
@@ -111,7 +131,6 @@ public final class AreaCodeInfoUtils {
             throw new IllegalArgumentException("file is not a regular file: " + file);
         }
         Objects.requireNonNull(predicate, "predicate is null");
-        Objects.requireNonNull(consumer, "consumer is null");
         try (var zipFile = new ZipFile(file, CHARSET)) {
             zipFile.stream().filter(predicate).forEach(e -> {
                 try (final var stream = zipFile.getInputStream(e)) {
