@@ -1,5 +1,8 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route;
 
+@SuppressWarnings({
+        "java:S101" // class _Route...
+})
 public final class _RouteConstants {
 
     // -----------------------------------------------------------------------------------------------------------------

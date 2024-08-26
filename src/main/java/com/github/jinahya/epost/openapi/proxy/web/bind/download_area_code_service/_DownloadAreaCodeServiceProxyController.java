@@ -15,6 +15,9 @@ import reactor.core.publisher.Mono;
 @Tag(name = __DownloadAreaCodeServiceApiConstants.TAG)
 @RestController
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
+@SuppressWarnings({
+        "java:S101" // class _Download
+})
 class _DownloadAreaCodeServiceProxyController {
 
     @GetMapping(

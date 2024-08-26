@@ -12,11 +12,15 @@ import lombok.ToString;
 import java.io.Serial;
 
 // -----------------------------------------------------------------------------------------------------------------
+
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
 @Getter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@SuppressWarnings({
+        "java:S119" // <SELF ...>
+})
 public abstract class AbstractAddressType<SELF extends AbstractAddressType<SELF>>
         extends AbstractType<SELF> {
 

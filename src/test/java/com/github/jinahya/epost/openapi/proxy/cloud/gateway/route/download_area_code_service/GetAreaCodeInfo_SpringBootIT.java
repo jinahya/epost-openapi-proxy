@@ -87,7 +87,7 @@ class GetAreaCodeInfo_SpringBootIT
                     );
                 })
                 .sequential()
-                .blockLast();
+                .blockLast()
         ;
     }
 }

@@ -29,6 +29,9 @@ import java.nio.file.FileSystems;
 @RestController
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Slf4j
+@SuppressWarnings({
+        "java:S101" // class _Download
+})
 class _DownloadAreaCodeServiceApiController
         extends _ApiController {
 

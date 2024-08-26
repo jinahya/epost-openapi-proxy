@@ -28,26 +28,29 @@ public class AreaCodeInfoRequest
     // ---------------------------------------------------------------------------------------------------------- dwldSe
 
     /**
-     * 우편번호 전체.
+     * 우편번호 전체. The value is {@value}.
      */
     public static final String DWLD_SE_1 = "1";
 
     /**
-     * 우편번호 변경분.
+     * 우편번호 변경분. The value is {@value}.
      */
     public static final String DWLD_SE_2 = "2";
 
     /**
-     * 범위 주소.
+     * 범위 주소. The value is {@value}.
      */
     public static final String DWLD_SE_3 = "3";
 
     /**
-     * 사서함 주소.
+     * 사서함 주소. The value is {@value}.
      */
     public static final String DWLD_SE_4 = "4";
 
     @XmlEnum(String.class)
+    @SuppressWarnings({
+            "java:S115" // _1(...)
+    })
     public enum DwldSe {
 
         /**
@@ -74,7 +77,14 @@ public class AreaCodeInfoRequest
         @XmlEnumValue(DWLD_SE_4)
         _4(DWLD_SE_4);
 
-        // -----------------------------------------------------------------------------------------------------------------
+        // -------------------------------------------------------------------------------------------------------------
+
+        /**
+         * Finds the constant whose {@link #value() value} property matches specified value.
+         *
+         * @param value the value of {@link #value() value} property to match.
+         * @return the constant whose {@link #value() value} property matches {@code value}.
+         */
         public static DwldSe valueOfValue(final String value) {
             Objects.requireNonNull(value, "value is null");
             for (final DwldSe v : values()) {
@@ -85,16 +95,24 @@ public class AreaCodeInfoRequest
             throw new IllegalArgumentException("no value for '" + value + "'");
         }
 
-        // -----------------------------------------------------------------------------------------------------------------
+        // ------------------------------------------------------------------------------------------------ CONSTRUCTORS
         DwldSe(final String value) {
             this.value = Objects.requireNonNull(value, "value is null");
         }
 
+        // ------------------------------------------------------------------------------------------------------- value
+
+        /**
+         * Returns the {@code value} of this constant.
+         *
+         * @return the {@code value} of this constant.
+         */
         @JsonValue
         public String value() {
             return value;
         }
 
+        // -------------------------------------------------------------------------------------------------------------
         private final String value;
     }
 
