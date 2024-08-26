@@ -19,6 +19,9 @@ import java.util.function.Supplier;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SuppressWarnings({
+        "java:S119" // <SELF ...>
+})
 public abstract class AbstractWrappingModel<
         SELF extends AbstractWrappingModel<SELF, WRAPPED>,
         WRAPPED extends AbstractType<WRAPPED>>
