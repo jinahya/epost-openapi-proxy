@@ -6,6 +6,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.validation.Validator;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.ResolvableType;
 import org.springframework.hateoas.config.HypermediaWebTestClientConfigurer;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -23,6 +25,12 @@ import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * An abstract test class for testing subclasses of {@link _ApiController} class.
+ *
+ * @param <CONTROLLER> subclass type parameter
+ * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
+ */
 @Import(
         value = {
                 ValidationAutoConfiguration.class
@@ -34,13 +42,9 @@ import static org.assertj.core.api.Assertions.assertThat;
         }
 )
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Slf4j
 public abstract class _ApiController_SpringBootIT<CONTROLLER extends _ApiController> {
-
-    protected _ApiController_SpringBootIT(final Class<CONTROLLER> controllerClass) {
-        super();
-        this.controllerClass = Objects.requireNonNull(controllerClass, "controllerClass is null");
-    }
 
     @PostConstruct
     private void doOnPostConstruct() {
@@ -51,6 +55,26 @@ public abstract class _ApiController_SpringBootIT<CONTROLLER extends _ApiControl
                 .build()
                 .mutateWith(hypermediaWebTestClientConfigurer)
         ;
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+
+    /**
+     * Returns the actual type of {@link CONTROLLER}.
+     *
+     * @return the actual type of {@link CONTROLLER}
+     */
+    @SuppressWarnings({"unchecked"})
+    protected final Class<CONTROLLER> controllerClass() {
+        if (controllerClass == null) {
+            controllerClass = Objects.requireNonNull(
+                    (Class<CONTROLLER>) ResolvableType.forType(getClass())
+                            .as(_ApiController_SpringBootIT.class)
+                            .resolveGeneric(0),
+                    "failed to resolve controller class"
+            );
+        }
+        return controllerClass;
     }
 
     // ------------------------------------------------------------------------------------------------------- validator
@@ -78,7 +102,7 @@ public abstract class _ApiController_SpringBootIT<CONTROLLER extends _ApiControl
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    protected final Class<CONTROLLER> controllerClass;
+    private Class<CONTROLLER> controllerClass;
 
     @Autowired
     private HypermediaWebTestClientConfigurer hypermediaWebTestClientConfigurer;

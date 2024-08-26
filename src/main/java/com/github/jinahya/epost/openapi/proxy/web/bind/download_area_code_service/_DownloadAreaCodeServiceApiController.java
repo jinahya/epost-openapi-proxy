@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
-import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -42,20 +41,18 @@ class _DownloadAreaCodeServiceApiController
     private Publisher<? extends AreaCodeInfo> getAreaCodeInfoPublisher(final String dwldSe) {
         return exchange(dwldSe)
                 .map(r -> AreaCodeInfo.newInstance(dwldSe, r.getFile()))
-                .flatMap(v -> ReactorContextUtils.getRequestBaseUrl()
-                        .map(UriComponentsBuilder::fromHttpUrl)
-                        .map(b -> b.path(__DownloadAreaCodeServiceApiConstants.REQUEST_URI))
-                        .map(b -> b.pathSegment(dwldSe))
+                .flatMap(v -> ReactorContextUtils.getUriComponentsBuilderFromRequestBaseUrl()
+                        .map(b -> b.path(__DownloadAreaCodeServiceApiConstants.REQUEST_URI_DWLD_SE))
                         .map(b -> {
                             v.add(
-                                    Link.of(b.cloneBuilder().build().toString())
+                                    Link.of(b.cloneBuilder().build(dwldSe).toString())
                                             .withSelfRel()
                             );
                             v.add(
                                     Link.of(b.cloneBuilder()
                                                     .pathSegment(
                                                             __DownloadAreaCodeServiceApiConstants.PATH_SEGMENT_FILE)
-                                                    .build()
+                                                    .build(dwldSe)
                                                     .toString())
                                             .withRel(__DownloadAreaCodeServiceApiConstants.REL_FILE)
                             );

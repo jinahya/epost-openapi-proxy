@@ -1,6 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.util.context;
 
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 import reactor.util.context.Context;
 
@@ -57,6 +58,10 @@ public final class ReactorContextUtils {
                         throw new RuntimeException("failed to get url from " + r, murle);
                     }
                 });
+    }
+
+    public static Mono<UriComponentsBuilder> getUriComponentsBuilderFromRequestBaseUrl() {
+        return getRequestBaseUrl().map(UriComponentsBuilder::fromHttpUrl);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

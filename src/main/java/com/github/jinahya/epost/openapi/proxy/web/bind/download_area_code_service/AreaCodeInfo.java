@@ -1,6 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.web.bind.download_area_code_service;
 
 import com.github.jinahya.epost.openapi.proxy.web.bind.AbstractModel;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -32,7 +33,9 @@ public class AreaCodeInfo
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
     // -----------------------------------------------------------------------------------------------------------------
+    @NotBlank
     private String dwldSe;
 
+    @NotBlank
     private String file;
 }
