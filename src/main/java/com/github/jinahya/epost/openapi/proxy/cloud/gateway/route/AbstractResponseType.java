@@ -14,6 +14,12 @@ import lombok.ToString;
 import java.io.Serial;
 import java.util.Objects;
 
+/**
+ * An abstract class for binding response messages.
+ *
+ * @param <SELF> self type parameter
+ * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
+ */
 @Setter
 @Getter
 @ToString(callSuper = true)
