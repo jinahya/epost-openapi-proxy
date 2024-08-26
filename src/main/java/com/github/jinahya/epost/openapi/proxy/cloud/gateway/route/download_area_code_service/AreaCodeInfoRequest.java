@@ -99,7 +99,7 @@ public class AreaCodeInfoRequest
     }
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
-    public static AreaCodeInfoRequest of(final Integer dwldSe) {
+    public static AreaCodeInfoRequest of(final String dwldSe) {
         return of(AreaCodeInfoRequest::new)
                 .dwldSe(dwldSe);
     }
@@ -125,7 +125,7 @@ public class AreaCodeInfoRequest
     }
 
     // ---------------------------------------------------------------------------------------------------------- dwldSe
-    public AreaCodeInfoRequest dwldSe(final Integer dwldSe) {
+    public AreaCodeInfoRequest dwldSe(final String dwldSe) {
         setDwldSe(dwldSe);
         return this;
     }
@@ -133,5 +133,5 @@ public class AreaCodeInfoRequest
     // -----------------------------------------------------------------------------------------------------------------
     @NotNull
     // TODO: Use the enum!
-    private Integer dwldSe;
+    private String dwldSe;
 }

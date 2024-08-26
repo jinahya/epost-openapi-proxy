@@ -8,6 +8,9 @@ final class __DownloadAreaCodeServiceApiConstants {
     static final String TAG = "DownloadAreaCodeService";
 
     // -----------------------------------------------------------------------------------------------------------------
+    static final String REL_FILE = "file";
+
+    // -----------------------------------------------------------------------------------------------------------------
     static final String REQUEST_URI = __WebBindConstants.REQUEST_URI_API
             + '/' + _DownloadAreaCodeServiceConstants.SERVICE_NAME;
 
@@ -19,11 +22,16 @@ final class __DownloadAreaCodeServiceApiConstants {
     // -----------------------------------------------------------------------------------------------------------------
     static final String PATH_NAME_DWLD_SE = "dwldSe";
 
-    static final String PATH_VALUE_DWLD_SE = "\\d";
+    static final String PATH_VALUE_DWLD_SE = ".+";
 
     static final String PATH_TEMPlATE_DWLD_SE = '{' + PATH_NAME_DWLD_SE + ':' + PATH_VALUE_DWLD_SE + '}';
 
     static final String REQUEST_URI_DWLD_SE = REQUEST_URI_AREA_CODE_INFO + '/' + PATH_TEMPlATE_DWLD_SE;
+
+    // -----------------------------------------------------------------------------------------------------------------
+    static final String PATH_SEGMENT_FILE = REL_FILE;
+
+    static final String REQUEST_URI_FILE = REQUEST_URI_DWLD_SE + '/' + PATH_SEGMENT_FILE;
 
     // -----------------------------------------------------------------------------------------------------------------
     private __DownloadAreaCodeServiceApiConstants() {

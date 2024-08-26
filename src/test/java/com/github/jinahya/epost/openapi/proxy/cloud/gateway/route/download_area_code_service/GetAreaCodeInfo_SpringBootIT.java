@@ -15,7 +15,6 @@ import reactor.core.scheduler.Schedulers;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 @DisplayName("/getAreaCodeInfo")
@@ -26,8 +25,9 @@ class GetAreaCodeInfo_SpringBootIT
     // -----------------------------------------------------------------------------------------------------------------
     private static Stream<AreaCodeInfoRequest> getRequestStream() {
         return AbstractRequestTypeTestUtils.mapMediaType(
-                IntStream.of(1, 2, 3, 4)
-                        .mapToObj(AreaCodeInfoRequest::of)
+                Stream.of(AreaCodeInfoRequest.DwldSe.values())
+                        .map(AreaCodeInfoRequest.DwldSe::text)
+                        .map(AreaCodeInfoRequest::of)
         );
     }
 

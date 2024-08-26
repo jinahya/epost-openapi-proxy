@@ -35,7 +35,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 )
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Slf4j
-public abstract class _WebBindSpringBootIT {
+public abstract class _ApiController_SpringBootIT<CONTROLLER extends _ApiController> {
+
+    protected _ApiController_SpringBootIT(final Class<CONTROLLER> controllerClass) {
+        super();
+        this.controllerClass = Objects.requireNonNull(controllerClass, "controllerClass is null");
+    }
 
     @PostConstruct
     private void doOnPostConstruct() {
@@ -73,6 +78,8 @@ public abstract class _WebBindSpringBootIT {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
+    protected final Class<CONTROLLER> controllerClass;
+
     @Autowired
     private HypermediaWebTestClientConfigurer hypermediaWebTestClientConfigurer;
 

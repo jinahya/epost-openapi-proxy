@@ -12,6 +12,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serial;
+import java.util.function.Supplier;
 
 @Setter
 @Getter
@@ -27,6 +28,13 @@ public abstract class AbstractWrappingModel<
     private static final long serialVersionUID = 2185796969322484068L;
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
+    protected static <T extends AbstractWrappingModel<T, WRAPPED>, WRAPPED extends AbstractType<WRAPPED>> T newInstance(
+            final Supplier<? extends T> initializer,
+            final WRAPPED wrapped) {
+        final T instance = newInstance(initializer);
+        instance.setWrapped(wrapped);
+        return instance;
+    }
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
