@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @Slf4j
-class _AreaCodeInfoUtilsTest {
+class AreaCodeInfoUtilsTest {
 
     private static Stream<String> getResNameStream() {
         return Stream.of(
@@ -39,7 +39,7 @@ class _AreaCodeInfoUtilsTest {
 
     private static Stream<URL> getResourceUrlStream() {
         return getResNameStream()
-                .map(_AreaCodeInfoUtilsTest.class::getResource)
+                .map(AreaCodeInfoUtilsTest.class::getResource)
                 .filter(Objects::nonNull);
     }
 

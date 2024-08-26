@@ -547,7 +547,7 @@
     <profile>
       <id>github-action</id>
       <properties>
-        <surefire.excludes>ApplicationTests</surefire.excludes>
+        <surefire.excludes>ApplicationTests, AreaCodeInfoUtilsTest</surefire.excludes>
       </properties>
       <build>
         <plugins>
