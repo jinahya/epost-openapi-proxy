@@ -1,6 +1,8 @@
 package com.github.jinahya.epost.openapi.proxy.web.bind;
 
 import lombok.extern.slf4j.Slf4j;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -8,6 +10,7 @@ import org.mockito.Mockito;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -22,6 +25,27 @@ public abstract class AbstractModelTest<MODEL extends AbstractModel<MODEL>> {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
+    @DisplayName("equals")
+    @Test
+    void __equals() {
+        __equals(
+                EqualsVerifier.simple().forClass(modelClass)
+        ).verify();
+    }
+
+    protected SingleTypeEqualsVerifierApi<MODEL> __equals(final SingleTypeEqualsVerifierApi<MODEL> verifierApi) {
+        return verifierApi
+                .withIgnoredFields(
+                        "links"
+                )
+                .withPrefabValues(
+                        List.class,
+                        List.of(new Object()),
+                        List.of(new Object())
+                )
+                ;
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
     @DisplayName("setXxx(getXxx())")
     @Test

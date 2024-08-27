@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 
 @Setter
 @Getter
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Slf4j
