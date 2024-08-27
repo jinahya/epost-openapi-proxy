@@ -26,6 +26,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @Slf4j
+// https://github.com/junit-team/junit5/issues/1477
 class AreaCodeInfoUtilsTest {
 
     private static Stream<String> getResNameStream() {

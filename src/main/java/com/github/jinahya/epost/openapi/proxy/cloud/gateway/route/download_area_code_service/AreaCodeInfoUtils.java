@@ -1,7 +1,5 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area_code_service;
 
-import org.springframework.lang.NonNull;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -31,8 +29,8 @@ public final class AreaCodeInfoUtils {
 
     static final Charset CHARSET = Charset.forName("EUC-KR");
 
-    private static void extract(final @NonNull InputStream stream,
-                                final @NonNull Consumer<? super Map<String, String>> consumer)
+    private static void extract(final InputStream stream,
+                                final Consumer<? super Map<String, String>> consumer)
             throws IOException {
         Objects.requireNonNull(stream, "stream is null");
         Objects.requireNonNull(consumer, "consumer is null");
@@ -50,11 +48,11 @@ public final class AreaCodeInfoUtils {
                             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (x, y) -> y,
                                                       LinkedHashMap::new));
                 })
-                .forEach(consumer::accept);
+                .forEach(consumer);
     }
 
-    private static void extract(final @NonNull InputStream stream, final String name,
-                                final @NonNull BiConsumer<? super String, ? super Map<String, String>> consumer)
+    private static void extract(final InputStream stream, final String name,
+                                final BiConsumer<? super String, ? super Map<String, String>> consumer)
             throws IOException {
         Objects.requireNonNull(consumer, "consumer is null");
         extract(
@@ -90,7 +88,7 @@ public final class AreaCodeInfoUtils {
      * Extracts a specific entry of specified zip file, and accepts each sub-entry to specified consumer.
      *
      * @param file     the zip file to extract.
-     * @param name     the entry name to extract.
+     * @param name     the entry name to extract. e.g. {@code 강원특별자치도.txt}.
      * @param consumer the consumer accepts sub-entries.
      * @throws IOException if an I/O error occurs.
      * @see #extract(File, Predicate, BiConsumer)

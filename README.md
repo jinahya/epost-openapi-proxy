@@ -11,9 +11,9 @@ using [Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway).
 
 ### Routes
 
-| api                               | service              | route.id                                         | notes |
-|-----------------------------------|----------------------|--------------------------------------------------|-------|
-| [우편번호 다운로드 서비스]                   | 우편번호 DB 다운로드 서비스     | `download_area_code_service`                     |       |      
+| api              | service              | route.id                                         | notes |
+|------------------|----------------------|--------------------------------------------------|-------|
+| [우편번호 다운로드 서비스]  | 우편번호 DB 다운로드 서비스     | `download_area_code_service`                     |       |      
 | [집배구 구분코드 조회서비스] | 집배구 구분코드 조회서비스       | `retrieve_deliv_area_cd_service`                 |       |      
 | [영문우편번호조회서비스]    | 영문 우편번호 조회 서비스       | `retrieve_eng_address_service`                   |       |      
 | [지번주소조회 서비스]     | 지번주소 5자리 우편번호 조회 서비스 | `retrieve_lot_number_adress_area_cd_service`     |       |      
@@ -31,7 +31,13 @@ $ mvn clean test
 ### How to verify
 
 ```commandline
-$ SERVICE_KEY=<your-own-url-decoded-service-key> mvn -Pfailsafe clean verify
+$ SERVICE_KEY=<your-own-URL-DECODED> mvn -Pfailsafe clean verify
+```
+
+e.g.
+
+```commandline
+$ SERVICE_KEY='...==' mvn -Pfailsafe clean verify
 ```
 
 ## Links
@@ -41,12 +47,31 @@ $ SERVICE_KEY=<your-own-url-decoded-service-key> mvn -Pfailsafe clean verify
 * [우편번호 DB와 검색기 소개](https://www.epost.go.kr/search/zipcode/cmzcd002k01.jsp)
     * [우편번호 DB파일](https://www.epost.go.kr/search/zipcode/areacdAddressDown.jsp)
 
-### [github.com/spring-cloud/spring-cloud-gateway](https://github.com/spring-cloud/spring-cloud-gateway)
 
-* [Double encoded URLs](https://github.com/spring-cloud/spring-cloud-gateway/issues/2065) (issues/2065)
-* [Route Configuration Not Merging from Imported YAML Files](https://github.com/spring-cloud/spring-cloud-gateway/issues/3098)
-* [#3466 AddRequestParameter double encodes parameter value](https://github.com/spring-cloud/spring-cloud-gateway/issues/3466)
-* [#3474 Forwarding route produces error at the first request](https://github.com/spring-cloud/spring-cloud-gateway/issues/3474)
+### github.com
+
+* [spring-cloud/spring-cloud-gateway](https://github.com/spring-cloud/spring-cloud-gateway)
+  * [Double encoded URLs](https://github.com/spring-cloud/spring-cloud-gateway/issues/2065) (issues/2065)
+  * [Route Configuration Not Merging from Imported YAML Files](https://github.com/spring-cloud/spring-cloud-gateway/issues/3098)
+  * [#3466 AddRequestParameter double encodes parameter value](https://github.com/spring-cloud/spring-cloud-gateway/issues/3466)
+  * [#3474 Forwarding route produces error at the first request](https://github.com/spring-cloud/spring-cloud-gateway/issues/3474)
+* [tdf/odftoolkit](https://github.com/tdf/odftoolkit)
+
+### [ODFDOM - The OpenDocument API](https://odftoolkit.org/odfdom/index.html)
+
+### [langintro.com](https://langintro.com/)
+
+* [Creating Spreadsheet Documents Using ODFDOM](https://langintro.com/odfdom_tutorials/create_ods.html)
+
+### https://mimetype.io
+
+* [All MIME types](https://mimetype.io/all-types)
+
+### https://www.iana.org
+
+* [/assignments/media-types/application/zip](https://www.iana.org/assignments/media-types/application/zip)
+
+---
 
 [우편번호 다운로드 서비스]: https://www.data.go.kr/data/15000302/openapi.do
 

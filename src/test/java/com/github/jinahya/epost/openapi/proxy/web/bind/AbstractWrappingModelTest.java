@@ -1,7 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.web.bind;
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractTypeTest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractTypeTestUtils;
 import nl.jqno.equalsverifier.api.SingleTypeEqualsVerifierApi;
 
