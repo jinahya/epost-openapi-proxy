@@ -25,6 +25,7 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.util.MimeType;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -33,6 +34,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Slf4j
@@ -66,6 +69,21 @@ public abstract class _ApiController {
         } catch (final MalformedURLException murle) {
             throw new RuntimeException("failed to get authority from " + request, murle);
         }
+    }
+
+    protected static void beforeCommit(final ServerHttpResponse response,
+                                       final Consumer<? super ServerHttpResponse> consumer) {
+        Objects.requireNonNull(consumer, "consumer is null");
+        response.beforeCommit(() -> {
+            consumer.accept(response);
+            return Mono.empty();
+        });
+    }
+
+    protected static void beforeCommit(
+            final ServerWebExchange exchange,
+            final BiConsumer<? super ServerWebExchange, ? super ServerHttpResponse> consumer) {
+        beforeCommit(exchange.getResponse(), r -> consumer.accept(exchange, r));
     }
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS

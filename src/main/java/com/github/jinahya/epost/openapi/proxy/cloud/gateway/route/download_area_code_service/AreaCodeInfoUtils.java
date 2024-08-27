@@ -29,8 +29,27 @@ public final class AreaCodeInfoUtils {
 
     static final Charset CHARSET = Charset.forName("EUC-KR");
 
-    private static void extract(final InputStream stream,
-                                final Consumer<? super Map<String, String>> consumer)
+    static final String DELIMITER = "\\|";
+
+    public static void extract(final InputStream stream,
+                               final Consumer<? super String[]> headerConsumer,
+                               final Consumer<? super String[]> rowConsumer)
+            throws IOException {
+        Objects.requireNonNull(stream, "stream is null");
+        Objects.requireNonNull(rowConsumer, "rowConsumer is null");
+        final var reader = new BufferedReader(new InputStreamReader(stream));
+        final var first = reader.readLine();
+        if (first.isEmpty()) {
+            return;
+        }
+        headerConsumer.accept(first.split(DELIMITER));
+        reader.lines()
+                .map(l -> l.split(DELIMITER))
+                .forEach(rowConsumer);
+    }
+
+    public static void extract(final InputStream stream,
+                               final Consumer<? super Map<String, String>> consumer)
             throws IOException {
         Objects.requireNonNull(stream, "stream is null");
         Objects.requireNonNull(consumer, "consumer is null");
