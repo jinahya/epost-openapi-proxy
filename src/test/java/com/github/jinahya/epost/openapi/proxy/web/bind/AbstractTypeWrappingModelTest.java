@@ -9,12 +9,12 @@ import java.util.Objects;
 @SuppressWarnings({
         "java:S119" // <MODEL ...>
 })
-public abstract class AbstractWrappingModelTest<
-        MODEL extends AbstractWrappingModel<MODEL, WRAPPED>,
+public abstract class AbstractTypeWrappingModelTest<
+        MODEL extends AbstractTypeWrappingModel<MODEL, WRAPPED>,
         WRAPPED extends AbstractType<WRAPPED>>
         extends AbstractModelTest<MODEL> {
 
-    protected AbstractWrappingModelTest(final Class<MODEL> modelClass, final Class<WRAPPED> wrappedClass) {
+    protected AbstractTypeWrappingModelTest(final Class<MODEL> modelClass, final Class<WRAPPED> wrappedClass) {
         super(modelClass);
         this.wrappedClass = Objects.requireNonNull(wrappedClass, "wrappedClass is null");
     }

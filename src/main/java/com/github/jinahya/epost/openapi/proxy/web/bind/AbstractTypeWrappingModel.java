@@ -1,6 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.web.bind;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -21,18 +22,18 @@ import java.util.function.Supplier;
 @SuppressWarnings({
         "java:S119" // <SELF ...>
 })
-public abstract class AbstractWrappingModel<SELF extends AbstractWrappingModel<SELF, WRAPPED>, WRAPPED>
+public abstract class AbstractTypeWrappingModel<
+        SELF extends AbstractTypeWrappingModel<SELF, WRAPPED>,
+        WRAPPED extends AbstractType<WRAPPED>>
         extends AbstractModel<SELF> {
 
     @Serial
     private static final long serialVersionUID = 2185796969322484068L;
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
-    protected static <T extends AbstractWrappingModel<T, WRAPPED>, WRAPPED> T newInstance(
-            final Supplier<? extends T> initializer,
-            final WRAPPED wrapped) {
-        final T instance = newInstance(initializer);
-        instance.setWrapped(wrapped);
+    protected static <T extends AbstractTypeWrappingModel<T, WRAPPED>, WRAPPED extends AbstractType<WRAPPED>>
+    T newInstance(final Supplier<? extends T> initializer, final WRAPPED wrapped) {
+        final T instance = newInstance(initializer, wrapped);
         return instance;
     }
 

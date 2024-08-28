@@ -2,7 +2,7 @@ package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_ser
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.LandAddressEngSearchListResponse;
-import com.github.jinahya.epost.openapi.proxy.web.bind.AbstractWrappingModel;
+import com.github.jinahya.epost.openapi.proxy.web.bind.AbstractTypeWrappingModel;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -19,7 +19,7 @@ import java.util.Objects;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class DistrictAddress
-        extends AbstractWrappingModel<DistrictAddress, LandAddressEngSearchListResponse.LandAddressEngSearchList> {
+        extends AbstractTypeWrappingModel<DistrictAddress, LandAddressEngSearchListResponse.LandAddressEngSearchList> {
 
     @Serial
     private static final long serialVersionUID = -8964407039642096158L;

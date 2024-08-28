@@ -1,7 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_new_adress_area_cd_search_all_service;
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_search_all_service.NewAddressListAreaCdSearchAllResponse;
-import com.github.jinahya.epost.openapi.proxy.web.bind.AbstractWrappingModel;
+import com.github.jinahya.epost.openapi.proxy.web.bind.AbstractTypeWrappingModel;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -18,7 +18,8 @@ import java.util.Objects;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class Address
-        extends AbstractWrappingModel<Address, NewAddressListAreaCdSearchAllResponse.NewAddressListAreaCdSearchAll> {
+        extends
+        AbstractTypeWrappingModel<Address, NewAddressListAreaCdSearchAllResponse.NewAddressListAreaCdSearchAll> {
 
     @Serial
     private static final long serialVersionUID = -4131507370713536523L;

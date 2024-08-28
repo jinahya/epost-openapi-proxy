@@ -2,7 +2,7 @@ package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_ser
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.StateEngListResponse;
-import com.github.jinahya.epost.openapi.proxy.web.bind.AbstractWrappingModel;
+import com.github.jinahya.epost.openapi.proxy.web.bind.AbstractTypeWrappingModel;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -21,7 +21,7 @@ import java.util.Objects;
 @ToString(callSuper = true)
 @Slf4j
 public class State
-        extends AbstractWrappingModel<State, StateEngListResponse.StateEngList> {
+        extends AbstractTypeWrappingModel<State, StateEngListResponse.StateEngList> {
 
     @Serial
     private static final long serialVersionUID = -8409236918457140462L;

@@ -3,7 +3,7 @@ package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_ser
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.CityEngListResponse;
-import com.github.jinahya.epost.openapi.proxy.web.bind.AbstractWrappingModel;
+import com.github.jinahya.epost.openapi.proxy.web.bind.AbstractTypeWrappingModel;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -21,7 +21,7 @@ import java.util.Objects;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class City
-        extends AbstractWrappingModel<City, CityEngListResponse.CityEngList> {
+        extends AbstractTypeWrappingModel<City, CityEngListResponse.CityEngList> {
 
     @Serial
     private static final long serialVersionUID = -9164721273765267181L;
