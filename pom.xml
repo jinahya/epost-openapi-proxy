@@ -50,10 +50,11 @@
     <sonar.organization>jinahya-github</sonar.organization>
     <sonar.projectKey>jinahya_epost-openapi-proxy</sonar.projectKey>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+<!--    <version.io.swagger.core.v3>2.2.22</version.io.swagger.core.v3>-->
     <version.maven-failsafe>${version.maven-surefire}</version.maven-failsafe>
     <version.maven-surefire>3.3.1</version.maven-surefire>
-    <!-- https://search.maven.org/search?q=g:org.apache.poi -->
-    <version.org.apache.poi>5.3.0</version.org.apache.poi>
+    <!--    &lt;!&ndash; https://search.maven.org/search?q=g:org.apache.poi &ndash;&gt;-->
+    <!--    <version.org.apache.poi>5.3.0</version.org.apache.poi>-->
     <!-- https://docs.spring.io/spring-boot/appendix/dependency-versions/coordinates.html -->
     <version.org.springframework>6.1.12</version.org.springframework>
     <!-- https://search.maven.org/search?q=g:org.springframework.boot -->
@@ -126,8 +127,7 @@
       <!--      <scope>test</scope>-->
       <scope>runtime</scope>
     </dependency>
-    <dependency>
-      <!-- https://github.com/netty/netty/issues/12582 -->
+    <dependency><!-- https://github.com/netty/netty/issues/12582 -->
       <groupId>io.netty</groupId>
       <artifactId>netty-resolver-dns-native-macos</artifactId>
       <!--      <version>4.1.111.Final</version>-->
@@ -139,6 +139,12 @@
       <artifactId>reactor-test</artifactId>
       <scope>test</scope>
     </dependency>
+<!--    <dependency>-->
+<!--      <groupId>io.swagger.core.v3</groupId>-->
+<!--      <artifactId>swagger-annotations-jakarta</artifactId>-->
+<!--      <version>${version.io.swagger.core.v3}</version>-->
+<!--      <scope>compile</scope>-->
+<!--    </dependency>-->
     <dependency>
       <groupId>io.vavr</groupId>
       <artifactId>vavr</artifactId>
@@ -161,60 +167,27 @@
       <version>3.16.2</version>
       <scope>test</scope>
     </dependency>
-<!--    <dependency>-->
-<!--      <groupId>org.apache.poi</groupId>-->
-<!--      <artifactId>poi</artifactId>-->
-<!--      <version>${version.org.apache.poi}</version>-->
-<!--      <scope>compile</scope>-->
-<!--    </dependency>-->
-    <dependency>
-      <groupId>org.apache.poi</groupId>
-      <artifactId>poi-ooxml</artifactId>
-      <version>${version.org.apache.poi}</version>
-      <scope>compile</scope>
-    </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>1.18.34</version>
       <scope>provided</scope>
     </dependency>
-    <dependency>
+    <dependency><!-- https://search.maven.org/artifact/org.springdoc/springdoc-openapi-starter-webflux-ui -->
       <groupId>org.springdoc</groupId>
       <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
-      <!-- https://search.maven.org/artifact/org.springdoc/springdoc-openapi-starter-webflux-ui -->
-      <!--      <scope>runtime</scope>-->
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
-      <!--      <scope>compile</scope>-->
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-cache</artifactId>
-      <!--      <scope>compile</scope>-->
       <scope>runtime</scope>
     </dependency>
-    <!--    <dependency>-->
-    <!--      <groupId>org.springframework.boot</groupId>-->
-    <!--      <artifactId>spring-boot-starter-hateoas</artifactId>-->
-    <!--      <scope>compile</scope>-->
-    <!--      <exclusions>-->
-    <!--        <exclusion>-->
-    <!--          <groupId>org.springframework.boot</groupId>-->
-    <!--          <artifactId>spring-boot-starter-web</artifactId>-->
-    <!--        </exclusion>-->
-    <!--      </exclusions>-->
-    <!--    </dependency>-->
-    <!--    <dependency>-->
-    <!--      <groupId>org.springframework.boot</groupId>-->
-    <!--      <artifactId>spring-boot-starter-json</artifactId>-->
-    <!--      &lt;!&ndash;      <scope>compile</scope>&ndash;&gt;-->
-    <!--      <scope>runtime</scope>-->
-    <!--    </dependency>-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>

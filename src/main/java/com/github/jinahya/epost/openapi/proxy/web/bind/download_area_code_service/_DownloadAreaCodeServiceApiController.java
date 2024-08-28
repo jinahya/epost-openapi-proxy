@@ -101,47 +101,6 @@ class _DownloadAreaCodeServiceApiController
                 });
     }
 
-//    // https://www.baeldung.com/spring-reactive-read-flux-into-inputstream
-//    // https://manhtai.github.io/posts/flux-databuffer-to-inputstream/
-//    private InputStream getFileDataStream(final String dwldSe, final Consumer<? super String> consumer)
-//            throws IOException {
-//        final var output = new PipedOutputStream();
-//        final var input = new PipedInputStream(output);
-//        DataBufferUtils
-//                .write(getFileDataPublisher(dwldSe, consumer), output)
-//                .subscribeOn(Schedulers.boundedElastic())
-//                .doOnComplete(() -> {
-//                    try {
-//                        output.close();
-//                    } catch (final IOException ioe) {
-//                        throw new RuntimeException("failed to close " + output, ioe);
-//                    }
-//                })
-//                .subscribe(DataBufferUtils.releaseConsumer());
-//        return input;
-//    }
-//
-//    private Flux<DataBuffer> getFileDataPublisher(final ServerWebExchange exchange, final String dwldSe,
-//                                                  final UnaryOperator<String> operator) {
-//        return exchange(dwldSe)
-//                .map(AreaCodeInfoResponse::getFile)
-//                .flatMapMany(f -> {
-//                    final String filename;
-//                    {
-//                        final var uri = URI.create(f);
-//                        final var path = FileSystems.getDefault().getPath(uri.getPath());
-//                        filename = path.getFileName().toString();
-//                    }
-//                    exchange.getResponse().beforeCommit(() -> {
-//                        exchange.getResponse().getHeaders().setContentDisposition(
-//                                ContentDisposition.attachment().filename(operator.apply(filename)).build()
-//                        );
-//                        return Mono.empty();
-//                    });
-//                    return WebClientUtils.retrieveBodyToFlux(f, DataBuffer.class);
-//                });
-//    }
-
     @GetMapping(
             path = {
                     __DownloadAreaCodeServiceApiConstants.REQUEST_URI_CONTENT
@@ -186,36 +145,6 @@ class _DownloadAreaCodeServiceApiController
                                 });
                             });
                 }
-        );
-    }
-
-    @GetMapping(
-            path = {
-                    __DownloadAreaCodeServiceApiConstants.REQUEST_URI_DOWNLOAD
-            },
-            produces = {
-                    MediaType.APPLICATION_OCTET_STREAM_VALUE
-            }
-    )
-    Flux<DataBuffer> downloadFile(
-            final ServerWebExchange exchange,
-            @PathVariable(__DownloadAreaCodeServiceApiConstants.PATH_NAME_DWLD_SE) final String dwldSe,
-            @RequestParam(value = __DownloadAreaCodeServiceApiConstants.PARAM_FILENAME, required = false)
-            final String filename) {
-        return getFileDataPublisher(
-                dwldSe,
-                f -> Optional.ofNullable(filename)
-                        .map(String::strip)
-                        .filter(v -> !v.isBlank())
-                        .or(() -> Optional.ofNullable(f))
-                        .map(v -> URLEncoder.encode(v, StandardCharsets.UTF_8))
-                        .ifPresent(v -> {
-                            beforeCommit(exchange.getResponse(), r -> {
-                                r.getHeaders().setContentDisposition(
-                                        ContentDisposition.attachment().filename(v).build()
-                                );
-                            });
-                        })
         );
     }
 }
