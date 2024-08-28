@@ -1,5 +1,4 @@
-#dummy-uri: http://localhost:${server.port}
-dummy-uri: https://example.com:443
+
 
 spring:
   cloud:

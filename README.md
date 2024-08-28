@@ -71,6 +71,14 @@ $ SERVICE_KEY='...==' mvn -Pfailsafe clean verify
 
 * [/assignments/media-types/application/zip](https://www.iana.org/assignments/media-types/application/zip)
 
+### stackoverflow.com
+
+* [How to encode the filename parameter of Content-Disposition header in HTTP?](https://stackoverflow.com/q/93551/330457)
+
+### [developers.mozilla.org](https://developer.mozilla.org) ([en_US](https://developer.mozilla.org/en_US/))
+
+* [/docs/Web/HTTP/Headers/Content-Disposition](https://developer.mozilla.org/docs/Web/HTTP/Headers/Content-Disposition) ([en_US](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition))
+
 ---
 
 [우편번호 다운로드 서비스]: https://www.data.go.kr/data/15000302/openapi.do
