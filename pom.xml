@@ -50,11 +50,11 @@
     <sonar.organization>jinahya-github</sonar.organization>
     <sonar.projectKey>jinahya_epost-openapi-proxy</sonar.projectKey>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-<!--    <version.io.swagger.core.v3>2.2.22</version.io.swagger.core.v3>-->
+    <!--    <version.io.swagger.core.v3>2.2.22</version.io.swagger.core.v3>-->
     <version.maven-failsafe>${version.maven-surefire}</version.maven-failsafe>
     <version.maven-surefire>3.3.1</version.maven-surefire>
-    <!--    &lt;!&ndash; https://search.maven.org/search?q=g:org.apache.poi &ndash;&gt;-->
-    <!--    <version.org.apache.poi>5.3.0</version.org.apache.poi>-->
+    <!-- https://search.maven.org/search?q=g:org.apache.poi -->
+    <version.org.apache.poi>5.3.0</version.org.apache.poi>
     <!-- https://docs.spring.io/spring-boot/appendix/dependency-versions/coordinates.html -->
     <version.org.springframework>6.1.12</version.org.springframework>
     <!-- https://search.maven.org/search?q=g:org.springframework.boot -->
@@ -139,12 +139,12 @@
       <artifactId>reactor-test</artifactId>
       <scope>test</scope>
     </dependency>
-<!--    <dependency>-->
-<!--      <groupId>io.swagger.core.v3</groupId>-->
-<!--      <artifactId>swagger-annotations-jakarta</artifactId>-->
-<!--      <version>${version.io.swagger.core.v3}</version>-->
-<!--      <scope>compile</scope>-->
-<!--    </dependency>-->
+    <!--    <dependency>-->
+    <!--      <groupId>io.swagger.core.v3</groupId>-->
+    <!--      <artifactId>swagger-annotations-jakarta</artifactId>-->
+    <!--      <version>${version.io.swagger.core.v3}</version>-->
+    <!--      <scope>compile</scope>-->
+    <!--    </dependency>-->
     <dependency>
       <groupId>io.vavr</groupId>
       <artifactId>vavr</artifactId>
@@ -165,6 +165,12 @@
       <groupId>nl.jqno.equalsverifier</groupId>
       <artifactId>equalsverifier-nodep</artifactId>
       <version>3.16.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>${version.org.apache.poi}</version>
       <scope>test</scope>
     </dependency>
     <dependency>

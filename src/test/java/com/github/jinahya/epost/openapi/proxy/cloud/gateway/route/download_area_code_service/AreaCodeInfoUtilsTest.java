@@ -3,6 +3,7 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Named;
+import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -44,7 +45,7 @@ class AreaCodeInfoUtilsTest {
                 .filter(Objects::nonNull);
     }
 
-    private static Stream<File> getResourceFileStream() {
+    static Stream<File> getResourceFileStream() {
         return getResourceUrlStream()
                 .map(v -> {
                     try {
@@ -137,5 +138,14 @@ class AreaCodeInfoUtilsTest {
                     }
                 }
         );
+    }
+
+    @DisplayName("extract(file, file)")
+    @MethodSource({
+            "getResourceFileStream"
+    })
+    @ParameterizedTest
+    void extract(final File source, @TempDir final File target) throws IOException {
+        AreaCodeInfoUtils.extract(source, target);
     }
 }
