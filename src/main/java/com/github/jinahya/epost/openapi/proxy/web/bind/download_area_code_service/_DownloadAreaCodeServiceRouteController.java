@@ -18,7 +18,7 @@ import reactor.core.publisher.Mono;
 @SuppressWarnings({
         "java:S101" // class _Download
 })
-class _DownloadAreaCodeServiceProxyController {
+class _DownloadAreaCodeServiceRouteController {
 
     @GetMapping(
             path = _DownloadAreaCodeServiceConstants.REQUEST_URI_GET_AREA_CODE_INFO,

@@ -9,7 +9,41 @@ An application for
 proxying [과학기술정보통신부 우정사업본부 APIs](https://www.data.go.kr/tcs/dss/selectDataSetList.do?dType=API&keyword=%EA%B3%BC%ED%95%99%EA%B8%B0%EC%88%A0%EC%A0%95%EB%B3%B4%ED%86%B5%EC%8B%A0%EB%B6%80+%EC%9A%B0%EC%A0%95%EC%82%AC%EC%97%85%EB%B3%B8%EB%B6%80&operator=AND&detailKeyword=&publicDataPk=&recmSe=N&detailText=&relatedKeyword=&commaNotInData=&commaAndData=&commaOrData=&must_not=&tabId=&dataSetCoreTf=&coreDataNm=&sort=&relRadio=&orgFullName=&orgFilter=&org=&orgSearch=&currentPage=1&perPage=10&brm=&instt=&svcType=&kwrdArray=&extsn=&coreDataNmArray=&pblonsipScopeCode=)
 using [Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway).
 
+
+기본적으로 [공공데이터포털] 에서 발급받은 `인증키`(`serviceKey`) 를 아용하여 `openapi.epost.go.kr` 를 호출하는 방법은 아래와 같다.
+
+```text
+<CLIENT>                                 | <EPOST>
+---------------------------------------- | -------------------------------------------------------
+GET /postal/...?serviceKey=...&other=... | openapi.epost.go.kr/postal/...?serviceKey=...&other=...
+HOST: openapi.epost.go.kr                | 
+```
+
+본 모듈은 아래와 같은 기능을 포함하고 있다.
+
+* 설정된 `인증키`를 추가
+* 응답 캐싱
+
+```text
+<CLIENT>                  | <PROXY>                | <EPOST>
+------------------------- | ---------------------- | -------------------------------------------------------
+GET /postal/...?other=... | /postal/...?other      | openapi.epost.go.kr/postal/...?serviceKey=...&other=...
+HOST: <PROXY>             | + ?serviceKey          | 
+                          | + local-response-cache |                 
+```
+
+추가로, 좀더 **세련된**, API 가 추가되었다.
+
+```text
+<CLIENT>                  | <PROXY>                | <PROXY>
+------------------------- | ---------------------- | -------------------------------------------------------
+GET /api/.../resource     | /api/.../resource      | /postal/...?other
+HOST: <PROXY>
+```
+
 ### Routes
+
+아래에 열거된(개발된) 모든 서비스들에 대해 데이터 활용 신청을 해야 한다. (동일한 `인증키`에 `활용`이 추가되는 구조인 듯 하다.)
 
 | api              | service              | route.id                                         | notes |
 |------------------|----------------------|--------------------------------------------------|-------|
@@ -22,6 +56,10 @@ using [Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway).
 
 ## How to build
 
+### JDK/JRE
+
+최신의 LTS(21) 가 필요하다.
+
 ### How to test
 
 ```commandline
@@ -29,6 +67,8 @@ $ mvn clean test
 ```
 
 ### How to verify
+
+발급받은 `인증키` 를 `SERVICE_KEY` 라는 이름의 환경 변수에 저장한다.
 
 ```commandline
 $ SERVICE_KEY=<your-own-URL-DECODED> mvn -Pfailsafe clean verify
@@ -39,6 +79,37 @@ e.g.
 ```commandline
 $ SERVICE_KEY='...==' mvn -Pfailsafe clean verify
 ```
+
+---
+
+## How to run
+
+(본 모듈은 `@SpringBootApplication` 으로 annotate 된 `Application` class 를 (`main`이 아닌) `test` 모듈에 포함하고 있다.
+
+아래와 같이 실행한 후 [Swagger UI](http://localhost:8080/webjars/swagger-ui/index.html) 를 열어서 확인한다.
+
+```commandline
+$ SERVICE_KEY='...==' mvn spring-boot:test-run
+```
+
+---
+
+## How to use/extend
+
+위에서 언급되었듯이, 본 모듈은 `@SpringBootApplication` 으로 annotate 된 `Application` class 를 (`main`이 아난) `test` 모듈에 포함하고 있다. 때문에 아래와 같이 `Application` 클래스를 추가해야 한다.
+
+Add [`com.github.jinahya.openapi.proxy.NoOp.class`](src/main/java/com/github/jinahya/epost/openapi/proxy/_NoOp) to the
+component-scanning path.
+
+e.g.
+
+https://github.com/jinahya/epost-openapi-proxy/blob/75b114f36b20a12d1ba93ead76818959c11f5735/src/test/java/com/mycompany/Application.java#L1-L17
+
+---
+
+## How to configure
+
+---
 
 ## Links
 
@@ -80,6 +151,7 @@ $ SERVICE_KEY='...==' mvn -Pfailsafe clean verify
 * [/docs/Web/HTTP/Headers/Content-Disposition](https://developer.mozilla.org/docs/Web/HTTP/Headers/Content-Disposition) ([en_US](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition))
 
 ---
+[공공데이터포털]: https://www.data.go.kr/
 
 [우편번호 다운로드 서비스]: https://www.data.go.kr/data/15000302/openapi.do
 
