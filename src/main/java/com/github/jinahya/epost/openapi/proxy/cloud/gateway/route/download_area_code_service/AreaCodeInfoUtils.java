@@ -18,7 +18,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
@@ -37,24 +36,16 @@ public final class AreaCodeInfoUtils {
 
     static final String DELIMITER = "\\|";
 
-    public static <R> R extract(final File file, final Function<? super ZipFile, ? extends R> function)
-            throws IOException {
-        if (!Objects.requireNonNull(file, "file is null").isFile()) {
-            throw new IllegalArgumentException("file is not a regular file: " + file);
-        }
-        Objects.requireNonNull(function, "function is null");
-        try (var zipFile = new ZipFile(file, CHARSET)) {
-            return function.apply(zipFile);
-        }
-    }
+    // -----------------------------------------------------------------------------------------------------------------
 
-    public static void extract(final InputStream stream,
+    public static void extract(final InputStream entryStream,
                                final Consumer<? super String[]> headerConsumer,
                                final Consumer<? super String[]> rowConsumer)
             throws IOException {
-        Objects.requireNonNull(stream, "stream is null");
+        Objects.requireNonNull(entryStream, "entryStream is null");
+        Objects.requireNonNull(headerConsumer, "headerConsumer is null");
         Objects.requireNonNull(rowConsumer, "rowConsumer is null");
-        final var reader = new BufferedReader(new InputStreamReader(stream));
+        final var reader = new BufferedReader(new InputStreamReader(entryStream));
         final var first = reader.readLine();
         if (first.isEmpty()) {
             return;
@@ -65,8 +56,7 @@ public final class AreaCodeInfoUtils {
                 .forEach(rowConsumer);
     }
 
-    public static void extract(final InputStream stream,
-                               final Consumer<? super Map<String, String>> consumer)
+    private static void extract(final InputStream stream, final Consumer<? super Map<String, String>> consumer)
             throws IOException {
         Objects.requireNonNull(stream, "stream is null");
         Objects.requireNonNull(consumer, "consumer is null");
@@ -104,8 +94,8 @@ public final class AreaCodeInfoUtils {
      * @param consumer the consumer.
      * @throws IOException if an I/O error occurs.
      */
-    public static void extract(final InputStream stream,
-                               final BiConsumer<? super String, ? super Map<String, String>> consumer)
+    static void extract(final InputStream stream,
+                        final BiConsumer<? super String, ? super Map<String, String>> consumer)
             throws IOException {
         Objects.requireNonNull(stream, "stream is null");
         Objects.requireNonNull(consumer, "consumer is null");
@@ -120,67 +110,13 @@ public final class AreaCodeInfoUtils {
         }
     }
 
-    /**
-     * Extracts a specific entry of specified zip file, and accepts each sub-entry to specified consumer.
-     *
-     * @param file     the zip file to extract.
-     * @param name     the entry name to extract. e.g. {@code 강원특별자치도.txt}.
-     * @param consumer the consumer accepts sub-entries.
-     * @throws IOException if an I/O error occurs.
-     * @see #extract(File, Predicate, BiConsumer)
-     */
-    public static void extract(final File file, final String name, final Consumer<? super Map<String, String>> consumer)
-            throws IOException {
-        if (!Objects.requireNonNull(file, "file is null").isFile()) {
-            throw new IllegalArgumentException("file is not a regular file: " + file);
-        }
-        Objects.requireNonNull(name, "name is null");
-        try (var zipFile = new ZipFile(file, CHARSET)) {
-            final var entry = zipFile.getEntry(name);
-            if (entry == null) {
-                throw new IllegalArgumentException("no entry for '" + name + "'");
-            }
-            try (final var stream = zipFile.getInputStream(entry)) {
-                extract(stream, consumer);
-            }
-        }
-    }
-
-    /**
-     * Extracts all entries of specified zip file, and accepts each sub-entry to specified consumer.
-     *
-     * @param file      the zip file to extract.
-     * @param predicate the predicate for filtering entries.
-     * @param consumer  the consumer accepts sub-entries.
-     * @throws IOException if an I/O error occurs.
-     * @see #extract(File, String, Consumer)
-     */
-    @SuppressWarnings({
-            "java:S112" // new RuntimeException
-    })
-    public static void extract(final File file, final Predicate<? super ZipEntry> predicate,
-                               final BiConsumer<? super ZipEntry, ? super Map<String, String>> consumer)
-            throws IOException {
-        if (!Objects.requireNonNull(file, "file is null").isFile()) {
-            throw new IllegalArgumentException("file is not a regular file: " + file);
-        }
-        Objects.requireNonNull(predicate, "predicate is null");
-        try (var zipFile = new ZipFile(file, CHARSET)) {
-            zipFile.stream().filter(predicate).forEach(e -> {
-                try (final var stream = zipFile.getInputStream(e)) {
-                    extract(stream, m -> consumer.accept(e, m));
-                } catch (final IOException ioe) {
-                    throw new RuntimeException("failed to extract " + file, ioe);
-                }
-            });
-        }
-    }
+    // -----------------------------------------------------------------------------------------------------------------
 
     /**
      * Extracts all tested entries from specified zip file to specified target directory.
      *
      * @param source    the zip file to be extracted.
-     * @param target    the target directory to which the {@code source} is extracted.
+     * @param target    the target directory into which the {@code source} is extracted.
      * @param predicate predicate tests each entry's name.
      * @throws IOException if an I/O error occurs.
      */
@@ -209,7 +145,6 @@ public final class AreaCodeInfoUtils {
                 }
                 final var bytes = Files.copy(zipFile.getInputStream(entry), file.toPath(),
                                              StandardCopyOption.REPLACE_EXISTING);
-                log.debug("{}: {}", entry.getName(), bytes);
             }
         }
     }
@@ -217,8 +152,8 @@ public final class AreaCodeInfoUtils {
     /**
      * Extracts all entries from specified zip file to specified target directory.
      *
-     * @param source the zip file to be extracted.
-     * @param target the target directory to which the {@code source} is extracted.
+     * @param source the zip file to extract.
+     * @param target the target directory into which the {@code source} is extracted.
      * @throws IOException if an I/O error occurs.
      */
     public static void extract(final File source, final File target)

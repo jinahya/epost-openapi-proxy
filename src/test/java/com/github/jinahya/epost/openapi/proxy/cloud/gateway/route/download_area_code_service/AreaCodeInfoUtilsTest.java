@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Spliterator;
 import java.util.Spliterators;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 import java.util.zip.ZipEntry;
@@ -102,42 +101,6 @@ class AreaCodeInfoUtilsTest {
                         }
                     });
         }
-    }
-
-    @DisplayName("extract(file, predicate, consumer)")
-    @MethodSource({
-            "getResourceFileStream"
-    })
-    @ParameterizedTest
-    void extract__(final File file) throws IOException {
-        final var flags = new HashMap<ZipEntry, Boolean>();
-        AreaCodeInfoUtils.extract(
-                file,
-                e -> e.getName().endsWith(".txt"),
-                (e, m) -> {
-                    if (flags.compute(e, (k, v) -> v == null)) {
-                        log.debug("n: {}, m: {}", e, m);
-                    }
-                }
-        );
-    }
-
-    @DisplayName("extract(file, name, consumer)")
-    @MethodSource({
-            "getResourceFileAndEntryNameArgumentsStream"
-    })
-    @ParameterizedTest
-    void extract__(final File file, final String name) throws IOException {
-        final var flag = new AtomicBoolean();
-        AreaCodeInfoUtils.extract(
-                file,
-                name,
-                m -> {
-                    if (!flag.getAndSet(true)) {
-                        log.debug("m: {}", m);
-                    }
-                }
-        );
     }
 
     @DisplayName("extract(file, file)")
