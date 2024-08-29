@@ -71,7 +71,7 @@ $ mvn clean test
 발급받은 `인증키` 를 `SERVICE_KEY` 라는 이름의 환경 변수에 저장한다.
 
 ```commandline
-$ SERVICE_KEY=<your-own-URL-DECODED> mvn -Pfailsafe clean verify
+$ SERVICE_KEY=<your-own-URL-DECODED-service-key> mvn -Pfailsafe clean verify
 ```
 
 e.g.
@@ -108,6 +108,8 @@ https://github.com/jinahya/epost-openapi-proxy/blob/75b114f36b20a12d1ba93ead7681
 ---
 
 ## How to configure
+
+[TBD]
 
 ---
 
