@@ -394,6 +394,7 @@
         <artifactId>jacoco-maven-plugin</artifactId>
         <configuration>
           <excludes>
+            <exclude>**/*ApiController.java</exclude>
             <exclude>**/*RouteController.java</exclude>
           </excludes>
         </configuration>

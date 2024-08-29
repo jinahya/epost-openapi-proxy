@@ -545,16 +545,12 @@ class _RetrieveEngAddressServiceApiController
                     MediaType.APPLICATION_NDJSON_VALUE
             }
     )
-    Mono<Void> readAllCities(final ServerWebExchange exchange) {
-        return writeNdjsonResponseWith(
-                exchange.getResponse(),
-                getStatesPublisher()
-                        .flatMapSequential(
-                                s -> getCitiesPublisher(s.name()),
-                                4
-                        ),
-                City.class
-        );
+    Flux<City> readAllCities(final ServerWebExchange exchange) {
+        return getStatesPublisher()
+                .flatMapSequential(
+                        s -> getCitiesPublisher(s.name()),
+                        4
+                );
     }
 
     // ------------------------------------------------------------------------------------------------------ /.../roads
@@ -567,20 +563,16 @@ class _RetrieveEngAddressServiceApiController
                     MediaType.APPLICATION_NDJSON_VALUE
             }
     )
-    Mono<Void> readAllRoads(final ServerWebExchange exchange) {
-        return writeNdjsonResponseWith(
-                exchange.getResponse(),
-                getStatesPublisher()
-                        .flatMapSequential(
-                                s -> getCitiesPublisher(s.name())
-                                        .flatMapSequential(
-                                                c -> getRoadPublisher(s.name(), c.name()),
-                                                8
-                                        ),
-                                4
-                        ),
-                Road.class
-        );
+    Flux<Road> readAllRoads(final ServerWebExchange exchange) {
+        return getStatesPublisher()
+                .flatMapSequential(
+                        s -> getCitiesPublisher(s.name())
+                                .flatMapSequential(
+                                        c -> getRoadPublisher(s.name(), c.name()),
+                                        8
+                                ),
+                        4
+                );
     }
 
     // -------------------------------------------------------------------------------------------------- /.../districts
@@ -593,19 +585,15 @@ class _RetrieveEngAddressServiceApiController
                     MediaType.APPLICATION_NDJSON_VALUE
             }
     )
-    Mono<Void> readAllDistricts(final ServerWebExchange exchange) {
-        return writeNdjsonResponseWith(
-                exchange.getResponse(),
-                getStatesPublisher()
-                        .flatMapSequential(
-                                s -> getCitiesPublisher(s.name())
-                                        .flatMapSequential(
-                                                c -> getDistrictPublisher(s.name(), c.name()),
-                                                8
-                                        ),
-                                4
-                        ),
-                District.class
-        );
+    Flux<District> readAllDistricts(final ServerWebExchange exchange) {
+        return getStatesPublisher()
+                .flatMapSequential(
+                        s -> getCitiesPublisher(s.name())
+                                .flatMapSequential(
+                                        c -> getDistrictPublisher(s.name(), c.name()),
+                                        8
+                                ),
+                        4
+                );
     }
 }

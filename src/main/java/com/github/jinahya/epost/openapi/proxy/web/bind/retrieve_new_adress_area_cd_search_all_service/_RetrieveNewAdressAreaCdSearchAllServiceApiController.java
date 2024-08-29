@@ -8,11 +8,11 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -36,14 +36,14 @@ class _RetrieveNewAdressAreaCdSearchAllServiceApiController
                     MediaType.APPLICATION_NDJSON_VALUE
             }
     )
-    Mono<Void> search(
+    Flux<Address> search(
+            final ServerWebExchange exchange,
             @NotBlank
             @RequestParam(__RetrieveNewAdressAreCdSearchAllServiceApiConstants.REQUEST_PARAM_SRCHWRD)
-            final String srchwrd,
-            final ServerHttpResponse response) {
+            final String srchwrd) {
         final var total = new AtomicReference<Integer>();
         final var count = new LongAdder();
-        final var data = Mono.just(NewAddressListAreaCdSearchAllRequest.of(
+        return Mono.just(NewAddressListAreaCdSearchAllRequest.of(
                         null,
                         srchwrd,
                         32,
@@ -77,6 +77,5 @@ class _RetrieveNewAdressAreaCdSearchAllServiceApiController
                         s.complete();
                     }
                 });
-        return writeNdjsonResponseWith(response, data, Address.class);
     }
 }
