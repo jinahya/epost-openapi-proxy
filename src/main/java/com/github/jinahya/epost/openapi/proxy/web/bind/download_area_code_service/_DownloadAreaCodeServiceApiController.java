@@ -85,8 +85,7 @@ class _DownloadAreaCodeServiceApiController
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    private Flux<DataBuffer> getFileDataPublisher(final String dwldSe,
-                                                  final Consumer<? super String> consumer) {
+    private Flux<DataBuffer> getFileDataPublisher(final String dwldSe, final Consumer<? super String> consumer) {
         return exchange(dwldSe)
                 .map(AreaCodeInfoResponse::getFile)
                 .flatMapMany(f -> {
