@@ -55,7 +55,7 @@ sequenceDiagram
     PROXY(R)-->>CLIENT: 200 OK<br><br>(LocalResponseCache <-)
 ```
 
-추가로, 좀더 **세련된**, API 가 추가되었다.
+추가로, 좀더 **세련된(?)**, API 가 정의되었다.
 
 ```mermaid
 %%{init: {
