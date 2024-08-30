@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
+import java.util.function.UnaryOperator;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Slf4j
@@ -58,6 +59,11 @@ public abstract class _ApiController {
                     .build();
         }
         return webClient;
+    }
+
+    // for mutating in the @SpringBootTest
+    void mutateWebClient(final UnaryOperator<WebClient> operator) {
+        webClient = Objects.requireNonNull(operator, "operator is null").apply(webClient());
     }
 
     // -----------------------------------------------------------------------------------------------------------------

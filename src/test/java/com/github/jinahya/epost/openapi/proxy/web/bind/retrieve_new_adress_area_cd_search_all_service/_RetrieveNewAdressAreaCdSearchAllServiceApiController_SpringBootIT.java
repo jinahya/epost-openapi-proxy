@@ -1,6 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_new_adress_area_cd_search_all_service;
 
-import com.github.jinahya.epost.openapi.proxy.web.bind._WebBindSpringBootIT;
+import com.github.jinahya.epost.openapi.proxy.web.bind._ApiController_SpringBootIT;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class _RetrieveNewAdressAreaCdSearchAllServiceApiController_SpringBootIT
-        extends _WebBindSpringBootIT {
+        extends _ApiController_SpringBootIT<_RetrieveNewAdressAreaCdSearchAllServiceApiController> {
 
     // -----------------------------------------------------------------------------------------------------------------
     static List<Address> search(final WebTestClient client, final String srchwrd) {

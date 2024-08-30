@@ -1,6 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service;
 
-import com.github.jinahya.epost.openapi.proxy.web.bind._WebBindSpringBootIT;
+import com.github.jinahya.epost.openapi.proxy.web.bind._ApiController_SpringBootIT;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class _RetrieveEngAddressServiceApiController_SpringBootIT
-        extends _WebBindSpringBootIT {
+        extends _ApiController_SpringBootIT<_RetrieveEngAddressServiceApiController> {
 
     // -----------------------------------------------------------------------------------------------------------------
     static List<State> readStates(final WebTestClient client, @Nullable final String accept) {

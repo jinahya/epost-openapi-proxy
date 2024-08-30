@@ -23,7 +23,7 @@ import reactor.core.publisher.Mono;
 // https://github.com/reactor/reactor-core/issues/2572
 // https://www.pkslow.com/docs/en/spring-webflux-get-request/#webfilter-fetch-and-save
 // https://gist.github.com/Elyorbe/c7cc5f28d0fced86dbd054dce0a9e206
-class ReactiveRequestContextFilter
+public class ReactiveRequestContextFilter
         implements WebFilter {
 
     // -----------------------------------------------------------------------------------------------------------------
