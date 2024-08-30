@@ -12,52 +12,38 @@ using [Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway).
 
 기본적으로 [공공데이터포털] 에서 발급받은 `인증키`(`serviceKey`) 를 아용하여 `openapi.epost.go.kr` 를 호출하는 방법은 아래와 같다.
 
-```text
-<CLIENT>                                 | <EPOST>
----------------------------------------- | ------------------------------------
-GET /postal/...?serviceKey=...&other=... | /postal/...?serviceKey=...&other=...
-HOST: openapi.epost.go.kr:80             | 
+```mermaid
+%%{init: { 'sequence': {'messageAlign': 'left', "fontFamily": "monospace"} }}%%
+sequenceDiagram
+    CLIENT->>EPOST: GET /postal/...?serviceKey=...&other=...<br>HOST: epost.go.kr:80<br>Accept: application/xml
+    EPOST-->>CLIENT: 200 OK
 ```
 
 본 모듈은 아래와 같은 기능을 포함하고 있다.
 
-* 설정된 `인증키`를 추가
+* 설정된 `인증키`(`?serviceKey`)를 추가
 * 응답 캐싱
 
-```text
-<CLIENT>                  | <PROXY>                | <EPOST>
-------------------------- | ---------------------- | ------------------------------------
-GET /postal/...?other=... | /postal/...?other      | /postal/...?serviceKey=...&other=...
-HOST: <PROXY>             | + ?serviceKey          | 
-                          | + local-response-cache |                 
+```mermaid
+%%{init: { 'sequence': {'messageAlign': 'left', "fontFamily": "monospace"} }}%%
+sequenceDiagram
+    CLIENT->>PROXY: GET /postal/...?other=...<br>HOST: <PROXY>
+    PROXY->>EPOST: GET /postal/...?serviceKey=...&other=...<br>HOST: epost.go.kr<br><SCG/AddRequestParameter>
+    EPOST-->>PROXY: 200 OK
+    PROXY-->>CLIENT: 200 OK<br><SCG/LocalResponseCache>
 ```
 
 추가로, 좀더 **세련된**, API 가 추가되었다.
 
 ```mermaid
+%%{init: { 'sequence': {'messageAlign': 'left', "fontFamily": "monospace" }}%%
 sequenceDiagram
-    Alice->>John: Hello John, how are you?
-    John-->>Alice: Great!
-    Alice-)John: See you later!
-```
-
-```sequence
-Alice->Bob: Hello Bob, how are you?
-Note right of Bob: Bob thinks
-Bob-->Alice: I am good thanks!
-```
-
-```text
-<CLIENT>                    | <PROXY>                  | <PROXY>                | <EPOST>
---------------------------- | ------------------------ | -----------------------|---------------------------------
-GET /api/.../<resource>     |                          | /postal/...?other      | /postal/...?serviceKey=...&other
-HOST: <PROXY>               |                          | + ?serviceKey          |
-                            | /postal/...?other=...    | + local-response-cache |
-                            | HOST: localhost
-GET /api/.../<resource>     |                          | /postal/...?other      | /postal/...?serviceKey=...&other
-HOST: <PROXY>               |                          | + ?serviceKey          |
-                            | /postal/...?other=...    | + local-response-cache |
-
+    CLIENT->>PROXY: GET /api/...<br>HOST: <PROXY><br>Accept: application/x-ndjson
+    PROXY->>PROXY: GET /postal/...?other=...<br>HOST: localhost
+    PROXY->>EPOST: GET /postal/...?serviceKey=...&other=...<br>HOST: epost.go.krbr><SCG/AddRequestParameter>
+    EPOST-->>PROXY: 200 OK
+    PROXY-->>PROXY: 200 OK<br><SCG/LocalResponseCache>
+    PROXY-->>CLIENT: 200 OK<br>Content-Type: application/x-ndjson
 ```
 
 ### Routes
