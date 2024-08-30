@@ -15,7 +15,7 @@ using [Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway).
 ```mermaid
 %%{init: { 'sequence': {'messageAlign': 'left'}, 'fontFamily': 'monospace' }}%%
 sequenceDiagram
-    CLIENT->>EPOST: GET /postal/...?serviceKey=...&other=...<br>HOST: <EPOST>
+    CLIENT->>EPOST: GET /postal/...?serviceKey=...<br>HOST: <EPOST>
     EPOST-->>CLIENT: 200 OK
 ```
 
@@ -27,10 +27,10 @@ sequenceDiagram
 ```mermaid
 %%{init: { 'sequence': {'messageAlign': 'left'}, 'fontFamily': 'monospace' }}%%
 sequenceDiagram
-    CLIENT->>PROXY(route): GET /postal/...?other=...<br>HOST: <PROXY>
-    PROXY(route)->>EPOST: (SCG/AddRequestParameter -> +?serviceKey)<br><br>GET /postal/...?serviceKey=...&other=...<br>HOST: <EPOST>
-    EPOST-->>PROXY(route): 200 OK
-    PROXY(route)-->>CLIENT: 200 OK<br><br>(SCG/LocalResponseCache <-)
+    CLIENT->>PROXY(R): GET /postal/...?o..=...<br>HOST: <PROXY(R)>
+    PROXY(R)->>EPOST: (AddRequestParameter -> +?serviceKey)<br><br>GET /postal/...?serviceKey=...<br>HOST: <EPOST>
+    EPOST-->>PROXY(R): 200 OK
+    PROXY(R)-->>CLIENT: 200 OK<br><br>(LocalResponseCache <-)
 ```
 
 추가로, 좀더 **세련된**, API 가 추가되었다.
@@ -49,12 +49,12 @@ sequenceDiagram
   'fontFamily': 'monospace'
 }}%%
 sequenceDiagram
-  CLIENT ->> PROXY(api): GET /api/...<br>HOST: <PROXY><br>Accept: application/x-ndjson
-  PROXY(api) ->> PROXY(route): GET /postal/...?other=...<br>HOST: localhost
-  PROXY(route) ->> EPOST: GET /postal/...?serviceKey=...&other=...<br>HOST: epost.go.kr<br>
-  EPOST -->> PROXY(route): 200 OK
-  PROXY(route) -->> PROXY(api): 200 OK
-  PROXY(api) -->> CLIENT: 200 OK
+  CLIENT ->> PROXY(A): GET /api/...<br>HOST: <PROXY(R)><br>Accept: application/x-ndjson
+  PROXY(A) ->> PROXY(R): GET /postal/...<br>HOST: localhost
+  PROXY(R) ->> EPOST: GET /postal/...?serviceKey=...<br>HOST: <EPOST><br>
+  EPOST -->> PROXY(R): 200 OK
+  PROXY(R) -->> PROXY(A): 200 OK
+  PROXY(A) -->> CLIENT: 200 OK
 ```
 
 ### Routes
