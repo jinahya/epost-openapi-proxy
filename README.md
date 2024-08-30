@@ -14,9 +14,9 @@ using [Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway).
 
 ```text
 <CLIENT>                                 | <EPOST>
----------------------------------------- | -------------------------------------------------------
-GET /postal/...?serviceKey=...&other=... | openapi.epost.go.kr/postal/...?serviceKey=...&other=...
-HOST: openapi.epost.go.kr                | 
+---------------------------------------- | ------------------------------------
+GET /postal/...?serviceKey=...&other=... | /postal/...?serviceKey=...&other=...
+HOST: openapi.epost.go.kr:80             | 
 ```
 
 본 모듈은 아래와 같은 기능을 포함하고 있다.
@@ -26,19 +26,39 @@ HOST: openapi.epost.go.kr                |
 
 ```text
 <CLIENT>                  | <PROXY>                | <EPOST>
-------------------------- | ---------------------- | -------------------------------------------------------
-GET /postal/...?other=... | /postal/...?other      | openapi.epost.go.kr/postal/...?serviceKey=...&other=...
+------------------------- | ---------------------- | ------------------------------------
+GET /postal/...?other=... | /postal/...?other      | /postal/...?serviceKey=...&other=...
 HOST: <PROXY>             | + ?serviceKey          | 
                           | + local-response-cache |                 
 ```
 
 추가로, 좀더 **세련된**, API 가 추가되었다.
 
+```mermaid
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+```
+
+```sequence
+Alice->Bob: Hello Bob, how are you?
+Note right of Bob: Bob thinks
+Bob-->Alice: I am good thanks!
+```
+
 ```text
-<CLIENT>                  | <PROXY>                | <PROXY>
-------------------------- | ---------------------- | -------------------------------------------------------
-GET /api/.../resource     | /api/.../resource      | /postal/...?other
-HOST: <PROXY>
+<CLIENT>                    | <PROXY>                  | <PROXY>                | <EPOST>
+--------------------------- | ------------------------ | -----------------------|---------------------------------
+GET /api/.../<resource>     |                          | /postal/...?other      | /postal/...?serviceKey=...&other
+HOST: <PROXY>               |                          | + ?serviceKey          |
+                            | /postal/...?other=...    | + local-response-cache |
+                            | HOST: localhost
+GET /api/.../<resource>     |                          | /postal/...?other      | /postal/...?serviceKey=...&other
+HOST: <PROXY>               |                          | + ?serviceKey          |
+                            | /postal/...?other=...    | + local-response-cache |
+
 ```
 
 ### Routes
