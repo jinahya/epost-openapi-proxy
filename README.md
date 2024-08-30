@@ -13,9 +13,9 @@ using [Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway).
 기본적으로 [공공데이터포털] 에서 발급받은 `인증키`(`serviceKey`) 를 아용하여 `openapi.epost.go.kr` 를 호출하는 방법은 아래와 같다.
 
 ```mermaid
-%%{init: { 'sequence': {'messageAlign': 'left', "fontFamily": "monospace"} }}%%
+%%{init: { 'sequence': {'messageAlign': 'left'}, 'fontFamily': 'monospace' }}%%
 sequenceDiagram
-    CLIENT->>EPOST: GET /postal/...?serviceKey=...&other=...<br>HOST: epost.go.kr:80<br>Accept: application/xml
+    CLIENT->>EPOST: GET /postal/...?serviceKey=...&other=...<br>HOST: <EPOST>
     EPOST-->>CLIENT: 200 OK
 ```
 
@@ -25,25 +25,36 @@ sequenceDiagram
 * 응답 캐싱
 
 ```mermaid
-%%{init: { 'sequence': {'messageAlign': 'left', "fontFamily": "monospace"} }}%%
+%%{init: { 'sequence': {'messageAlign': 'left'}, 'fontFamily': 'monospace' }}%%
 sequenceDiagram
-    CLIENT->>PROXY: GET /postal/...?other=...<br>HOST: <PROXY>
-    PROXY->>EPOST: GET /postal/...?serviceKey=...&other=...<br>HOST: epost.go.kr<br><SCG/AddRequestParameter>
-    EPOST-->>PROXY: 200 OK
-    PROXY-->>CLIENT: 200 OK<br><SCG/LocalResponseCache>
+    CLIENT->>PROXY(route): GET /postal/...?other=...<br>HOST: <PROXY>
+    PROXY(route)->>EPOST: (SCG/AddRequestParameter -> +?serviceKey)<br><br>GET /postal/...?serviceKey=...&other=...<br>HOST: <EPOST>
+    EPOST-->>PROXY(route): 200 OK
+    PROXY(route)-->>CLIENT: 200 OK<br><br>(SCG/LocalResponseCache <-)
 ```
 
 추가로, 좀더 **세련된**, API 가 추가되었다.
 
 ```mermaid
-%%{init: { 'theme': 'forest', 'sequence': {'messageAlign': 'left', "fontFamily": "monospace", 'theme': 'dark'} }}%%
+%%{init: {
+  'theme': 'forest',
+  'themeVariables': {
+    'primaryColor': '#BB2528',
+    'primaryTextColor': '#fff',
+    'background': '#BB2528'
+   },
+  'sequence': {
+    'messageAlign': 'left'
+   },
+  'fontFamily': 'monospace'
+}}%%
 sequenceDiagram
-    CLIENT->>PROXY: GET /api/...<br>HOST: <PROXY><br>Accept: application/x-ndjson
-    PROXY->>PROXY: GET /postal/...?other=...<br>HOST: localhost
-    PROXY->>EPOST: GET /postal/...?serviceKey=...&other=...<br>HOST: epost.go.kr<br>
-    EPOST-->>PROXY: 200 OK
-    PROXY-->>PROXY: 200 OK
-    PROXY-->>CLIENT: 200 OK<br>Content-Type: application/x-ndjson
+  CLIENT ->> PROXY(api): GET /api/...<br>HOST: <PROXY><br>Accept: application/x-ndjson
+  PROXY(api) ->> PROXY(route): GET /postal/...?other=...<br>HOST: localhost
+  PROXY(route) ->> EPOST: GET /postal/...?serviceKey=...&other=...<br>HOST: epost.go.kr<br>
+  EPOST -->> PROXY(route): 200 OK
+  PROXY(route) -->> PROXY(api): 200 OK
+  PROXY(api) -->> CLIENT: 200 OK
 ```
 
 ### Routes
