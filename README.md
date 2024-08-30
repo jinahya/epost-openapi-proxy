@@ -49,7 +49,7 @@ sequenceDiagram
   'fontFamily': 'monospace'
 }}%%
 sequenceDiagram
-  CLIENT ->> PROXY(A): GET /api/...<br>HOST: <PROXY(R)><br>Accept: application/x-ndjson
+  CLIENT ->> PROXY(A): GET /api/...<br>HOST: <PROXY(R)>
   PROXY(A) ->> PROXY(R): GET /postal/...<br>HOST: localhost
   PROXY(R) ->> EPOST: GET /postal/...?serviceKey=...<br>HOST: <EPOST><br>
   EPOST -->> PROXY(R): 200 OK
