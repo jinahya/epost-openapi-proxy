@@ -16,14 +16,12 @@ import org.springframework.boot.autoconfigure.validation.ValidationAutoConfigura
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.ResolvableType;
-import org.springframework.hateoas.config.HypermediaWebTestClientConfigurer;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.client.ExchangeFunction;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.time.Duration;
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -44,7 +42,7 @@ import static org.assertj.core.api.Assertions.assertThat;
                 Application.class
         }
 )
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest//(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Slf4j
 @SuppressWarnings({
@@ -59,11 +57,11 @@ public abstract class _ApiController_SpringBootTest<CONTROLLER extends _ApiContr
     private void doOnPostConstruct() {
         // https://stackoverflow.com/a/48655749/330457
         // https://stackoverflow.com/a/49496309/330457
-        webTestClient = webTestClient.mutate()
-                .responseTimeout(Duration.ofSeconds(16L))
-                .build()
-                .mutateWith(hypermediaWebTestClientConfigurer)
-        ;
+//        webTestClient = webTestClient.mutate()
+//                .responseTimeout(Duration.ofSeconds(16L))
+//                .build()
+//                .mutateWith(hypermediaWebTestClientConfigurer)
+//        ;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -112,27 +110,24 @@ public abstract class _ApiController_SpringBootTest<CONTROLLER extends _ApiContr
     }
 
     // ---------------------------------------------------------------------------------------------- controllerInstance
+    protected void acceptControllerInstance(final Consumer<? super CONTROLLER> consumer) {
+        consumer.accept(controllerInstance);
+    }
+
+    protected void setControllerInstanceWebClient(final WebClient webClient) {
+        controllerInstance.webClient = webClient;
+    }
+
     protected void mutateControllerInstanceWebClient(final UnaryOperator<WebClient> operator) {
         controllerInstance.mutateWebClient(operator);
     }
 
     protected void mutateControllerInstanceWebClientWith(final ExchangeFunction function) {
-        mutateControllerInstanceWebClient(wc -> {
-            return wc.mutate().exchangeFunction(function).build();
-        });
+        mutateControllerInstanceWebClient(wc -> wc.mutate().exchangeFunction(function).build());
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     private Class<CONTROLLER> controllerClass;
-
-    @Autowired
-    private HypermediaWebTestClientConfigurer hypermediaWebTestClientConfigurer;
-
-    @Autowired
-    @Accessors(fluent = true)
-    @Setter(AccessLevel.NONE)
-    @Getter(AccessLevel.PROTECTED)
-    private WebTestClient webTestClient;
 
     @Autowired
     @Accessors(fluent = true)

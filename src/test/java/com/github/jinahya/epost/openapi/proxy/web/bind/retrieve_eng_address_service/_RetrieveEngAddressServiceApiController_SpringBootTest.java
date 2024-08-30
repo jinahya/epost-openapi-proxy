@@ -9,12 +9,10 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.core.io.buffer.DefaultDataBufferFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.mock.http.server.reactive.MockServerHttpRequest;
-import org.springframework.mock.web.server.MockServerWebExchange;
 import org.springframework.web.reactive.function.client.ClientRequest;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.ExchangeFunction;
-import org.springframework.web.server.WebFilterChain;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @Import({
@@ -49,8 +47,9 @@ class _RetrieveEngAddressServiceApiController_SpringBootTest
 //                builder.exchangeStrategies(ExchangeStrategies.builder().build());
 //            }
 //        });
+
 //        _RetrieveEngAddressServiceApiController_SpringBootIT.readStates(webTestClient(), null);
-        mutateControllerInstanceWebClientWith(new ExchangeFunction() {
+        final var exchangeFunction = new ExchangeFunction() {
             @Override
             public Mono<ClientResponse> exchange(final ClientRequest request) {
                 final var resource = new UrlResource(
@@ -63,14 +62,14 @@ class _RetrieveEngAddressServiceApiController_SpringBootTest
                                 .build()
                 );
             }
-        });
-//        WebFilterChain filterChain = filterExchange -> Mono.empty();
-//        MockServerWebExchange exchange = MockServerWebExchange.from(
-//                MockServerHttpRequest
-//                        .get("/your-url")
-//                        .header("my-key", "value"));
-//        // https://stackoverflow.com/a/68937805/330457
-//        controllerInstance().readStates(exchange)
-//                .blockLast();
+        };
+        setControllerInstanceWebClient(
+                WebClient.builder()
+                        .exchangeFunction(exchangeFunction)
+                        .build()
+        );
+        // https://stackoverflow.com/a/68937805/330457
+        controllerInstance().readStates(null)
+                .blockLast();
     }
 }
