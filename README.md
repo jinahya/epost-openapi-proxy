@@ -36,13 +36,13 @@ sequenceDiagram
 추가로, 좀더 **세련된**, API 가 추가되었다.
 
 ```mermaid
-%%{init: { 'sequence': {'messageAlign': 'left', "fontFamily": "monospace" }}%%
+%%{init: { 'theme': 'forest', 'sequence': {'messageAlign': 'left', "fontFamily": "monospace", 'theme': 'dark'} }}%%
 sequenceDiagram
     CLIENT->>PROXY: GET /api/...<br>HOST: <PROXY><br>Accept: application/x-ndjson
     PROXY->>PROXY: GET /postal/...?other=...<br>HOST: localhost
-    PROXY->>EPOST: GET /postal/...?serviceKey=...&other=...<br>HOST: epost.go.krbr><SCG/AddRequestParameter>
+    PROXY->>EPOST: GET /postal/...?serviceKey=...&other=...<br>HOST: epost.go.kr<br>
     EPOST-->>PROXY: 200 OK
-    PROXY-->>PROXY: 200 OK<br><SCG/LocalResponseCache>
+    PROXY-->>PROXY: 200 OK
     PROXY-->>CLIENT: 200 OK<br>Content-Type: application/x-ndjson
 ```
 
