@@ -122,7 +122,7 @@ $ SERVICE_KEY='...==' mvn -Pfailsafe clean verify
 
 ## How to run
 
-(본 모듈은 `@SpringBootApplication` 으로 annotate 된 `Application` class 를 (`main`이 아닌) `test` 모듈에 포함하고 있다.
+(본 모듈은 `@SpringBootApplication` 으로 annotate 된 class 를 (`main`이 아닌) `test` 모듈에 포함하고 있다.
 
 아래와 같이 실행한 후 [Swagger UI](http://localhost:8080/webjars/swagger-ui/index.html) 를 열어서 확인한다.
 
@@ -134,7 +134,7 @@ $ SERVICE_KEY='...==' mvn spring-boot:test-run
 
 ## How to use/extend
 
-위에서 언급되었듯이, 본 모듈은 `@SpringBootApplication` 으로 annotate 된 `Application` class 를 (`main`이 아난) `test` 모듈에 포함하고 있다. 때문에 아래와 같이 `Application` 클래스를 추가해야 한다.
+위에서 언급되었듯이, 본 모듈은 `@SpringBootApplication` 으로 annotate 된 class 를 (`main`이 아난) `test` 모듈에 포함하고 있다. 때문에 아래와 같이 추가해야 한다.
 
 Add [`com.github.jinahya.openapi.proxy.NoOp.class`](src/main/java/com/github/jinahya/epost/openapi/proxy/_NoOp) to the
 component-scanning path.
