@@ -13,7 +13,18 @@ using [Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway).
 기본적으로 [공공데이터포털] 에서 발급받은 `인증키`(`serviceKey`) 를 아용하여 `openapi.epost.go.kr` 를 호출하는 방법은 아래와 같다.
 
 ```mermaid
-%%{init: { 'sequence': {'messageAlign': 'left'}, 'fontFamily': 'monospace' }}%%
+%%{init: {
+  'theme': 'forest',
+  'themeVariables': {
+    'primaryColor': '#BB2528',
+    'primaryTextColor': '#fff',
+    'background': '#BB2528'
+   },
+  'sequence': {
+    'messageAlign': 'left'
+   },
+  'fontFamily': 'monospace'
+}}%%
 sequenceDiagram
     CLIENT->>EPOST: GET /postal/...?serviceKey=...<br>HOST: <EPOST>
     EPOST-->>CLIENT: 200 OK
@@ -25,7 +36,18 @@ sequenceDiagram
 * 응답 캐싱
 
 ```mermaid
-%%{init: { 'sequence': {'messageAlign': 'left'}, 'fontFamily': 'monospace' }}%%
+%%{init: {
+  'theme': 'forest',
+  'themeVariables': {
+    'primaryColor': '#BB2528',
+    'primaryTextColor': '#fff',
+    'background': '#BB2528'
+   },
+  'sequence': {
+    'messageAlign': 'left'
+   },
+  'fontFamily': 'monospace'
+}}%%
 sequenceDiagram
     CLIENT->>PROXY(R): GET /postal/...?o..=...<br>HOST: <PROXY(R)>
     PROXY(R)->>EPOST: (AddRequestParameter -> +?serviceKey)<br><br>GET /postal/...?serviceKey=...<br>HOST: <EPOST>
