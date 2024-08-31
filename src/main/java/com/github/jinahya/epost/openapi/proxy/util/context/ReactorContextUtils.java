@@ -6,6 +6,8 @@ import reactor.core.publisher.Mono;
 import reactor.util.context.Context;
 
 import java.net.MalformedURLException;
+import java.util.Objects;
+import java.util.function.UnaryOperator;
 
 /**
  * A utility class for {@link Context}.
@@ -62,6 +64,13 @@ public final class ReactorContextUtils {
 
     public static Mono<UriComponentsBuilder> getUriComponentsBuilderFromRequestBaseUrl() {
         return getRequestBaseUrl().map(UriComponentsBuilder::fromHttpUrl);
+    }
+
+    public static Mono<UriComponentsBuilder> applyUriComponentsBuilderFromRequestBaseUrl(
+            final UnaryOperator<UriComponentsBuilder> operator) {
+        Objects.requireNonNull(operator, "operator is null");
+        return getUriComponentsBuilderFromRequestBaseUrl()
+                .map(operator);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

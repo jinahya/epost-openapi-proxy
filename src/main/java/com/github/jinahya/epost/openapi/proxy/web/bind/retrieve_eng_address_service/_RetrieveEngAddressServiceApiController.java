@@ -8,6 +8,7 @@ import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_a
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.RoadEngFirstNameListRequest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.RoadEngListRequest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.StateEngListRequest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.StateEngListResponse;
 import com.github.jinahya.epost.openapi.proxy.util.context.ReactorContextUtils;
 import com.github.jinahya.epost.openapi.proxy.web.bind._ApiController;
 import io.swagger.v3.oas.annotations.Hidden;
@@ -16,8 +17,12 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotBlank;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.LinkRelation;
 import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.RepresentationModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -29,6 +34,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.atomic.LongAdder;
@@ -39,6 +45,9 @@ import java.util.concurrent.atomic.LongAdder;
 @RestController
 //@NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Slf4j
+@SuppressWarnings({
+        "java:S101" // class _Retrieve...
+})
 class _RetrieveEngAddressServiceApiController
         extends _ApiController {
 
@@ -48,9 +57,14 @@ class _RetrieveEngAddressServiceApiController
     }
 
     // ----------------------------------------------------------------------------------------------------- /.../states
-    private Flux<State> getStatesPublisher() {
+    private Mono<StateEngListResponse> exchange(final StateEngListRequest request) {
         return new StateEngListRequest()
                 .exchange(webClient())
+                ;
+    }
+
+    private Flux<State> getStatePublisher() {
+        return exchange(new StateEngListRequest())
                 .flatMapMany(r -> Flux.fromIterable(r.getStateEngList()))
                 .map(State::newInstance)
                 .flatMap(s -> ReactorContextUtils.getRequestBaseUrl()
@@ -74,6 +88,42 @@ class _RetrieveEngAddressServiceApiController
                 ;
     }
 
+    private Flux<RepresentationModel<?>> getState2Publisher() {
+        return exchange(new StateEngListRequest())
+                .flatMapMany(r -> Flux.fromIterable(r.getStateEngList()))
+                .map(State2::newInstance)
+                .map(s -> {
+                    final var b = UriComponentsBuilder.fromPath(
+                            __RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES
+                    );
+                    final var l = List.of(
+                            Link.of(b.toUriString(), IanaLinkRelations.SELF),
+                            Link.of(b.pathSegment(__RetrieveEngAddressServiceApiConstants.REL_CITIES).toUriString(),
+                                    LinkRelation.of(__RetrieveEngAddressServiceApiConstants.REL_CITIES))
+                    );
+                    return s.build(l);
+                })
+                ;
+    }
+
+    private Flux<RepresentationModel<EntityModel<State2>>> getState3Publisher() {
+        return exchange(new StateEngListRequest())
+                .flatMapMany(r -> Flux.fromIterable(r.getStateEngList()))
+                .map(State2::newInstance)
+                .map(s -> {
+                    final var b = UriComponentsBuilder.fromPath(
+                            __RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES
+                    );
+                    final var l = List.of(
+                            Link.of(b.toUriString(), IanaLinkRelations.SELF),
+                            Link.of(b.pathSegment(__RetrieveEngAddressServiceApiConstants.REL_CITIES).toUriString(),
+                                    LinkRelation.of(__RetrieveEngAddressServiceApiConstants.REL_CITIES))
+                    );
+                    return s.build2(l);
+                })
+                ;
+    }
+
     @Operation(summary = "Reads all states.")
     @GetMapping(
             path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES,
@@ -83,7 +133,19 @@ class _RetrieveEngAddressServiceApiController
             }
     )
     Flux<State> readStates(final ServerWebExchange exchange) {
-        return getStatesPublisher();
+        return getStatePublisher();
+    }
+
+    @Operation(summary = "Reads all states.")
+    @GetMapping(
+            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES + "2",
+            produces = {
+                    MediaType.APPLICATION_NDJSON_VALUE,
+                    MediaTypes.HAL_JSON_VALUE
+            }
+    )
+    Flux<RepresentationModel<EntityModel<State2>>> readStates2(final ServerWebExchange exchange) {
+        return getState3Publisher();
     }
 
     @Operation(summary = "Reads a state.")
@@ -96,7 +158,7 @@ class _RetrieveEngAddressServiceApiController
     Mono<State> readState(
             @PathVariable(__RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME) final String stateName,
             final ServerWebExchange exchange) {
-        return getStatesPublisher()
+        return getStatePublisher()
                 .filter(s -> s.name().equals(stateName))
                 .single()
                 .onErrorResume(
@@ -546,7 +608,7 @@ class _RetrieveEngAddressServiceApiController
             }
     )
     Flux<City> readAllCities(final ServerWebExchange exchange) {
-        return getStatesPublisher()
+        return getStatePublisher()
                 .flatMapSequential(
                         s -> getCitiesPublisher(s.name()),
                         4
@@ -564,7 +626,7 @@ class _RetrieveEngAddressServiceApiController
             }
     )
     Flux<Road> readAllRoads(final ServerWebExchange exchange) {
-        return getStatesPublisher()
+        return getStatePublisher()
                 .flatMapSequential(
                         s -> getCitiesPublisher(s.name())
                                 .flatMapSequential(
@@ -586,7 +648,7 @@ class _RetrieveEngAddressServiceApiController
             }
     )
     Flux<District> readAllDistricts(final ServerWebExchange exchange) {
-        return getStatesPublisher()
+        return getStatePublisher()
                 .flatMapSequential(
                         s -> getCitiesPublisher(s.name())
                                 .flatMapSequential(

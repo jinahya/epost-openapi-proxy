@@ -4,10 +4,13 @@ import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area_
 import com.github.jinahya.epost.openapi.proxy.web.bind._ApiController_SpringBootIT;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.server.core.TypeReferences;
 
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 class _DownloadAreaCodeServiceApiController_SpringBootIT
@@ -18,16 +21,39 @@ class _DownloadAreaCodeServiceApiController_SpringBootIT
     @EnumSource(AreaCodeInfoRequest.DwldSe.class)
     @ParameterizedTest
     void readAreaCodeInfo__(final AreaCodeInfoRequest.DwldSe dwldSe) {
-        final var responseBody = webTestClient()
+        webTestClient()
                 .get()
                 .uri(b -> b.path(__DownloadAreaCodeServiceApiConstants.REQUEST_URI_DWLD_SE)
                         .build(dwldSe.value()))
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader().contentType(MediaTypes.HAL_JSON)
-                .expectBodyList(AreaCodeInfo.class)
-                .returnResult()
-                .getResponseBody();
-        assertValid(responseBody);
+                .expectBody(new TypeReferences.EntityModelType<AreaCodeInfo>() {
+                })
+                .consumeWith(r -> {
+                    final var responseBody = r.getResponseBody();
+                    assert responseBody != null;
+                    final var content = responseBody.getContent();
+                    assertValid(content);
+                })
+        ;
+    }
+
+    @Disabled("takes too long, baby")
+    @DisplayName("GET /.../areaCodeInfo/{dwldSe}/fileContent")
+    @EnumSource(AreaCodeInfoRequest.DwldSe.class)
+    @ParameterizedTest
+    void readAreaCodeInfoFileContent__(final AreaCodeInfoRequest.DwldSe dwldSe) {
+        webTestClient()
+                .get()
+                .uri(b -> b.path(__DownloadAreaCodeServiceApiConstants.REQUEST_URI_FILE_CONTENT)
+                        .build(dwldSe.value()))
+                .exchange()
+                .expectStatus().isOk()
+                .returnResult(DataBuffer.class)
+                .consumeWith(r -> {
+                    r.getResponseBody().blockLast();
+                })
+        ;
     }
 }

@@ -25,7 +25,7 @@ import java.util.function.Supplier;
 public abstract class AbstractTypeWrappingModel<
         SELF extends AbstractTypeWrappingModel<SELF, WRAPPED>,
         WRAPPED extends AbstractType<WRAPPED>>
-        extends AbstractModel<SELF> {
+        extends AbstractWrappingModel<SELF, WRAPPED> {
 
     @Serial
     private static final long serialVersionUID = 2185796969322484068L;

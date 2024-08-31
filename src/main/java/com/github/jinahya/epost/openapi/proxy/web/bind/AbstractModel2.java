@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.mediatype.hal.HalModelBuilder;
@@ -25,18 +26,19 @@ import java.util.function.Supplier;
 @SuppressWarnings({
         "java:S119" // <SELF ...>
 })
-public abstract class AbstractModel<SELF extends AbstractModel<SELF>>
-        extends RepresentationModel<SELF>
+public abstract class AbstractModel2<SELF extends AbstractModel2<SELF>>
         implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = 1775734949340833035L;
+    private static final long serialVersionUID = -2347216264885910369L;
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
-    protected static <T extends AbstractModel<T>> T newInstance(final Supplier<? extends T> initializer) {
+    protected static <T extends AbstractModel2> T newInstance(final Supplier<? extends T> initializer) {
         final T instance = Objects.requireNonNull(initializer, "initializer is null").get();
         return instance;
     }
+
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
     // -----------------------------------------------------------------------------------------------------------------
     public HalModelBuilder builder(final Iterable<Link> links) {
@@ -44,8 +46,13 @@ public abstract class AbstractModel<SELF extends AbstractModel<SELF>>
                 .links(links);
     }
 
-    public RepresentationModel<SELF> build(final Iterable<Link> links) {
+    public RepresentationModel<EntityModel<SELF>> build(final Iterable<Link> links) {
         return builder(links)
                 .build();
+    }
+
+    public <T extends RepresentationModel<T>> RepresentationModel<T> build2(final Iterable<Link> links) {
+        return builder(links)
+                .<T>build();
     }
 }

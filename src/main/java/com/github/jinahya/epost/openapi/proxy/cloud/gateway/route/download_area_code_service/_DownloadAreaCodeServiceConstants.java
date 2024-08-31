@@ -2,8 +2,14 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._RouteConstants;
 
+@SuppressWarnings({
+        "java:S101"
+})
 public final class _DownloadAreaCodeServiceConstants {
 
+    public static final String ROUTE_ID = "download_area_code_service";
+
+    // -----------------------------------------------------------------------------------------------------------------
     public static final String SERVICE_NAME = "downloadAreaCodeService";
 
     // -----------------------------------------------------------------------------------------------------------------
