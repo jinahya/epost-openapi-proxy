@@ -37,8 +37,8 @@ sequenceDiagram
   'fontFamily': 'monospace'
 }}%%
 sequenceDiagram
-    CLIENT->>PROXY(R): GET /postal/...?o..=...<br>HOST: <PROXY(R)>
-    PROXY(R)->>EPOST: (AddRequestParameter -> +?serviceKey)<br><br>GET /postal/...?serviceKey=...<br>HOST: <EPOST>
+    CLIENT->>PROXY(R): GET /postal/...<br>HOST: <PROXY(R)>
+    PROXY(R)->>EPOST: (AddRequestParameter -> +?serviceKey)<br><br>GET /postal/...?&serviceKey=...<br>HOST: <EPOST>
     EPOST-->>PROXY(R): 200 OK
     PROXY(R)-->>CLIENT: 200 OK<br><br>(LocalResponseCache <-)
 ```
@@ -53,7 +53,7 @@ sequenceDiagram
   'fontFamily': 'monospace'
 }}%%
 sequenceDiagram
-  CLIENT ->> PROXY(A): GET /api/...<br>HOST: <PROXY(R)>
+  CLIENT ->> PROXY(A): GET /api/...<br>HOST: <PROXY>
   PROXY(A) ->> PROXY(R): GET /postal/...<br>HOST: localhost
   PROXY(R) ->> EPOST: GET /postal/...?serviceKey=...<br>HOST: <EPOST><br>
   EPOST -->> PROXY(R): 200 OK
@@ -81,11 +81,10 @@ sequenceDiagram
 
 ### How to test
 
-발급받은 `인증키` 를 `SERVICE_KEY` 라는 이름의 환경 변수에 저장한다.
-
 ```commandline
 $ mvn clean test
 ```
+
 ### How to verify
 
 발급받은 `인증키` 를 `SERVICE_KEY` 라는 이름의 환경 변수에 저장한다.

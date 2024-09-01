@@ -47,33 +47,52 @@ import java.util.function.Consumer;
 class _DownloadAreaCodeServiceApiController
         extends _ApiController {
 
-    // -----------------------------------------------------------------------------------------------------------------
-    private Mono<AreaCodeInfoResponse> exchange(final String dwldSe) {
-        return AreaCodeInfoRequest.of(dwldSe)
-                .exchange(webClient());
-    }
-
-    private Iterable<Link> links(final String dwldSe, AreaCodeInfoResponse response) {
-        final var b = UriComponentsBuilder.fromPath(
-                __DownloadAreaCodeServiceApiConstants.REQUEST_URI_DWLD_SE
-        );
+    private static Iterable<Link> links(final AreaCodeInfoResponse response) {
+        final AreaCodeInfoRequest request = response.getRequestInstance();
         return List.of(
-                Link.of(b.build(dwldSe).toString())
+                Link.of(UriComponentsBuilder.fromPath(__DownloadAreaCodeServiceApiConstants.REQUEST_URI_DWLD_SE)
+                                .build(request.getDwldSe())
+                                .toString())
                         .withSelfRel(),
-                Link.of(b.pathSegment(__DownloadAreaCodeServiceApiConstants.PATH_SEGMENT_FILE_CONTENT)
-                                .build(dwldSe)
+                Link.of(UriComponentsBuilder.fromPath(__DownloadAreaCodeServiceApiConstants.REQUEST_URI_FILE_CONTENT)
+                                .build(request.getDwldSe())
                                 .toString())
                         .withRel(__DownloadAreaCodeServiceApiConstants.REL_FILE_CONTENT)
         );
     }
 
-    private Mono<RepresentationModel<EntityModel<AreaCodeInfoResponse>>> areaCodeInfoResponsePublisher(
-            final String dwldSe) {
-        return exchange(dwldSe)
-                .map(r -> r.cmmMsgHeader(null))
-                .map(r -> HalModelBuilder.halModelOf(r).links(links(dwldSe, r)).build());
+    private RepresentationModel<EntityModel<AreaCodeInfoResponse>> model(final AreaCodeInfoResponse response) {
+        response.setCmmMsgHeader(null);
+        return HalModelBuilder.halModelOf(response)
+                .links(links(response))
+                .build();
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
+    private Mono<AreaCodeInfoResponse> exchange(final String dwldSe) {
+        return exchange(AreaCodeInfoRequest.of(dwldSe));
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    @ApiResponse(content = {
+            @Content(schema = @Schema(implementation = AreaCodeInfoResponse.class))
+    })
+    @GetMapping(
+            path = {
+                    __DownloadAreaCodeServiceApiConstants.REQUEST_URI_AREA_CODE_INFO
+            },
+            produces = {
+                    MediaType.APPLICATION_NDJSON_VALUE
+            }
+    )
+    Flux<RepresentationModel<EntityModel<AreaCodeInfoResponse>>> readAreaCodeInfo(final ServerWebExchange exchange) {
+        return Flux.fromArray(AreaCodeInfoRequest.DwldSe.values())
+                .map(AreaCodeInfoRequest.DwldSe::value)
+                .flatMapSequential(this::exchange, 2)
+                .map(this::model);
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
     @ApiResponse(content = {
             @Content(schema = @Schema(implementation = AreaCodeInfoResponse.class))
     })
@@ -88,11 +107,13 @@ class _DownloadAreaCodeServiceApiController
     Mono<RepresentationModel<EntityModel<AreaCodeInfoResponse>>> readAreaCodeInfo(
             final ServerWebExchange exchange,
             @PathVariable(__DownloadAreaCodeServiceApiConstants.PATH_NAME_DWLD_SE) final String dwldSe) {
-        return areaCodeInfoResponsePublisher(dwldSe);
+        return exchange(AreaCodeInfoRequest.of(dwldSe))
+                .map(r -> r.cmmMsgHeader(null))
+                .map(this::model);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    private Flux<DataBuffer> getFileDataPublisher(final String dwldSe, final Consumer<? super String> consumer) {
+    private Flux<DataBuffer> getFileContentPublisher(final String dwldSe, final Consumer<? super String> consumer) {
         return exchange(dwldSe)
                 .map(AreaCodeInfoResponse::getFile)
                 .flatMapMany(f -> {
@@ -122,7 +143,7 @@ class _DownloadAreaCodeServiceApiController
             final Boolean attach,
             @RequestParam(value = __DownloadAreaCodeServiceApiConstants.PARAM_FILENAME, required = false)
             final String filename) {
-        return getFileDataPublisher(
+        return getFileContentPublisher(
                 dwldSe,
                 f -> {
                     // attach 가 true 이고 filename 혹은 f 가 present 할 경우,
