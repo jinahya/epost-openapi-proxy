@@ -38,7 +38,7 @@ sequenceDiagram
 }}%%
 sequenceDiagram
     CLIENT->>PROXY(R): GET /postal/...<br>HOST: <PROXY(R)>
-    PROXY(R)->>EPOST: (AddRequestParameter -> +?serviceKey)<br><br>GET /postal/...?&serviceKey=...<br>HOST: <EPOST>
+    PROXY(R)->>EPOST: (-> AddRequestParameter)<br><br>GET /postal/...?&serviceKey=...<br>HOST: <EPOST>
     EPOST-->>PROXY(R): 200 OK
     PROXY(R)-->>CLIENT: 200 OK<br><br>(LocalResponseCache <-)
 ```
