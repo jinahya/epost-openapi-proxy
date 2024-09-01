@@ -106,7 +106,6 @@ $ SERVICE_KEY='...==' mvn -Pfailsafe clean verify
 (본 모듈은 `@SpringBootApplication` 으로 annotate 된 class 를 (`main`이 아닌) `test` 모듈에 포함하고 있다.
 
 아래와 같이 실행한 후 [Swagger UI](http://localhost:8080/webjars/swagger-ui/index.html) 를 열어서 확인한다.
-아래와 같이 실행한 후 <a href="http://localhost:8080/webjars/swagger-ui/index.html" target="_blank">Swagger UI</a> 를 열어서 확인한다.
 
 ```commandline
 $ SERVICE_KEY='...==' mvn spring-boot:test-run
