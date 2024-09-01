@@ -38,7 +38,7 @@ sequenceDiagram
 }}%%
 sequenceDiagram
     CLIENT->>PROXY(R): GET /postal/...<br>HOST: <PROXY(R)>
-    PROXY(R)->>EPOST: (-> AddRequestParameter)<br><br>GET /postal/...?&serviceKey=...<br>HOST: <EPOST>
+    PROXY(R)->>EPOST: (-> AddRequestParameter)<br><br>GET /postal/...?&serviceKey=...<br>Host: <EPOST>
     EPOST-->>PROXY(R): 200 OK
     PROXY(R)-->>CLIENT: 200 OK<br><br>(LocalResponseCache <-)
 ```
@@ -54,8 +54,8 @@ sequenceDiagram
 }}%%
 sequenceDiagram
   CLIENT ->> PROXY(A): GET /api/...<br>HOST: <PROXY>
-  PROXY(A) ->> PROXY(R): GET /postal/...<br>HOST: localhost
-  PROXY(R) ->> EPOST: GET /postal/...?serviceKey=...<br>HOST: <EPOST><br>
+  PROXY(A) ->> PROXY(R): GET /postal/...<br>Host: localhost
+  PROXY(R) ->> EPOST: GET /postal/...?serviceKey=...<br>Host: <EPOST>
   EPOST -->> PROXY(R): 200 OK
   PROXY(R) -->> PROXY(A): 200 OK
   PROXY(A) -->> CLIENT: 200 OK
