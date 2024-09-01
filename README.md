@@ -81,8 +81,16 @@ sequenceDiagram
 
 ### How to test
 
+발급받은 `인증키` 를 `SERVICE_KEY` 라는 이름의 환경 변수에 저장한다.
+
 ```commandline
-$ mvn clean test
+$ SERVICE_KEY=<your-own-URL-DECODED-service-key> mvn clean test
+```
+
+e.g.
+
+```commandline
+$ SERVICE_KEY='...==' mvn clean test
 ```
 
 ### How to verify
