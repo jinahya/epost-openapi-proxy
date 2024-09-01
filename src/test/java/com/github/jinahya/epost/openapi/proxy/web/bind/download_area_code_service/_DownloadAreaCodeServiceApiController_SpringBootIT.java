@@ -1,9 +1,11 @@
 package com.github.jinahya.epost.openapi.proxy.web.bind.download_area_code_service;
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area_code_service.AreaCodeInfoRequest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area_code_service.AreaCodeInfoResponse;
 import com.github.jinahya.epost.openapi.proxy.web.bind._ApiController_SpringBootIT;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,7 +14,10 @@ import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.core.TypeReferences;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
+@Slf4j
 class _DownloadAreaCodeServiceApiController_SpringBootIT
         extends _ApiController_SpringBootIT<_DownloadAreaCodeServiceApiController> {
 
@@ -28,12 +33,13 @@ class _DownloadAreaCodeServiceApiController_SpringBootIT
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader().contentType(MediaTypes.HAL_JSON)
-                .expectBody(new TypeReferences.EntityModelType<AreaCodeInfo>() {
+                .expectBody(new TypeReferences.EntityModelType<AreaCodeInfoResponse>() {
                 })
                 .consumeWith(r -> {
                     final var responseBody = r.getResponseBody();
                     assert responseBody != null;
                     final var content = responseBody.getContent();
+                    assertThat(content).isNotNull();
                     assertValid(content);
                 })
         ;

@@ -11,12 +11,6 @@ spring:
           predicates:
             - Method=GET
             - Path=/postal/downloadAreaCodeService/downloadAreaCodeService/{operation}
-        # ------------------------------------------------------------------------------- retrieve_deliv_area_cd_service
-        - id: retrieve_deliv_area_cd_service # https://www.data.go.kr/data/15000302/openapi.do
-          uri: http://openapi.epost.go.kr
-          predicates:
-            - Method=GET
-            - Path=/postal/retrieveDelivAreaCdService/retrieveDelivAreaCdService/{operation}
         # --------------------------------------------------------------------------------- retrieve_eng_address_service
         - id: retrieve_eng_address_service
           uri: http://openapi.epost.go.kr
@@ -52,6 +46,5 @@ spring:
     web-application-type: reactive
 
 springdoc:
-#  enable-hateoas: false
-  enable-hateoas: true
+  enable-hateoas: false
   packagesToScan: com.github.jinahya.epost.openapi.proxy

@@ -1,9 +1,12 @@
 package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_new_adress_area_cd_search_all_service;
 
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_search_all_service.NewAddressListAreaCdSearchAllResponse;
 import com.github.jinahya.epost.openapi.proxy.web.bind._ApiController_SpringBootIT;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.core.TypeReferences;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
@@ -17,7 +20,8 @@ class _RetrieveNewAdressAreaCdSearchAllServiceApiController_SpringBootIT
         extends _ApiController_SpringBootIT<_RetrieveNewAdressAreaCdSearchAllServiceApiController> {
 
     // -----------------------------------------------------------------------------------------------------------------
-    static List<Address> search(final WebTestClient client, final String srchwrd) {
+    static List<EntityModel<NewAddressListAreaCdSearchAllResponse.NewAddressListAreaCdSearchAll>> search(
+            final WebTestClient client, final String srchwrd) {
         return Objects.requireNonNull(
                 client
                         .get()
@@ -28,7 +32,9 @@ class _RetrieveNewAdressAreaCdSearchAllServiceApiController_SpringBootIT
                         .exchange()
                         .expectStatus().isOk()
                         .expectHeader().contentType(MediaType.APPLICATION_NDJSON)
-                        .expectBodyList(Address.class)
+                        .expectBodyList(
+                                new TypeReferences.EntityModelType<NewAddressListAreaCdSearchAllResponse.NewAddressListAreaCdSearchAll>() {
+                                })
                         .returnResult()
                         .getResponseBody()
         );

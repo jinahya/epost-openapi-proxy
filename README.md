@@ -14,12 +14,6 @@ using [Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway).
 
 ```mermaid
 %%{init: {
-  'theme': 'forest',
-  'themeVariables': {
-    'primaryColor': '#BB2528',
-    'primaryTextColor': '#fff',
-    'background': '#BB2528'
-   },
   'sequence': {
     'messageAlign': 'left'
    },
@@ -37,12 +31,6 @@ sequenceDiagram
 
 ```mermaid
 %%{init: {
-  'theme': 'forest',
-  'themeVariables': {
-    'primaryColor': '#BB2528',
-    'primaryTextColor': '#fff',
-    'background': '#BB2528'
-   },
   'sequence': {
     'messageAlign': 'left'
    },
@@ -59,12 +47,6 @@ sequenceDiagram
 
 ```mermaid
 %%{init: {
-  'theme': 'forest',
-  'themeVariables': {
-    'primaryColor': '#BB2528',
-    'primaryTextColor': '#fff',
-    'background': '#BB2528'
-   },
   'sequence': {
     'messageAlign': 'left'
    },
@@ -86,7 +68,6 @@ sequenceDiagram
 | api              | service              | route.id                                         | notes |
 |------------------|----------------------|--------------------------------------------------|-------|
 | [우편번호 다운로드 서비스]  | 우편번호 DB 다운로드 서비스     | `download_area_code_service`                     |       |      
-| [집배구 구분코드 조회서비스] | 집배구 구분코드 조회서비스       | `retrieve_deliv_area_cd_service`                 |       |      
 | [영문우편번호조회서비스]    | 영문 우편번호 조회 서비스       | `retrieve_eng_address_service`                   |       |      
 | [지번주소조회 서비스]     | 지번주소 5자리 우편번호 조회 서비스 | `retrieve_lot_number_adress_area_cd_service`     |       |      
 | [우편번호 정보조회]      | 통합검색 5자리 우편번호 조회서비스  | `retrieve_new_adress_area_cd_search_all_service` |       |      

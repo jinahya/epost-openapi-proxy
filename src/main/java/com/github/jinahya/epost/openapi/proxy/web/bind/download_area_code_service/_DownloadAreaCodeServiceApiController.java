@@ -16,6 +16,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.mediatype.hal.HalModelBuilder;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -52,27 +53,29 @@ class _DownloadAreaCodeServiceApiController
                 .exchange(webClient());
     }
 
-    private Mono<RepresentationModel<EntityModel<AreaCodeInfo2>>> getAreaCodeInfoPublisher(final String dwldSe) {
+    private Iterable<Link> links(final String dwldSe, AreaCodeInfoResponse response) {
+        final var b = UriComponentsBuilder.fromPath(
+                __DownloadAreaCodeServiceApiConstants.REQUEST_URI_DWLD_SE
+        );
+        return List.of(
+                Link.of(b.build(dwldSe).toString())
+                        .withSelfRel(),
+                Link.of(b.pathSegment(__DownloadAreaCodeServiceApiConstants.PATH_SEGMENT_FILE_CONTENT)
+                                .build(dwldSe)
+                                .toString())
+                        .withRel(__DownloadAreaCodeServiceApiConstants.REL_FILE_CONTENT)
+        );
+    }
+
+    private Mono<RepresentationModel<EntityModel<AreaCodeInfoResponse>>> areaCodeInfoResponsePublisher(
+            final String dwldSe) {
         return exchange(dwldSe)
-                .map(AreaCodeInfo2::newInstance)
-                .map(m -> {
-                    final var b = UriComponentsBuilder.fromPath(
-                            __DownloadAreaCodeServiceApiConstants.REQUEST_URI_DWLD_SE
-                    );
-                    final var l = List.of(
-                            Link.of(b.build(dwldSe).toString())
-                                    .withSelfRel(),
-                            Link.of(b.pathSegment(__DownloadAreaCodeServiceApiConstants.PATH_SEGMENT_FILE_CONTENT)
-                                            .build(dwldSe)
-                                            .toString())
-                                    .withRel(__DownloadAreaCodeServiceApiConstants.REL_FILE_CONTENT)
-                    );
-                    return m.build2(l);
-                });
+                .map(r -> r.cmmMsgHeader(null))
+                .map(r -> HalModelBuilder.halModelOf(r).links(links(dwldSe, r)).build());
     }
 
     @ApiResponse(content = {
-            @Content(schema = @Schema(implementation = AreaCodeInfo2.class))
+            @Content(schema = @Schema(implementation = AreaCodeInfoResponse.class))
     })
     @GetMapping(
             path = {
@@ -82,11 +85,10 @@ class _DownloadAreaCodeServiceApiController
                     MediaTypes.HAL_JSON_VALUE
             }
     )
-//    Mono<AreaCodeInfo> readAreaCodeInfo(final ServerWebExchange exchange,
-    Mono<RepresentationModel<EntityModel<AreaCodeInfo2>>> readAreaCodeInfo(
+    Mono<RepresentationModel<EntityModel<AreaCodeInfoResponse>>> readAreaCodeInfo(
             final ServerWebExchange exchange,
             @PathVariable(__DownloadAreaCodeServiceApiConstants.PATH_NAME_DWLD_SE) final String dwldSe) {
-        return getAreaCodeInfoPublisher(dwldSe);
+        return areaCodeInfoResponsePublisher(dwldSe);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

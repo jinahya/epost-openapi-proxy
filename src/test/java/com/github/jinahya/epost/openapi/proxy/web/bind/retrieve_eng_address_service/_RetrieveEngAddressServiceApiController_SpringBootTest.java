@@ -68,8 +68,8 @@ class _RetrieveEngAddressServiceApiController_SpringBootTest
                         .exchangeFunction(exchangeFunction)
                         .build()
         );
-        // https://stackoverflow.com/a/68937805/330457
-        controllerInstance().readStates(null)
-                .blockLast();
+//        // https://stackoverflow.com/a/68937805/330457
+//        controllerInstance().readStates(null)
+//                .blockLast();
     }
 }
