@@ -4,9 +4,10 @@ import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area_
 import com.github.jinahya.epost.openapi.proxy.web.bind.__WebBindConstants;
 
 @SuppressWarnings({
-        "java:S101" // class __Download...
+        "java:S101", // class _Api...
+        "java:S125" // ------- ....
 })
-final class __DownloadAreaCodeServiceApiConstants {
+final class _ApiConstants {
 
     static final String TAG = "DownloadAreaCodeService";
 
@@ -42,7 +43,7 @@ final class __DownloadAreaCodeServiceApiConstants {
     static final String REQUEST_URI_FILE_CONTENT = REQUEST_URI_DWLD_SE + '/' + PATH_SEGMENT_FILE_CONTENT;
 
     // -----------------------------------------------------------------------------------------------------------------
-    private __DownloadAreaCodeServiceApiConstants() {
+    private _ApiConstants() {
         throw new AssertionError("instantiation is not allowed");
     }
 }

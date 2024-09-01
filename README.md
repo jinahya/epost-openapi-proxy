@@ -167,6 +167,7 @@ https://github.com/jinahya/epost-openapi-proxy/blob/75b114f36b20a12d1ba93ead7681
 
 * [How to encode the filename parameter of Content-Disposition header in HTTP?](https://stackoverflow.com/q/93551/330457)
 * [HATEOAS: absolute or relative URLs?](https://stackoverflow.com/q/2239405/330457)
+* [Spring Boot Unit Test ignores logging.level](https://stackoverflow.com/a/41639534/330457)
 
 ### [developers.mozilla.org](https://developer.mozilla.org) ([en_US](https://developer.mozilla.org/en_US/))
 

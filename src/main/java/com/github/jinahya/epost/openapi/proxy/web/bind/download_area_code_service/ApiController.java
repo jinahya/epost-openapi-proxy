@@ -37,27 +37,24 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-@Tag(name = __DownloadAreaCodeServiceApiConstants.TAG)
+@Tag(name = _ApiConstants.TAG)
 @RestController
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Slf4j
-@SuppressWarnings({
-        "java:S101" // class _Download
-})
-class _DownloadAreaCodeServiceApiController
+class ApiController
         extends _ApiController {
 
     private static Iterable<Link> links(final AreaCodeInfoResponse response) {
         final AreaCodeInfoRequest request = response.getRequestInstance();
         return List.of(
-                Link.of(UriComponentsBuilder.fromPath(__DownloadAreaCodeServiceApiConstants.REQUEST_URI_DWLD_SE)
+                Link.of(UriComponentsBuilder.fromPath(_ApiConstants.REQUEST_URI_DWLD_SE)
                                 .build(request.getDwldSe())
                                 .toString())
                         .withSelfRel(),
-                Link.of(UriComponentsBuilder.fromPath(__DownloadAreaCodeServiceApiConstants.REQUEST_URI_FILE_CONTENT)
+                Link.of(UriComponentsBuilder.fromPath(_ApiConstants.REQUEST_URI_FILE_CONTENT)
                                 .build(request.getDwldSe())
                                 .toString())
-                        .withRel(__DownloadAreaCodeServiceApiConstants.REL_FILE_CONTENT)
+                        .withRel(_ApiConstants.REL_FILE_CONTENT)
         );
     }
 
@@ -79,7 +76,7 @@ class _DownloadAreaCodeServiceApiController
     })
     @GetMapping(
             path = {
-                    __DownloadAreaCodeServiceApiConstants.REQUEST_URI_AREA_CODE_INFO
+                    _ApiConstants.REQUEST_URI_AREA_CODE_INFO
             },
             produces = {
                     MediaType.APPLICATION_NDJSON_VALUE
@@ -98,7 +95,7 @@ class _DownloadAreaCodeServiceApiController
     })
     @GetMapping(
             path = {
-                    __DownloadAreaCodeServiceApiConstants.REQUEST_URI_DWLD_SE
+                    _ApiConstants.REQUEST_URI_DWLD_SE
             },
             produces = {
                     MediaTypes.HAL_JSON_VALUE
@@ -106,7 +103,7 @@ class _DownloadAreaCodeServiceApiController
     )
     Mono<RepresentationModel<EntityModel<AreaCodeInfoResponse>>> readAreaCodeInfo(
             final ServerWebExchange exchange,
-            @PathVariable(__DownloadAreaCodeServiceApiConstants.PATH_NAME_DWLD_SE) final String dwldSe) {
+            @PathVariable(_ApiConstants.PATH_NAME_DWLD_SE) final String dwldSe) {
         return exchange(AreaCodeInfoRequest.of(dwldSe))
                 .map(r -> r.cmmMsgHeader(null))
                 .map(this::model);
@@ -130,7 +127,7 @@ class _DownloadAreaCodeServiceApiController
 
     @GetMapping(
             path = {
-                    __DownloadAreaCodeServiceApiConstants.REQUEST_URI_FILE_CONTENT
+                    _ApiConstants.REQUEST_URI_FILE_CONTENT
             },
             produces = {
                     MediaType.APPLICATION_OCTET_STREAM_VALUE
@@ -138,10 +135,10 @@ class _DownloadAreaCodeServiceApiController
     )
     Flux<DataBuffer> readAreaCodeInfoFileContent(
             final ServerWebExchange exchange,
-            @PathVariable(__DownloadAreaCodeServiceApiConstants.PATH_NAME_DWLD_SE) final String dwldSe,
-            @RequestParam(value = __DownloadAreaCodeServiceApiConstants.PARAM_ATTACH, required = false)
+            @PathVariable(_ApiConstants.PATH_NAME_DWLD_SE) final String dwldSe,
+            @RequestParam(value = _ApiConstants.PARAM_ATTACH, required = false)
             final Boolean attach,
-            @RequestParam(value = __DownloadAreaCodeServiceApiConstants.PARAM_FILENAME, required = false)
+            @RequestParam(value = _ApiConstants.PARAM_FILENAME, required = false)
             final String filename) {
         return getFileContentPublisher(
                 dwldSe,

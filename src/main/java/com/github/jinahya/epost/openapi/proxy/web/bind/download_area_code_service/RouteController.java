@@ -12,13 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
-@Tag(name = __DownloadAreaCodeServiceApiConstants.TAG)
+@Tag(name = _ApiConstants.TAG)
 @RestController
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
-@SuppressWarnings({
-        "java:S101" // class _Download
-})
-class _DownloadAreaCodeServiceRouteController {
+class RouteController {
 
     @GetMapping(
             path = _DownloadAreaCodeServiceConstants.REQUEST_URI_GET_AREA_CODE_INFO,
