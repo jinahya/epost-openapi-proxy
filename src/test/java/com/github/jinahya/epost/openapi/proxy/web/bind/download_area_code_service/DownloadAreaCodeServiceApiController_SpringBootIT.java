@@ -25,8 +25,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Slf4j
-class ApiController_SpringBootIT
-        extends _ApiController_SpringBootIT<ApiController> {
+class DownloadAreaCodeServiceApiController_SpringBootIT
+        extends _ApiController_SpringBootIT<DownloadAreaCodeServiceApiController> {
 
     // ----------------------------------------------------------------------------------------------- /.../areaCodeInfo
     @DisplayName("GET /.../areaCodeInfo")
@@ -34,7 +34,7 @@ class ApiController_SpringBootIT
     void readAreaCodeInfo__() {
         webTestClient()
                 .get()
-                .uri(b -> b.path(_ApiConstants.REQUEST_URI_AREA_CODE_INFO).build())
+                .uri(b -> b.path(_DownloadAreaCodeServiceApiConstants.REQUEST_URI_AREA_CODE_INFO).build())
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader().contentType(MediaType.APPLICATION_NDJSON)
@@ -59,7 +59,7 @@ class ApiController_SpringBootIT
     void readAreaCodeInfo__(final AreaCodeInfoRequest.DwldSe dwldSe) {
         webTestClient()
                 .get()
-                .uri(b -> b.path(_ApiConstants.REQUEST_URI_DWLD_SE).build(dwldSe.value()))
+                .uri(b -> b.path(_DownloadAreaCodeServiceApiConstants.REQUEST_URI_DWLD_SE).build(dwldSe.value()))
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader().contentType(MediaTypes.HAL_JSON)
@@ -86,7 +86,7 @@ class ApiController_SpringBootIT
                 .setLogLevel(Logger.ROOT_LOGGER_NAME, LogLevel.ERROR);
         webTestClient()
                 .get()
-                .uri(b -> b.path(_ApiConstants.REQUEST_URI_FILE_CONTENT).build(dwldSe.value()))
+                .uri(b -> b.path(_DownloadAreaCodeServiceApiConstants.REQUEST_URI_FILE_CONTENT).build(dwldSe.value()))
                 .exchange()
                 .expectStatus().isOk()
                 .returnResult(DataBuffer.class)

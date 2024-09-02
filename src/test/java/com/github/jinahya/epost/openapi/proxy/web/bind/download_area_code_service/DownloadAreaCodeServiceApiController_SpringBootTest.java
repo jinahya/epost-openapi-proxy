@@ -26,12 +26,12 @@ import java.util.stream.Stream;
 
 @EnabledIfEnvironmentVariable(named = _TestConstants.ENVIRONMENT_VARIABLE_SERVICE_KEY, matches = ".+")
 @ContextConfiguration(classes = {
-        ApiController.class
+        DownloadAreaCodeServiceApiController.class
 })
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Slf4j
-class ApiController_SpringBootTest
-        extends _ApiController_SpringBootTest<ApiController> {
+class DownloadAreaCodeServiceApiController_SpringBootTest
+        extends _ApiController_SpringBootTest<DownloadAreaCodeServiceApiController> {
 
     private static String xmlRouteResName(final String dwldSeValue) {
         return '/' + _DownloadAreaCodeServiceConstants.ROUTE_ID + "/getAreaCodeInfo_response" + dwldSeValue + ".xml";
@@ -43,11 +43,11 @@ class ApiController_SpringBootTest
 
     private static Stream<String> xmlRouteResNameStream() {
         return Stream.of(AreaCodeInfoRequest.DwldSe.values())
-                .map(ApiController_SpringBootTest::xmlRouteResName);
+                .map(DownloadAreaCodeServiceApiController_SpringBootTest::xmlRouteResName);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    @DisplayName("GET " + _ApiConstants.REQUEST_URI_AREA_CODE_INFO)
+    @DisplayName("GET " + _DownloadAreaCodeServiceApiConstants.REQUEST_URI_AREA_CODE_INFO)
     @Test
     void __() {
         mutateControllerInstanceWebClientWith(r -> {
@@ -70,7 +70,7 @@ class ApiController_SpringBootTest
                 .readAreaCodeInfo(
                         MockServerWebExchange.from(
                                 MockServerHttpRequest
-                                        .get(_ApiConstants.REQUEST_URI_AREA_CODE_INFO)
+                                        .get(_DownloadAreaCodeServiceApiConstants.REQUEST_URI_AREA_CODE_INFO)
                                         .build()
                         )
                 )
@@ -88,7 +88,7 @@ class ApiController_SpringBootTest
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    @DisplayName("GET" + _ApiConstants.REQUEST_URI_DWLD_SE)
+    @DisplayName("GET" + _DownloadAreaCodeServiceApiConstants.REQUEST_URI_DWLD_SE)
     @EnumSource(AreaCodeInfoRequest.DwldSe.class)
     @ParameterizedTest
     void __(final AreaCodeInfoRequest.DwldSe dwldSe) {
@@ -107,7 +107,7 @@ class ApiController_SpringBootTest
                 .readAreaCodeInfo(
                         MockServerWebExchange.from(
                                 MockServerHttpRequest
-                                        .get(_ApiConstants.REQUEST_URI_DWLD_SE, dwldSe.value())
+                                        .get(_DownloadAreaCodeServiceApiConstants.REQUEST_URI_DWLD_SE, dwldSe.value())
                                         .build()
                         ),
                         dwldSe.value()

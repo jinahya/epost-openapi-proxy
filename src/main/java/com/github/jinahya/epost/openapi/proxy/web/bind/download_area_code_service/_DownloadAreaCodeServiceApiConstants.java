@@ -7,7 +7,7 @@ import com.github.jinahya.epost.openapi.proxy.web.bind.__WebBindConstants;
         "java:S101", // class _Api...
         "java:S125" // ------- ....
 })
-final class _ApiConstants {
+final class _DownloadAreaCodeServiceApiConstants {
 
     static final String TAG = "DownloadAreaCodeService";
 
@@ -43,7 +43,7 @@ final class _ApiConstants {
     static final String REQUEST_URI_FILE_CONTENT = REQUEST_URI_DWLD_SE + '/' + PATH_SEGMENT_FILE_CONTENT;
 
     // -----------------------------------------------------------------------------------------------------------------
-    private _ApiConstants() {
+    private _DownloadAreaCodeServiceApiConstants() {
         throw new AssertionError("instantiation is not allowed");
     }
 }
