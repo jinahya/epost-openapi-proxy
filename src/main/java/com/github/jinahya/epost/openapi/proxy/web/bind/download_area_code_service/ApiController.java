@@ -15,8 +15,6 @@ import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.MediaTypes;
-import org.springframework.hateoas.RepresentationModel;
-import org.springframework.hateoas.mediatype.hal.HalModelBuilder;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -58,11 +56,9 @@ class ApiController
         );
     }
 
-    private RepresentationModel<EntityModel<AreaCodeInfoResponse>> model(final AreaCodeInfoResponse response) {
+    private EntityModel<AreaCodeInfoResponse> model(final AreaCodeInfoResponse response) {
         response.setCmmMsgHeader(null);
-        return HalModelBuilder.halModelOf(response)
-                .links(links(response))
-                .build();
+        return EntityModel.of(response, links(response));
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -82,7 +78,7 @@ class ApiController
                     MediaType.APPLICATION_NDJSON_VALUE
             }
     )
-    Flux<RepresentationModel<EntityModel<AreaCodeInfoResponse>>> readAreaCodeInfo(final ServerWebExchange exchange) {
+    Flux<EntityModel<AreaCodeInfoResponse>> readAreaCodeInfo(final ServerWebExchange exchange) {
         return Flux.fromArray(AreaCodeInfoRequest.DwldSe.values())
                 .map(AreaCodeInfoRequest.DwldSe::value)
                 .flatMapSequential(this::exchange, 2)
@@ -101,7 +97,7 @@ class ApiController
                     MediaTypes.HAL_JSON_VALUE
             }
     )
-    Mono<RepresentationModel<EntityModel<AreaCodeInfoResponse>>> readAreaCodeInfo(
+    Mono<EntityModel<AreaCodeInfoResponse>> readAreaCodeInfo(
             final ServerWebExchange exchange,
             @PathVariable(_ApiConstants.PATH_NAME_DWLD_SE) final String dwldSe) {
         return exchange(AreaCodeInfoRequest.of(dwldSe))
@@ -136,10 +132,8 @@ class ApiController
     Flux<DataBuffer> readAreaCodeInfoFileContent(
             final ServerWebExchange exchange,
             @PathVariable(_ApiConstants.PATH_NAME_DWLD_SE) final String dwldSe,
-            @RequestParam(value = _ApiConstants.PARAM_ATTACH, required = false)
-            final Boolean attach,
-            @RequestParam(value = _ApiConstants.PARAM_FILENAME, required = false)
-            final String filename) {
+            @RequestParam(value = _ApiConstants.PARAM_ATTACH, required = false) final Boolean attach,
+            @RequestParam(value = _ApiConstants.PARAM_FILENAME, required = false) final String filename) {
         return getFileContentPublisher(
                 dwldSe,
                 f -> {

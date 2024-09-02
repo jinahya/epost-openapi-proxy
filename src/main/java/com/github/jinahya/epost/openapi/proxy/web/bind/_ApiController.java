@@ -30,7 +30,6 @@ import java.util.function.UnaryOperator;
 })
 // https://github.com/spring-projects/spring-boot/issues/41862
 public abstract class _ApiController {
-//        implements ApplicationListener<ReactiveWebServerInitializedEvent> {
 
     // -----------------------------------------------------------------------------------------------------------------
     private static final Map<Class<?>, ResolvableType> RESOLVABLE_TYPES = new ConcurrentHashMap<>();
@@ -69,7 +68,7 @@ public abstract class _ApiController {
     }
 
     // for mutating in the @SpringBootTest
-    void mutateWebClient(final UnaryOperator<WebClient> operator) {
+    final void mutateWebClient(final UnaryOperator<WebClient> operator) {
         webClient = Objects.requireNonNull(operator, "operator is null").apply(webClient());
     }
 
@@ -89,9 +88,9 @@ public abstract class _ApiController {
     // -----------------------------------------------------------------------------------------------------------------
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.NONE)
-    WebServer webServer;
+    private WebServer webServer;
 
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.NONE)
-    WebClient webClient;
+    private WebClient webClient;
 }

@@ -1,0 +1,4 @@
+{"file":"http://www.epost.go.kr/search/areacd/zipcode_DB.zip","_links":{"self":{"href":"/api/downloadAreaCodeService/areaCodeInfo/1"},"fileContent":{"href":"/api/downloadAreaCodeService/areaCodeInfo/1/fileContent"}}}
+{"file":"http://www.epost.go.kr/search/areacd/areacd_chgaddr_DB.zip","_links":{"self":{"href":"/api/downloadAreaCodeService/areaCodeInfo/2"},"fileContent":{"href":"/api/downloadAreaCodeService/areaCodeInfo/2/fileContent"}}}
+{"file":"http://www.epost.go.kr/search/areacd/areacd_rangeaddr_DB.zip","_links":{"self":{"href":"/api/downloadAreaCodeService/areaCodeInfo/3"},"fileContent":{"href":"/api/downloadAreaCodeService/areaCodeInfo/3/fileContent"}}}
+{"file":"http://www.epost.go.kr/search/areacd/areacd_pobox_DB.zip","_links":{"self":{"href":"/api/downloadAreaCodeService/areaCodeInfo/4"},"fileContent":{"href":"/api/downloadAreaCodeService/areaCodeInfo/4/fileContent"}}}

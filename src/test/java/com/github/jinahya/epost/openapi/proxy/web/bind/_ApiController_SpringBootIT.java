@@ -46,6 +46,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Slf4j
 public abstract class _ApiController_SpringBootIT<CONTROLLER extends _ApiController> {
 
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
+
+    // -----------------------------------------------------------------------------------------------------------------
     @PostConstruct
     private void doOnPostConstruct() {
         // https://stackoverflow.com/a/48655749/330457
@@ -55,6 +58,12 @@ public abstract class _ApiController_SpringBootIT<CONTROLLER extends _ApiControl
                 .build()
                 .mutateWith(hypermediaWebTestClientConfigurer)
         ;
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    @Test
+    final void doNotBother() {
+        // https://youtrack.jetbrains.com/issue/IDEA-357194/Abstract-test-class-with-no-test-method-doesnt-run
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -78,14 +87,15 @@ public abstract class _ApiController_SpringBootIT<CONTROLLER extends _ApiControl
     }
 
     // ------------------------------------------------------------------------------------------------------- validator
-    protected <T> T assertValid(final T object) {
+    protected final <T> T assertValid(final T object) {
         Objects.requireNonNull(object, "object is null");
         assertThat(validator().validate(object))
+                .as("constraint violations of %1$s", object)
                 .isEmpty();
         return object;
     }
 
-    protected <T extends AbstractResponseType<T>> T assertSucceeded(final T response) {
+    protected final <T extends AbstractResponseType<T>> T assertSucceeded(final T response) {
         assertThat(response.getCmmMsgHeader()).isNotNull().satisfies(h -> {
             assertThat(h.isSucceeded()).isTrue();
             assertThat(h.isReturnCode00()).isTrue();
@@ -93,12 +103,6 @@ public abstract class _ApiController_SpringBootIT<CONTROLLER extends _ApiControl
             log.debug("responseTimeAsLocalDateTime: {}", h.getResponseTimeAsLocalDateTime());
         });
         return response;
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    @Test
-    void dontBother() {
-        // https://youtrack.jetbrains.com/issue/IDEA-357194/Abstract-test-class-with-no-test-method-doesnt-run
     }
 
     // -----------------------------------------------------------------------------------------------------------------

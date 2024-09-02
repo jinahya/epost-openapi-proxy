@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AreaCodeInfoResponse>
+  <cmmMsgHeader>
+    <requestMsgId></requestMsgId>
+    <responseMsgId></responseMsgId>
+    <responseTime>20240902:110758593</responseTime>
+    <successYN>Y</successYN>
+    <returnCode>00</returnCode>
+    <errMsg></errMsg>
+  </cmmMsgHeader>
+  <file>http://www.epost.go.kr/search/areacd/areacd_pobox_DB.zip</file>
+</AreaCodeInfoResponse>

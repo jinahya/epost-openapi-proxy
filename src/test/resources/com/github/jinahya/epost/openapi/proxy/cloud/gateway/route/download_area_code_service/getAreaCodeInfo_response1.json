@@ -1,0 +1,13 @@
+{
+  "AreaCodeInfoResponse": {
+    "cmmMsgHeader": {
+      "requestMsgId": "",
+      "responseMsgId": "",
+      "responseTime": "20240902:110818619",
+      "successYN": "Y",
+      "returnCode": "00",
+      "errMsg": ""
+    },
+    "file": "http://www.epost.go.kr/search/areacd/zipcode_DB.zip"
+  }
+}

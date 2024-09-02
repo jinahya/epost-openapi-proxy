@@ -16,12 +16,17 @@ import org.springframework.boot.autoconfigure.validation.ValidationAutoConfigura
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.ResolvableType;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.core.io.buffer.DataBufferUtils;
+import org.springframework.core.io.buffer.DefaultDataBufferFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.reactive.function.client.ExchangeFunction;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
 
+import java.io.IOException;
 import java.util.Objects;
-import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,13 +47,15 @@ import static org.assertj.core.api.Assertions.assertThat;
                 Application.class
         }
 )
-@SpringBootTest//(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Slf4j
 @SuppressWarnings({
         "java:S119"
 })
 public abstract class _ApiController_SpringBootTest<CONTROLLER extends _ApiController> {
+
+    static final String RESOURCE_PREFIX_ROUTE = "/com/github/jinahya/epost/openapi/proxy/cloud/gateway/route";
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
@@ -66,7 +73,7 @@ public abstract class _ApiController_SpringBootTest<CONTROLLER extends _ApiContr
 
     // -----------------------------------------------------------------------------------------------------------------
     @Test
-    void dontBother() {
+    final void doNotBother() {
         // https://youtrack.jetbrains.com/issue/IDEA-357194/Abstract-test-class-with-no-test-method-doesnt-run
         log.debug("controllerInstance: {}", controllerInstance);
     }
@@ -91,10 +98,40 @@ public abstract class _ApiController_SpringBootTest<CONTROLLER extends _ApiContr
         return controllerClass;
     }
 
+    protected Flux<DataBuffer> resourceDataPublisher(final String name) {
+        final var resource = controllerClass().getResourceAsStream(name);
+        assertThat(resource)
+                .as("resource for '" + name + "'")
+                .isNotNull();
+        return DataBufferUtils.read(
+                        new InputStreamResource(resource),
+                        DefaultDataBufferFactory.sharedInstance,
+                        1024
+                )
+                .doFinally(s -> {
+                    try {
+                        resource.close();
+                    } catch (final IOException ioe) {
+                        throw new RuntimeException(ioe);
+                    }
+                });
+    }
+
+    /**
+     * Loads the resource of specified name under the {@value #RESOURCE_PREFIX_ROUTE} path.
+     *
+     * @param name the sub-resource name. e.g. {@code /some/other}.
+     * @return a data flux of specified resource.
+     */
+    protected Flux<DataBuffer> routeResourceDataPublisher(final String name) {
+        return resourceDataPublisher(RESOURCE_PREFIX_ROUTE + name);
+    }
+
     // ------------------------------------------------------------------------------------------------------- validator
     protected <T> T assertValid(final T object) {
         Objects.requireNonNull(object, "object is null");
         assertThat(validator().validate(object))
+                .as("constraint violations of %1$s", object)
                 .isEmpty();
         return object;
     }
@@ -110,20 +147,29 @@ public abstract class _ApiController_SpringBootTest<CONTROLLER extends _ApiContr
     }
 
     // ---------------------------------------------------------------------------------------------- controllerInstance
-    protected void acceptControllerInstance(final Consumer<? super CONTROLLER> consumer) {
-        consumer.accept(controllerInstance);
-    }
 
-    protected void setControllerInstanceWebClient(final WebClient webClient) {
-        controllerInstance.webClient = webClient;
-    }
-
-    protected void mutateControllerInstanceWebClient(final UnaryOperator<WebClient> operator) {
+    /**
+     * {@link _ApiController#mutateWebClient(UnaryOperator) mutates} {@link #controllerInstance() controllerInstance}'s
+     * {@code webClient} with specified operator.
+     *
+     * @param operator the operator.
+     */
+    protected final void mutateControllerInstanceWebClient(final UnaryOperator<WebClient> operator) {
+        Objects.requireNonNull(operator, "operator is null");
         controllerInstance.mutateWebClient(operator);
     }
 
-    protected void mutateControllerInstanceWebClientWith(final ExchangeFunction function) {
-        mutateControllerInstanceWebClient(wc -> wc.mutate().exchangeFunction(function).build());
+    /**
+     * {@link #mutateControllerInstanceWebClient(UnaryOperator) Mutates}
+     * {@link #controllerInstance() controllerInstance}'s {@code webClient} with specified exchange function.
+     *
+     * @param function the exchange function.
+     */
+    protected final void mutateControllerInstanceWebClientWith(final ExchangeFunction function) {
+        Objects.requireNonNull(function, "function is null");
+        mutateControllerInstanceWebClient(
+                wc -> wc.mutate().exchangeFunction(function).build()
+        );
     }
 
     // -----------------------------------------------------------------------------------------------------------------
