@@ -1,5 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.web.bind.download_area_code_service;
 
+import com.github.jinahya.epost.openapi.proxy._TestConstants;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area_code_service.AreaCodeInfoRequest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area_code_service._DownloadAreaCodeServiceConstants;
 import com.github.jinahya.epost.openapi.proxy.web.bind._ApiController_SpringBootTest;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.hateoas.EntityModel;
@@ -22,6 +24,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.stream.Stream;
 
+@EnabledIfEnvironmentVariable(named = _TestConstants.ENVIRONMENT_VARIABLE_SERVICE_KEY, matches = ".+")
 @ContextConfiguration(classes = {
         ApiController.class
 })
