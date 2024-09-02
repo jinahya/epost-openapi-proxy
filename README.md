@@ -77,7 +77,17 @@ sequenceDiagram
 
 ### JDK/JRE
 
-최신의 LTS(21) 가 필요하다.
+최신의 JDK(`22`) 가 필요하다. (main 모듈은 `21` 을 기준으로 한다.)
+
+```commandline
+$ grep \<maven.compiler\\. pom.xml
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
+    <maven.compiler.release>${maven.compiler.target}</maven.compiler.release>
+    <maven.compiler.testSource>22</maven.compiler.testSource>
+    <maven.compiler.testTarget>${maven.compiler.testSource}</maven.compiler.testTarget>
+    <maven.compiler.testRelease>${maven.compiler.testTarget}</maven.compiler.testRelease>
+```
 
 ### How to test
 
