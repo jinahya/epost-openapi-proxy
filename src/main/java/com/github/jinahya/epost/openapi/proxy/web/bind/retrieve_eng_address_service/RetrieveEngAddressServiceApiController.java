@@ -46,20 +46,20 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.atomic.LongAdder;
 import java.util.function.Predicate;
 
-import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service.__RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME;
-import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service.__RetrieveEngAddressServiceApiConstants.PATH_NAME_DISTRICT_NAME;
-import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service.__RetrieveEngAddressServiceApiConstants.PATH_NAME_ROAD_NAME;
-import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service.__RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME;
-import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service.__RetrieveEngAddressServiceApiConstants.REL_CITIES;
-import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service.__RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITY;
-import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service.__RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICTS;
-import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service.__RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICT_ADDRESSES;
-import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service.__RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROADS;
-import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service.__RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATE;
-import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service.__RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES;
+import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service._RetrieveEngAddressServiceApiConstants.PATH_NAME_CITY_NAME;
+import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service._RetrieveEngAddressServiceApiConstants.PATH_NAME_DISTRICT_NAME;
+import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service._RetrieveEngAddressServiceApiConstants.PATH_NAME_ROAD_NAME;
+import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service._RetrieveEngAddressServiceApiConstants.PATH_NAME_STATE_NAME;
+import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service._RetrieveEngAddressServiceApiConstants.REL_CITIES;
+import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service._RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITY;
+import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service._RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICTS;
+import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service._RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICT_ADDRESSES;
+import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service._RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROADS;
+import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service._RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATE;
+import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service._RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES;
 
 @Hidden
-@Tag(name = __RetrieveEngAddressServiceApiConstants.TAG)
+@Tag(name = _RetrieveEngAddressServiceApiConstants.TAG)
 @Validated
 @RestController
 //@NoArgsConstructor(access = AccessLevel.PACKAGE)
@@ -67,24 +67,18 @@ import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_addre
 @SuppressWarnings({
         "java:S101" // class _Retrieve...
 })
-class _RetrieveEngAddressServiceApiController
+class RetrieveEngAddressServiceApiController
         extends _ApiController {
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
-    _RetrieveEngAddressServiceApiController() {
+    RetrieveEngAddressServiceApiController() {
         super();
     }
 
     // ----------------------------------------------------------------------------------------------------- /.../states
-    private Mono<StateEngListResponse> exchange() {
-        return new StateEngListRequest()
-                .exchange(webClient())
-                ;
-    }
-
     private Flux<StateEngListResponse.StateEngList> statePublisher(
             final Predicate<? super StateEngListResponse.StateEngList> filter) {
-        return exchange()
+        return exchange(new StateEngListRequest())
                 .flatMapMany(r -> Flux.fromIterable(r.getStateEngList()))
                 .filter(filter)
                 ;
@@ -99,7 +93,7 @@ class _RetrieveEngAddressServiceApiController
                         IanaLinkRelations.SELF
                 ),
                 Link.of(
-                        UriComponentsBuilder.fromPath(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITIES)
+                        UriComponentsBuilder.fromPath(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITIES)
                                 .build(stateEngList.getStateEngName())
                                 .toString(),
                         LinkRelation.of(REL_CITIES)
@@ -107,9 +101,8 @@ class _RetrieveEngAddressServiceApiController
         );
     }
 
-    private RepresentationModel<EntityModel<StateEngListResponse.StateEngList>> model(
-            StateEngListResponse.StateEngList stateEngList) {
-        return HalModelBuilder.halModelOf(stateEngList).links(links(stateEngList)).build();
+    private EntityModel<StateEngListResponse.StateEngList> model(StateEngListResponse.StateEngList stateEngList) {
+        return EntityModel.of(stateEngList, links(stateEngList));
     }
 
     @Operation(summary = "Reads all states.")
@@ -132,7 +125,7 @@ class _RetrieveEngAddressServiceApiController
                     MediaTypes.HAL_JSON_VALUE
             }
     )
-    Mono<RepresentationModel<EntityModel<StateEngListResponse.StateEngList>>> readState(
+    Mono<EntityModel<StateEngListResponse.StateEngList>> readState(
             final ServerWebExchange exchange,
             @PathVariable(PATH_NAME_STATE_NAME) final String stateName) {
         return statePublisher(s -> s.getStateEngName().equals(stateName))
@@ -159,7 +152,7 @@ class _RetrieveEngAddressServiceApiController
                         UriComponentsBuilder.fromPath(REQUEST_URI_STATE)
                                 .build(stateName)
                                 .toString(),
-                        __RetrieveEngAddressServiceApiConstants.REL_STATE
+                        _RetrieveEngAddressServiceApiConstants.REL_STATE
                 ),
                 Link.of(
                         UriComponentsBuilder.fromPath(REQUEST_URI_CITY)
@@ -171,13 +164,13 @@ class _RetrieveEngAddressServiceApiController
                         UriComponentsBuilder.fromPath(REQUEST_URI_ROADS)
                                 .build(stateName, cityEngList.getCityEngName())
                                 .toString(),
-                        __RetrieveEngAddressServiceApiConstants.REL_ROADS
+                        _RetrieveEngAddressServiceApiConstants.REL_ROADS
                 ),
                 Link.of(
                         UriComponentsBuilder.fromPath(REQUEST_URI_DISTRICTS)
                                 .build(stateName, cityEngList.getCityEngName())
                                 .toString(),
-                        __RetrieveEngAddressServiceApiConstants.REL_DISTRICTS
+                        _RetrieveEngAddressServiceApiConstants.REL_DISTRICTS
                 )
         );
     }
@@ -199,7 +192,7 @@ class _RetrieveEngAddressServiceApiController
 
     @Operation(summary = "Reads all cities.", description = "Reads all cities in specified state.")
     @GetMapping(
-            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITIES,
+            path = _RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITIES,
             produces = {
                     MediaType.APPLICATION_NDJSON_VALUE
             }
@@ -216,7 +209,7 @@ class _RetrieveEngAddressServiceApiController
             description = "Reads a specific city in a specific state."
     )
     @GetMapping(
-            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITY,
+            path = _RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITY,
             produces = {
                     MediaTypes.HAL_JSON_VALUE
             }
@@ -260,23 +253,23 @@ class _RetrieveEngAddressServiceApiController
         return List.of(
                 Link.of(
                         UriComponentsBuilder
-                                .fromPath(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITY)
+                                .fromPath(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITY)
                                 .build(stateName, cityName).toString(),
-                        __RetrieveEngAddressServiceApiConstants.REL_CITY
+                        _RetrieveEngAddressServiceApiConstants.REL_CITY
                 ),
                 Link.of(
                         UriComponentsBuilder
-                                .fromPath(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD)
+                                .fromPath(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD)
                                 .build(stateName, cityName, roadEngList.getRoadEngName())
                                 .toString(),
                         IanaLinkRelations.SELF
                 ),
                 Link.of(
                         UriComponentsBuilder
-                                .fromPath(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD_ADDRESSES)
+                                .fromPath(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD_ADDRESSES)
                                 .build(stateName, cityName, roadEngList.getRoadEngName())
                                 .toString(),
-                        __RetrieveEngAddressServiceApiConstants.REL_ADDRESSES
+                        _RetrieveEngAddressServiceApiConstants.REL_ADDRESSES
                 )
         );
     }
@@ -306,7 +299,7 @@ class _RetrieveEngAddressServiceApiController
     }
 
     @GetMapping(
-            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD,
+            path = _RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD,
             produces = {
                     MediaTypes.HAL_JSON_VALUE
             }
@@ -379,10 +372,10 @@ class _RetrieveEngAddressServiceApiController
             final RoadAddressEngSearchListResponse.RoadAddressEngSearchList roadAddressEngSearchList) {
         return List.of(
                 Link.of(
-                        UriComponentsBuilder.fromPath(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD)
+                        UriComponentsBuilder.fromPath(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD)
                                 .build(stateName, cityName, roadName)
                                 .toString(),
-                        __RetrieveEngAddressServiceApiConstants.REL_ROAD
+                        _RetrieveEngAddressServiceApiConstants.REL_ROAD
                 )
         );
     }
@@ -396,7 +389,7 @@ class _RetrieveEngAddressServiceApiController
     }
 
     @GetMapping(
-            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD_ADDRESSES,
+            path = _RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD_ADDRESSES,
             produces = {
                     MediaType.APPLICATION_NDJSON_VALUE
             }
@@ -435,13 +428,13 @@ class _RetrieveEngAddressServiceApiController
         return List.of(
                 Link.of(
                         UriComponentsBuilder
-                                .fromPath(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITY)
+                                .fromPath(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITY)
                                 .build(stateName, cityName).toString(),
-                        __RetrieveEngAddressServiceApiConstants.REL_CITY
+                        _RetrieveEngAddressServiceApiConstants.REL_CITY
                 ),
                 Link.of(
                         UriComponentsBuilder
-                                .fromPath(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICT)
+                                .fromPath(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICT)
                                 .build(stateName, cityName, districtEngList.getDistrictEngName())
                                 .toString(),
                         IanaLinkRelations.SELF
@@ -451,7 +444,7 @@ class _RetrieveEngAddressServiceApiController
                                 .fromPath(REQUEST_URI_DISTRICT_ADDRESSES)
                                 .build(stateName, cityName, districtEngList.getDistrictEngName())
                                 .toString(),
-                        __RetrieveEngAddressServiceApiConstants.REL_ADDRESSES
+                        _RetrieveEngAddressServiceApiConstants.REL_ADDRESSES
                 )
         );
     }
@@ -466,7 +459,7 @@ class _RetrieveEngAddressServiceApiController
     }
 
     @GetMapping(
-            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICTS,
+            path = _RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICTS,
             produces = {
                     MediaType.APPLICATION_NDJSON_VALUE
             }
@@ -480,7 +473,7 @@ class _RetrieveEngAddressServiceApiController
     }
 
     @GetMapping(
-            path = __RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICT,
+            path = _RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICT,
             produces = {
                     MediaTypes.HAL_JSON_VALUE
             }
@@ -551,10 +544,10 @@ class _RetrieveEngAddressServiceApiController
                                  final LandAddressEngSearchList landAddressEngSearchList) {
         return List.of(
                 Link.of(
-                        UriComponentsBuilder.fromPath(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD)
+                        UriComponentsBuilder.fromPath(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD)
                                 .build(stateName, cityName, roadName)
                                 .toString(),
-                        __RetrieveEngAddressServiceApiConstants.REL_ROAD
+                        _RetrieveEngAddressServiceApiConstants.REL_ROAD
                 )
         );
     }

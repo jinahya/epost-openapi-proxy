@@ -3,7 +3,10 @@ package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_ser
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service._RetrieveEngAddressServiceConstants;
 import com.github.jinahya.epost.openapi.proxy.web.bind.__WebBindConstants;
 
-final class __RetrieveEngAddressServiceApiConstants {
+@SuppressWarnings({
+        "java:S125"
+})
+final class _RetrieveEngAddressServiceApiConstants {
 
     // -----------------------------------------------------------------------------------------------------------------
     static final String REL_STATES = "states";
@@ -101,7 +104,7 @@ final class __RetrieveEngAddressServiceApiConstants {
     static final String TAG = "RetrieveEngAddressService";
 
     // -----------------------------------------------------------------------------------------------------------------
-    private __RetrieveEngAddressServiceApiConstants() {
+    private _RetrieveEngAddressServiceApiConstants() {
         throw new AssertionError("instantiation is not allowed");
     }
 }

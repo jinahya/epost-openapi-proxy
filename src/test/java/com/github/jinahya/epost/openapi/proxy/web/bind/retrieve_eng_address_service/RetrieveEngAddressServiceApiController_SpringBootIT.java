@@ -33,8 +33,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(value = TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class _RetrieveEngAddressServiceApiController_SpringBootIT
-        extends _ApiController_SpringBootIT<_RetrieveEngAddressServiceApiController> {
+class RetrieveEngAddressServiceApiController_SpringBootIT
+        extends _ApiController_SpringBootIT<RetrieveEngAddressServiceApiController> {
 
     // -----------------------------------------------------------------------------------------------------------------
     static List<EntityModel<StateEngListResponse.StateEngList>> readStates(final WebTestClient client,
@@ -42,7 +42,7 @@ class _RetrieveEngAddressServiceApiController_SpringBootIT
         return Objects.requireNonNull(
                 client
                         .get()
-                        .uri(b -> b.path(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES)
+                        .uri(b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES)
                                 .build())
                         .headers(h -> {
                             Optional.ofNullable(accept)
@@ -65,7 +65,7 @@ class _RetrieveEngAddressServiceApiController_SpringBootIT
         return Objects.requireNonNull(
                 client
                         .get()
-                        .uri(b -> b.path(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATE)
+                        .uri(b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATE)
                                 .build(stateName))
                         .headers(h -> {
                             Optional.ofNullable(accept)
@@ -89,7 +89,7 @@ class _RetrieveEngAddressServiceApiController_SpringBootIT
         return Objects.requireNonNull(
                 client
                         .get()
-                        .uri(b -> b.path(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITIES)
+                        .uri(b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITIES)
                                 .build(stateName))
                         .headers(h -> {
                             Optional.ofNullable(accept)
@@ -112,7 +112,7 @@ class _RetrieveEngAddressServiceApiController_SpringBootIT
         return Objects.requireNonNull(
                 client
                         .get()
-                        .uri(b -> b.path(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITY)
+                        .uri(b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITY)
                                 .build(stateName, cityName))
                         .headers(h -> {
                             Optional.ofNullable(accept)
@@ -136,7 +136,7 @@ class _RetrieveEngAddressServiceApiController_SpringBootIT
         return Objects.requireNonNull(
                 client
                         .get()
-                        .uri(b -> b.path(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROADS)
+                        .uri(b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROADS)
                                 .build(stateName, cityName))
                         .headers(h -> {
                             Optional.ofNullable(accept)
@@ -159,7 +159,7 @@ class _RetrieveEngAddressServiceApiController_SpringBootIT
         return Objects.requireNonNull(
                 client
                         .get()
-                        .uri(b -> b.path(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD)
+                        .uri(b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD)
                                 .build(stateName, cityName, roadName))
                         .headers(h -> {
                             Optional.ofNullable(accept)
@@ -182,7 +182,7 @@ class _RetrieveEngAddressServiceApiController_SpringBootIT
         return Objects.requireNonNull(
                 client
                         .get()
-                        .uri(b -> b.path(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD_ADDRESSES)
+                        .uri(b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD_ADDRESSES)
                                 .build(stateName, cityName, roadName))
                         .headers(h -> {
                             Optional.ofNullable(accept)
@@ -209,7 +209,7 @@ class _RetrieveEngAddressServiceApiController_SpringBootIT
         return Objects.requireNonNull(
                 client
                         .get()
-                        .uri(b -> b.path(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICTS)
+                        .uri(b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICTS)
                                 .build(stateName, cityName))
                         .headers(h -> {
                             Optional.ofNullable(accept)
@@ -234,7 +234,7 @@ class _RetrieveEngAddressServiceApiController_SpringBootIT
         return Objects.requireNonNull(
                 client
                         .get()
-                        .uri(b -> b.path(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICT)
+                        .uri(b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICT)
                                 .build(stateName, cityName, districtName))
                         .headers(h -> {
                             Optional.ofNullable(accept)
@@ -257,7 +257,7 @@ class _RetrieveEngAddressServiceApiController_SpringBootIT
         return Objects.requireNonNull(
                 client
                         .get()
-                        .uri(b -> b.path(__RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICT_ADDRESSES)
+                        .uri(b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICT_ADDRESSES)
                                 .build(stateName, cityName, districtName))
                         .headers(h -> {
                             Optional.ofNullable(accept)
