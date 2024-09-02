@@ -1,12 +1,12 @@
 package com.github.jinahya.epost.openapi.proxy.web.bind.download_area_code_service;
 
-import com.github.jinahya.epost.openapi.proxy._misc.net.URLUtils;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area_code_service.AreaCodeInfoRequest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area_code_service._DownloadAreaCodeServiceConstants;
 import com.github.jinahya.epost.openapi.proxy.web.bind._ApiController_SpringBootTest;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -15,18 +15,27 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.http.server.reactive.MockServerHttpRequest;
 import org.springframework.mock.web.server.MockServerWebExchange;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.reactive.function.client.ClientResponse;
+import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
 import java.util.stream.Stream;
 
+@ContextConfiguration(classes = {
+        ApiController.class
+})
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Slf4j
 class ApiController_SpringBootTest
         extends _ApiController_SpringBootTest<ApiController> {
 
+    private static String xmlRouteResName(final String dwldSeValue) {
+        return '/' + _DownloadAreaCodeServiceConstants.ROUTE_ID + "/getAreaCodeInfo_response" + dwldSeValue + ".xml";
+    }
+
     private static String xmlRouteResName(final AreaCodeInfoRequest.DwldSe dwldSe) {
-        return '/' + _DownloadAreaCodeServiceConstants.ROUTE_ID + "/getAreaCodeInfo_response" + dwldSe.value() + ".xml";
+        return xmlRouteResName(dwldSe.value());
     }
 
     private static Stream<String> xmlRouteResNameStream() {
@@ -35,34 +44,26 @@ class ApiController_SpringBootTest
     }
 
     // -----------------------------------------------------------------------------------------------------------------
+    @DisplayName("GET " + _ApiConstants.REQUEST_URI_AREA_CODE_INFO)
     @Test
     void __() {
-        // ------------------------------------------------------------------------------------------------------- given
-        // mutate the controllerInstance().webClient to just return the resource
-//        mutateControllerInstanceWebClientWith(r -> Mono.just(
-//                ClientResponse.create(HttpStatus.OK)
-//                        .headers(h -> {
-//                            h.setContentType(MediaType.APPLICATION_NDJSON);
-//                        })
-//                        .body(routeResourceDataPublisher(
-//                                '/' + _DownloadAreaCodeServiceConstants.ROUTE_ID + "/getAreaCodeInfo_response.ndjson")
-//                        )
-//                        .build()
-//        ));
         mutateControllerInstanceWebClientWith(r -> {
-            final var filename = URLUtils.getFileName(r.url().toString());
-            final var dwldSe = AreaCodeInfoRequest.DwldSe.valueOfValue(URLUtils.getFileName(r.url().toString()));
+            final var dwldSeValue = UriComponentsBuilder.fromUri(r.url())
+                    .build()
+                    .getQueryParams()
+                    .get(_DownloadAreaCodeServiceConstants.PARAM_NAME_DWLDSE)
+                    .getFirst();
             return Mono.just(
                     ClientResponse.create(HttpStatus.OK)
                             .headers(h -> {
                                 h.setContentType(MediaType.APPLICATION_XML);
                             })
-                            .body(routeResourceDataPublisher(xmlRouteResName(dwldSe)))
+                            .body(routeResourceDataPublisher(xmlRouteResName(dwldSeValue)))
                             .build()
             );
         });
         // -------------------------------------------------------------------------------------------------------- when
-        final var content = controllerInstance()
+        final var flux = controllerInstance()
                 .readAreaCodeInfo(
                         MockServerWebExchange.from(
                                 MockServerHttpRequest
@@ -71,9 +72,12 @@ class ApiController_SpringBootTest
                         )
                 )
                 .switchIfEmpty(Mono.error(new RuntimeException("empty")))
+                .doOnNext(em -> {
+                    log.debug("model: {}", em);
+                })
                 .map(EntityModel::getContent);
         // -------------------------------------------------------------------------------------------------------- then
-        content.doOnNext(c -> {
+        flux.doOnNext(c -> {
                     log.debug("content: {}", c);
                     assertValid(c);
                 })
@@ -81,7 +85,7 @@ class ApiController_SpringBootTest
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-
+    @DisplayName("GET" + _ApiConstants.REQUEST_URI_DWLD_SE)
     @EnumSource(AreaCodeInfoRequest.DwldSe.class)
     @ParameterizedTest
     void __(final AreaCodeInfoRequest.DwldSe dwldSe) {
