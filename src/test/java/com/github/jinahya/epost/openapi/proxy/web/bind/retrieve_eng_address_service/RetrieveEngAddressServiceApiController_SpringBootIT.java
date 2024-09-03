@@ -49,6 +49,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RetrieveEngAddressServiceApiController_SpringBootIT
         extends _ApiController_SpringBootIT<RetrieveEngAddressServiceApiController> {
 
+    // 왜 안되는지 잘 모르겠다.
+    // https://stackoverflow.com/q/78942661/330457
+    // https://github.com/spring-projects/spring-hateoas/issues/2211
     private static <T> List<EntityModel<T>> readList(final WebTestClient client,
                                                      final Function<UriBuilder, URI> uriFunction,
                                                      @Nullable final String accept,
@@ -100,8 +103,7 @@ class RetrieveEngAddressServiceApiController_SpringBootIT
         if (false) {
             return readList(
                     client,
-                    b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES)
-                            .build(),
+                    b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES).build(),
                     accept,
                     StateEngList.class
             );
@@ -153,6 +155,14 @@ class RetrieveEngAddressServiceApiController_SpringBootIT
     static List<EntityModel<CityEngList>> readCities(final WebTestClient client,
                                                      final String stateName,
                                                      @Nullable final String accept) {
+        if (false) {
+            return readList(
+                    client,
+                    b -> b.path(REQUEST_URI_CITIES).build(stateName),
+                    accept,
+                    CityEngList.class
+            );
+        }
         return Objects.requireNonNull(
                 client
                         .get()
@@ -341,6 +351,9 @@ class RetrieveEngAddressServiceApiController_SpringBootIT
         return list.getFirst();
     }
 
+    @SuppressWarnings({
+            "java:S6204" // STREAM#collect(Collectors.toList()) <> Stream#toList()
+    })
     private static <T> T getRandomContent(final List<EntityModel<T>> list) {
         return getRandom(list.stream().map(EntityModel::getContent).collect(Collectors.toList()));
     }
@@ -348,7 +361,7 @@ class RetrieveEngAddressServiceApiController_SpringBootIT
     // -----------------------------------------------------------------------------------------------------------------
     private static Stream<String> getMediaTypeStreamForCollection() {
         return Stream.of(
-                (String) null,
+                null,
                 MediaType.APPLICATION_NDJSON_VALUE
         );
     }
@@ -393,8 +406,8 @@ class RetrieveEngAddressServiceApiController_SpringBootIT
 
     private void validateState(final EntityModel<StateEngList> model) {
         Objects.requireNonNull(model, "model is null");
-        final var content = model.getContent();
-//        validateState(model.getContent());
+//        final var content = model.getContent();
+        validateState(model.getContent());
     }
 
     @Order(ORDER_STATES)
@@ -414,7 +427,7 @@ class RetrieveEngAddressServiceApiController_SpringBootIT
 //                    log.debug("c: {}", c);
                     validateState(m);
                 });
-        _state = getRandomContent(states);
+//        _state = getRandomContent(states);
     }
 
     @Order(ORDER_STATE)

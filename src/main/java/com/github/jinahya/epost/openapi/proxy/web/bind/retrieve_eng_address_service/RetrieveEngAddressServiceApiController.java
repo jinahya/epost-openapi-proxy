@@ -21,13 +21,13 @@ import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.MediaTypes;
-import org.springframework.hateoas.RepresentationModel;
-import org.springframework.hateoas.mediatype.hal.HalModelBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -70,7 +70,7 @@ import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_addre
 @Tag(name = _RetrieveEngAddressServiceApiConstants.TAG)
 @Validated
 @RestController
-//@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Slf4j
 @SuppressWarnings({
         "java:S101" // class _Retrieve...
@@ -79,9 +79,6 @@ class RetrieveEngAddressServiceApiController
         extends _ApiController {
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
-    RetrieveEngAddressServiceApiController() {
-        super();
-    }
 
     // ----------------------------------------------------------------------------------------------------- /.../states
     private Flux<StateEngListResponse.StateEngList> statePublisher(
@@ -120,8 +117,7 @@ class RetrieveEngAddressServiceApiController
                     MediaType.APPLICATION_NDJSON_VALUE
             }
     )
-    Flux<RepresentationModel<EntityModel<StateEngListResponse.StateEngList>>> readStates(
-            final ServerWebExchange exchange) {
+    Flux<EntityModel<StateEngListResponse.StateEngList>> readStates(final ServerWebExchange exchange) {
         return statePublisher(v -> true)
                 .map(this::model);
     }
@@ -183,11 +179,12 @@ class RetrieveEngAddressServiceApiController
         );
     }
 
-    private RepresentationModel<EntityModel<CityEngListResponse.CityEngList>> model(
+    private EntityModel<CityEngListResponse.CityEngList> model(
             final String stateName, final CityEngListResponse.CityEngList content) {
-        return HalModelBuilder.halModelOf(content)
-                .links(links(stateName, content))
-                .build();
+        return EntityModel.of(
+                content,
+                links(stateName, content)
+        );
     }
 
     private Flux<CityEngListResponse.CityEngList> cityPublisher(
@@ -205,7 +202,7 @@ class RetrieveEngAddressServiceApiController
                     MediaType.APPLICATION_NDJSON_VALUE
             }
     )
-    Flux<RepresentationModel<EntityModel<CityEngListResponse.CityEngList>>> readCities(
+    Flux<EntityModel<CityEngListResponse.CityEngList>> readCities(
             final ServerWebExchange exchange,
             @PathVariable(name = PATH_NAME_STATE_NAME) final String stateName) {
         return cityPublisher(stateName, c -> true)
@@ -222,7 +219,7 @@ class RetrieveEngAddressServiceApiController
                     MediaTypes.HAL_JSON_VALUE
             }
     )
-    Mono<RepresentationModel<EntityModel<CityEngListResponse.CityEngList>>> readCity(
+    Mono<EntityModel<CityEngListResponse.CityEngList>> readCity(
             @Parameter(description = "the name of the state")
             @PathVariable(name = PATH_NAME_STATE_NAME) final String stateName,
             @Parameter(description = "the name of the city")
@@ -291,7 +288,7 @@ class RetrieveEngAddressServiceApiController
                     MediaType.APPLICATION_NDJSON_VALUE
             }
     )
-    Flux<RepresentationModel<EntityModel<RoadEngListResponse.RoadEngList>>> readRoads(
+    Flux<EntityModel<RoadEngListResponse.RoadEngList>> readRoads(
             final ServerWebExchange exchange,
             @PathVariable(PATH_NAME_STATE_NAME) final String stateName,
             @PathVariable(PATH_NAME_CITY_NAME) final String cityName) {
