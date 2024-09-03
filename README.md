@@ -85,7 +85,7 @@ sequenceDiagram
     <td></td>
   </tr>
   <tr>
-    <td><pre>/postal<br>/downloadAreaCodeService<br>/downloadAreaCodeService<br>/getAreaCodeInfo<br>?dwldSe=<{dwldSe}</pre></td>
+    <td><pre>/postal<br>/downloadAreaCodeService<br>/downloadAreaCodeService<br>/getAreaCodeInfo<br>?dwldSe={dwldSe}</pre></td>
     <td><pre>/api<br>/downloadAreaCodeService<br>/areaCodeInfo<br>/{dwldSe}</pre></td>
     <td></td>
   </tr>
