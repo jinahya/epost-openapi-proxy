@@ -1,6 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractRequestTypeTestUtils;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.PageInfo;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._RouteSpringBootIT;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -25,8 +26,7 @@ class GetRoadAddressSearch_SpringBootIT
                                 "D",
                                 "Daeho-gil",
                                 "45-40",
-                                2,
-                                1
+                                new PageInfo(2, 1)
                         )
                 )
         );

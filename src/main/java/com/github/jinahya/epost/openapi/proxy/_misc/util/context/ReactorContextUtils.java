@@ -1,4 +1,4 @@
-package com.github.jinahya.epost.openapi.proxy.util.context;
+package com.github.jinahya.epost.openapi.proxy._misc.util.context;
 
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.util.UriComponentsBuilder;

@@ -7,7 +7,7 @@ class RoadAddressEngSearchListRequestTest
         extends AbstractPairedRequestTypeTest<RoadAddressEngSearchListRequest, RoadAddressEngSearchListResponse> {
 
     RoadAddressEngSearchListRequestTest() {
-        super(RoadAddressEngSearchListRequest.class);
+        super(RoadAddressEngSearchListRequest.class, RoadAddressEngSearchListResponse.class);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

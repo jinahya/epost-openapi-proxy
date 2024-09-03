@@ -1,5 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service;
 
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.PageInfo;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.CityEngListRequest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.CityEngListResponse;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.DistrictEngFirstNameListRequest;
@@ -338,8 +339,7 @@ class RetrieveEngAddressServiceApiController
                         null,
                         roadName,
                         null,
-                        32,
-                        1
+                        new PageInfo(32, 1)
                 ))
                 .expand(r -> Mono.just(r.forNextPage()))
                 .flatMapSequential(
