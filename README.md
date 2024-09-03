@@ -81,13 +81,13 @@ sequenceDiagram
   <tbody>
   <tr>
     <td></td>
-    <td><pre>/postal<br>/downloadAreaCodeService<br>/downloadAreaCodeService<br>/getAreaCodeInfo<br>?dwldSe=<{dwldSe}</pre></td>
-    <td>b</td>
+    <td><pre>/api/downloadAreaCodeService/areaCodeInfo</pre></td>
+    <td></td>
   </tr>
   <tr>
-    <td><pre>/api/downloadAreaCodeService/areaCodeInfo</pre></td>
-    <td>b</td>
-    <td>b</td>
+    <td><pre>/postal<br>/downloadAreaCodeService<br>/downloadAreaCodeService<br>/getAreaCodeInfo<br>?dwldSe=<{dwldSe}</pre></td>
+    <td></td>
+    <td></td>
   </tr>
   </tbody>
 </table>
