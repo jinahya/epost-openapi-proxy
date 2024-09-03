@@ -80,7 +80,7 @@ sequenceDiagram
   </thead>
   <tbody>
   <tr>
-    <td><pre>/postal<br>&nbsp;&nbsp;/downloadAreaCodeService<br>&nbsp;&nbsp;&nbsp;&nbsp;/downloadAreaCodeService<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/getAreaCodeInfo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;?dwldSe=<{dwldSe}/pre></td>
+    <td><pre>/postal<br>&nbsp;&nbsp;/downloadAreaCodeService<br>&nbsp;&nbsp;&nbsp;&nbsp;/downloadAreaCodeService<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/getAreaCodeInfo<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;?dwldSe=<{dwldSe}/pre></td>
     <td>b</td>
     <td>b</td>
   </tr>
