@@ -74,6 +74,8 @@ sequenceDiagram
 
 ### 우편번호 다운로드 서비스(`downloadAreaCodeService`)
 
+#### Routes and APIs
+
 <table>
   <thead>
     <tr><th>route</th><th>api</th><th>notes</th></tr>
