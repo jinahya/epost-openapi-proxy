@@ -81,12 +81,17 @@ sequenceDiagram
   <tbody>
   <tr>
     <td></td>
-    <td><pre>/api/downloadAreaCodeService/areaCodeInfo</pre></td>
+    <td><pre>/api<br>/downloadAreaCodeService<br>/areaCodeInfo</pre></td>
     <td></td>
   </tr>
   <tr>
     <td><pre>/postal<br>/downloadAreaCodeService<br>/downloadAreaCodeService<br>/getAreaCodeInfo<br>?dwldSe=<{dwldSe}</pre></td>
+    <td><pre>/api<br>/downloadAreaCodeService<br>/areaCodeInfo<br>/{dwldSe}</pre></td>
     <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><pre>/api<br>/downloadAreaCodeService<br>/areaCodeInfo<br>/{dwldSe}<br>/fileContent</pre></td>
     <td></td>
   </tr>
   </tbody>
@@ -102,7 +107,7 @@ sequenceDiagram
 
 ### JDK/JRE
 
-최신의 JDK(`22`) 가 필요하다. (main 모듈은 `21` 을 기준으로 한다.)
+최신의 JDK(`22`) 가 필요하다. (`main` 모듈은 `21` 을 기준으로 한다.)
 
 ```commandline
 $ grep \<maven.compiler\\. pom.xml
