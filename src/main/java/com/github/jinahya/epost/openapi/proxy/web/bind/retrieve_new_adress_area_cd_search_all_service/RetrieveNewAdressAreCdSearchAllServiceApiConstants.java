@@ -3,7 +3,7 @@ package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_new_adress_area
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_search_all_service._RetrieveNewAdressAreaCdSearchAllServiceConstants;
 import com.github.jinahya.epost.openapi.proxy.web.bind.__WebBindConstants;
 
-final class __RetrieveNewAdressAreCdSearchAllServiceApiConstants {
+final class RetrieveNewAdressAreCdSearchAllServiceApiConstants {
 
     // -----------------------------------------------------------------------------------------------------------------
     static final String TAG = "RetrieveNewAdressAreaCdSearchAllService";
@@ -21,7 +21,7 @@ final class __RetrieveNewAdressAreCdSearchAllServiceApiConstants {
             _RetrieveNewAdressAreaCdSearchAllServiceConstants.REQUEST_PARAM_SRCHWRD;
 
     // -----------------------------------------------------------------------------------------------------------------
-    private __RetrieveNewAdressAreCdSearchAllServiceApiConstants() {
+    private RetrieveNewAdressAreCdSearchAllServiceApiConstants() {
         throw new AssertionError("instantiation is not allowed");
     }
 }

@@ -8,7 +8,6 @@ import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_a
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.StateEngListResponse.StateEngList;
 import com.github.jinahya.epost.openapi.proxy.web.bind._ApiController_SpringBootIT;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -20,16 +19,11 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.core.TypeReferences;
 import org.springframework.http.MediaType;
-import org.springframework.lang.Nullable;
-import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.web.util.UriBuilder;
 
-import java.net.URI;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -42,308 +36,14 @@ import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_addre
 import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service._RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROADS;
 import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service._RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD_ADDRESSES;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 
 @TestInstance(value = TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Slf4j
 class RetrieveEngAddressServiceApiController_SpringBootIT
         extends _ApiController_SpringBootIT<RetrieveEngAddressServiceApiController> {
-
-    // 왜 안되는지 잘 모르겠다.
-    // https://stackoverflow.com/q/78942661/330457
-    // https://github.com/spring-projects/spring-hateoas/issues/2211
-    private static <T> List<EntityModel<T>> readList(final WebTestClient client,
-                                                     final Function<UriBuilder, URI> uriFunction,
-                                                     @Nullable final String accept,
-                                                     final Class<T> type) {
-        final var responseBody = client
-                .get()
-                .uri(uriFunction)
-                .headers(h -> {
-                    Optional.ofNullable(accept)
-                            .map(MediaType::valueOf)
-                            .map(List::of)
-                            .ifPresent(h::setAccept);
-                })
-                .exchange()
-                .expectStatus().isOk()
-                .expectBodyList(new TypeReferences.EntityModelType<T>() {
-                })
-//                .<EntityModel<T>>expectBodyList(TypeReferences.EntityModelType.<EntityModel<T>>forType(type))
-                .returnResult()
-                .getResponseBody();
-        return Objects.requireNonNull(responseBody, "responseBody is null");
-    }
-
-    private static <T> EntityModel<T> readSingle(final WebTestClient client,
-                                                 final Function<UriBuilder, URI> uriFunction,
-                                                 @Nullable final String accept) {
-        final var responseBody = client
-                .get()
-                .uri(uriFunction)
-                .headers(h -> {
-                    Optional.ofNullable(accept)
-                            .map(MediaType::valueOf)
-                            .map(List::of)
-                            .ifPresent(h::setAccept);
-                })
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody(new TypeReferences.EntityModelType<T>() {
-                })
-                .returnResult()
-                .getResponseBody();
-        return Objects.requireNonNull(responseBody, "responseBody is null");
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    // -----------------------------------------------------------------------------------------------------------------
-    static List<EntityModel<StateEngList>> readStates(final WebTestClient client,
-                                                      @Nullable final String accept) {
-        if (false) {
-            return readList(
-                    client,
-                    b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES).build(),
-                    accept,
-                    StateEngList.class
-            );
-        }
-        return Objects.requireNonNull(
-                client
-                        .get()
-                        .uri(b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES)
-                                .build())
-                        .headers(h -> {
-                            Optional.ofNullable(accept)
-                                    .map(MediaType::valueOf)
-                                    .map(List::of)
-                                    .ifPresent(h::setAccept);
-                        })
-                        .exchange()
-                        .expectStatus().isOk()
-                        .expectBodyList(new TypeReferences.EntityModelType<StateEngList>() {
-                        })
-                        .returnResult()
-                        .getResponseBody()
-        );
-    }
-
-    static EntityModel<StateEngList> readState(final WebTestClient client,
-                                               final String stateName,
-                                               @Nullable final String accept) {
-        return Objects.requireNonNull(
-                client
-                        .get()
-                        .uri(b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATE)
-                                .build(stateName))
-                        .headers(h -> {
-                            Optional.ofNullable(accept)
-                                    .map(MediaType::valueOf)
-                                    .map(List::of)
-                                    .ifPresent(h::setAccept);
-                        })
-                        .exchange()
-                        .expectStatus().isOk()
-                        .expectBody(new TypeReferences.EntityModelType<StateEngList>() {
-                        })
-                        .returnResult()
-                        .getResponseBody()
-        );
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    static List<EntityModel<CityEngList>> readCities(final WebTestClient client,
-                                                     final String stateName,
-                                                     @Nullable final String accept) {
-        if (false) {
-            return readList(
-                    client,
-                    b -> b.path(REQUEST_URI_CITIES).build(stateName),
-                    accept,
-                    CityEngList.class
-            );
-        }
-        return Objects.requireNonNull(
-                client
-                        .get()
-                        .uri(b -> b.path(REQUEST_URI_CITIES).build(stateName))
-                        .headers(h -> {
-                            Optional.ofNullable(accept)
-                                    .map(MediaType::valueOf)
-                                    .map(List::of)
-                                    .ifPresent(h::setAccept);
-                        })
-                        .exchange()
-                        .expectStatus().isOk()
-                        .expectBodyList(new TypeReferences.EntityModelType<CityEngList>() {
-                        })
-                        .returnResult()
-                        .getResponseBody()
-        );
-    }
-
-    static EntityModel<CityEngList> readCity(final WebTestClient client, final String stateName,
-                                             final String cityName,
-                                             @Nullable final String accept) {
-        return Objects.requireNonNull(
-                client
-                        .get()
-                        .uri(b -> b.path(REQUEST_URI_CITY).build(stateName, cityName))
-                        .headers(h -> {
-                            Optional.ofNullable(accept)
-                                    .map(MediaType::valueOf)
-                                    .map(List::of)
-                                    .ifPresent(h::setAccept);
-                        })
-                        .exchange()
-                        .expectStatus().isOk()
-                        .expectBody(new TypeReferences.EntityModelType<CityEngList>() {
-                        })
-                        .returnResult()
-                        .getResponseBody()
-        );
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    static List<EntityModel<RoadEngList>> readRoads(final WebTestClient client,
-                                                    final String stateName, final String cityName,
-                                                    @Nullable final String accept) {
-        return Objects.requireNonNull(
-                client
-                        .get()
-                        .uri(b -> b.path(REQUEST_URI_ROADS).build(stateName, cityName))
-                        .headers(h -> {
-                            Optional.ofNullable(accept)
-                                    .map(MediaType::valueOf)
-                                    .map(List::of)
-                                    .ifPresent(h::setAccept);
-                        })
-                        .exchange()
-                        .expectStatus().isOk()
-                        .expectBodyList(new TypeReferences.EntityModelType<RoadEngList>() {
-                        })
-                        .returnResult()
-                        .getResponseBody()
-        );
-    }
-
-    static EntityModel<RoadEngList> readRoad(final WebTestClient client, final String stateName,
-                                             final String cityName, final String roadName,
-                                             @Nullable final String accept) {
-        return Objects.requireNonNull(
-                client
-                        .get()
-                        .uri(b -> b.path(REQUEST_URI_ROAD).build(stateName, cityName, roadName))
-                        .headers(h -> {
-                            Optional.ofNullable(accept)
-                                    .map(MediaType::valueOf)
-                                    .map(List::of)
-                                    .ifPresent(h::setAccept);
-                        })
-                        .exchange()
-                        .expectStatus().isOk()
-                        .expectBody(new TypeReferences.EntityModelType<RoadEngList>() {
-                        })
-                        .returnResult()
-                        .getResponseBody()
-        );
-    }
-
-    static List<EntityModel<RoadAddressEngSearchList>> readRoadAddresses(
-            final WebTestClient client, String stateName, final String cityName,
-            final String roadName, @Nullable final String accept) {
-        return Objects.requireNonNull(
-                client
-                        .get()
-                        .uri(b -> b.path(REQUEST_URI_ROAD_ADDRESSES).build(stateName, cityName, roadName))
-                        .headers(h -> {
-                            Optional.ofNullable(accept)
-                                    .map(MediaType::valueOf)
-                                    .map(List::of)
-                                    .ifPresent(h::setAccept);
-                        })
-                        .exchange()
-                        .expectStatus().isOk()
-                        .expectBodyList(
-                                new TypeReferences.EntityModelType<
-                                        RoadAddressEngSearchList>() {
-                                })
-                        .returnResult()
-                        .getResponseBody()
-        );
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
-    static List<EntityModel<DistrictEngList>> readDistricts(final WebTestClient client,
-                                                            final String stateName,
-                                                            final String cityName,
-                                                            @Nullable final String accept) {
-        return Objects.requireNonNull(
-                client
-                        .get()
-                        .uri(b -> b.path(REQUEST_URI_DISTRICTS).build(stateName, cityName))
-                        .headers(h -> {
-                            Optional.ofNullable(accept)
-                                    .map(MediaType::valueOf)
-                                    .map(List::of)
-                                    .ifPresent(h::setAccept);
-                        })
-                        .exchange()
-                        .expectStatus().isOk()
-                        .expectBodyList(new TypeReferences.EntityModelType<DistrictEngList>() {
-                        })
-                        .returnResult()
-                        .getResponseBody()
-        );
-    }
-
-    static EntityModel<DistrictEngList> readDistrict(final WebTestClient client,
-                                                     final String stateName,
-                                                     final String cityName,
-                                                     final String districtName,
-                                                     @Nullable final String accept) {
-        return Objects.requireNonNull(
-                client
-                        .get()
-                        .uri(b -> b.path(REQUEST_URI_DISTRICT).build(stateName, cityName, districtName))
-                        .headers(h -> {
-                            Optional.ofNullable(accept)
-                                    .map(MediaType::valueOf)
-                                    .map(List::of)
-                                    .ifPresent(h::setAccept);
-                        })
-                        .exchange()
-                        .expectStatus().isOk()
-                        .expectBody(new TypeReferences.EntityModelType<DistrictEngList>() {
-                        })
-                        .returnResult()
-                        .getResponseBody()
-        );
-    }
-
-    static List<EntityModel<LandAddressEngSearchList>> readDistrictAddresses(
-            final WebTestClient client, String stateName, final String cityName,
-            final String districtName, @Nullable final String accept) {
-        return Objects.requireNonNull(
-                client
-                        .get()
-                        .uri(b -> b.path(REQUEST_URI_DISTRICT_ADDRESSES).build(stateName, cityName, districtName))
-                        .headers(h -> {
-                            Optional.ofNullable(accept)
-                                    .map(MediaType::valueOf)
-                                    .map(List::of)
-                                    .ifPresent(h::setAccept);
-                        })
-                        .exchange()
-                        .expectStatus().isOk()
-                        .expectBodyList(
-                                new TypeReferences.EntityModelType<
-                                        LandAddressEngSearchList>() {
-                                })
-                        .returnResult()
-                        .getResponseBody()
-        );
-    }
 
     // -----------------------------------------------------------------------------------------------------------------
     private static <T> T getRandom(final List<T> list) {
@@ -398,16 +98,25 @@ class RetrieveEngAddressServiceApiController_SpringBootIT
     private static final int ORDER_DISTRICT_ADDRESSES = ORDER_DISTRICT + 1;
 
     // -----------------------------------------------------------------------------------------------------------------
-    private static StateEngList _state = null;
-
-    private void validateState(final StateEngList content) {
+    private <T> void validate(final T content) {
         Objects.requireNonNull(content, "content is null");
+        assertValid(content);
     }
 
-    private void validateState(final EntityModel<StateEngList> model) {
+    private <T> void validate(final EntityModel<T> model) {
         Objects.requireNonNull(model, "model is null");
-//        final var content = model.getContent();
-        validateState(model.getContent());
+        validate(Objects.requireNonNull(model.getContent(), "model.content is null"));
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    private static StateEngList state = null;
+
+    private static StateEngList state() {
+        return Optional.ofNullable(state).orElseGet(() -> {
+            state = mock(StateEngList.class);
+            given(state.getStateEngName()).willReturn("Jeollanam-do");
+            return state;
+        });
     }
 
     @Order(ORDER_STATES)
@@ -416,18 +125,21 @@ class RetrieveEngAddressServiceApiController_SpringBootIT
     @ParameterizedTest
     void readStates__(final String accept) {
         // -------------------------------------------------------------------------------------------------------- when
-        final var states = readStates(webTestClient(), accept);
+        final var states = readList(
+                StateEngList.class,
+                b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES).build(),
+                accept,
+                new TypeReferences.EntityModelType<>() {
+                }
+        );
         // -------------------------------------------------------------------------------------------------------- then
         assertThat(states)
                 .isNotEmpty()
                 .doesNotContainNull()
                 .allSatisfy(m -> {
-//                    log.debug("m: {}", m);
-//                    final var c = m.getContent();
-//                    log.debug("c: {}", c);
-                    validateState(m);
+                    validate(m);
                 });
-//        _state = getRandomContent(states);
+        state = getRandomContent(states);
     }
 
     @Order(ORDER_STATE)
@@ -435,23 +147,28 @@ class RetrieveEngAddressServiceApiController_SpringBootIT
     @MethodSource({"getMediaTypeStreamForItem"})
     @ParameterizedTest
     void readState__(final String accept) {
-        Assumptions.assumeTrue(_state != null);
         // -------------------------------------------------------------------------------------------------------- when
-        final var state = readState(webTestClient(), _state.getStateEngName(), accept);
+        final var state = readSingle(
+                StateEngList.class,
+                b -> b.path(_RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATE)
+                        .build(state().getStateEngName()),
+                accept,
+                new TypeReferences.EntityModelType<>() {
+                }
+        );
         // -------------------------------------------------------------------------------------------------------- then
-        validateState(state);
+        validate(state);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    private static CityEngList _city;
+    private static CityEngList city;
 
-    private void validate(final CityEngList content) {
-        Objects.requireNonNull(content, "content is null");
-    }
-
-    private void validateCity(final EntityModel<CityEngList> model) {
-        Objects.requireNonNull(model, "model is null");
-        validate(model.getContent());
+    private static CityEngList city() {
+        return Optional.ofNullable(city).orElseGet(() -> {
+            city = mock(CityEngList.class);
+            given(city.getCityEngName()).willReturn("Naju-si");
+            return city;
+        });
     }
 
     @Order(ORDER_CITIES)
@@ -459,21 +176,22 @@ class RetrieveEngAddressServiceApiController_SpringBootIT
     @MethodSource({"getMediaTypeStreamForCollection"})
     @ParameterizedTest
     void readCities__(final String accept) {
-        Assumptions.assumeTrue(_state != null);
         // -------------------------------------------------------------------------------------------------------- when
-        final var cities = readCities(webTestClient(), _state.getStateEngName(), accept);
+        final var cities = readList(
+                CityEngList.class,
+                b -> b.path(REQUEST_URI_CITIES).build(state().getStateEngName()),
+                accept,
+                new TypeReferences.EntityModelType<>() {
+                }
+        );
         // -------------------------------------------------------------------------------------------------------- then
         assertThat(cities)
                 .isNotEmpty()
                 .doesNotContainNull()
                 .allSatisfy(m -> {
-                    validateCity(m);
+                    validate(m);
                 });
-        {
-            final var list = cities.stream().map(EntityModel::getContent).collect(Collectors.toList());
-            Collections.shuffle(list);
-            _city = list.getFirst();
-        }
+        city = getRandomContent(cities);
     }
 
     @Order(ORDER_CITY)
@@ -481,23 +199,27 @@ class RetrieveEngAddressServiceApiController_SpringBootIT
     @MethodSource({"getMediaTypeStreamForItem"})
     @ParameterizedTest
     void readCity__(final String accept) {
-        Assumptions.assumeTrue(_state != null);
-        Assumptions.assumeTrue(_city != null);
-        final var city = readCity(webTestClient(), _state.getStateEngName(), _city.getCityEngName(), accept);
-        validateCity(city);
+        // -------------------------------------------------------------------------------------------------------- when
+        final var city = readSingle(
+                CityEngList.class,
+                b -> b.path(REQUEST_URI_CITY).build(state().getStateEngName(), city().getCityEngName()),
+                accept,
+                new TypeReferences.EntityModelType<>() {
+                }
+        );
+        // -------------------------------------------------------------------------------------------------------- then
+        validate(city);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    private static RoadEngList _road;
+    private static RoadEngList road;
 
-    private void validate(final RoadEngList content) {
-        Objects.requireNonNull(content, "content is null");
-        assertValid(content);
-    }
-
-    private void validateRoad(final EntityModel<RoadEngList> model) {
-        Objects.requireNonNull(model, "model is null");
-        validate(model.getContent());
+    private RoadEngList road() {
+        return Optional.ofNullable(road).orElseGet(() -> {
+            road = mock(RoadEngList.class);
+            given(road.getRoadEngName()).willReturn("Daeho-gil");
+            return road;
+        });
     }
 
     @Order(ORDER_ROADS)
@@ -505,18 +227,20 @@ class RetrieveEngAddressServiceApiController_SpringBootIT
     @MethodSource({"getMediaTypeStreamForCollection"})
     @ParameterizedTest
     void readRoads__(final String accept) {
-        Assumptions.assumeTrue(_state != null);
-        Assumptions.assumeTrue(_city != null);
-        final var roads = readRoads(webTestClient(), _state.getStateEngName(), _city.getCityEngName(), accept);
+        // -------------------------------------------------------------------------------------------------------- when
+        final var roads = readList(
+                RoadEngList.class,
+                b -> b.path(REQUEST_URI_ROADS).build(state().getStateEngName(), city().getCityEngName()),
+                accept,
+                new TypeReferences.EntityModelType<>() {
+                }
+        );
+        // -------------------------------------------------------------------------------------------------------- then
         assertThat(roads)
                 .isNotEmpty()
                 .doesNotContainNull()
-                .allSatisfy(m -> validateRoad(m));
-        {
-            final var list = roads.stream().map(EntityModel::getContent).collect(Collectors.toList());
-            Collections.shuffle(list);
-            _road = list.getFirst();
-        }
+                .allSatisfy(m -> validate(m));
+        road = getRandomContent(roads);
     }
 
     @Order(ORDER_ROAD)
@@ -524,64 +248,52 @@ class RetrieveEngAddressServiceApiController_SpringBootIT
     @MethodSource({"getMediaTypeStreamForItem"})
     @ParameterizedTest
     void readRoad__(final String accept) {
-        Assumptions.assumeTrue(_state != null);
-        Assumptions.assumeTrue(_city != null);
-        Assumptions.assumeTrue(_road != null);
-        final var road = readRoad(
-                webTestClient(),
-                _state.getStateEngName(),
-                _city.getCityEngName(),
-                _road.getRoadEngName(),
-                accept
+        // -------------------------------------------------------------------------------------------------------- when
+        final var road = readSingle(
+                RoadEngList.class,
+                b -> b.path(REQUEST_URI_ROAD)
+                        .build(state().getStateEngName(), city().getCityEngName(), road().getRoadEngName()),
+                accept,
+                new TypeReferences.EntityModelType<>() {
+                }
         );
-        validateRoad(road);
+        // -------------------------------------------------------------------------------------------------------- then
+        validate(road);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    private void validate(final RoadAddressEngSearchList content) {
-        Objects.requireNonNull(content, "content is null");
-        assertValid(content);
-    }
-
-    private void validateRoadAddress(final EntityModel<RoadAddressEngSearchList> model) {
-        Objects.requireNonNull(model, "model is null");
-        validate(model.getContent());
-    }
-
     @Order(ORDER_ROAD_ADDRESSES)
     @DisplayName("GET /.../{roadName}/addresses")
     @MethodSource({"getMediaTypeStreamForCollection"})
     @ParameterizedTest
     void readRoadAddresses__(final String accept) {
-        Assumptions.assumeTrue(_state != null);
-        Assumptions.assumeTrue(_city != null);
-        Assumptions.assumeTrue(_road != null);
         // -------------------------------------------------------------------------------------------------------- when
-        final var roadAddresses = readRoadAddresses(
-                webTestClient(),
-                _state.getStateEngName(),
-                _city.getCityEngName(),
-                _road.getRoadEngName(),
-                accept
+        final var roadAddresses = readList(
+                RoadAddressEngSearchList.class,
+                b -> b.path(REQUEST_URI_ROAD_ADDRESSES)
+                        .build(state().getStateEngName(), city().getCityEngName(), road().getRoadEngName()),
+                accept,
+                new TypeReferences.EntityModelType<>() {
+                }
         );
         // -------------------------------------------------------------------------------------------------------- then
         assertThat(roadAddresses)
                 .isNotEmpty()
                 .doesNotContainNull()
-                .allSatisfy(this::validateRoadAddress);
+                .allSatisfy(m -> {
+                    validate(m);
+                });
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    private static DistrictEngList _district;
+    private static DistrictEngList district;
 
-    private void validate(final DistrictEngList content) {
-        Objects.requireNonNull(content, "content is null");
-        assertValid(content);
-    }
-
-    private void validateDistrict(final EntityModel<DistrictEngList> model) {
-        Objects.requireNonNull(model, "model is null");
-        validate(model.getContent());
+    private DistrictEngList district() {
+        return Optional.ofNullable(district).orElseGet(() -> {
+            district = mock(DistrictEngList.class);
+            given(district.getDistrictEngName()).willReturn("Daeho-dong");
+            return district;
+        });
     }
 
     @Order(ORDER_DISTRICTS)
@@ -589,16 +301,22 @@ class RetrieveEngAddressServiceApiController_SpringBootIT
     @MethodSource({"getMediaTypeStreamForCollection"})
     @ParameterizedTest
     void readDistricts__(final String accept) {
-        Assumptions.assumeTrue(_state != null);
-        Assumptions.assumeTrue(_city != null);
         // -------------------------------------------------------------------------------------------------------- when
-        final var districts = readDistricts(webTestClient(), _state.getStateEngName(), _city.getCityEngName(), accept);
+        final var districts = readList(
+                DistrictEngList.class,
+                b -> b.path(REQUEST_URI_DISTRICTS).build(state().getStateEngName(), city().getCityEngName()),
+                accept,
+                new TypeReferences.EntityModelType<>() {
+                }
+        );
         assertThat(districts)
                 .isNotEmpty()
                 .doesNotContainNull()
-                .allSatisfy(v -> validateDistrict(v));
+                .allSatisfy(v -> {
+                    validate(v);
+                });
         // -------------------------------------------------------------------------------------------------------- then
-        _district = getRandomContent(districts);
+        district = getRandomContent(districts);
     }
 
     @Order(ORDER_DISTRICT)
@@ -606,54 +324,40 @@ class RetrieveEngAddressServiceApiController_SpringBootIT
     @MethodSource({"getMediaTypeStreamForItem"})
     @ParameterizedTest
     void readDistrict__(final String accept) {
-        Assumptions.assumeTrue(_state != null);
-        Assumptions.assumeTrue(_city != null);
-        Assumptions.assumeTrue(_district != null);
         // -------------------------------------------------------------------------------------------------------- when
-        final var district = readDistrict(
-                webTestClient(),
-                _state.getStateEngName(),
-                _city.getCityEngName(),
-                _district.getDistrictEngName(),
-                accept
+        final var district = readSingle(
+                DistrictEngList.class,
+                b -> b.path(REQUEST_URI_DISTRICT)
+                        .build(state().getStateEngName(), city().getCityEngName(), district().getDistrictEngName()),
+                accept,
+                new TypeReferences.EntityModelType<>() {
+                }
         );
         // -------------------------------------------------------------------------------------------------------- then
-        validateDistrict(district);
+        validate(district);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    private void validate(final LandAddressEngSearchList content) {
-        Objects.requireNonNull(content, "content is null");
-        assertValid(content);
-    }
-
-    private void validateDistrictAddress(final EntityModel<LandAddressEngSearchList> model) {
-        Objects.requireNonNull(model, "model is null");
-        validate(model.getContent());
-    }
-
     @Order(ORDER_DISTRICT_ADDRESSES)
     @DisplayName("GET /.../{districtName}/addresses")
     @MethodSource({"getMediaTypeStreamForCollection"})
     @ParameterizedTest
     void readDistrictAddresses__(final String accept) {
-        Assumptions.assumeTrue(_state != null);
-        Assumptions.assumeTrue(_city != null);
-        Assumptions.assumeTrue(_district != null);
         // -------------------------------------------------------------------------------------------------------- when
-        final var districtAddresses = readDistrictAddresses(
-                webTestClient(),
-                _state.getStateEngName(),
-                _city.getCityEngName(),
-                _district.getDistrictEngName(),
-                accept
+        final var districtAddresses = readList(
+                LandAddressEngSearchList.class,
+                b -> b.path(REQUEST_URI_DISTRICT_ADDRESSES)
+                        .build(state().getStateEngName(), city().getCityEngName(), district().getDistrictEngName()),
+                accept,
+                new TypeReferences.EntityModelType<>() {
+                }
         );
         // -------------------------------------------------------------------------------------------------------- then
         assertThat(districtAddresses)
                 .isNotEmpty()
                 .doesNotContainNull()
                 .allSatisfy(m -> {
-                    validateDistrictAddress(m);
+                    validate(m);
                 });
     }
 }

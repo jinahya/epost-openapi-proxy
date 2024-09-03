@@ -2,6 +2,7 @@ package com.github.jinahya.epost.openapi.proxy.web.bind;
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractResponseType;
 import com.mycompany.Application;
+import jakarta.annotation.Nullable;
 import jakarta.annotation.PostConstruct;
 import jakarta.validation.Validator;
 import lombok.AccessLevel;
@@ -16,12 +17,20 @@ import org.springframework.boot.autoconfigure.validation.ValidationAutoConfigura
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.ResolvableType;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.config.HypermediaWebTestClientConfigurer;
+import org.springframework.hateoas.server.core.TypeReferences;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.web.util.UriBuilder;
 
+import java.net.URI;
 import java.time.Duration;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -45,6 +54,51 @@ import static org.assertj.core.api.Assertions.assertThat;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Slf4j
 public abstract class _ApiController_SpringBootIT<CONTROLLER extends _ApiController> {
+
+    // 왜 안되는지 잘 모르겠다.
+    // https://stackoverflow.com/q/78942661/330457
+    // https://github.com/spring-projects/spring-hateoas/issues/2211
+    protected static <T> List<EntityModel<T>> readList(final Class<T> contentType, final WebTestClient client,
+                                                       final Function<UriBuilder, URI> uriFunction,
+                                                       @Nullable final String accept,
+                                                       final TypeReferences.EntityModelType<T> modelType) {
+        final var responseBody = client
+                .get()
+                .uri(uriFunction)
+                .headers(h -> {
+                    Optional.ofNullable(accept)
+                            .map(MediaType::valueOf)
+                            .map(List::of)
+                            .ifPresent(h::setAccept);
+                })
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(modelType)
+                .returnResult()
+                .getResponseBody();
+        return Objects.requireNonNull(responseBody, "responseBody is null");
+    }
+
+    protected static <T> EntityModel<T> readSingle(final Class<T> contentType, final WebTestClient client,
+                                                   final Function<UriBuilder, URI> uriFunction,
+                                                   @Nullable final String accept,
+                                                   final TypeReferences.EntityModelType<T> modelType) {
+        final var responseBody = client
+                .get()
+                .uri(uriFunction)
+                .headers(h -> {
+                    Optional.ofNullable(accept)
+                            .map(MediaType::valueOf)
+                            .map(List::of)
+                            .ifPresent(h::setAccept);
+                })
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(modelType)
+                .returnResult()
+                .getResponseBody();
+        return Objects.requireNonNull(responseBody, "responseBody is null");
+    }
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
@@ -84,6 +138,32 @@ public abstract class _ApiController_SpringBootIT<CONTROLLER extends _ApiControl
             );
         }
         return controllerClass;
+    }
+
+    // --------------------------------------------------------------------------------------------------- webTestClient
+    // https://stackoverflow.com/q/78942661/330457
+    protected <T> List<EntityModel<T>> readList(final Class<T> contentType, final Function<UriBuilder, URI> uriFunction,
+                                                @Nullable final String acceptValue,
+                                                final TypeReferences.EntityModelType<T> modelType) {
+        return readList(
+                contentType,
+                webTestClient(),
+                uriFunction,
+                acceptValue,
+                modelType
+        );
+    }
+
+    protected <T> EntityModel<T> readSingle(final Class<T> contentType, final Function<UriBuilder, URI> uriFunction,
+                                            @Nullable final String acceptValue,
+                                            final TypeReferences.EntityModelType<T> modelType) {
+        return readSingle(
+                contentType,
+                webTestClient(),
+                uriFunction,
+                acceptValue,
+                modelType
+        );
     }
 
     // ------------------------------------------------------------------------------------------------------- validator
