@@ -78,13 +78,13 @@ sequenceDiagram
 
 <table>
   <thead>
-    <tr><th>route</th><th>api</th><th>notes</th></tr>
+    <tr><th>route</th><th>api</th><th>description</th></tr>
   </thead>
   <tbody>
   <tr>
     <td></td>
     <td><pre>/api<br>/downloadAreaCodeService<br>/areaCodeInfo</pre></td>
-    <td></td>
+    <td>모든 <code>{dwldSe}</code>값들에 대한 응답을 반환한다.</td>
   </tr>
   <tr>
     <td><pre>/postal<br>/downloadAreaCodeService<br>/downloadAreaCodeService<br>/getAreaCodeInfo<br>?dwldSe={dwldSe}</pre></td>
