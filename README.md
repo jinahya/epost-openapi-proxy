@@ -60,7 +60,7 @@ sequenceDiagram
     PROXY(A) -->> CLIENT: 200 OK
 ```
 
-## Routes
+## Services
 
 아래에 열거된(개발된) 모든 서비스들에 대해 데이터 활용 신청을 해야 한다. (동일한 `인증키`에 `활용`이 추가되는 구조인 듯 하다.)
 
@@ -72,7 +72,7 @@ sequenceDiagram
 | [우편번호 정보조회]     | 통합검색 5자리 우편번호 조회서비스  | `retrieve_new_adress_area_cd_search_all_service` |       |      
 | [도로명주소조회서비스]    | 새주소 5자리 우편번호 조회서비스   | `retrieve_new_adress_area_cd_service`            |       |
 
-### 우편번호 다운로드 서비스(`downloadAreaCodeService`)
+### 우편번호 DB 다운로드 서비스(`downloadAreaCodeService`)
 
 #### Routes and APIs
 
@@ -99,12 +99,9 @@ sequenceDiagram
   </tbody>
 </table>
 
-| route                                                              | api                                                              | notes |
-|--------------------------------------------------------------------|------------------------------------------------------------------|-------|
-|                                                                    | `/api/downloadAreaCodeService/areaCodeInfo`                      |       |
-| `/postal/downloadAreaCodeService/<repeat>/getAreaCodeInfo?dwldSe=` | `/api/downloadAreaCodeService/areaCodeInfo/{dwldSe}`             |       |
-|                                                                    | `/api/downloadAreaCodeService/areaCodeInfo/{dwldSe}/fileContent` |       |
+### 영문 우편번호 조회 서비스(`retrieveEngAddressService`)  
 
+ 
 ## How to build
 
 ### JDK/JRE
