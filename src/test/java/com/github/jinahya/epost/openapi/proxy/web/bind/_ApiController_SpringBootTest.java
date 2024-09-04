@@ -41,17 +41,17 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @param <CONTROLLER> subclass type parameter
  * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
  */
-@Import(
-        value = {
-                ValidationAutoConfiguration.class
-        }
-)
-@ContextConfiguration(
-        classes = {
-                Application.class
-        }
-)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+//@Import(
+//        value = {
+//                ValidationAutoConfiguration.class
+//        }
+//)
+//@ContextConfiguration(
+//        classes = {
+//                Application.class
+//        }
+//)
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Slf4j
 @SuppressWarnings({
@@ -60,6 +60,35 @@ import static org.assertj.core.api.Assertions.assertThat;
 public abstract class _ApiController_SpringBootTest<CONTROLLER extends _ApiController> {
 
     static final String RESOURCE_PREFIX_ROUTE = "/com/github/jinahya/epost/openapi/proxy/cloud/gateway/route";
+
+    protected static Flux<DataBuffer> resourceDataPublisher(final String name) {
+        final var resource = _ApiController_SpringBootTest.class.getResourceAsStream(name);
+        assertThat(resource)
+                .as("resource for '" + name + "'")
+                .isNotNull();
+        return DataBufferUtils.read(
+                        new InputStreamResource(resource),
+                        DefaultDataBufferFactory.sharedInstance,
+                        1024
+                )
+                .doFinally(s -> {
+                    try {
+                        resource.close();
+                    } catch (final IOException ioe) {
+                        throw new RuntimeException(ioe);
+                    }
+                });
+    }
+
+    /**
+     * Loads the resource of specified name under the {@value #RESOURCE_PREFIX_ROUTE} path.
+     *
+     * @param name the sub-resource name. e.g. {@code /some/other}.
+     * @return a data flux of specified resource.
+     */
+    protected static Flux<DataBuffer> routeResourceDataPublisher(final String name) {
+        return resourceDataPublisher(RESOURCE_PREFIX_ROUTE + name);
+    }
 
     // -----------------------------------------------------------------------------------------------------------------
     protected static <T> T getRandom(final List<T> list) {
@@ -122,34 +151,34 @@ public abstract class _ApiController_SpringBootTest<CONTROLLER extends _ApiContr
         return controllerClass;
     }
 
-    protected Flux<DataBuffer> resourceDataPublisher(final String name) {
-        final var resource = controllerClass().getResourceAsStream(name);
-        assertThat(resource)
-                .as("resource for '" + name + "'")
-                .isNotNull();
-        return DataBufferUtils.read(
-                        new InputStreamResource(resource),
-                        DefaultDataBufferFactory.sharedInstance,
-                        1024
-                )
-                .doFinally(s -> {
-                    try {
-                        resource.close();
-                    } catch (final IOException ioe) {
-                        throw new RuntimeException(ioe);
-                    }
-                });
-    }
-
-    /**
-     * Loads the resource of specified name under the {@value #RESOURCE_PREFIX_ROUTE} path.
-     *
-     * @param name the sub-resource name. e.g. {@code /some/other}.
-     * @return a data flux of specified resource.
-     */
-    protected Flux<DataBuffer> routeResourceDataPublisher(final String name) {
-        return resourceDataPublisher(RESOURCE_PREFIX_ROUTE + name);
-    }
+//    protected Flux<DataBuffer> resourceDataPublisher(final String name) {
+//        final var resource = controllerClass().getResourceAsStream(name);
+//        assertThat(resource)
+//                .as("resource for '" + name + "'")
+//                .isNotNull();
+//        return DataBufferUtils.read(
+//                        new InputStreamResource(resource),
+//                        DefaultDataBufferFactory.sharedInstance,
+//                        1024
+//                )
+//                .doFinally(s -> {
+//                    try {
+//                        resource.close();
+//                    } catch (final IOException ioe) {
+//                        throw new RuntimeException(ioe);
+//                    }
+//                });
+//    }
+//
+//    /**
+//     * Loads the resource of specified name under the {@value #RESOURCE_PREFIX_ROUTE} path.
+//     *
+//     * @param name the sub-resource name. e.g. {@code /some/other}.
+//     * @return a data flux of specified resource.
+//     */
+//    protected Flux<DataBuffer> routeResourceDataPublisher(final String name) {
+//        return resourceDataPublisher(RESOURCE_PREFIX_ROUTE + name);
+//    }
 
     // ------------------------------------------------------------------------------------------------------- validator
     protected <T> T assertValid(final T object) {

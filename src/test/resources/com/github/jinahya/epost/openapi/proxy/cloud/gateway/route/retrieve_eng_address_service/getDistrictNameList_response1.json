@@ -1,0 +1,32 @@
+{
+  "DistrictEngListResponse": {
+    "cmmMsgHeader": {
+      "requestMsgId": "",
+      "responseMsgId": "",
+      "responseTime": "20240904:160934575",
+      "successYN": "Y",
+      "returnCode": "00",
+      "errMsg": ""
+    },
+    "districtEngList": [
+      {
+        "districtEngName": "Dado-myeon"
+      },
+      {
+        "districtEngName": "Daegi-dong"
+      },
+      {
+        "districtEngName": "Daeho-dong"
+      },
+      {
+        "districtEngName": "Dasi-myeon"
+      },
+      {
+        "districtEngName": "Donggang-myeon"
+      },
+      {
+        "districtEngName": "Dongsu-dong"
+      }
+    ]
+  }
+}

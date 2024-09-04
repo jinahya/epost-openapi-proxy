@@ -9,16 +9,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.reactive.context.ReactiveWebServerInitializedEvent;
 import org.springframework.boot.web.server.WebServer;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.ResolvableType;
 import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.web.reactive.function.client.ExchangeFunction;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
@@ -56,12 +59,18 @@ public abstract class _ApiController {
         webServer = event.getWebServer();
     }
 
+    // ------------------------------------------------------------------------------------------------------- webServer
+
     // ------------------------------------------------------------------------------------------------------- webClient
     protected WebClient webClient() {
-        assert webServer != null;
         if (webClient == null) {
-            webClient = WebClient.builder()
-                    .baseUrl("http://localhost:" + webServer.getPort())
+            final var builder = WebClient.builder();
+            if (exchangeFunction != null) {
+                builder.exchangeFunction(exchangeFunction);
+            }
+            final var port = Optional.ofNullable(webServer).map(WebServer::getPort).orElse(8080);
+            webClient = builder
+                    .baseUrl("http://localhost:" + port)
                     .build();
         }
         return webClient;
@@ -70,6 +79,7 @@ public abstract class _ApiController {
     // for mutating in the @SpringBootTest
     final void mutateWebClient(final UnaryOperator<WebClient> operator) {
         webClient = Objects.requireNonNull(operator, "operator is null").apply(webClient());
+        log.debug("webClient: {}", webClient);
     }
 
     protected <RESPONSE extends AbstractResponseType<RESPONSE>>
@@ -89,6 +99,10 @@ public abstract class _ApiController {
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.NONE)
     private WebServer webServer;
+
+    @LocalExchangeFunction
+    @Autowired(required = false)
+    private ExchangeFunction exchangeFunction;
 
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.NONE)

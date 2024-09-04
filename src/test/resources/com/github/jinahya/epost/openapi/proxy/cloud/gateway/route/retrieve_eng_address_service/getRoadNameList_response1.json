@@ -1,0 +1,245 @@
+{
+  "RoadEngListResponse": {
+    "cmmMsgHeader": {
+      "requestMsgId": "",
+      "responseMsgId": "",
+      "responseTime": "20240904:194958351",
+      "successYN": "Y",
+      "returnCode": "00",
+      "errMsg": ""
+    },
+    "roadEngList": [
+      {
+        "roadEngName": "Dado-ro"
+      },
+      {
+        "roadEngName": "Daedeok-gil"
+      },
+      {
+        "roadEngName": "Daedodaejang-gil"
+      },
+      {
+        "roadEngName": "Daedodojang-gil"
+      },
+      {
+        "roadEngName": "Daegakchon-gil"
+      },
+      {
+        "roadEngName": "Daegi 1-gil"
+      },
+      {
+        "roadEngName": "Daegi 2-gil"
+      },
+      {
+        "roadEngName": "Daegok-gil"
+      },
+      {
+        "roadEngName": "Daeheung 1-gil"
+      },
+      {
+        "roadEngName": "Daeheung 2-gil"
+      },
+      {
+        "roadEngName": "Daeheung 3-gil"
+      },
+      {
+        "roadEngName": "Daeho-gil"
+      },
+      {
+        "roadEngName": "Daejang-gil"
+      },
+      {
+        "roadEngName": "Daejeon-gil"
+      },
+      {
+        "roadEngName": "Daesan-gil"
+      },
+      {
+        "roadEngName": "Daesanjuksan-gil"
+      },
+      {
+        "roadEngName": "Daesanyongsan-gil"
+      },
+      {
+        "roadEngName": "Daeseo-gil"
+      },
+      {
+        "roadEngName": "Daeseol-gil"
+      },
+      {
+        "roadEngName": "Daesil-gil"
+      },
+      {
+        "roadEngName": "Daeyong-gil"
+      },
+      {
+        "roadEngName": "Dahak-gil"
+      },
+      {
+        "roadEngName": "Danam-ro"
+      },
+      {
+        "roadEngName": "Dangga-gil"
+      },
+      {
+        "roadEngName": "Dasi-ro"
+      },
+      {
+        "roadEngName": "Deogeum-ro"
+      },
+      {
+        "roadEngName": "Deokchi-gil"
+      },
+      {
+        "roadEngName": "Deokdong-gil"
+      },
+      {
+        "roadEngName": "Deokdongnaedong-gil"
+      },
+      {
+        "roadEngName": "Deoksan-gil"
+      },
+      {
+        "roadEngName": "Deoksanjungang-gil"
+      },
+      {
+        "roadEngName": "Deoksanyongsan-gil"
+      },
+      {
+        "roadEngName": "Deoksil-gil"
+      },
+      {
+        "roadEngName": "Deongnim-ro"
+      },
+      {
+        "roadEngName": "Deongnimhangnim-gil"
+      },
+      {
+        "roadEngName": "Deongnyedeongnim-gil"
+      },
+      {
+        "roadEngName": "Deongnyesinpyeong-gil"
+      },
+      {
+        "roadEngName": "Deongnyeyuchon-gil"
+      },
+      {
+        "roadEngName": "Deongnyong-ro"
+      },
+      {
+        "roadEngName": "Deungdae-gil"
+      },
+      {
+        "roadEngName": "Deungjeong-gil"
+      },
+      {
+        "roadEngName": "Deungjeongdeongnye-gil"
+      },
+      {
+        "roadEngName": "Deungsu-gil"
+      },
+      {
+        "roadEngName": "Deungsupyeongya-gil"
+      },
+      {
+        "roadEngName": "Docheon-ro"
+      },
+      {
+        "roadEngName": "Dodongjindong-gil"
+      },
+      {
+        "roadEngName": "Dogwasil-gil"
+      },
+      {
+        "roadEngName": "Dojang-gil"
+      },
+      {
+        "roadEngName": "Domin-gil"
+      },
+      {
+        "roadEngName": "Donam-gil"
+      },
+      {
+        "roadEngName": "Donga-gil"
+      },
+      {
+        "roadEngName": "Dongbaek-gil"
+      },
+      {
+        "roadEngName": "Dongbang 1-gil"
+      },
+      {
+        "roadEngName": "Dongbang 2-gil"
+      },
+      {
+        "roadEngName": "Dongchang-ro"
+      },
+      {
+        "roadEngName": "Dongchon-ro"
+      },
+      {
+        "roadEngName": "Dongchonsongjeong-gil"
+      },
+      {
+        "roadEngName": "Donggang-ro"
+      },
+      {
+        "roadEngName": "Donggok-gil"
+      },
+      {
+        "roadEngName": "Donggoksongjeong-gil"
+      },
+      {
+        "roadEngName": "Donggunaru-gil"
+      },
+      {
+        "roadEngName": "Dongjeommun-gil"
+      },
+      {
+        "roadEngName": "Dongjeon-gil"
+      },
+      {
+        "roadEngName": "Dongmakgol-gil"
+      },
+      {
+        "roadEngName": "Dongnyeok-gil"
+      },
+      {
+        "roadEngName": "Dongnyeong-gil"
+      },
+      {
+        "roadEngName": "Dongokseon-ro"
+      },
+      {
+        "roadEngName": "Dongsan 1-gil"
+      },
+      {
+        "roadEngName": "Dongsan 2-gil"
+      },
+      {
+        "roadEngName": "Dongshindae-gil"
+      },
+      {
+        "roadEngName": "Dongsunonggongdanji-gil"
+      },
+      {
+        "roadEngName": "Dongwonseowon-gil"
+      },
+      {
+        "roadEngName": "Dongyangchon-gil"
+      },
+      {
+        "roadEngName": "Doryong-gil"
+      },
+      {
+        "roadEngName": "Dosan-gil"
+      },
+      {
+        "roadEngName": "Dueum-gil"
+      },
+      {
+        "roadEngName": "Duham-gil"
+      }
+    ]
+  }
+}
