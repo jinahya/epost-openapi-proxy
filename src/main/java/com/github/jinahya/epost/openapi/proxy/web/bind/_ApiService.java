@@ -15,8 +15,9 @@ import org.springframework.context.event.EventListener;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Objects;
-import java.util.Optional;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Slf4j
@@ -39,14 +40,17 @@ public abstract class _ApiService {
 
     // ------------------------------------------------------------------------------------------------------- webClient
     protected WebClient webClient() {
+        assert webServer != null;
         if (webClient == null) {
-            final var builder = WebClient.builder();
-//            if (exchangeFunction != null) {
-//                builder.exchangeFunction(exchangeFunction);
-//            }
-            final var port = Optional.ofNullable(webServer).map(WebServer::getPort).orElse(8080);
-            webClient = builder
-                    .baseUrl("http://localhost:" + port)
+            String localhost;
+            try {
+                localhost = InetAddress.getLocalHost().getHostName();
+            } catch (final UnknownHostException uhe) {
+                log.warn("failed to get localhost", uhe);
+                localhost = "localhost";
+            }
+            return WebClient.builder()
+                    .baseUrl("http://" + localhost + ':' + webServer.getPort())
                     .build();
         }
         return webClient;
