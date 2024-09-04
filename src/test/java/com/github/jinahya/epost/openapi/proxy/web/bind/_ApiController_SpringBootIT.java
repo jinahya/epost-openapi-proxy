@@ -27,10 +27,12 @@ import org.springframework.web.util.UriBuilder;
 
 import java.net.URI;
 import java.time.Duration;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -54,6 +56,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Slf4j
 public abstract class _ApiController_SpringBootIT<CONTROLLER extends _ApiController> {
+
+    // -----------------------------------------------------------------------------------------------------------------
+    protected static <T> T getRandom(final List<T> list) {
+        Collections.shuffle(list);
+        return list.getFirst();
+    }
+
+    @SuppressWarnings({
+            "java:S6204" // STREAM#collect(Collectors.toList()) <> Stream#toList()
+    })
+    protected static <T> T getRandomContent(final List<EntityModel<T>> list) {
+        return getRandom(list.stream().map(EntityModel::getContent).collect(Collectors.toList()));
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
 
     // 왜 안되는지 잘 모르겠다.
     // https://stackoverflow.com/q/78942661/330457

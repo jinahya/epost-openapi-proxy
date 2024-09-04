@@ -20,14 +20,18 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.core.io.buffer.DefaultDataBufferFactory;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.reactive.function.client.ExchangeFunction;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -56,6 +60,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 public abstract class _ApiController_SpringBootTest<CONTROLLER extends _ApiController> {
 
     static final String RESOURCE_PREFIX_ROUTE = "/com/github/jinahya/epost/openapi/proxy/cloud/gateway/route";
+
+    // -----------------------------------------------------------------------------------------------------------------
+    protected static <T> T getRandom(final List<T> list) {
+        Collections.shuffle(list);
+        return list.getFirst();
+    }
+
+    @SuppressWarnings({
+            "java:S6204" // STREAM#collect(Collectors.toList()) <> Stream#toList()
+    })
+    protected static <T> T getRandomContent(final List<EntityModel<T>> list) {
+        return getRandom(list.stream().map(EntityModel::getContent).collect(Collectors.toList()));
+    }
+
+    @SuppressWarnings({
+            "java:S6204" // STREAM#collect(Collectors.toList()) <> Stream#toList()
+    })
+    protected static <T> T getRandomContent(final Flux<EntityModel<T>> list) {
+        return list.collectList().map(l -> getRandomContent(l)).block();
+    }
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 

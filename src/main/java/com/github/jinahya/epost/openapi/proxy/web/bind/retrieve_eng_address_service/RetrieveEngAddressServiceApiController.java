@@ -221,11 +221,11 @@ class RetrieveEngAddressServiceApiController
             }
     )
     Mono<EntityModel<CityEngListResponse.CityEngList>> readCity(
+            final ServerWebExchange exchange,
             @Parameter(description = "the name of the state")
             @PathVariable(name = PATH_NAME_STATE_NAME) final String stateName,
             @Parameter(description = "the name of the city")
-            @PathVariable(name = PATH_NAME_CITY_NAME) final String cityName,
-            final ServerWebExchange exchange) {
+            @PathVariable(name = PATH_NAME_CITY_NAME) final String cityName) {
         return cityPublisher(stateName, c -> c.getCityEngName().equals(cityName))
                 .map(c -> model(stateName, c))
                 .single()

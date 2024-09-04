@@ -20,11 +20,8 @@ import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.core.TypeReferences;
 import org.springframework.http.MediaType;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service._RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITIES;
@@ -44,19 +41,6 @@ import static org.mockito.Mockito.mock;
 @Slf4j
 class RetrieveEngAddressServiceApiController_SpringBootIT
         extends _ApiController_SpringBootIT<RetrieveEngAddressServiceApiController> {
-
-    // -----------------------------------------------------------------------------------------------------------------
-    private static <T> T getRandom(final List<T> list) {
-        Collections.shuffle(list);
-        return list.getFirst();
-    }
-
-    @SuppressWarnings({
-            "java:S6204" // STREAM#collect(Collectors.toList()) <> Stream#toList()
-    })
-    private static <T> T getRandomContent(final List<EntityModel<T>> list) {
-        return getRandom(list.stream().map(EntityModel::getContent).collect(Collectors.toList()));
-    }
 
     // -----------------------------------------------------------------------------------------------------------------
     private static Stream<String> getMediaTypeStreamForCollection() {
