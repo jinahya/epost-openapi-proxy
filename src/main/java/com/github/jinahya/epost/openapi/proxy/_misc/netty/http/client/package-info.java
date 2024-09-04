@@ -1,5 +1,5 @@
 /**
- * {@link reactor.netty.http.client}.
+ * Classes related to the {@link reactor.netty.http.client} package.
  *
  * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
  */
