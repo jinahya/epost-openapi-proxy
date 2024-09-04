@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.hateoas.EntityModel;
@@ -37,10 +37,10 @@ import java.util.function.Consumer;
 
 @Tag(name = _DownloadAreaCodeServiceApiConstants.TAG)
 @RestController
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 @Slf4j
 class DownloadAreaCodeServiceApiController
-        extends _ApiController {
+        extends _ApiController<DownloadAreaCodeServiceApiService> {
 
     private static Iterable<Link> links(final AreaCodeInfoResponse response) {
         final AreaCodeInfoRequest request = response.getRequestInstance();
@@ -62,11 +62,6 @@ class DownloadAreaCodeServiceApiController
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    private Mono<AreaCodeInfoResponse> exchange(final String dwldSe) {
-        return exchange(AreaCodeInfoRequest.of(dwldSe));
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
     @ApiResponse(content = {
             @Content(schema = @Schema(implementation = AreaCodeInfoResponse.class))
     })
@@ -81,7 +76,7 @@ class DownloadAreaCodeServiceApiController
     Flux<EntityModel<AreaCodeInfoResponse>> readAreaCodeInfo(final ServerWebExchange exchange) {
         return Flux.fromArray(AreaCodeInfoRequest.DwldSe.values())
                 .map(AreaCodeInfoRequest.DwldSe::value)
-                .flatMapSequential(this::exchange, 2)
+                .flatMapSequential(v -> service().exchange(AreaCodeInfoRequest.of(v)))
                 .map(this::model);
     }
 
@@ -100,14 +95,14 @@ class DownloadAreaCodeServiceApiController
     Mono<EntityModel<AreaCodeInfoResponse>> readAreaCodeInfo(
             final ServerWebExchange exchange,
             @PathVariable(_DownloadAreaCodeServiceApiConstants.PATH_NAME_DWLD_SE) final String dwldSe) {
-        return exchange(AreaCodeInfoRequest.of(dwldSe))
+        return service().exchange(AreaCodeInfoRequest.of(dwldSe))
                 .map(r -> r.cmmMsgHeader(null))
                 .map(this::model);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     private Flux<DataBuffer> getFileContentPublisher(final String dwldSe, final Consumer<? super String> consumer) {
-        return exchange(dwldSe)
+        return service().exchange(AreaCodeInfoRequest.of(dwldSe))
                 .map(AreaCodeInfoResponse::getFile)
                 .flatMapMany(f -> {
                     final String filename;
@@ -132,8 +127,10 @@ class DownloadAreaCodeServiceApiController
     Flux<DataBuffer> readAreaCodeInfoFileContent(
             final ServerWebExchange exchange,
             @PathVariable(_DownloadAreaCodeServiceApiConstants.PATH_NAME_DWLD_SE) final String dwldSe,
-            @RequestParam(value = _DownloadAreaCodeServiceApiConstants.PARAM_ATTACH, required = false) final Boolean attach,
-            @RequestParam(value = _DownloadAreaCodeServiceApiConstants.PARAM_FILENAME, required = false) final String filename) {
+            @RequestParam(value = _DownloadAreaCodeServiceApiConstants.PARAM_ATTACH, required = false)
+            final Boolean attach,
+            @RequestParam(value = _DownloadAreaCodeServiceApiConstants.PARAM_FILENAME, required = false)
+            final String filename) {
         return getFileContentPublisher(
                 dwldSe,
                 f -> {

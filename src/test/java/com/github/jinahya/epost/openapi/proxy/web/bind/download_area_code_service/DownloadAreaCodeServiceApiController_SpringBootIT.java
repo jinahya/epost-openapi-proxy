@@ -2,7 +2,7 @@ package com.github.jinahya.epost.openapi.proxy.web.bind.download_area_code_servi
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area_code_service.AreaCodeInfoRequest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area_code_service.AreaCodeInfoResponse;
-import com.github.jinahya.epost.openapi.proxy.web.bind._ApiController_SpringBootIT;
+import com.github.jinahya.epost.openapi.proxy.web.bind.__ApiController_SpringBootIT;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Slf4j
 class DownloadAreaCodeServiceApiController_SpringBootIT
-        extends _ApiController_SpringBootIT<DownloadAreaCodeServiceApiController> {
+        extends __ApiController_SpringBootIT<DownloadAreaCodeServiceApiController> {
 
     // ----------------------------------------------------------------------------------------------- /.../areaCodeInfo
     @DisplayName("GET /.../areaCodeInfo")

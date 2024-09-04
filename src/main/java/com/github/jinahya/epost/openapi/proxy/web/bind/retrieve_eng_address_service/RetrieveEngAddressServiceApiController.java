@@ -17,7 +17,7 @@ import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_a
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.RoadEngListResponse;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.StateEngListRequest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.StateEngListResponse;
-import com.github.jinahya.epost.openapi.proxy.web.bind._ApiController;
+import com.github.jinahya.epost.openapi.proxy.web.bind.__ApiController;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -77,7 +77,7 @@ import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_addre
         "java:S101" // class _Retrieve...
 })
 class RetrieveEngAddressServiceApiController
-        extends _ApiController {
+        extends __ApiController {
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 

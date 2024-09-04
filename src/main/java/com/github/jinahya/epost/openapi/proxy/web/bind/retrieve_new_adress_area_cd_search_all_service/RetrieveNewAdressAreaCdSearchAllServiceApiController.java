@@ -2,7 +2,7 @@ package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_new_adress_area
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_search_all_service.NewAddressListAreaCdSearchAllRequest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_search_all_service.NewAddressListAreaCdSearchAllResponse.NewAddressListAreaCdSearchAll;
-import com.github.jinahya.epost.openapi.proxy.web.bind._ApiController;
+import com.github.jinahya.epost.openapi.proxy.web.bind.__ApiController;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -31,7 +31,7 @@ import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_new_adres
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Slf4j
 class RetrieveNewAdressAreaCdSearchAllServiceApiController
-        extends _ApiController {
+        extends __ApiController {
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 

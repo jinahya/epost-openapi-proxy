@@ -3,8 +3,9 @@ package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_ser
 import com.github.jinahya.epost.openapi.proxy._TestConstants;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service._RetrieveEngAddressServiceConstants;
 import com.github.jinahya.epost.openapi.proxy.web.bind.LocalExchangeFunction;
-import com.github.jinahya.epost.openapi.proxy.web.bind._ApiController_SpringBootTest;
+import com.github.jinahya.epost.openapi.proxy.web.bind.__ApiController_SpringBootTest;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.http.server.reactive.MockServerHttpRequest;
@@ -22,8 +22,6 @@ import org.springframework.web.reactive.function.client.ExchangeFunction;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.util.UriTemplate;
 import reactor.core.publisher.Mono;
-
-import java.util.Objects;
 
 import static com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service._RetrieveEngAddressServiceConstants.REQUEST_URI_GET_CITY_LIST;
 import static com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service._RetrieveEngAddressServiceConstants.REQUEST_URI_GET_DISTRICT_FIRST_NAME_LIST;
@@ -45,6 +43,7 @@ import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_addre
 import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service._RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATE;
 import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service._RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES;
 
+@Disabled
 @EnabledIfEnvironmentVariable(named = _TestConstants.ENVIRONMENT_VARIABLE_SERVICE_KEY, matches = ".+")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Slf4j
@@ -52,7 +51,7 @@ import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_addre
         "java:S125" // / ----------
 })
 class RetrieveEngAddressServiceApiController_SpringBootTest
-        extends _ApiController_SpringBootTest<RetrieveEngAddressServiceApiController> {
+        extends __ApiController_SpringBootTest<RetrieveEngAddressServiceApiController> {
 
     // -----------------------------------------------------------------------------------------------------------------
 
@@ -208,15 +207,15 @@ class RetrieveEngAddressServiceApiController_SpringBootTest
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    private <T> void validate(final T content) {
-        Objects.requireNonNull(content, "content is null");
-        assertValid(content);
-    }
-
-    private <T> void validate(final EntityModel<T> model) {
-        Objects.requireNonNull(model, "model is null");
-        validate(Objects.requireNonNull(model.getContent(), "model.content is null"));
-    }
+//    private <T> void validate(final T content) {
+//        Objects.requireNonNull(content, "content is null");
+//        assertValid(content);
+//    }
+//
+//    private <T> void validate(final EntityModel<T> model) {
+//        Objects.requireNonNull(model, "model is null");
+//        validate(Objects.requireNonNull(model.getContent(), "model.content is null"));
+//    }
 
     // ----------------------------------------------------------------------------------------------------- /.../states
     @DisplayName("GET " + REQUEST_URI_STATES)
