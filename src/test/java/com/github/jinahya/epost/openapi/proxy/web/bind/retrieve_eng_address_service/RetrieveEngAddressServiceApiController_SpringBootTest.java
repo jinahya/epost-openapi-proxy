@@ -5,6 +5,7 @@ import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_a
 import com.github.jinahya.epost.openapi.proxy.web.bind.LocalExchangeFunction;
 import com.github.jinahya.epost.openapi.proxy.web.bind.__ApiController_SpringBootTest;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
@@ -106,7 +107,7 @@ class RetrieveEngAddressServiceApiController_SpringBootTest
             REQUEST_URI_GET_ROAD_ADDRESS_SEARCH);
 
     // -----------------------------------------------------------------------------------------------------------------
-    @TestConfiguration
+//    @TestConfiguration
     static class TestConfiguration_ {
 
         @LocalExchangeFunction
@@ -204,6 +205,11 @@ class RetrieveEngAddressServiceApiController_SpringBootTest
                 throw new RuntimeException("unhandled url: " + url);
             };
         }
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    @BeforeEach
+    void a() {
     }
 
     // -----------------------------------------------------------------------------------------------------------------

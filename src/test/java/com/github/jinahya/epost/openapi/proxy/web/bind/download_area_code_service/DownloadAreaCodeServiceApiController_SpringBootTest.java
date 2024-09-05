@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.mock.http.server.reactive.MockServerHttpRequest;
@@ -20,6 +19,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import static com.github.jinahya.epost.openapi.proxy.web.bind.download_area_code_service._DownloadAreaCodeServiceApiConstants.REQUEST_URI_AREA_CODE_INFO;
+import static com.github.jinahya.epost.openapi.proxy.web.bind.download_area_code_service._DownloadAreaCodeServiceApiConstants.REQUEST_URI_DWLD_SE;
 import static org.mockito.ArgumentMatchers.notNull;
 import static org.mockito.Mockito.when;
 
@@ -31,17 +31,15 @@ import static org.mockito.Mockito.when;
 @ContextConfiguration(classes = {
         DownloadAreaCodeServiceApiController.class
 })
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Slf4j
 class DownloadAreaCodeServiceApiController_SpringBootTest
-        extends _ApiController_SpringBootTest<
-                DownloadAreaCodeServiceApiController, DownloadAreaCodeServiceApiService> {
+        extends _ApiController_SpringBootTest<DownloadAreaCodeServiceApiController, DownloadAreaCodeServiceApiService> {
 
     // -----------------------------------------------------------------------------------------------------------------
     @BeforeEach
     void a() {
-        when(service().exchange(notNull())).thenAnswer(i -> {
+        when(serviceInstance().exchange(notNull())).thenAnswer(i -> {
             final var request = i.getArgument(0, AreaCodeInfoRequest.class);
             final var dwldSe = request.getDwldSe();
             try (final var resource = AreaCodeInfoResponse.class.getResourceAsStream(
@@ -83,14 +81,14 @@ class DownloadAreaCodeServiceApiController_SpringBootTest
      *
      * @param dwldSe the value for {@code dwldSe} parameter.
      */
-    @DisplayName("GET " + _DownloadAreaCodeServiceApiConstants.REQUEST_URI_DWLD_SE)
+    @DisplayName("GET " + REQUEST_URI_DWLD_SE)
     @EnumSource(AreaCodeInfoRequest.DwldSe.class)
     @ParameterizedTest
     void __(final AreaCodeInfoRequest.DwldSe dwldSe) {
         // ------------------------------------------------------------------------------------------------------- given
         final var exchange = MockServerWebExchange.from(
                 MockServerHttpRequest
-                        .get(_DownloadAreaCodeServiceApiConstants.REQUEST_URI_DWLD_SE, dwldSe.value())
+                        .get(REQUEST_URI_DWLD_SE, dwldSe.value())
                         .build()
         );
         // -------------------------------------------------------------------------------------------------------- when
