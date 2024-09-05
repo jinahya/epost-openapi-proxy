@@ -8,6 +8,7 @@ import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -47,6 +48,14 @@ public final class AbstractTypeUtils {
                                                                               final Object source)
             throws JAXBException {
         return unmarshalNoNamespacedInstance(context(clazz), clazz, source);
+    }
+
+    public static <T extends AbstractType<T>> T unmarshalNoNamespacedInstance(final Class<T> clazz,
+                                                                              final String resName)
+            throws IOException, JAXBException {
+        try (final var resource = clazz.getResourceAsStream(resName)) {
+            return unmarshalNoNamespacedInstance(clazz, resource);
+        }
     }
 
     // -----------------------------------------------------------------------------------------------------------------

@@ -9,8 +9,8 @@ import org.springframework.hateoas.server.core.TypeReferences;
 
 import java.util.stream.Stream;
 
-import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_new_adress_area_cd_search_all_service.RetrieveNewAdressAreCdSearchAllServiceApiConstants.REQUEST_PARAM_SRCHWRD;
-import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_new_adress_area_cd_search_all_service.RetrieveNewAdressAreCdSearchAllServiceApiConstants.REQUEST_URI_SEARCH;
+import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_new_adress_area_cd_search_all_service._RetrieveNewAdressAreCdSearchAllServiceApiConstants.REQUEST_PARAM_SRCHWRD;
+import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_new_adress_area_cd_search_all_service._RetrieveNewAdressAreCdSearchAllServiceApiConstants.REQUEST_URI_SEARCH;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RetrieveNewAdressAreaCdSearchAllServiceApiController_SpringBootIT

@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
-@Tag(name = RetrieveNewAdressAreCdSearchAllServiceApiConstants.TAG)
+@Tag(name = _RetrieveNewAdressAreCdSearchAllServiceApiConstants.TAG)
 @RestController
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
-class _RetrieveNewAdressAreaCdSearchAllServiceRouteController
+class RetrieveNewAdressAreaCdSearchAllServiceRouteController
         extends _RouteController {
 
     // -----------------------------------------------------------------------------------------------------------------

@@ -17,7 +17,6 @@ import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_a
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.StateEngListRequest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.StateEngListResponse;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service._NoOp;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service._RetrieveEngAddressServiceConstants;
 import com.github.jinahya.epost.openapi.proxy.web.bind._ApiController_SpringBootTest;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -29,18 +28,9 @@ import org.springframework.mock.http.server.reactive.MockServerHttpRequest;
 import org.springframework.mock.web.server.MockServerWebExchange;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.server.ServerWebExchange;
-import org.springframework.web.util.UriTemplate;
 import reactor.core.publisher.Mono;
 
 import static com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractTypeUtils.unmarshalNoNamespacedInstance;
-import static com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service._RetrieveEngAddressServiceConstants.REQUEST_URI_GET_CITY_LIST;
-import static com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service._RetrieveEngAddressServiceConstants.REQUEST_URI_GET_DISTRICT_FIRST_NAME_LIST;
-import static com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service._RetrieveEngAddressServiceConstants.REQUEST_URI_GET_DISTRICT_NAME_LIST;
-import static com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service._RetrieveEngAddressServiceConstants.REQUEST_URI_GET_LAND_ADDRESS_SEARCH;
-import static com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service._RetrieveEngAddressServiceConstants.REQUEST_URI_GET_ROAD_ADDRESS_SEARCH;
-import static com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service._RetrieveEngAddressServiceConstants.REQUEST_URI_GET_ROAD_FIRST_NAME_LIST;
-import static com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service._RetrieveEngAddressServiceConstants.REQUEST_URI_GET_ROAD_NAME_LIST;
-import static com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service._RetrieveEngAddressServiceConstants.REQUEST_URI_GET_STATE_LIST;
 import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service._RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITIES;
 import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service._RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITY;
 import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service._RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICT;
@@ -54,9 +44,6 @@ import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_addre
 import static org.mockito.ArgumentMatchers.notNull;
 import static org.mockito.Mockito.when;
 
-//@Disabled
-//@EnabledIfEnvironmentVariable(named = _TestConstants.ENVIRONMENT_VARIABLE_SERVICE_KEY, matches = ".+")
-//@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ContextConfiguration(classes = {
         RetrieveEngAddressServiceApiController.class
 })
@@ -91,45 +78,14 @@ class RetrieveEngAddressServiceApiController_SpringBootTest
     private static final String ROAD_NAME = "Daeho-gil";
 
     // -----------------------------------------------------------------------------------------------------------------
-
-    /**
-     * A uri template of {@value _RetrieveEngAddressServiceConstants#REQUEST_URI_GET_STATE_LIST}.
-     */
-    private static final UriTemplate URI_TEMPLATE_GET_STATE_LIST = new UriTemplate(REQUEST_URI_GET_STATE_LIST);
-
-    /**
-     * A uri template of {@value _RetrieveEngAddressServiceConstants#REQUEST_URI_GET_CITY_LIST}.
-     */
-    private static final UriTemplate URI_TEMPLATE_GET_CITY_LIST = new UriTemplate(REQUEST_URI_GET_CITY_LIST);
-
-    // -----------------------------------------------------------------------------------------------------------------
-    private static final UriTemplate URI_TEMPLATE_GET_DISTRICT_FIRST_NAME_LIST = new UriTemplate(
-            REQUEST_URI_GET_DISTRICT_FIRST_NAME_LIST);
-
-    private static final UriTemplate URI_TEMPLATE_GET_DISTRICT_NAME_LIST = new UriTemplate(
-            REQUEST_URI_GET_DISTRICT_NAME_LIST);
-
-    private static final UriTemplate URI_TEMPLATE_GET_LAND_ADDRESS_SEARCH = new UriTemplate(
-            REQUEST_URI_GET_LAND_ADDRESS_SEARCH);
-
-    // -----------------------------------------------------------------------------------------------------------------
-    private static final UriTemplate URI_TEMPLATE_GET_ROAD_FIRST_NAME_LIST = new UriTemplate(
-            REQUEST_URI_GET_ROAD_FIRST_NAME_LIST);
-
-    private static final UriTemplate URI_TEMPLATE_GET_ROAD_NAME_LIST = new UriTemplate(
-            REQUEST_URI_GET_ROAD_NAME_LIST);
-
-    private static final UriTemplate URI_TEMPLATE_GET_ROAD_ADDRESS_SEARCH = new UriTemplate(
-            REQUEST_URI_GET_ROAD_ADDRESS_SEARCH);
-
-    // -----------------------------------------------------------------------------------------------------------------
     @BeforeEach
-    void a() {
-        when(serviceInstance().exchange(notNull(StateEngListRequest.class))).thenAnswer(i -> {
-            try (var resource = StateEngListResponse.class.getResourceAsStream("getStateList_response1.xml")) {
-                return Mono.just(unmarshalNoNamespacedInstance(StateEngListResponse.class, resource));
-            }
-        });
+    void a() throws Exception {
+        when(serviceInstance().exchange(notNull(StateEngListRequest.class))).thenAnswer(
+                i -> Mono.just(unmarshalNoNamespacedInstance(
+                        StateEngListResponse.class,
+                        "getStateList_response1.xml"
+                ))
+        );
         when(serviceInstance().exchange(notNull(CityEngListRequest.class))).thenAnswer(i -> {
             try (var resource = CityEngListResponse.class.getResourceAsStream("getCityList_response1.xml")) {
                 return Mono.just(unmarshalNoNamespacedInstance(CityEngListResponse.class, resource));
@@ -340,7 +296,7 @@ class RetrieveEngAddressServiceApiController_SpringBootTest
                 .block();
     }
 
-    // ----------------------------------------------------------------------------------- /.../{roadName}/addresses
+    // --------------------------------------------------------------------------------------- /.../{roadName}/addresses
 
     /**
      * Tests {@link RetrieveEngAddressServiceApiController#readRoadAddresses(ServerWebExchange, String, String, String)}

@@ -22,10 +22,10 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.atomic.LongAdder;
 
-import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_new_adress_area_cd_search_all_service.RetrieveNewAdressAreCdSearchAllServiceApiConstants.REQUEST_PARAM_SRCHWRD;
-import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_new_adress_area_cd_search_all_service.RetrieveNewAdressAreCdSearchAllServiceApiConstants.REQUEST_URI_SEARCH;
+import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_new_adress_area_cd_search_all_service._RetrieveNewAdressAreCdSearchAllServiceApiConstants.REQUEST_PARAM_SRCHWRD;
+import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_new_adress_area_cd_search_all_service._RetrieveNewAdressAreCdSearchAllServiceApiConstants.REQUEST_URI_SEARCH;
 
-@Tag(name = RetrieveNewAdressAreCdSearchAllServiceApiConstants.TAG)
+@Tag(name = _RetrieveNewAdressAreCdSearchAllServiceApiConstants.TAG)
 @Validated
 @RestController
 @NoArgsConstructor(access = AccessLevel.PACKAGE)

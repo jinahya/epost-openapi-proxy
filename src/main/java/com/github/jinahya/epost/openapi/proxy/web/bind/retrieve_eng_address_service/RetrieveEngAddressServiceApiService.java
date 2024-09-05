@@ -1,5 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service;
 
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractPairedRequestType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractPairedResponseType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.CityEngListRequest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.CityEngListResponse;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.DistrictEngFirstNameListRequest;
@@ -40,9 +42,19 @@ class RetrieveEngAddressServiceApiService
 
     // -----------------------------------------------------------------------------------------------------------------
     @NotNull
+    @SuppressWarnings({
+            "java:S119" // <REQUEST ...>
+    })
+    <REQUEST extends AbstractPairedRequestType<REQUEST, RESPONSE>,
+            RESPONSE extends AbstractPairedResponseType<RESPONSE, REQUEST>>
+    Mono<RESPONSE> exchange(@Valid @NotNull final REQUEST request) {
+        return super.exchangeResponse(request);
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    @NotNull
     Mono<StateEngListResponse> exchange(@Valid @NotNull final StateEngListRequest request) {
-        var result = super.<StateEngListRequest, StateEngListResponse>exchangeResponse(request);
-        return result;
+        return super.exchangeResponse(request);
     }
 
     // -----------------------------------------------------------------------------------------------------------------
