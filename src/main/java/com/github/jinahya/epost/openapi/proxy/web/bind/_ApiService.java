@@ -4,6 +4,8 @@ import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractPaired
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractPairedResponseType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractRequestType;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractResponseType;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +24,7 @@ import java.util.Objects;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Slf4j
 @SuppressWarnings({
-        "java:S119" // <UPPER ...>
+        "java:S101" // class _Api...
 })
 // https://github.com/spring-projects/spring-boot/issues/41862
 public abstract class _ApiService {
@@ -56,17 +58,32 @@ public abstract class _ApiService {
         return webClient;
     }
 
+    /**
+     * Exchanges a specified type of response for specified request.
+     *
+     * @param request      the request.
+     * @param responseType the type of {@link RESPONSE}.
+     * @param <RESPONSE>   response type parameter
+     * @return a mono of {@link RESPONSE}.
+     */
+    @SuppressWarnings({
+            "java:S119" // <RESPONSE ...>
+    })
     protected <RESPONSE extends AbstractResponseType<RESPONSE>>
-    Mono<RESPONSE> exchange(final AbstractRequestType<?> requestInstance, final Class<RESPONSE> responseType) {
-        Objects.requireNonNull(requestInstance, "requestInstance is null");
+    Mono<RESPONSE> exchangeResponseFor(@Valid @NotNull final AbstractRequestType<?> request,
+                                       @NotNull final Class<RESPONSE> responseType) {
+        Objects.requireNonNull(request, "request is null");
         Objects.requireNonNull(responseType, "responseType is null");
-        return requestInstance.exchange(webClient(), responseType);
+        return request.exchange(webClient(), responseType);
     }
 
+    @SuppressWarnings({
+            "java:S119" // <REQUEST ...>
+    })
     protected <
             REQUEST extends AbstractPairedRequestType<REQUEST, RESPONSE>,
             RESPONSE extends AbstractPairedResponseType<RESPONSE, REQUEST>>
-    Mono<RESPONSE> exchange(final REQUEST requestInstance) {
+    Mono<RESPONSE> exchangeResponse(@Valid @NotNull final REQUEST requestInstance) {
         Objects.requireNonNull(requestInstance, "requestInstance is null");
         return requestInstance.exchange(webClient());
     }
@@ -75,10 +92,6 @@ public abstract class _ApiService {
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.NONE)
     private WebServer webServer;
-
-//    @LocalExchangeFunction
-//    @Autowired(required = false)
-//    private ExchangeFunction exchangeFunction;
 
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.NONE)

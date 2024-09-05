@@ -1,29 +1,38 @@
 package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service;
 
-import com.github.jinahya.epost.openapi.proxy._TestConstants;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.CityEngListRequest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.CityEngListResponse;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.DistrictEngFirstNameListRequest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.DistrictEngFirstNameListResponse;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.DistrictEngListRequest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.DistrictEngListResponse;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.LandAddressEngSearchListRequest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.LandAddressEngSearchListResponse;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.RoadAddressEngSearchListRequest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.RoadAddressEngSearchListResponse;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.RoadEngFirstNameListRequest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.RoadEngFirstNameListResponse;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.RoadEngListRequest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.RoadEngListResponse;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.StateEngListRequest;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.StateEngListResponse;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service._NoOp;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service._RetrieveEngAddressServiceConstants;
-import com.github.jinahya.epost.openapi.proxy.web.bind.LocalExchangeFunction;
-import com.github.jinahya.epost.openapi.proxy.web.bind.__ApiController_SpringBootTest;
+import com.github.jinahya.epost.openapi.proxy.web.bind._ApiController_SpringBootTest;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.mock.http.server.reactive.MockServerHttpRequest;
 import org.springframework.mock.web.server.MockServerWebExchange;
-import org.springframework.web.reactive.function.client.ClientResponse;
-import org.springframework.web.reactive.function.client.ExchangeFunction;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.util.UriTemplate;
 import reactor.core.publisher.Mono;
 
+import static com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractTypeUtils.unmarshalNoNamespacedInstance;
 import static com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service._RetrieveEngAddressServiceConstants.REQUEST_URI_GET_CITY_LIST;
 import static com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service._RetrieveEngAddressServiceConstants.REQUEST_URI_GET_DISTRICT_FIRST_NAME_LIST;
 import static com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service._RetrieveEngAddressServiceConstants.REQUEST_URI_GET_DISTRICT_NAME_LIST;
@@ -32,7 +41,6 @@ import static com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retriev
 import static com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service._RetrieveEngAddressServiceConstants.REQUEST_URI_GET_ROAD_FIRST_NAME_LIST;
 import static com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service._RetrieveEngAddressServiceConstants.REQUEST_URI_GET_ROAD_NAME_LIST;
 import static com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service._RetrieveEngAddressServiceConstants.REQUEST_URI_GET_STATE_LIST;
-import static com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service._RetrieveEngAddressServiceConstants.ROUTE_ID;
 import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service._RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITIES;
 import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service._RetrieveEngAddressServiceApiConstants.REQUEST_URI_CITY;
 import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service._RetrieveEngAddressServiceApiConstants.REQUEST_URI_DISTRICT;
@@ -43,16 +51,24 @@ import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_addre
 import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service._RetrieveEngAddressServiceApiConstants.REQUEST_URI_ROAD_ADDRESSES;
 import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service._RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATE;
 import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_address_service._RetrieveEngAddressServiceApiConstants.REQUEST_URI_STATES;
+import static org.mockito.ArgumentMatchers.notNull;
+import static org.mockito.Mockito.when;
 
-@Disabled
-@EnabledIfEnvironmentVariable(named = _TestConstants.ENVIRONMENT_VARIABLE_SERVICE_KEY, matches = ".+")
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+//@Disabled
+//@EnabledIfEnvironmentVariable(named = _TestConstants.ENVIRONMENT_VARIABLE_SERVICE_KEY, matches = ".+")
+//@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@ContextConfiguration(classes = {
+        RetrieveEngAddressServiceApiController.class
+})
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Slf4j
 @SuppressWarnings({
         "java:S125" // / ----------
 })
 class RetrieveEngAddressServiceApiController_SpringBootTest
-        extends __ApiController_SpringBootTest<RetrieveEngAddressServiceApiController> {
+        extends _ApiController_SpringBootTest<
+        RetrieveEngAddressServiceApiController,
+        RetrieveEngAddressServiceApiService> {
 
     // -----------------------------------------------------------------------------------------------------------------
 
@@ -107,121 +123,51 @@ class RetrieveEngAddressServiceApiController_SpringBootTest
             REQUEST_URI_GET_ROAD_ADDRESS_SEARCH);
 
     // -----------------------------------------------------------------------------------------------------------------
-//    @TestConfiguration
-    static class TestConfiguration_ {
-
-        @LocalExchangeFunction
-        @Bean
-        ExchangeFunction exchangeFunction() {
-            return r -> {
-                log.debug("request: {}", r);
-                final var url = r.url();
-                final var urlPath = url.getPath();
-                if (URI_TEMPLATE_GET_STATE_LIST.matches(urlPath)) {
-                    return Mono.just(
-                            ClientResponse.create(HttpStatus.OK)
-                                    .headers(h -> h.setContentType(MediaType.APPLICATION_XML))
-                                    .body(routeResourceDataPublisher(
-                                            '/' + ROUTE_ID + "/getStateList_response1.xml"))
-                                    .build()
-                    );
-                }
-                if (URI_TEMPLATE_GET_CITY_LIST.matches(urlPath)) {
-                    return Mono.just(
-                            ClientResponse.create(HttpStatus.OK)
-                                    .headers(h -> {
-                                        h.setContentType(MediaType.APPLICATION_XML);
-                                    })
-                                    .body(routeResourceDataPublisher('/' + ROUTE_ID + "/getCityList_response1.xml"))
-                                    .build()
-                    );
-                }
-                if (URI_TEMPLATE_GET_DISTRICT_FIRST_NAME_LIST.matches(urlPath)) {
-                    return Mono.just(
-                            ClientResponse.create(HttpStatus.OK)
-                                    .headers(h -> {
-                                        h.setContentType(MediaType.APPLICATION_XML);
-                                    })
-                                    .body(routeResourceDataPublisher(
-                                            '/' + ROUTE_ID + "/getDistrictFirstNameList_response1.xml"))
-                                    .build()
-                    );
-                }
-                if (URI_TEMPLATE_GET_DISTRICT_NAME_LIST.matches(urlPath)) {
-                    return Mono.just(
-                            ClientResponse.create(HttpStatus.OK)
-                                    .headers(h -> {
-                                        h.setContentType(MediaType.APPLICATION_XML);
-                                    })
-                                    .body(routeResourceDataPublisher(
-                                            '/' + ROUTE_ID + "/getDistrictNameList_response1.xml"))
-                                    .build()
-                    );
-                }
-                if (URI_TEMPLATE_GET_LAND_ADDRESS_SEARCH.matches(urlPath)) {
-                    return Mono.just(
-                            ClientResponse.create(HttpStatus.OK)
-                                    .headers(h -> {
-                                        h.setContentType(MediaType.APPLICATION_XML);
-                                    })
-                                    .body(routeResourceDataPublisher(
-                                            '/' + ROUTE_ID + "/getLandAddressSearch_response1.xml"))
-                                    .build()
-                    );
-                }
-                if (URI_TEMPLATE_GET_ROAD_FIRST_NAME_LIST.matches(urlPath)) {
-                    return Mono.just(
-                            ClientResponse.create(HttpStatus.OK)
-                                    .headers(h -> {
-                                        h.setContentType(MediaType.APPLICATION_XML);
-                                    })
-                                    .body(routeResourceDataPublisher(
-                                            '/' + ROUTE_ID + "/getRoadFirstNameList_response1.xml"))
-                                    .build()
-                    );
-                }
-                if (URI_TEMPLATE_GET_ROAD_NAME_LIST.matches(urlPath)) {
-                    return Mono.just(
-                            ClientResponse.create(HttpStatus.OK)
-                                    .headers(h -> {
-                                        h.setContentType(MediaType.APPLICATION_XML);
-                                    })
-                                    .body(routeResourceDataPublisher(
-                                            '/' + ROUTE_ID + "/getRoadNameList_response1.xml"))
-                                    .build()
-                    );
-                }
-                if (URI_TEMPLATE_GET_ROAD_ADDRESS_SEARCH.matches(urlPath)) {
-                    return Mono.just(
-                            ClientResponse.create(HttpStatus.OK)
-                                    .headers(h -> {
-                                        h.setContentType(MediaType.APPLICATION_XML);
-                                    })
-                                    .body(routeResourceDataPublisher(
-                                            '/' + ROUTE_ID + "/getRoadAddressSearch_response1.xml"))
-                                    .build()
-                    );
-                }
-                throw new RuntimeException("unhandled url: " + url);
-            };
-        }
-    }
-
-    // -----------------------------------------------------------------------------------------------------------------
     @BeforeEach
     void a() {
+        when(serviceInstance().exchange(notNull(StateEngListRequest.class))).thenAnswer(i -> {
+            try (var resource = StateEngListResponse.class.getResourceAsStream("getStateList_response1.xml")) {
+                return Mono.just(unmarshalNoNamespacedInstance(StateEngListResponse.class, resource));
+            }
+        });
+        when(serviceInstance().exchange(notNull(CityEngListRequest.class))).thenAnswer(i -> {
+            try (var resource = CityEngListResponse.class.getResourceAsStream("getCityList_response1.xml")) {
+                return Mono.just(unmarshalNoNamespacedInstance(CityEngListResponse.class, resource));
+            }
+        });
+        // -------------------------------------------------------------------------------------------------------------
+        when(serviceInstance().exchange(notNull(DistrictEngFirstNameListRequest.class))).thenAnswer(i -> {
+            try (var r = _NoOp.class.getResourceAsStream("getDistrictFirstNameList_response1.xml")) {
+                return Mono.just(unmarshalNoNamespacedInstance(DistrictEngFirstNameListResponse.class, r));
+            }
+        });
+        when(serviceInstance().exchange(notNull(DistrictEngListRequest.class))).thenAnswer(i -> {
+            try (var r = _NoOp.class.getResourceAsStream("getDistrictNameList_response1.xml")) {
+                return Mono.just(unmarshalNoNamespacedInstance(DistrictEngListResponse.class, r));
+            }
+        });
+        when(serviceInstance().exchange(notNull(LandAddressEngSearchListRequest.class))).thenAnswer(i -> {
+            try (var r = _NoOp.class.getResourceAsStream("getLandAddressSearch_response1.xml")) {
+                return Mono.just(unmarshalNoNamespacedInstance(LandAddressEngSearchListResponse.class, r));
+            }
+        });
+        // -------------------------------------------------------------------------------------------------------------
+        when(serviceInstance().exchange(notNull(RoadEngFirstNameListRequest.class))).thenAnswer(i -> {
+            try (var r = _NoOp.class.getResourceAsStream("getRoadFirstNameList_response1.xml")) {
+                return Mono.just(unmarshalNoNamespacedInstance(RoadEngFirstNameListResponse.class, r));
+            }
+        });
+        when(serviceInstance().exchange(notNull(RoadEngListRequest.class))).thenAnswer(i -> {
+            try (var r = _NoOp.class.getResourceAsStream("getRoadNameList_response1.xml")) {
+                return Mono.just(unmarshalNoNamespacedInstance(RoadEngListResponse.class, r));
+            }
+        });
+        when(serviceInstance().exchange(notNull(RoadAddressEngSearchListRequest.class))).thenAnswer(i -> {
+            try (var r = _NoOp.class.getResourceAsStream("getRoadAddressSearch_response1.xml")) {
+                return Mono.just(unmarshalNoNamespacedInstance(RoadAddressEngSearchListResponse.class, r));
+            }
+        });
     }
-
-    // -----------------------------------------------------------------------------------------------------------------
-//    private <T> void validate(final T content) {
-//        Objects.requireNonNull(content, "content is null");
-//        assertValid(content);
-//    }
-//
-//    private <T> void validate(final EntityModel<T> model) {
-//        Objects.requireNonNull(model, "model is null");
-//        validate(Objects.requireNonNull(model.getContent(), "model.content is null"));
-//    }
 
     // ----------------------------------------------------------------------------------------------------- /.../states
     @DisplayName("GET " + REQUEST_URI_STATES)

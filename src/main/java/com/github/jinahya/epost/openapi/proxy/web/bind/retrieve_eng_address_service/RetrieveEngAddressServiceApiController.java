@@ -17,7 +17,7 @@ import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_a
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.RoadEngListResponse;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.StateEngListRequest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.StateEngListResponse;
-import com.github.jinahya.epost.openapi.proxy.web.bind.__ApiController;
+import com.github.jinahya.epost.openapi.proxy.web.bind._ApiController;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -77,14 +77,14 @@ import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_eng_addre
         "java:S101" // class _Retrieve...
 })
 class RetrieveEngAddressServiceApiController
-        extends __ApiController {
+        extends _ApiController<RetrieveEngAddressServiceApiService> {
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
     // ----------------------------------------------------------------------------------------------------- /.../states
     private Flux<StateEngListResponse.StateEngList> statePublisher(
             final Predicate<? super StateEngListResponse.StateEngList> filter) {
-        return exchange(new StateEngListRequest())
+        return service().exchange(new StateEngListRequest())
                 .flatMapMany(r -> Flux.fromIterable(r.getStateEngList()))
                 .filter(filter)
                 ;
@@ -146,11 +146,6 @@ class RetrieveEngAddressServiceApiController
     }
 
     // ---------------------------------------------------------------------------------- /.../states/{stateName}/cities
-    private Mono<CityEngListResponse> exchange(final String stateName) {
-        return CityEngListRequest.of(null, stateName)
-                .exchange(webClient());
-    }
-
     private Iterable<Link> links(final String stateName, final CityEngListResponse.CityEngList content) {
         return List.of(
                 Link.of(
@@ -190,7 +185,7 @@ class RetrieveEngAddressServiceApiController
 
     private Flux<CityEngListResponse.CityEngList> cityPublisher(
             final String statEngName, final Predicate<? super CityEngListResponse.CityEngList> filter) {
-        return exchange(statEngName)
+        return service().exchange(CityEngListRequest.of(null, statEngName))
                 .flatMapMany(r -> Flux.fromIterable(r.getCityEngList()))
                 .filter(filter)
                 ;
@@ -238,184 +233,16 @@ class RetrieveEngAddressServiceApiController
                 );
     }
 
-    // ----------------------------------------------------------------- /.../states/{stateName}/cities/{cityName}/roads
-    private Flux<RoadEngListResponse.RoadEngList> roadPublisher(
-            final String stateName, final String cityName,
-            final Predicate<? super RoadEngFirstNameListResponse.RoadEngFirstNameList> filter1,
-            final Predicate<? super RoadEngListResponse.RoadEngList> filter2) {
-        return RoadEngFirstNameListRequest.of(null, stateName, cityName)
-                .exchange(webClient())
-                .flatMapMany(r -> Flux.fromIterable(r.getRoadEngFirstNameList()))
-                .filter(filter1)
-                .map(e -> RoadEngListRequest.of(null, stateName, cityName, e.getRoadEngFirstName()))
-                .flatMapSequential(r -> r.exchange(webClient()), 5)
-                .flatMap(r -> Flux.fromIterable(r.getRoadEngList()))
-                .filter(filter2)
-                ;
-    }
-
-    private Iterable<Link> links(final String stateName, final String cityName,
-                                 final RoadEngListResponse.RoadEngList roadEngList) {
-        return List.of(
-                Link.of(
-                        UriComponentsBuilder.fromPath(REQUEST_URI_CITY)
-                                .build(stateName, cityName).toASCIIString(),
-                        REL_CITY
-                ),
-                Link.of(
-                        UriComponentsBuilder.fromPath(REQUEST_URI_ROAD)
-                                .build(stateName, cityName, roadEngList.getRoadEngName())
-                                .toASCIIString(),
-                        IanaLinkRelations.SELF
-                ),
-                Link.of(
-                        UriComponentsBuilder.fromPath(REQUEST_URI_ROAD_ADDRESSES)
-                                .build(stateName, cityName, roadEngList.getRoadEngName())
-                                .toASCIIString(),
-                        REL_ADDRESSES
-                )
-        );
-    }
-
-    private EntityModel<RoadEngListResponse.RoadEngList> model(
-            final String stateName, final String cityName,
-            final RoadEngListResponse.RoadEngList content) {
-        return EntityModel.of(content, links(stateName, cityName, content));
-    }
-
-    @GetMapping(
-            path = REQUEST_URI_ROADS,
-            produces = {
-                    MediaType.APPLICATION_NDJSON_VALUE
-            }
-    )
-    Flux<EntityModel<RoadEngListResponse.RoadEngList>> readRoads(
-            final ServerWebExchange exchange,
-            @PathVariable(PATH_NAME_STATE_NAME) final String stateName,
-            @PathVariable(PATH_NAME_CITY_NAME) final String cityName) {
-        return roadPublisher(stateName, cityName, v -> true, c -> true)
-                .map(r -> model(stateName, cityName, r))
-                ;
-    }
-
-    @GetMapping(
-            path = REQUEST_URI_ROAD,
-            produces = {
-                    MediaTypes.HAL_JSON_VALUE
-            }
-    )
-    Mono<EntityModel<RoadEngListResponse.RoadEngList>> readRoad(
-            final ServerWebExchange exchange,
-            @PathVariable(PATH_NAME_STATE_NAME) final String stateName,
-            @PathVariable(name = PATH_NAME_CITY_NAME) final String cityName,
-            @PathVariable(name = PATH_NAME_ROAD_NAME) final String roadName) {
-        return roadPublisher(
-                stateName,
-                cityName,
-                v -> roadName.toUpperCase().startsWith(v.getRoadEngFirstName()),
-                c -> c.getRoadEngName().equals(roadName)
-        )
-                .map(r -> model(stateName, cityName, r))
-                .single()
-                .onErrorResume(
-                        NoSuchElementException.class,
-                        t -> {
-                            exchange.getResponse().setStatusCode(HttpStatus.NOT_FOUND);
-                            return Mono.empty();
-                        }
-                );
-    }
-
-    // -------------------------------------------- /.../states/{stateName}/cities/{cityName}/roads/{roadName}/addresses
-    private Flux<RoadAddressEngSearchListResponse.RoadAddressEngSearchList> roadAddressPublisher(
-            final String stateName, final String cityName, final String roadName,
-            final Predicate<? super RoadAddressEngSearchListResponse.RoadAddressEngSearchList> filter) {
-        final var total = new AtomicReference<Integer>();
-        final var count = new LongAdder();
-        return Mono.just(RoadAddressEngSearchListRequest.of(
-                        null,
-                        stateName,
-                        cityName,
-                        null,
-                        roadName,
-                        null,
-                        new PageInfo(32, 1)
-                ))
-                .expand(r -> Mono.just(r.forNextPage()))
-                .flatMapSequential(
-                        r -> r.exchange(webClient()),
-                        5,
-                        1
-                )
-                .switchOnFirst((s, f) -> {
-                    final var cmmMsgHeader = s.get().getCmmMsgHeader();
-                    total.compareAndSet(null, cmmMsgHeader.getTotalCount());
-                    return f;
-                })
-                .flatMap(r -> Flux.fromIterable(r.getRoadAddressEngSearchList()))
-                .filter(filter)
-                .<RoadAddressEngSearchListResponse.RoadAddressEngSearchList>handle((e, s) -> {
-                    count.increment();
-                    final var t = total.get();
-                    final var c = count.sum();
-                    if (t == null || c <= t) {
-                        s.next(e);
-                    } else {
-                        s.complete();
-                    }
-                });
-    }
-
-    private Iterable<Link> links(
-            final String stateName, final String cityName, final String roadName,
-            final RoadAddressEngSearchListResponse.RoadAddressEngSearchList content) {
-        return List.of(
-                Link.of(
-                        UriComponentsBuilder.fromPath(REQUEST_URI_ROAD)
-                                .build(stateName, cityName, roadName)
-                                .toASCIIString(),
-                        REL_ROAD
-                )
-        );
-    }
-
-    private EntityModel<RoadAddressEngSearchListResponse.RoadAddressEngSearchList> model(
-            final String stateName, final String cityName, final String roadName,
-            final RoadAddressEngSearchListResponse.RoadAddressEngSearchList content) {
-        return EntityModel.of(content, links(stateName, cityName, roadName, content));
-    }
-
-    @GetMapping(
-            path = REQUEST_URI_ROAD_ADDRESSES,
-            produces = {
-                    MediaType.APPLICATION_NDJSON_VALUE
-            }
-    )
-    Flux<EntityModel<RoadAddressEngSearchListResponse.RoadAddressEngSearchList>> readRoadAddresses(
-            final ServerWebExchange exchange,
-            @PathVariable(PATH_NAME_STATE_NAME) final String stateName,
-            @PathVariable(PATH_NAME_CITY_NAME) final String cityName,
-            @PathVariable(PATH_NAME_ROAD_NAME) final String roadName) {
-        return roadAddressPublisher(
-                stateName,
-                cityName,
-                roadName,
-                v -> true
-        )
-                .map(v -> model(stateName, cityName, roadName, v));
-    }
-
     // ------------------------------------------------------------- /.../states/{stateName}/cities/{cityName}/districts
     private Flux<DistrictEngListResponse.DistrictEngList> districtPublisher(
             final String stateName, final String cityName,
             final Predicate<? super DistrictEngFirstNameListResponse.DistrictEngFirstNameList> filter1,
             final Predicate<? super DistrictEngListResponse.DistrictEngList> filter2) {
-        return DistrictEngFirstNameListRequest.of(null, stateName, cityName)
-                .exchange(webClient())
+        return service().exchange(DistrictEngFirstNameListRequest.of(null, stateName, cityName))
                 .flatMapMany(r -> Flux.fromIterable(r.getDistrictEngFirstNameList()))
                 .filter(filter1)
                 .map(e -> DistrictEngListRequest.of(null, stateName, cityName, e.getDistrictEngFirstName()))
-                .flatMapSequential(r -> r.exchange(webClient()), 5)
+                .flatMapSequential(r -> service().exchange(r), 5)
                 .flatMap(r -> Flux.fromIterable(r.getDistrictEngList()))
                 .filter(filter2);
     }
@@ -511,7 +338,7 @@ class RetrieveEngAddressServiceApiController
                         1
                 ))
                 .expand(r -> Mono.just(r.forNextPage()))
-                .flatMapSequential(r -> r.exchange(webClient()), 5, 1)
+                .flatMapSequential(r -> service().exchange(r), 5, 1)
                 .switchOnFirst((s, f) -> {
                     if (s.hasValue()) {
                         final var cmmMsgHeader = s.get().getCmmMsgHeader();
@@ -571,5 +398,166 @@ class RetrieveEngAddressServiceApiController
                 v -> true
         )
                 .map(v -> model(stateName, cityName, districtName, v));
+    }
+
+    // ----------------------------------------------------------------- /.../states/{stateName}/cities/{cityName}/roads
+    private Flux<RoadEngListResponse.RoadEngList> roadPublisher(
+            final String stateName, final String cityName,
+            final Predicate<? super RoadEngFirstNameListResponse.RoadEngFirstNameList> filter1,
+            final Predicate<? super RoadEngListResponse.RoadEngList> filter2) {
+        return service().exchange(RoadEngFirstNameListRequest.of(null, stateName, cityName))
+                .flatMapMany(r -> Flux.fromIterable(r.getRoadEngFirstNameList()))
+                .filter(filter1)
+                .map(e -> RoadEngListRequest.of(null, stateName, cityName, e.getRoadEngFirstName()))
+                .flatMapSequential(r -> service().exchange(r), 5)
+                .flatMap(r -> Flux.fromIterable(r.getRoadEngList()))
+                .filter(filter2)
+                ;
+    }
+
+    private Iterable<Link> links(final String stateName, final String cityName,
+                                 final RoadEngListResponse.RoadEngList roadEngList) {
+        return List.of(
+                Link.of(
+                        UriComponentsBuilder.fromPath(REQUEST_URI_CITY)
+                                .build(stateName, cityName).toASCIIString(),
+                        REL_CITY
+                ),
+                Link.of(
+                        UriComponentsBuilder.fromPath(REQUEST_URI_ROAD)
+                                .build(stateName, cityName, roadEngList.getRoadEngName())
+                                .toASCIIString(),
+                        IanaLinkRelations.SELF
+                ),
+                Link.of(
+                        UriComponentsBuilder.fromPath(REQUEST_URI_ROAD_ADDRESSES)
+                                .build(stateName, cityName, roadEngList.getRoadEngName())
+                                .toASCIIString(),
+                        REL_ADDRESSES
+                )
+        );
+    }
+
+    private EntityModel<RoadEngListResponse.RoadEngList> model(
+            final String stateName, final String cityName,
+            final RoadEngListResponse.RoadEngList content) {
+        return EntityModel.of(content, links(stateName, cityName, content));
+    }
+
+    @GetMapping(
+            path = REQUEST_URI_ROADS,
+            produces = {
+                    MediaType.APPLICATION_NDJSON_VALUE
+            }
+    )
+    Flux<EntityModel<RoadEngListResponse.RoadEngList>> readRoads(
+            final ServerWebExchange exchange,
+            @PathVariable(PATH_NAME_STATE_NAME) final String stateName,
+            @PathVariable(PATH_NAME_CITY_NAME) final String cityName) {
+        return roadPublisher(stateName, cityName, v -> true, c -> true)
+                .map(r -> model(stateName, cityName, r))
+                ;
+    }
+
+    @GetMapping(
+            path = REQUEST_URI_ROAD,
+            produces = {
+                    MediaTypes.HAL_JSON_VALUE
+            }
+    )
+    Mono<EntityModel<RoadEngListResponse.RoadEngList>> readRoad(
+            final ServerWebExchange exchange,
+            @PathVariable(PATH_NAME_STATE_NAME) final String stateName,
+            @PathVariable(name = PATH_NAME_CITY_NAME) final String cityName,
+            @PathVariable(name = PATH_NAME_ROAD_NAME) final String roadName) {
+        return roadPublisher(
+                stateName,
+                cityName,
+                v -> roadName.toUpperCase().startsWith(v.getRoadEngFirstName()),
+                c -> c.getRoadEngName().equals(roadName)
+        )
+                .map(r -> model(stateName, cityName, r))
+                .single()
+                .onErrorResume(
+                        NoSuchElementException.class,
+                        t -> {
+                            exchange.getResponse().setStatusCode(HttpStatus.NOT_FOUND);
+                            return Mono.empty();
+                        }
+                );
+    }
+
+    // -------------------------------------------- /.../states/{stateName}/cities/{cityName}/roads/{roadName}/addresses
+    private Flux<RoadAddressEngSearchListResponse.RoadAddressEngSearchList> roadAddressPublisher(
+            final String stateName, final String cityName, final String roadName,
+            final Predicate<? super RoadAddressEngSearchListResponse.RoadAddressEngSearchList> filter) {
+        final var total = new AtomicReference<Integer>();
+        final var count = new LongAdder();
+        return Mono.just(RoadAddressEngSearchListRequest.of(
+                        null,
+                        stateName,
+                        cityName,
+                        null,
+                        roadName,
+                        null,
+                        new PageInfo(32, 1)
+                ))
+                .expand(r -> Mono.just(r.forNextPage()))
+                .flatMapSequential(
+                        r -> service().exchange(r),
+                        5,
+                        1
+                )
+                .switchOnFirst((s, f) -> {
+                    final var cmmMsgHeader = s.get().getCmmMsgHeader();
+                    total.compareAndSet(null, cmmMsgHeader.getTotalCount());
+                    return f;
+                })
+                .flatMap(r -> Flux.fromIterable(r.getRoadAddressEngSearchList()))
+                .filter(filter)
+                .<RoadAddressEngSearchListResponse.RoadAddressEngSearchList>handle((e, s) -> {
+                    count.increment();
+                    final var t = total.get();
+                    final var c = count.sum();
+                    if (t == null || c <= t) {
+                        s.next(e);
+                    } else {
+                        s.complete();
+                    }
+                });
+    }
+
+    private Iterable<Link> links(
+            final String stateName, final String cityName, final String roadName,
+            final RoadAddressEngSearchListResponse.RoadAddressEngSearchList content) {
+        return List.of(
+                Link.of(
+                        UriComponentsBuilder.fromPath(REQUEST_URI_ROAD)
+                                .build(stateName, cityName, roadName)
+                                .toASCIIString(),
+                        REL_ROAD
+                )
+        );
+    }
+
+    private EntityModel<RoadAddressEngSearchListResponse.RoadAddressEngSearchList> model(
+            final String stateName, final String cityName, final String roadName,
+            final RoadAddressEngSearchListResponse.RoadAddressEngSearchList content) {
+        return EntityModel.of(content, links(stateName, cityName, roadName, content));
+    }
+
+    @GetMapping(
+            path = REQUEST_URI_ROAD_ADDRESSES,
+            produces = {
+                    MediaType.APPLICATION_NDJSON_VALUE
+            }
+    )
+    Flux<EntityModel<RoadAddressEngSearchListResponse.RoadAddressEngSearchList>> readRoadAddresses(
+            final ServerWebExchange exchange,
+            @PathVariable(PATH_NAME_STATE_NAME) final String stateName,
+            @PathVariable(PATH_NAME_CITY_NAME) final String cityName,
+            @PathVariable(PATH_NAME_ROAD_NAME) final String roadName) {
+        return roadAddressPublisher(stateName, cityName, roadName, v -> true)
+                .map(v -> model(stateName, cityName, roadName, v));
     }
 }

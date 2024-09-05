@@ -19,6 +19,6 @@ class DownloadAreaCodeServiceApiService
 
     Mono<AreaCodeInfoResponse> exchange(final AreaCodeInfoRequest requestInstance) {
         Objects.requireNonNull(requestInstance, "requestInstance is null");
-        return exchange(requestInstance, AreaCodeInfoResponse.class);
+        return exchangeResponseFor(requestInstance, AreaCodeInfoResponse.class);
     }
 }
