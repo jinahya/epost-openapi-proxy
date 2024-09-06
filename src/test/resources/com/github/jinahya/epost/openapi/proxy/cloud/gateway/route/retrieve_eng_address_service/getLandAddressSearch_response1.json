@@ -1,0 +1,26 @@
+{
+  "LandAddressEngSearchListResponse": {
+    "cmmMsgHeader": {
+      "requestMsgId": "",
+      "responseMsgId": "",
+      "responseTime": "20240904:174434712",
+      "successYN": "Y",
+      "returnCode": "00",
+      "errMsg": "",
+      "totalCount": 401,
+      "countPerPage": 2,
+      "totalPage": 201,
+      "currentPage": 1
+    },
+    "landAddressEngSearchList": [
+      {
+        "engAddress": "2-1, Daeho-dong, Naju-si, Jeollanam-do, 58242, REP. OF KOREA",
+        "areaCode": 58242
+      },
+      {
+        "engAddress": "2-4, Daeho-dong, Naju-si, Jeollanam-do, 58242, REP. OF KOREA",
+        "areaCode": 58242
+      }
+    ]
+  }
+}

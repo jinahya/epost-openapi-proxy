@@ -64,12 +64,20 @@ public abstract class AbstractResponseType<SELF extends AbstractResponseType<SEL
     // ---------------------------------------------------------------------------------------------------- cmmMsgHeader
     // just for the prefab values.
     @SuppressWarnings({"unchecked"})
-    SELF cmmMsgHeader(final CmmMsgHeader cmmMsgHeader) {
+    public SELF cmmMsgHeader(final CmmMsgHeader cmmMsgHeader) {
         setCmmMsgHeader(cmmMsgHeader);
         return (SELF) this;
     }
 
     // --------------------------------------------------------------------------------------------------------- wrapped
+    @SuppressWarnings({
+            "unchecked"
+    })
+    public final SELF wrapped(final SELF wrapped) {
+        setWrapped(wrapped);
+        return (SELF) this;
+    }
+
     @SuppressWarnings({"unchecked"})
     public final SELF get() {
         if (wrapped != null) {

@@ -2,6 +2,7 @@ package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.Element;
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -12,6 +13,7 @@ import jakarta.xml.bind.annotation.XmlTransient;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.xml.namespace.QName;
@@ -29,10 +31,12 @@ import java.util.function.Supplier;
  *
  * @param <SELF> self type parameter
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @XmlAccessorType(XmlAccessType.FIELD)
 @Setter
 @Getter
 @EqualsAndHashCode
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractType<SELF extends AbstractType<SELF>>
         implements Serializable {
 
@@ -46,13 +50,6 @@ public abstract class AbstractType<SELF extends AbstractType<SELF>>
     }
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
-
-    /**
-     * Creates a new instance.
-     */
-    protected AbstractType() {
-        super();
-    }
 
     // ------------------------------------------------------------------------------------------------ java.lang.Object
     @Override

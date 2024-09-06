@@ -112,7 +112,7 @@ public abstract class _SpringBootIT {
     protected <T extends AbstractPairedRequestType<T, U>, U extends AbstractPairedResponseType<U, T>> U exchange(
             final T request) {
         Objects.requireNonNull(request, "request is null");
-        return (U) exchangeHelp((Class<T>) request.getClass(), request);
+        return exchangeHelp((Class<T>) request.getClass(), request);
     }
 
     // ------------------------------------------------------------------------------------------------------- validator

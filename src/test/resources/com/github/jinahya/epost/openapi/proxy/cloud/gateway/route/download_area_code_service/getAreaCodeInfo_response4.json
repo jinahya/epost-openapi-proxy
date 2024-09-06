@@ -1,0 +1,13 @@
+{
+  "AreaCodeInfoResponse": {
+    "cmmMsgHeader": {
+      "requestMsgId": "",
+      "responseMsgId": "",
+      "responseTime": "20240902:110928366",
+      "successYN": "Y",
+      "returnCode": "00",
+      "errMsg": ""
+    },
+    "file": "http://www.epost.go.kr/search/areacd/areacd_pobox_DB.zip"
+  }
+}

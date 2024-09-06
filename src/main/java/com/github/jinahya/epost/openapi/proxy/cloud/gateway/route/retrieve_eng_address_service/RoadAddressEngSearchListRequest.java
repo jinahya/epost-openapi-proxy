@@ -1,7 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service;
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractPairedRequestType;
-import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.AbstractRequestType;
+import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.PageInfo;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.PaginatedRequest;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route._RouteConstants;
 import jakarta.validation.constraints.NotBlank;
@@ -12,7 +12,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.web.util.UriBuilder;
 
@@ -47,11 +46,11 @@ public class RoadAddressEngSearchListRequest
      * @param currentPage      a value for {@link #getCurrentPage() currentPage} property.
      * @return a new instance.
      */
-    public static RoadAddressEngSearchListRequest of(final @Nullable String serviceKey, final String stateEngName,
-                                                     final String cityEngName, final @Nullable String roadEngFirstName,
-                                                     final String roadEngName, final @Nullable String keyword,
+    public static RoadAddressEngSearchListRequest of(@Nullable final String serviceKey, final String stateEngName,
+                                                     final String cityEngName, @Nullable final String roadEngFirstName,
+                                                     final String roadEngName, @Nullable final String keyword,
                                                      final Integer countPerPage, final Integer currentPage) {
-        final var instance = AbstractRequestType.of(RoadAddressEngSearchListRequest::new, serviceKey);
+        final var instance = of(RoadAddressEngSearchListRequest::new, serviceKey);
         instance.setStateEngName(stateEngName);
         instance.setCityEngName(cityEngName);
         instance.setRoadEngFirstName(roadEngFirstName);
@@ -62,22 +61,20 @@ public class RoadAddressEngSearchListRequest
         return instance;
     }
 
-    public static RoadAddressEngSearchListRequest from(
-            final @NonNull RoadEngFirstNameListRequest roadEngFirstNameListRequest,
-            final @NonNull RoadEngFirstNameListResponse.RoadEngFirstNameList roadEngFirstNameList,
-            final String roadEngName, final @org.springframework.lang.Nullable String keyword,
-            final Integer countPerPage, final Integer currentPage) {
-        Objects.requireNonNull(roadEngFirstNameListRequest, "roadEngFirstNameListRequest is null");
-        Objects.requireNonNull(roadEngFirstNameList, "roadEngFirstNameList is null");
+    public static RoadAddressEngSearchListRequest of(@Nullable final String serviceKey, final String stateEngName,
+                                                     final String cityEngName, @Nullable final String roadEngFirstName,
+                                                     final String roadEngName, @Nullable final String keyword,
+                                                     final PageInfo pageInfo) {
+        Objects.requireNonNull(pageInfo, "pageInfo is null");
         return of(
-                roadEngFirstNameListRequest.getServiceKey(),
-                roadEngFirstNameListRequest.getStateEngName(),
-                roadEngFirstNameListRequest.getCityEngName(),
-                roadEngFirstNameList.getRoadEngFirstName(),
+                serviceKey,
+                stateEngName,
+                cityEngName,
+                roadEngFirstName,
                 roadEngName,
                 keyword,
-                countPerPage,
-                currentPage
+                pageInfo.getCountPerPage(),
+                pageInfo.getCurrentPage()
         );
     }
 
@@ -97,6 +94,9 @@ public class RoadAddressEngSearchListRequest
             };
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
+    /**
+     * Creates a new instance.
+     */
     public RoadAddressEngSearchListRequest() {
         super(RoadAddressEngSearchListResponse.class);
         setUriConfigurer(

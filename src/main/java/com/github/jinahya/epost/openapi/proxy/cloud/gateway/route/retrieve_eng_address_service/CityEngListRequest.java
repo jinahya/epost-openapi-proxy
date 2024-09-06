@@ -30,8 +30,7 @@ public class CityEngListRequest
 
     // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
     public static CityEngListRequest of(@Nullable final String serviceKey, final String stateEngName) {
-        final CityEngListRequest instance = new CityEngListRequest();
-        instance.setServiceKey(serviceKey);
+        final CityEngListRequest instance = of(CityEngListRequest::new, serviceKey);
         instance.setStateEngName(stateEngName);
         return instance;
     }
@@ -57,18 +56,6 @@ public class CityEngListRequest
     }
 
     // ---------------------------------------------------------------------------------------------------- stateEngName
-    public String getStateEngName() {
-        return stateEngName;
-    }
-
-    public void setStateEngName(final String stateEngName) {
-        this.stateEngName = stateEngName;
-    }
-
-    public CityEngListRequest stateEngName(final String stateEngName) {
-        setStateEngName(stateEngName);
-        return this;
-    }
 
     // -----------------------------------------------------------------------------------------------------------------
     @NotBlank

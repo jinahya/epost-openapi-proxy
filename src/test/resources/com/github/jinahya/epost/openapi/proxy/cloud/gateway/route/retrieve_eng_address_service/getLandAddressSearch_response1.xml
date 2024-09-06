@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<LandAddressEngSearchListResponse>
+  <cmmMsgHeader>
+    <requestMsgId></requestMsgId>
+    <responseMsgId></responseMsgId>
+    <responseTime>20240904:174503792</responseTime>
+    <successYN>Y</successYN>
+    <returnCode>00</returnCode>
+    <errMsg></errMsg>
+    <totalCount>401</totalCount>
+    <countPerPage>2</countPerPage>
+    <totalPage>201</totalPage>
+    <currentPage>1</currentPage>
+  </cmmMsgHeader>
+  <landAddressEngSearchList>
+    <engAddress>2-1, Daeho-dong, Naju-si, Jeollanam-do, 58242, REP. OF KOREA</engAddress>
+    <areaCode>58242</areaCode>
+  </landAddressEngSearchList>
+  <landAddressEngSearchList>
+    <engAddress>2-4, Daeho-dong, Naju-si, Jeollanam-do, 58242, REP. OF KOREA</engAddress>
+    <areaCode>58242</areaCode>
+  </landAddressEngSearchList>
+</LandAddressEngSearchListResponse>

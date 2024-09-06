@@ -1,6 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.web.server;
 
-import com.github.jinahya.epost.openapi.proxy.util.context.ReactorContextUtils;
+import com.github.jinahya.epost.openapi.proxy._misc.util.context.ReactorContextUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -23,7 +23,7 @@ import reactor.core.publisher.Mono;
 // https://github.com/reactor/reactor-core/issues/2572
 // https://www.pkslow.com/docs/en/spring-webflux-get-request/#webfilter-fetch-and-save
 // https://gist.github.com/Elyorbe/c7cc5f28d0fced86dbd054dce0a9e206
-class ReactiveRequestContextFilter
+public class ReactiveRequestContextFilter
         implements WebFilter {
 
     // -----------------------------------------------------------------------------------------------------------------

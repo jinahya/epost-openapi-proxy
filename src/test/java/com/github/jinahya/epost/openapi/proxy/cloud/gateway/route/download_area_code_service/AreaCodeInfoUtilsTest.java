@@ -1,8 +1,11 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.download_area_code_service;
 
+import com.github.jinahya.epost.openapi.proxy._TestConstants;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Named;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -84,6 +87,8 @@ class AreaCodeInfoUtilsTest {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
+    @Tag(_TestConstants.TAB_LONG_RUNNING)
+    @Disabled("takes to long, baby")
     @DisplayName("extract(stream, consumer)")
     @MethodSource({
             "getResNameStream"
@@ -103,6 +108,7 @@ class AreaCodeInfoUtilsTest {
         }
     }
 
+    @Disabled("takes to long, baby")
     @DisplayName("extract(file, file)")
     @MethodSource({
             "getResourceFileStream"

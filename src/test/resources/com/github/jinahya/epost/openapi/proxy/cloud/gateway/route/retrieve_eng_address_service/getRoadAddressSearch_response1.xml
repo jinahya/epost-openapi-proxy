@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RoadAddressEngSearchListResponse>
+  <cmmMsgHeader>
+    <requestMsgId></requestMsgId>
+    <responseMsgId></responseMsgId>
+    <responseTime>20240904:174548556</responseTime>
+    <successYN>Y</successYN>
+    <returnCode>00</returnCode>
+    <errMsg></errMsg>
+    <totalCount>141</totalCount>
+    <countPerPage>32</countPerPage>
+    <totalPage>5</totalPage>
+    <currentPage>2</currentPage>
+  </cmmMsgHeader>
+  <roadAddressEngSearchList>
+    <engAddress>45-36, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>45-40, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>45-42, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>45-44, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>45-46, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>45-48, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>45-50, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>45-52, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>47, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>49, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>49-1, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>51, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>53, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>53-1, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>55, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>55-1, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>56, Daeho-gil, Naju-si, Jeollanam-do, 58243, REP. OF KOREA</engAddress>
+    <areaCode>58243</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>57, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>58, Daeho-gil, Naju-si, Jeollanam-do, 58243, REP. OF KOREA</engAddress>
+    <areaCode>58243</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>59, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>59-5, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>59-9, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>59-15, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>59-18, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>59-20, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>59-22, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>59-24, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>59-26, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>59-28, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>59-30, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>59-32, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+  <roadAddressEngSearchList>
+    <engAddress>59-34, Daeho-gil, Naju-si, Jeollanam-do, 58244, REP. OF KOREA</engAddress>
+    <areaCode>58244</areaCode>
+  </roadAddressEngSearchList>
+</RoadAddressEngSearchListResponse>

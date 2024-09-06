@@ -1,5 +1,6 @@
 package com.github.jinahya.epost.openapi.proxy.cloud.gateway.route;
 
+import com.github.jinahya.epost.openapi.proxy.util.BeanTestUtils;
 import io.vavr.CheckedFunction1;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -13,11 +14,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +31,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @param <TYPE> subclass type parameter
  * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
  */
+@SuppressWarnings({
+        "java:S119" // <TYPE ...>
+})
 public abstract class AbstractTypeTest<TYPE extends AbstractType<TYPE>> {
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -167,29 +168,8 @@ public abstract class AbstractTypeTest<TYPE extends AbstractType<TYPE>> {
     // -----------------------------------------------------------------------------------------------------------------
     @DisplayName("setXxx(getXxx())")
     @Test
-    void __accessors() throws IntrospectionException, InvocationTargetException, IllegalAccessException {
-        final var instance = newTypeInstance();
-        for (Class<?> clazz = typeClass; clazz.isAssignableFrom(AbstractType.class); clazz = clazz.getSuperclass()) {
-            final var info = Introspector.getBeanInfo(typeClass);
-            for (var descriptor : info.getPropertyDescriptors()) {
-                final var reader = descriptor.getReadMethod();
-                if (reader == null) {
-                    continue;
-                }
-                if (!reader.canAccess(instance)) {
-                    reader.setAccessible(true);
-                }
-                final var value = reader.invoke(instance);
-                final var writer = descriptor.getWriteMethod();
-                if (writer == null) {
-                    continue;
-                }
-                if (!writer.canAccess(instance)) {
-                    writer.setAccessible(true);
-                }
-                writer.invoke(instance, value);
-            }
-        }
+    void __accessors() throws Exception {
+        BeanTestUtils.testProperties(typeClass, newTypeInstance());
     }
 
     // ------------------------------------------------------------------------------------------------------- typeClass
