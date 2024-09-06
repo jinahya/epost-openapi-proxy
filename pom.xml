@@ -418,8 +418,8 @@
         <artifactId>jacoco-maven-plugin</artifactId>
         <configuration>
           <excludes>
-            <exclude>**/*ApiController.java</exclude>
-            <exclude>**/*RouteController.java</exclude>
+            <exclude>**/*RouteController.class</exclude>
+            <exclude>*/AreaCodeInfoUtils.class</exclude>
           </excludes>
         </configuration>
         <executions>
