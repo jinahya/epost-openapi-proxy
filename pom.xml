@@ -419,7 +419,7 @@
         <configuration>
           <excludes>
             <exclude>**/*RouteController.class</exclude>
-            <exclude>*/AreaCodeInfoUtils.class</exclude>
+            <exclude>**/AreaCodeInfoUtils.class</exclude>
           </excludes>
         </configuration>
         <executions>
