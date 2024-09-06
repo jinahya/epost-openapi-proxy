@@ -20,15 +20,12 @@ import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.core.io.buffer.DefaultDataBufferFactory;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.web.reactive.function.client.ExchangeFunction;
-import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -201,30 +198,6 @@ public abstract class __ApiController_SpringBootTest<CONTROLLER extends __ApiCon
     }
 
     // ---------------------------------------------------------------------------------------------- controllerInstance
-
-    /**
-     * {@link __ApiController#mutateWebClient(UnaryOperator) mutates} {@link #controllerInstance() controllerInstance}'s
-     * {@code webClient} with specified operator.
-     *
-     * @param operator the operator.
-     */
-    protected final void mutateControllerInstanceWebClient(final UnaryOperator<WebClient> operator) {
-        Objects.requireNonNull(operator, "operator is null");
-        controllerInstance.mutateWebClient(operator);
-    }
-
-    /**
-     * {@link #mutateControllerInstanceWebClient(UnaryOperator) Mutates}
-     * {@link #controllerInstance() controllerInstance}'s {@code webClient} with specified exchange function.
-     *
-     * @param function the exchange function.
-     */
-    protected final void mutateControllerInstanceWebClientWith(final ExchangeFunction function) {
-        Objects.requireNonNull(function, "function is null");
-        mutateControllerInstanceWebClient(
-                wc -> wc.mutate().exchangeFunction(function).build()
-        );
-    }
 
     // -----------------------------------------------------------------------------------------------------------------
     private Class<CONTROLLER> controllerClass;

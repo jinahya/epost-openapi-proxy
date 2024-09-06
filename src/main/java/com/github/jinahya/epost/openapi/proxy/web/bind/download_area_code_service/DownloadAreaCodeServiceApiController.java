@@ -145,6 +145,20 @@ class DownloadAreaCodeServiceApiController
 //                                    .map(v -> URLEncoder.encode(v, StandardCharsets.UTF_8))
                             )
                             .ifPresent(v -> {
+//                                exchange.getResponse().beforeCommit(() -> {
+//                                    // https://stackoverflow.com/a/20933751/330457
+//                                    // https://stackoverflow.com/q/93551/330457
+//                                    final var w = URLEncoder.encode(v, StandardCharsets.UTF_8);
+//                                    if (w.equals(v)) {
+//                                        exchange.getResponse().getHeaders().setContentDisposition(
+//                                                ContentDisposition.attachment().filename(v).build()
+//                                        );
+//                                    } else {
+//                                        final var x = "filename: " + dwldSe + ".zip; filename*=utf-8''" + w;
+//                                        exchange.getResponse().getHeaders().set(HttpHeaders.CONTENT_DISPOSITION, "attach; " + x);
+//                                    }
+//                                    return Mono.empty();
+//                                });
                                 beforeCommit(exchange.getResponse(), r -> {
                                     // https://stackoverflow.com/a/20933751/330457
                                     // https://stackoverflow.com/q/93551/330457
