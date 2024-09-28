@@ -3,10 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>com.github.jinahya</groupId>
+    <groupId>io.github.jinahya</groupId>
     <artifactId>jinahya-parent</artifactId>
     <!-- https://search.maven.org/artifact/com.github.jinahya/jinahya-parent -->
-    <version>0.9.4</version>
+    <!-- https://repo.maven.apache.org/maven2/io/github/jinahya/jinahya-parent/ -->
+    <version>0.9.6</version>
   </parent>
 
   <artifactId>epost-openapi-proxy</artifactId>
