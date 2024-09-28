@@ -19,11 +19,11 @@ import java.util.Objects;
  *
  * @param <SELF> self type parameter
  * @author Jin Kwon &lt;onacit_at_gmail.com&gt;
+ * @see AbstractResponseType
  */
 @Setter
 @Getter
 @ToString(callSuper = true)
-//@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SuppressWarnings({
         "java:S119" // <SELF ...>
@@ -34,7 +34,9 @@ public abstract class AbstractResponseType<SELF extends AbstractResponseType<SEL
     @Serial
     private static final long serialVersionUID = 3542834861055866296L;
 
-    // -----------------------------------------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------------------ STATIC_FACTORY_METHODS
+
+    // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
     // ------------------------------------------------------------------------------------------------ java.lang.Object
     @Override

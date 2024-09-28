@@ -21,6 +21,12 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+/**
+ * An abstract class for binding request messages.
+ *
+ * @param <SELF> self type parameter
+ * @see AbstractResponseType
+ */
 @Setter
 @Getter
 @EqualsAndHashCode(callSuper = true)
@@ -54,6 +60,15 @@ public abstract class AbstractRequestType<SELF extends AbstractRequestType<SELF>
     // ------------------------------------------------------------------------------------------------ java.lang.Object
 
     // -----------------------------------------------------------------------------------------------------------------
+
+    /**
+     * Exchanges an instance of response message of specified type, using specified web client.
+     *
+     * @param webClient    the web client.
+     * @param responseType the response type to exchange.
+     * @param <T>          response type parameter
+     * @return an instance of {@code responseType} exchanged.
+     */
     public <T extends AbstractResponseType<T>> Mono<T> exchange(final WebClient webClient,
                                                                 final Class<T> responseType) {
         Objects.requireNonNull(webClient, "webClient is null");
