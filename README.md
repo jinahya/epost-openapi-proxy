@@ -138,7 +138,68 @@ https://github.com/jinahya/epost-openapi-proxy/blob/75b114f36b20a12d1ba93ead7681
 
 ## How to configure
 
-[TBD]
+### application-epost-openapi-proxy-(development|production).yaml
+
+기본적인 routing 정보가 포함된 파일들이다. 현재, 우정사업본부로 접속하기 위한 환경별 설정값의 차이는 없다.
+
+* 개발환경에서는 `application-epost-openapi-proxy-development.yaml` 를 import 한다.
+* 상용환경에서는 `application-epost-openapi-proxy-development.yaml` 과 `application-epost-openapi-proxy-production.yaml` 를 순서대로
+  import 한다.
+
+아래는 본 모듈의 `src/test/resource` 에 있는 파일들의 예시이다.
+
+```yaml
+spring:
+  profiles:
+    default: development
+    group:
+      development:
+        - dev     # <- application-development.yaml <- application-epost-openapi-proxy-development.yaml
+      production:
+        - dev     # <- application-development.yaml <- application-epost-openapi-proxy-development.yaml
+        - prod     # <- application-production.yaml <- application-epost-openapi-proxy-production.yaml
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+    import: application-development.yaml          # <- application-epost-openapi-proxy-development.yaml
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+    import: classpath:application-production.yaml # <- application-epost-openapi-proxy-production.yaml
+```
+
+### Properties
+
+#### Application specific properties
+
+| name                              | description                                  |
+|-----------------------------------|----------------------------------------------|
+| `epost.openapi.proxy.service-key` | `openapi.epost.go.kr` 접속을 위한 `?serviceKey` 값 |
+
+#### Spring Boot / Cloud specific proeprties
+
+아래는 Spring Boot / Cloud 와 관련된
+설정들이다. 아래를 참고하자.
+
+* [Spring Boot / Appendix / Common Application Properties](https://docs.spring.io/spring-boot/appendix/application-properties/index.html)
+* [Spring Cloud Gateway / Common application properties](https://docs.spring.io/spring-cloud-gateway/reference/appendix.html)
+
+| name                                                              | description |
+|-------------------------------------------------------------------|-------------|
+| `spring.cloud.gateway.filter.local-response-cache.enabled`        |             |
+| `spring.cloud.gateway.filter.local-response-cache.size`           |             |
+| `spring.cloud.gateway.filter.local-response-cache.time-to-live`   |             |
+| `spring.cloud.gateway.global-filter.local-response-cache.enabled` |             |
+| `spring.cloud.gateway.httpclient.connect-timeout`                 |             |
+| `spring.cloud.gateway.httpclient.response-timeout`                |             |
 
 ---
 
