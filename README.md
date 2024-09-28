@@ -2,6 +2,7 @@
 
 [![Java CI with Maven](https://github.com/jinahya/epost-openapi-proxy/actions/workflows/maven.yml/badge.svg)](https://github.com/jinahya/epost-openapi-proxy/actions/workflows/maven.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jinahya_epost-openapi-proxy&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=jinahya_epost-openapi-proxy)
+[![Maven Central Version](https://img.shields.io/maven-central/v/io.github.jinahya/epost-openapi-proxy)](https://repo1.maven.org/maven2/io/github/jinahya/epost-openapi-proxy/)
 
 ## Abstract
 
