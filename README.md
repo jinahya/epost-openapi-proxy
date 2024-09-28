@@ -72,36 +72,6 @@ sequenceDiagram
 | [우편번호 정보조회]     | 통합검색 5자리 우편번호 조회서비스  | `retrieve_new_adress_area_cd_search_all_service` |       |      
 | [도로명주소조회서비스]    | 새주소 5자리 우편번호 조회서비스   | `retrieve_new_adress_area_cd_service`            |       |
 
-### 우편번호 DB 다운로드 서비스(`downloadAreaCodeService`)
-
-#### Routes and APIs
-
-<table>
-  <thead>
-    <tr><th>route</th><th>api</th><th>description</th></tr>
-  </thead>
-  <tbody>
-  <tr>
-    <td></td>
-    <td><pre>/api<br>/downloadAreaCodeService<br>/areaCodeInfo</pre></td>
-    <td>모든 <code>{dwldSe}</code>값들에 대한 응답을 반환한다.</td>
-  </tr>
-  <tr>
-    <td><pre>/postal<br>/downloadAreaCodeService<br>/downloadAreaCodeService<br>/getAreaCodeInfo<br>?dwldSe={dwldSe}</pre></td>
-    <td><pre>/api<br>/downloadAreaCodeService<br>/areaCodeInfo<br>/{dwldSe}</pre></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td><pre>/api<br>/downloadAreaCodeService<br>/areaCodeInfo<br>/{dwldSe}<br>/fileContent</pre></td>
-    <td></td>
-  </tr>
-  </tbody>
-</table>
-
-### 영문 우편번호 조회 서비스(`retrieveEngAddressService`)  
-
- 
 ## How to build
 
 ### JDK/JRE
