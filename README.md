@@ -74,9 +74,9 @@ sequenceDiagram
 
 ## How to build
 
-### JDK/JRE
+### JDK / JRE
 
-최신의 JDK(`22`) 가 필요하다. (`main` 모듈은 `21` 을 기준으로 한다.)
+최신의 LTS(`21`) 가 필요하다.
 
 ```commandline
 $ grep '<maven.compiler.' pom.xml
