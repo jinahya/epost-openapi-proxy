@@ -43,7 +43,7 @@ class DownloadAreaCodeServiceApiController
         extends _ApiController<DownloadAreaCodeServiceApiService> {
 
     private static Iterable<Link> links(final AreaCodeInfoResponse response) {
-        final AreaCodeInfoRequest request = response.getRequestInstance();
+        final var request = response.getRequestInstance();
         return List.of(
                 Link.of(UriComponentsBuilder.fromPath(_DownloadAreaCodeServiceApiConstants.REQUEST_URI_DWLD_SE)
                                 .build(request.getDwldSe())
@@ -95,7 +95,8 @@ class DownloadAreaCodeServiceApiController
     Mono<EntityModel<AreaCodeInfoResponse>> readAreaCodeInfo(
             final ServerWebExchange exchange,
             @PathVariable(_DownloadAreaCodeServiceApiConstants.PATH_NAME_DWLD_SE) final String dwldSe) {
-        return service().exchange(AreaCodeInfoRequest.of(dwldSe))
+        return service()
+                .exchange(AreaCodeInfoRequest.of(dwldSe))
                 .map(r -> r.cmmMsgHeader(null))
                 .map(this::model);
     }

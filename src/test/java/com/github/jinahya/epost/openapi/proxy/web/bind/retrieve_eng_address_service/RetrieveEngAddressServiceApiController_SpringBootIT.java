@@ -6,7 +6,7 @@ import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_a
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.RoadAddressEngSearchListResponse.RoadAddressEngSearchList;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.RoadEngListResponse.RoadEngList;
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_eng_address_service.StateEngListResponse.StateEngList;
-import com.github.jinahya.epost.openapi.proxy.web.bind.__ApiController_SpringBootIT;
+import com.github.jinahya.epost.openapi.proxy.web.bind._ApiController_SpringBootIT;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
@@ -40,7 +40,9 @@ import static org.mockito.Mockito.mock;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Slf4j
 class RetrieveEngAddressServiceApiController_SpringBootIT
-        extends __ApiController_SpringBootIT<RetrieveEngAddressServiceApiController> {
+        extends _ApiController_SpringBootIT<
+        RetrieveEngAddressServiceApiController,
+        RetrieveEngAddressServiceApiService> {
 
     // -----------------------------------------------------------------------------------------------------------------
     private static Stream<String> getMediaTypeStreamForCollection() {

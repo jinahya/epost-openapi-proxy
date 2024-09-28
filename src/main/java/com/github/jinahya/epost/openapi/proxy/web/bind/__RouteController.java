@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Slf4j
-public abstract class _RouteController
-        extends __RouteController {
+abstract class __RouteController {
 
 }

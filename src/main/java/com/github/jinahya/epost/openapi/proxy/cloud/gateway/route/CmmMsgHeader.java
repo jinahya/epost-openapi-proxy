@@ -156,6 +156,7 @@ public class CmmMsgHeader
      *
      * @return {@code true} if current value of {@code returnCode} property is equal to {@value #RETURN_CODE_00};
      * {@code false} otherwise.
+     * @see #isReturnCodeSuccessful()
      */
     @JsonIgnore
     @XmlTransient
@@ -165,7 +166,33 @@ public class CmmMsgHeader
                 .orElse(false);
     }
 
+    /**
+     * Checks whether current value of {@code returnCode} property can be regarded as a successful value.
+     *
+     * @return {@code true} if current value of {@code returnCode} property is regarded as a successful value;
+     * {@code false} otherwise.
+     * @implSpec This method returns the result of {@link #isReturnCode00()}.
+     */
+    @JsonIgnore
+    @XmlTransient
+    public boolean isReturnCodeSuccessful() {
+        return isReturnCode00();
+    }
+
     // ---------------------------------------------------------------------------------------------------------- errMsg
+
+    /**
+     * Returns current value of {@code errMsg} property filtered by {@link String#isBlank() non-blank}.
+     *
+     * @return current value of {@code errMsg} property filtered.
+     */
+    @JsonIgnore
+    @XmlTransient
+    public Optional<String> getErrMsgFiltered() {
+        return Optional.ofNullable(getErrMsg())
+                .map(String::strip)
+                .filter(v -> !v.isBlank());
+    }
 
     // -----------------------------------------------------------------------------------------------------------------
     @XmlElement

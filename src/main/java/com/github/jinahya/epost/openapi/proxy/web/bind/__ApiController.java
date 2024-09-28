@@ -15,7 +15,7 @@ import java.util.function.Consumer;
         "java:S119"
 })
 // https://github.com/spring-projects/spring-boot/issues/41862
-public abstract class __ApiController {
+abstract class __ApiController {
 
     // -----------------------------------------------------------------------------------------------------------------
     protected static void beforeCommit(final ServerHttpResponse response,

@@ -27,13 +27,13 @@ import java.util.Objects;
         "java:S101" // class _Api...
 })
 // https://github.com/spring-projects/spring-boot/issues/41862
-public abstract class __ApiService {
+abstract class __ApiService {
 
     // ---------------------------------------------------------------------------------------------------- CONSTRUCTORS
 
     // -----------------------------------------------------------------------------------------------------------------
     @EventListener
-//    protected
+    protected // required
     void onApplicationEvent(final ReactiveWebServerInitializedEvent event) {
         webServer = event.getWebServer();
     }
@@ -46,7 +46,7 @@ public abstract class __ApiService {
         if (webClient == null) {
             String localhost;
             try {
-                localhost = InetAddress.getLocalHost().getHostName();
+                localhost = InetAddress.getLocalHost().getHostAddress();
             } catch (final UnknownHostException uhe) {
                 log.warn("failed to get localhost", uhe);
                 localhost = "localhost";
