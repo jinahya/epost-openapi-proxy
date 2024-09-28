@@ -14,7 +14,7 @@ class AreaCodeInfoRequestTest
         extends AbstractPairedRequestTypeTest<AreaCodeInfoRequest, AreaCodeInfoResponse> {
 
     AreaCodeInfoRequestTest() {
-        super(AreaCodeInfoRequest.class);
+        super(AreaCodeInfoRequest.class, AreaCodeInfoResponse.class);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

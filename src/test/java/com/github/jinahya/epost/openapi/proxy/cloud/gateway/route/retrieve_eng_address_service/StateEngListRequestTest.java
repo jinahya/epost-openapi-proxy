@@ -6,6 +6,6 @@ class StateEngListRequestTest
         extends AbstractPairedRequestTypeTest<StateEngListRequest, StateEngListResponse> {
 
     StateEngListRequestTest() {
-        super(StateEngListRequest.class);
+        super(StateEngListRequest.class, StateEngListResponse.class);
     }
 }

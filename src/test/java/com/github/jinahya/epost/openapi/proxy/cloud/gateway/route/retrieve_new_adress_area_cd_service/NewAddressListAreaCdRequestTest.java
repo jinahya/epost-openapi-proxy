@@ -31,6 +31,6 @@ class NewAddressListAreaCdRequestTest
 
     // -----------------------------------------------------------------------------------------------------------------
     NewAddressListAreaCdRequestTest() {
-        super(NewAddressListAreaCdRequest.class);
+        super(NewAddressListAreaCdRequest.class, NewAddressListAreaCdResponse.class);
     }
 }

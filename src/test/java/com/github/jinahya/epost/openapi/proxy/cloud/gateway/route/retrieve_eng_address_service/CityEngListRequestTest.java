@@ -6,6 +6,6 @@ class CityEngListRequestTest
         extends AbstractPairedRequestTypeTest<CityEngListRequest, CityEngListResponse> {
 
     CityEngListRequestTest() {
-        super(CityEngListRequest.class);
+        super(CityEngListRequest.class, CityEngListResponse.class);
     }
 }
