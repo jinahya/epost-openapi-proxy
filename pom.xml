@@ -52,14 +52,14 @@
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     <!--    <version.io.swagger.core.v3>2.2.22</version.io.swagger.core.v3>-->
     <version.maven-failsafe>${version.maven-surefire}</version.maven-failsafe>
-<!--    <version.maven-surefire>3.3.1</version.maven-surefire>-->
+    <!--    <version.maven-surefire>3.3.1</version.maven-surefire>-->
     <version.maven-surefire>3.5.0</version.maven-surefire>
     <!-- https://search.maven.org/search?q=g:org.apache.poi -->
     <version.org.apache.poi>5.3.0</version.org.apache.poi>
     <!-- https://docs.spring.io/spring-boot/appendix/dependency-versions/coordinates.html -->
-    <version.org.springframework>6.1.12</version.org.springframework>
+    <version.org.springframework>6.1.13</version.org.springframework>
     <!-- https://search.maven.org/search?q=g:org.springframework.boot -->
-    <version.org.springframework.boot>3.3.3</version.org.springframework.boot>
+    <version.org.springframework.boot>3.3.4</version.org.springframework.boot>
     <!-- https://spring.io/projects/spring-cloud -->
     <!-- https://github.com/spring-cloud/spring-cloud-release/wiki -->
     <!-- https://github.com/spring-cloud/spring-cloud-release/wiki/Spring-Cloud-2023.0-Release-Notes -->
@@ -106,14 +106,14 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <dependency>
-        <groupId>org.springframework.data</groupId>
-        <artifactId>spring-data-bom</artifactId>
-        <!-- https://search.maven.org/artifact/org.springframework.data/spring-data-bom -->
-        <version>2024.0.3</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
+      <!--      <dependency>-->
+      <!--        <groupId>org.springframework.data</groupId>-->
+      <!--        <artifactId>spring-data-bom</artifactId>-->
+      <!--        &lt;!&ndash; https://search.maven.org/artifact/org.springframework.data/spring-data-bom &ndash;&gt;-->
+      <!--        <version>2024.0.4</version>-->
+      <!--        <type>pom</type>-->
+      <!--        <scope>import</scope>-->
+      <!--      </dependency>-->
     </dependencies>
   </dependencyManagement>
   <dependencies>
@@ -131,7 +131,6 @@
     <dependency><!-- https://github.com/netty/netty/issues/12582 -->
       <groupId>io.netty</groupId>
       <artifactId>netty-resolver-dns-native-macos</artifactId>
-      <!--      <version>4.1.111.Final</version>-->
       <classifier>osx-aarch_64</classifier>
       <scope>test</scope>
     </dependency>
@@ -236,7 +235,12 @@
             <!--            <doclint>all</doclint>-->
             <doclint>none</doclint>
             <!-- https://maven.apache.org/plugins/maven-javadoc-plugin/javadoc-mojo.html#excludePackageNames -->
-            <excludePackageNames>com.github.jinahya.epost.openapi.proxy._misc, com.github.jinahya.epost.openapi.proxy._misc.*</excludePackageNames>
+            <excludePackageNames>
+              com.github.jinahya.epost.openapi.proxy._misc,
+              com.github.jinahya.epost.openapi.proxy._misc.*,
+              com.mycompany,
+              com.github.jinahya.epost.openapi.proxy.util
+            </excludePackageNames>
             <links>
               <link>https://javadoc.io/doc/io.projectreactor.netty/reactor-netty/latest/</link>
               <link>https://javadoc.io/doc/jakarta.validation/jakarta.validation-api/latest/</link>
@@ -419,7 +423,7 @@
         <configuration>
           <excludes>
             <exclude>**/*RouteController.class</exclude>
-            <exclude>*/AreaCodeInfoUtils.class</exclude>
+            <exclude>**/AreaCodeInfoUtils.class</exclude>
           </excludes>
         </configuration>
         <executions>
@@ -487,12 +491,12 @@
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>4.8.6.2</version>
+        <version>4.8.6.4</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jxr-plugin</artifactId>
-        <version>3.4.0</version>
+        <version>3.5.0</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

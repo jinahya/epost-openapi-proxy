@@ -22,7 +22,10 @@ import org.springframework.beans.factory.annotation.Autowired;
         "java:S119"  // <CONTROLLER ...>
 })
 public abstract class _ApiController_SpringBootIT<
-        CONTROLLER extends _ApiController<SERVICE>, SERVICE extends _ApiService> {
+        CONTROLLER extends _ApiController<SERVICE>,
+        SERVICE extends _ApiService
+        >
+        extends __ApiController_SpringBootIT<CONTROLLER> {
 
     // -----------------------------------------------------------------------------------------------------------------
     // -----------------------------------------------------------------------------------------------------------------

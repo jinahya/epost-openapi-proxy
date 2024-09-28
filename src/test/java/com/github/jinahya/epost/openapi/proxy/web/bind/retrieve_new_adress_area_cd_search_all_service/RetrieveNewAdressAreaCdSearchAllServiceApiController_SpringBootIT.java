@@ -1,7 +1,7 @@
 package com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_new_adress_area_cd_search_all_service;
 
 import com.github.jinahya.epost.openapi.proxy.cloud.gateway.route.retrieve_new_adress_area_cd_search_all_service.NewAddressListAreaCdSearchAllResponse.NewAddressListAreaCdSearchAll;
-import com.github.jinahya.epost.openapi.proxy.web.bind.__ApiController_SpringBootIT;
+import com.github.jinahya.epost.openapi.proxy.web.bind._ApiController_SpringBootIT;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -14,7 +14,8 @@ import static com.github.jinahya.epost.openapi.proxy.web.bind.retrieve_new_adres
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RetrieveNewAdressAreaCdSearchAllServiceApiController_SpringBootIT
-        extends __ApiController_SpringBootIT<RetrieveNewAdressAreaCdSearchAllServiceApiController> {
+        extends _ApiController_SpringBootIT<
+        RetrieveNewAdressAreaCdSearchAllServiceApiController, RetrieveNewAdressAreaCdSearchAllServiceApiService> {
 
     // -----------------------------------------------------------------------------------------------------------------
     @SuppressWarnings({

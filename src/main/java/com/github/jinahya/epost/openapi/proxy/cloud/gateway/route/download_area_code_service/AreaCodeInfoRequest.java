@@ -26,6 +26,7 @@ public class AreaCodeInfoRequest
     private static final long serialVersionUID = 7432210876083090440L;
 
     // ---------------------------------------------------------------------------------------------------------- dwldSe
+    public static final String PROPERTY_DWLD_SE = "dwldSe";
 
     /**
      * 우편번호 전체. The value is {@value}.
@@ -143,6 +144,13 @@ public class AreaCodeInfoRequest
     }
 
     // ---------------------------------------------------------------------------------------------------------- dwldSe
+
+    /**
+     * Replaces current value of {@value #PROPERTY_DWLD_SE} property with specified value, and returns this instance.
+     *
+     * @param dwldSe new value for the {@value #PROPERTY_DWLD_SE} property.
+     * @return this instance.
+     */
     public AreaCodeInfoRequest dwldSe(final String dwldSe) {
         setDwldSe(dwldSe);
         return this;

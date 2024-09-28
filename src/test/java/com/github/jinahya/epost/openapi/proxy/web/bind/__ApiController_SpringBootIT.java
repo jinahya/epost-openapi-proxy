@@ -58,7 +58,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SuppressWarnings({
         "java:S119" // <CONTROLLER ...>
 })
-public abstract class __ApiController_SpringBootIT<CONTROLLER extends __ApiController> {
+abstract class __ApiController_SpringBootIT<CONTROLLER extends __ApiController> {
 
     // -----------------------------------------------------------------------------------------------------------------
     protected static <T> T getRandom(final List<T> list) {

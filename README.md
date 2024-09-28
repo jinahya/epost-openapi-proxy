@@ -72,48 +72,18 @@ sequenceDiagram
 | [우편번호 정보조회]     | 통합검색 5자리 우편번호 조회서비스  | `retrieve_new_adress_area_cd_search_all_service` |       |      
 | [도로명주소조회서비스]    | 새주소 5자리 우편번호 조회서비스   | `retrieve_new_adress_area_cd_service`            |       |
 
-### 우편번호 DB 다운로드 서비스(`downloadAreaCodeService`)
-
-#### Routes and APIs
-
-<table>
-  <thead>
-    <tr><th>route</th><th>api</th><th>description</th></tr>
-  </thead>
-  <tbody>
-  <tr>
-    <td></td>
-    <td><pre>/api<br>/downloadAreaCodeService<br>/areaCodeInfo</pre></td>
-    <td>모든 <code>{dwldSe}</code>값들에 대한 응답을 반환한다.</td>
-  </tr>
-  <tr>
-    <td><pre>/postal<br>/downloadAreaCodeService<br>/downloadAreaCodeService<br>/getAreaCodeInfo<br>?dwldSe={dwldSe}</pre></td>
-    <td><pre>/api<br>/downloadAreaCodeService<br>/areaCodeInfo<br>/{dwldSe}</pre></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td><pre>/api<br>/downloadAreaCodeService<br>/areaCodeInfo<br>/{dwldSe}<br>/fileContent</pre></td>
-    <td></td>
-  </tr>
-  </tbody>
-</table>
-
-### 영문 우편번호 조회 서비스(`retrieveEngAddressService`)  
-
- 
 ## How to build
 
-### JDK/JRE
+### JDK / JRE
 
-최신의 JDK(`22`) 가 필요하다. (`main` 모듈은 `21` 을 기준으로 한다.)
+최신의 LTS(`21`) 가 필요하다.
 
 ```commandline
-$ grep \<maven.compiler\\. pom.xml
+$ grep '<maven.compiler.' pom.xml
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
     <maven.compiler.release>${maven.compiler.target}</maven.compiler.release>
-    <maven.compiler.testSource>22</maven.compiler.testSource>
+    <maven.compiler.testSource>${maven.compiler.source}</maven.compiler.testSource>
     <maven.compiler.testTarget>${maven.compiler.testSource}</maven.compiler.testTarget>
     <maven.compiler.testRelease>${maven.compiler.testTarget}</maven.compiler.testRelease>
 ```
@@ -152,7 +122,7 @@ $ SERVICE_KEY='...==' mvn spring-boot:test-run
 
 ---
 
-## How to use/extend
+## How to use / extend
 
 위에서 언급되었듯이, 본 모듈은 `@SpringBootApplication` 으로 annotate 된 class 를 (`main`이 아난) `test` 모듈에 포함하고 있다. 때문에 아래와 같이 추가해야 한다.
 
