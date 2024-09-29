@@ -6,6 +6,6 @@ class DistrictEngFirstNameListRequestTest
         extends AbstractPairedRequestTypeTest<DistrictEngFirstNameListRequest, DistrictEngFirstNameListResponse> {
 
     DistrictEngFirstNameListRequestTest() {
-        super(DistrictEngFirstNameListRequest.class);
+        super(DistrictEngFirstNameListRequest.class, DistrictEngFirstNameListResponse.class);
     }
 }

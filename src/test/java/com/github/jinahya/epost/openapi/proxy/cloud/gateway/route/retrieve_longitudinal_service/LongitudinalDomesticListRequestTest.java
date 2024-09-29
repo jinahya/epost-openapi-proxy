@@ -7,7 +7,7 @@ class LongitudinalDomesticListRequestTest
         extends AbstractPairedRequestTypeTest<LongitudinalDomesticListRequest, LongitudinalDomesticListResponse> {
 
     LongitudinalDomesticListRequestTest() {
-        super(LongitudinalDomesticListRequest.class);
+        super(LongitudinalDomesticListRequest.class, LongitudinalDomesticListResponse.class);
     }
 
     // -----------------------------------------------------------------------------------------------------------------

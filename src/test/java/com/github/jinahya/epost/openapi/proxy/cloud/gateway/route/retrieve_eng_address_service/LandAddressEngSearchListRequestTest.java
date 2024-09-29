@@ -6,6 +6,6 @@ class LandAddressEngSearchListRequestTest
         extends AbstractPairedRequestTypeTest<LandAddressEngSearchListRequest, LandAddressEngSearchListResponse> {
 
     LandAddressEngSearchListRequestTest() {
-        super(LandAddressEngSearchListRequest.class);
+        super(LandAddressEngSearchListRequest.class, LandAddressEngSearchListResponse.class);
     }
 }

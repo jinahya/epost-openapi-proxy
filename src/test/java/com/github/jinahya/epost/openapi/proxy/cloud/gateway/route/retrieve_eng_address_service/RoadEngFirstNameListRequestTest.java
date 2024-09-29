@@ -6,6 +6,6 @@ class RoadEngFirstNameListRequestTest
         extends AbstractPairedRequestTypeTest<RoadEngFirstNameListRequest, RoadEngFirstNameListResponse> {
 
     RoadEngFirstNameListRequestTest() {
-        super(RoadEngFirstNameListRequest.class);
+        super(RoadEngFirstNameListRequest.class, RoadEngFirstNameListResponse.class);
     }
 }

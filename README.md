@@ -2,6 +2,7 @@
 
 [![Java CI with Maven](https://github.com/jinahya/epost-openapi-proxy/actions/workflows/maven.yml/badge.svg)](https://github.com/jinahya/epost-openapi-proxy/actions/workflows/maven.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jinahya_epost-openapi-proxy&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=jinahya_epost-openapi-proxy)
+[![Maven Central Version](https://img.shields.io/maven-central/v/io.github.jinahya/epost-openapi-proxy)](https://central.sonatype.com/artifact/io.github.jinahya/epost-openapi-proxy/overview)
 
 ## Abstract
 
@@ -124,20 +125,7 @@ $ SERVICE_KEY='...==' mvn spring-boot:test-run
 
 ## How to use / extend
 
-위에서 언급되었듯이, 본 모듈은 `@SpringBootApplication` 으로 annotate 된 class 를 (`main`이 아난) `test` 모듈에 포함하고 있다. 때문에 아래와 같이 추가해야 한다.
-
-Add [`com.github.jinahya.openapi.proxy.NoOp.class`](src/main/java/com/github/jinahya/epost/openapi/proxy/_NoOp) to the
-component-scanning path.
-
-e.g.
-
-https://github.com/jinahya/epost-openapi-proxy/blob/75b114f36b20a12d1ba93ead76818959c11f5735/src/test/java/com/mycompany/Application.java#L1-L17
-
----
-
-## How to configure
-
-[TBD]
+See [epost-openapi-proxy-sample-application](https://github.com/onacit/epost-openapi-proxy-sample-application).
 
 ---
 

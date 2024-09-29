@@ -8,6 +8,6 @@ class NewAddressListAreaCdSearchAllRequestTest
         NewAddressListAreaCdSearchAllResponse> {
 
     NewAddressListAreaCdSearchAllRequestTest() {
-        super(NewAddressListAreaCdSearchAllRequest.class);
+        super(NewAddressListAreaCdSearchAllRequest.class, NewAddressListAreaCdSearchAllResponse.class);
     }
 }
